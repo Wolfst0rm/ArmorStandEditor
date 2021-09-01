@@ -22,6 +22,7 @@ package io.github.rypofalem.armorstandeditor;
 import io.github.rypofalem.armorstandeditor.language.Language;
 
 import org.bstats.charts.AdvancedPie;
+import org.bstats.charts.DrilldownPie;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -42,6 +43,7 @@ import java.util.concurrent.Callable;
 
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
@@ -77,6 +79,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private static ArmorStandEditorPlugin plugin;
 
+	private static final int PLUGIN_ID = 12668;
+
 	public ArmorStandEditorPlugin(){
 		instance = this;
 	}
@@ -85,20 +89,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	public void onEnable(){
 		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 		registerScoreboards();
-
-		//Metrics/bStats Support
-		int pluginID = 12668;
-		Metrics metrics = new Metrics(this, pluginID);
-
-		/*TODO: Metrics Charts (Optional but might add some useful stuff)
-		* TODO: Useful to Track Language Usage 		  (config: lang)
-		* TODO: Useful to Track RequireToolData Usage (config: requireToolData)
-		* TODO: Useful to Track RequireToolLore Usage (config: requireToolLore)
-		* TODO: Useful to Track ActionBar Usage 	  (config: sendMessagesToActionBar)
-		* TODO: Useful to Track DebugMode Usage		  (config: debug)
-		* TODO: Useful to Track Java Version		  (java.Version)
-		*
-		*/
 
 		//Get NMS Version
 		nmsVersion = getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
@@ -200,16 +190,20 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
 		glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
 
+		//Get Metrics from bStats
+		getMetrics();
+
 		editorManager = new PlayerEditorManager(this);
 		execute = new CommandEx(this);
 		getCommand("ase").setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
 		getServer().getPluginManager().registerEvents(editorManager, this);
+
+
 	}
 
 	//Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
 	private void registerScoreboards() {
 		getLogger().info("Registering Scoreboards required for Glowing Effects");
-
 		scoreboard.registerNewTeam("ASLocked");
 		scoreboard.getTeam("ASLocked").setColor(ChatColor.RED);
 
@@ -295,6 +289,66 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		return true;
 	}
 
+	//Metrics/bStats Support
+	private void getMetrics(){
+
+		Metrics metrics = new Metrics(this, PLUGIN_ID);
+
+		//RequireToolLore Metric
+		metrics.addCustomChart(new SimplePie("tool_lore_enabled", () -> {
+			return getConfig().getString("requireToolLore");
+		}));
+
+		//RequireToolData
+		metrics.addCustomChart(new SimplePie("tool_data_enabled", () ->{
+			return getConfig().getString("requireToolData");
+		}));
+
+		//Send Messages to ActionBar
+		metrics.addCustomChart(new SimplePie("action_bar_messages", () -> {
+			return getConfig().getString("sendMessagesToActionBar");
+		}));
+
+		//Debug Mode Enabled?
+		metrics.addCustomChart(new SimplePie("uses_debug_mode", () -> {
+			return getConfig().getString("debug");
+		}));
+
+		//Language is used
+		metrics.addCustomChart(new DrilldownPie("language_used", () -> {
+			Map<String, Map<String, Integer>> map = new HashMap<>();
+			Map<String, Integer> entry = new HashMap<>();
+
+			String languageUsed = getConfig().getString("lang");
+			entry.put(languageUsed, 1);
+
+			assert languageUsed != null;
+			if(languageUsed.startsWith("nl")){
+				map.put("Dutch", entry);
+			} else if(languageUsed.startsWith("de")){
+				map.put("German", entry);
+			} else if(languageUsed.startsWith("es")){
+				map.put("Spanish", entry);
+			} else if(languageUsed.startsWith("fr")){
+				map.put("French", entry);
+			} else if(languageUsed.startsWith("ja")){
+				map.put("Japanese", entry);
+			} else if(languageUsed.startsWith("pl")){
+				map.put("Polish", entry);
+			} else if(languageUsed.startsWith("ro")){
+				map.put("Romanian", entry);
+			} else if(languageUsed.startsWith("uk")){
+				map.put("Ukranian", entry);
+			} else if(languageUsed.startsWith("zh")){
+				map.put("Chinese", entry);
+			} else{
+				map.put("Other", entry);
+			}
+
+			return map;
+		}));
+
+	}
 
 	public NamespacedKey getIconKey() {
 		if(iconKey == null) iconKey = new NamespacedKey(this, "command_icon");
