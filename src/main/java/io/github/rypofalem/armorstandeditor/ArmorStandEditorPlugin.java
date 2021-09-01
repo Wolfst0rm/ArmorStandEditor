@@ -39,11 +39,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
-import sun.java2d.pipe.SpanShapeRenderer;
+import org.bstats.charts.DrilldownPie;
 
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
@@ -338,7 +337,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			} else if(languageUsed.startsWith("ro")){
 				map.put("Romanian", entry);
 			} else if(languageUsed.startsWith("uk")){
-				map.put("Ukranian", entry);
+				map.put("Ukrainian", entry);
 			} else if(languageUsed.startsWith("zh")){
 				map.put("Chinese", entry);
 			} else{
