@@ -39,6 +39,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import static org.bukkit.Material.*;
+
 //Manages PlayerEditors and Player Events related to editing armorstands
 public class PlayerEditorManager implements Listener {
 	private  ArmorStandEditorPlugin plugin;
@@ -53,6 +55,7 @@ public class PlayerEditorManager implements Listener {
 	private  TickCounter counter;
 	private ArrayList<ArmorStand> as = null;
 	private ArrayList<ItemFrame> itemF = null;
+	private ArrayList<ItemFrame> itemFrameRotated = null;
 
 
 	PlayerEditorManager( ArmorStandEditorPlugin plugin) {
@@ -109,7 +112,7 @@ public class PlayerEditorManager implements Listener {
 
 
 			//Attempt rename
-			if (player.getInventory().getItemInMainHand().getType() == Material.NAME_TAG && player.hasPermission("asedit.rename")) {
+			if (player.getInventory().getItemInMainHand().getType() == NAME_TAG && player.hasPermission("asedit.rename")) {
 				ItemStack nameTag = player.getInventory().getItemInMainHand();
 				 String name;
 				if (nameTag.getItemMeta() != null && nameTag.getItemMeta().hasDisplayName()) {
@@ -129,7 +132,7 @@ public class PlayerEditorManager implements Listener {
 						if (nameTag.getAmount() > 1) {
 							nameTag.setAmount(nameTag.getAmount() - 1);
 						} else {
-							nameTag = new ItemStack(Material.AIR);
+							nameTag = new ItemStack(AIR);
 						}
 						player.getInventory().setItemInMainHand(nameTag);
 					}
@@ -148,20 +151,20 @@ public class PlayerEditorManager implements Listener {
 			if (!canEdit(player, itemFrame)) return;
 			if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
 				getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
-				if (!itemFrame.getItem().getType().equals(Material.AIR)) {
+				if (!itemFrame.getItem().getType().equals(AIR)) {
 					event.setCancelled(true);
 				}
 				applyRightTool(player, itemFrame);
 				return;
 			}
 
-			if (player.getInventory().getItemInMainHand().getType().equals(Material.GLOW_INK_SAC) //attempt glowing
+			if (player.getInventory().getItemInMainHand().getType().equals(GLOW_INK_SAC) //attempt glowing
 					&& player.hasPermission("asedit.basic")
 					&& plugin.glowItemFrames && player.isSneaking()) {
 				ItemStack glowSacs = player.getInventory().getItemInMainHand();
 				ItemStack contents = null;
 				Rotation rotation = null;
-				if (itemFrame.getItem().getType() != Material.AIR) {
+				if (itemFrame.getItem().getType() != AIR) {
 					contents = itemFrame.getItem(); //save item
 					rotation = itemFrame.getRotation(); // save item rotation
 				}
@@ -171,7 +174,7 @@ public class PlayerEditorManager implements Listener {
 				if (player.getGameMode() != GameMode.CREATIVE) {
 					if (glowSacs.getAmount() > 1) {
 						glowSacs.setAmount(glowSacs.getAmount() - 1);
-					} else glowSacs = new ItemStack(Material.AIR);
+					} else glowSacs = new ItemStack(AIR);
 				}
 
 				itemFrame.remove();
@@ -241,7 +244,7 @@ public class PlayerEditorManager implements Listener {
 		return armorStands;
 	}
 
-	private ArrayList<ItemFrame> getFrameTargets(Player player) {
+	public ArrayList<ItemFrame> getFrameTargets(Player player) {
 		Location eyeLaser = player.getEyeLocation();
 		Vector direction = player.getLocation().getDirection();
 		ArrayList<ItemFrame> itemFrames = new ArrayList<>();
@@ -403,6 +406,24 @@ public class PlayerEditorManager implements Listener {
 		if (e.getInventory().getHolder() == equipmentHolder) {
 			 PlayerEditor pe = players.get(e.getPlayer().getUniqueId());
 			pe.equipMenu.equipArmorstand();
+		}
+	}
+
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	void checkItemFrameRotate(PlayerInteractEntityEvent event){
+		Player player = event.getPlayer();
+		if(event.getRightClicked() instanceof ItemFrame){
+			boolean itemFrameInvis = ((ItemFrame) event.getRightClicked()).isVisible();
+			if(itemFrameInvis) {
+				itemFrameRotated = getFrameTargets(player);
+				if (!itemFrameRotated.isEmpty()) {
+					for (int i = 0; i < itemFrameRotated.size(); i++) {
+						if (itemFrameRotated.get(i).getItem().getType() == Material.FLINT) {
+							event.setCancelled(true);
+						}
+					}
+				}
+			}
 		}
 	}
 

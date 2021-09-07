@@ -34,8 +34,12 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -374,7 +378,9 @@ public class PlayerEditor {
 
 		//TODO: Wolfst0rm/ArmorStandEditor-Issues#3 - ItemFrame Invisible Rotate Issue
 		itemFrame.setVisible(!itemFrame.isVisible());
+
 	}
+
 
 	void toggleSize(ArmorStand armorStand) {
 		armorStand.setSmall(!armorStand.isSmall());
