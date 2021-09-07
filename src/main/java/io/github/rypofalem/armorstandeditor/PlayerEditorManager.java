@@ -414,15 +414,26 @@ public class PlayerEditorManager implements Listener {
 		Player player = event.getPlayer();
 		if(event.getRightClicked() instanceof ItemFrame){
 			boolean itemFrameInvis = ((ItemFrame) event.getRightClicked()).isVisible();
-			if(itemFrameInvis) {
-				itemFrameRotated = getFrameTargets(player);
+
+			if(itemFrameInvis){
+
+				//Firstly, Ensure Flint doesnt go into the frame.
+				//CASE:  If the itemframe does not contain an item, the flint item will go into it.
+				if(plugin.isEditTool(player.getInventory().getItemInMainHand())){
+					if(player.getInventory().getItemInMainHand().getType().equals(Material.FLINT)){
+						event.setCancelled(true);
+					}
+				}
+
+				//Next: Only if the item is not flint.
+				// When making the itemframe invisible, and the itemframe already contains an item;
+				// using right click to make the itemframe invisible, it will rotate. (With left click it will not rotate)
+				itemFrameRotated = getFrameTargets(player); //Get all the Frames near the player
 				if(itemFrameRotated.isEmpty()) return; //Sanity Check
-				if (!itemFrameRotated.isEmpty()) {
-					for (int i = 0; i < itemFrameRotated.size(); i++) {
-						if (!itemFrameRotated.get(i).isVisible()) continue; //Only apply if the ItemFrame is Invisible. Skip if not.
-						if (itemFrameRotated.get(i).getItem().getType() == Material.FLINT) {
-							event.setCancelled(true);
-						}
+				for (ItemFrame itemFrame : itemFrameRotated) { // Loop over the ItemFrames
+					if (!itemFrame.isVisible()) continue; //Only apply if the ItemFrame is Invisible. Skip if not.
+					if(player.getInventory().getItemInMainHand().getType().equals(Material.FLINT)) { //If Item is EditTool
+						event.setCancelled(true); // Cancel the Event.
 					}
 				}
 			}
