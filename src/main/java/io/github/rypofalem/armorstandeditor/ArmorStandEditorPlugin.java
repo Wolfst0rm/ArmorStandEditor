@@ -94,23 +94,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		getLogger().info("Plugin Version: " + pdfFile.getVersion());
 
 		//Spigot Check
-		try {
-			Class.forName("org.spigotmc.SpigotConfig");
-			hasSpigot = true;
-			nmsVersionNotLatest = "SpigotMC ASAP";
-		} catch (ClassNotFoundException e){
-			hasSpigot = false;
-		}
+		hasSpigot = spigotCheck();
 		getLogger().info("SpigotMC: " + hasSpigot);
 
 		//Paper Check
-		try{
-			Class.forName("com.destroystokyo.paper.PaperConfig");
-			hasPaper = true;
-			nmsVersionNotLatest = "Paper ASAP";
-		} catch (ClassNotFoundException e){
-			hasPaper = false;
-		}
+		hasPaper = paperCheck();
 		getLogger().info("PaperMC: " + hasPaper);
 
 		//If Paper and Spigot are both FALSE - Disable the plugin
@@ -120,6 +108,68 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			return;
 		}
 
+		//Check net.minecraft.server Version
+		nmsVersionChecker();
+		getLogger().info("================================");
+
+		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
+		updateConfig("", "config.yml");
+		updateConfig("lang/", "test_NA.yml");
+		updateConfig("lang/", "nl_NL.yml");
+		updateConfig("lang/", "uk_UA.yml");
+		updateConfig("lang/", "zh_CN.yml");
+		updateConfig("lang/", "fr_FR.yml");
+		updateConfig("lang/", "ro_RO.yml");
+		updateConfig("lang/", "ja_JP.yml");
+		updateConfig("lang/", "de_DE.yml");
+		updateConfig("lang/", "es_ES.yml");
+		//English is the default language and needs to be unaltered to so that there is always a backup message string
+		saveResource("lang/en_US.yml", true);
+		lang = new Language(getConfig().getString("lang"), this);
+
+		//Get all of the Config Options Defined
+		getConfigSettings();
+
+		//Get Metrics from bStats
+		getMetrics();
+
+		editorManager = new PlayerEditorManager(this);
+		execute = new CommandEx(this);
+		getCommand("ase").setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
+		getServer().getPluginManager().registerEvents(editorManager, this);
+
+
+	}
+
+	private void getConfigSettings() {
+		//Rotation
+		coarseRot = getConfig().getDouble("coarse");
+		fineRot = getConfig().getDouble("fine");
+
+		//Set Tool to be used in game
+		toolType = getConfig().getString("tool");
+		if (toolType != null) {
+			editTool = Material.getMaterial(toolType); //Ignore Warning
+		} else {
+			getLogger().severe("Unable to get Tool for Use with Plugin. Unable to continue!");
+			getLogger().info("================================");
+			getServer().getPluginManager().disablePlugin(this);
+			return;
+		}
+
+		//Is there NBT Required for the tool
+		requireToolData = getConfig().getBoolean("requireToolData", false);
+		if(requireToolData) editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+		requireToolLore = getConfig().getBoolean("requireToolLore", false);
+		if(requireToolLore) editToolLore= getConfig().getString("toolLore", null);
+
+		//Optional Information
+		debug = getConfig().getBoolean("debug", true);
+		sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+		glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
+	}
+
+	private void nmsVersionChecker() {
 		//Minimum Version Check - No Lower than 1.13-API. Will be tuned out in the future
 		if (    nmsVersion.startsWith("v1_8")  ||
 				nmsVersion.startsWith("v1_9")  ||
@@ -143,58 +193,31 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
 		}
 		getServer().getPluginManager().enablePlugin(this);
-		getLogger().info("================================");
+	}
 
-		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
-		updateConfig("", "config.yml");
-		updateConfig("lang/", "test_NA.yml");
-		updateConfig("lang/", "nl_NL.yml");
-		updateConfig("lang/", "uk_UA.yml");
-		updateConfig("lang/", "zh_CN.yml");
-		updateConfig("lang/", "fr_FR.yml");
-		updateConfig("lang/", "ro_RO.yml");
-		updateConfig("lang/", "ja_JP.yml");
-		updateConfig("lang/", "de_DE.yml");
-		updateConfig("lang/", "es_ES.yml");
-		//English is the default language and needs to be unaltered to so that there is always a backup message string
-		saveResource("lang/en_US.yml", true);
-		lang = new Language(getConfig().getString("lang"), this);
-
-		//Rotation
-		coarseRot = getConfig().getDouble("coarse");
-		fineRot = getConfig().getDouble("fine");
-
-		//Set Tool to be used in game
-		toolType = getConfig().getString("tool");
-		if (toolType != null) {
-			editTool = Material.getMaterial(toolType); //Ignore Warning
-		} else {
-			 getLogger().severe("Unable to get Tool for Use with Plugin. Unable to continue!");
-			 getLogger().info("================================");
-			 getServer().getPluginManager().disablePlugin(this);
-			 return;
+	//Spigot Checks
+	private boolean spigotCheck(){
+		try {
+			Class.forName("org.spigotmc.SpigotConfig");
+			nmsVersionNotLatest = "SpigotMC ASAP";
+			return true;
+		} catch (ClassNotFoundException e){
+			getLogger().info("SpigotMC: Not Detected.");
+			return false;
 		}
+	}
 
-		//Is there NBT Required for the tool
-		requireToolData = getConfig().getBoolean("requireToolData", false);
-		if(requireToolData) editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
-		requireToolLore = getConfig().getBoolean("requireToolLore", false);
-		if(requireToolLore) editToolLore= getConfig().getString("toolLore", null);
+	//PaperMC check
+	private boolean paperCheck() {
+		try{
+			Class.forName("com.destroystokyo.paper.PaperConfig");
+			nmsVersionNotLatest = "Paper ASAP";
+			return true;
 
-		//Optional Information
-		debug = getConfig().getBoolean("debug", true);
-		sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
-		glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-
-		//Get Metrics from bStats
-		getMetrics();
-
-		editorManager = new PlayerEditorManager(this);
-		execute = new CommandEx(this);
-		getCommand("ase").setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
-		getServer().getPluginManager().registerEvents(editorManager, this);
-
-
+		} catch (ClassNotFoundException e){
+			getLogger().info("PaperMC: Not detected.");
+			return false;
+		}
 	}
 
 	//Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
@@ -202,7 +225,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		getLogger().info("Registering Scoreboards required for Glowing Effects");
 		scoreboard.registerNewTeam("ASLocked");
 		scoreboard.getTeam("ASLocked").setColor(ChatColor.RED);
-
 	}
 
 	private void unregisterScoreboards() {
