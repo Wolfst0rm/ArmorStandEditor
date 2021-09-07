@@ -55,7 +55,7 @@ public class PlayerEditorManager implements Listener {
 	private  TickCounter counter;
 	private ArrayList<ArmorStand> as = null;
 	private ArrayList<ItemFrame> itemF = null;
-	private ArrayList<ItemFrame> itemFrameRotated = null;
+	private ArrayList<ItemFrame> itemFrameLookedAt = null;
 
 
 	PlayerEditorManager( ArmorStandEditorPlugin plugin) {
@@ -410,41 +410,28 @@ public class PlayerEditorManager implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-	void checkItemFrameRotate(PlayerInteractEntityEvent event){
+	void checkItemFrameRotate(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
-		if(event.getRightClicked() instanceof ItemFrame){
-			boolean itemFrameInvis = ((ItemFrame) event.getRightClicked()).isVisible();
-			ItemStack itemFrameContainsItem = ((ItemFrame) event.getRightClicked()).getItem();
+		if (event.getRightClicked() instanceof ItemFrame) {
+			ItemFrame itemF = ((ItemFrame) event.getRightClicked());
+			boolean itemFrameInvis = itemF.isVisible();
 
-			if(itemFrameInvis){
+			if (!itemFrameInvis) {  //If Visible then we do nothing and do not cancel the event - So if we want to set it Invis we can
 
-				if (itemFrameContainsItem != null) {
+				event.setCancelled(false);
 
-					//Firstly, Ensure Flint doesnt go into the frame.
-					//CASE:  If the itemframe does not contain an item, the flint item will go into it.
-					if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
-						if (player.getInventory().getItemInMainHand().getType().equals(Material.FLINT)) {
-							event.setCancelled(true);
-						}
-					}
-				} else{
-					if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
-						if (player.getInventory().getItemInMainHand().getType().equals(Material.FLINT)) {
-							event.setCancelled(true);
-						}
-					}
+			} else { //ItemFrame is Invisible - Regardless of if it has an item or not
+
+				//Dont Bother looking at it if not holding flint
+				if (player.getInventory().getItemInMainHand().getType() != Material.FLINT)
+					event.setCancelled(false);
+
+				//If we are HOLDING Flint and when we rightclick the ItemFrame
+				if (player.getInventory().getItemInMainHand().getType().equals(Material.FLINT)
+						&& event.getRightClicked().getType().equals(itemF.getType())) {
+					event.setCancelled(true);
 				}
-				//Next: Only if the item is not flint.
-				// When making the itemframe invisible, and the itemframe already contains an item;
-				// using right click to make the itemframe invisible, it will rotate. (With left click it will not rotate)
-				itemFrameRotated = getFrameTargets(player); //Get all the Frames near the player
-				if(itemFrameRotated.isEmpty()) return; //Sanity Check
-				for (ItemFrame itemFrame : itemFrameRotated) { // Loop over the ItemFrames
-					if (!itemFrame.isVisible()) continue; //Only apply if the ItemFrame is Invisible. Skip if not.
-					if(player.getInventory().getItemInMainHand().getType().equals(Material.FLINT)) { //If Item is EditTool
-						event.setCancelled(true); // Cancel the Event.
-					}
-				}
+
 			}
 		}
 	}
