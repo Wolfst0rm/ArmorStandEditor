@@ -34,16 +34,12 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Scoreboard;
+
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.EulerAngle;
 
@@ -372,11 +368,9 @@ public class PlayerEditor {
 		armorStand.setVisible(!armorStand.isVisible());
 	}
 
-	void toggleItemFrameVisible(ItemFrame itemFrame) {
+	void toggleItemFrameVisible(ItemFrame itemFrame) {//Should run checKItemFrameRotate before doing any of this
 		if (!getPlayer().hasPermission("asedit.invisible")) return; //Changed to Invisible, better that visibility is all under same permission node
-		//Potential for OnInteractEvent for ItemFrame to Disable Interaction
 
-		//TODO: Wolfst0rm/ArmorStandEditor-Issues#3 - ItemFrame Invisible Rotate Issue
 		itemFrame.setVisible(!itemFrame.isVisible());
 
 	}
