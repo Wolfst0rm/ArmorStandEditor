@@ -431,8 +431,9 @@ public class PlayerEditorManager implements Listener {
 						&& event.getRightClicked().getType().equals(itemF.getType())) {
 					event.setCancelled(true);
 				}
-
 			}
+		} else{ // if if not then we dont do anything and cancel the event.
+			event.setCancelled(false);
 		}
 	}
 
