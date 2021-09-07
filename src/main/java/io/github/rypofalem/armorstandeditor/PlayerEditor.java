@@ -170,6 +170,8 @@ public class PlayerEditor {
 			case NONE:
 				sendMessage("nomode", null);
 				break;
+			default:
+				sendMessage("",null); //Message for here?
 		}
 	}
 
@@ -184,6 +186,8 @@ public class PlayerEditor {
 			case NONE:
 				sendMessage("nomode", null);
 				break;
+			default:
+				sendMessage("",null);
 		}
 	}
 
@@ -372,7 +376,8 @@ public class PlayerEditor {
 		if (!getPlayer().hasPermission("asedit.invisible")) return; //Changed to Invisible, better that visibility is all under same permission node
 		//Potential for OnInteractEvent for ItemFrame to Disable Interaction
 
-		//TODO: Wolfst0rm/ArmorStandEditor-Issues#3 - ItemFrame Invisible Rotate Issue
+		//Wolfst0rm/ArmorStandEditor-Issues#3 - ItemFrame Invisible Rotate Issue. Work in Progress,
+		// see https://github.com/Wolfst0rm/ArmorStandEditor/tree/dev/frameRotateWhenInvisibleCheck
 		itemFrame.setVisible(!itemFrame.isVisible());
 	}
 
