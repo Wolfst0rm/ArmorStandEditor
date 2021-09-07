@@ -374,4 +374,4 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	}
 }
 //todo:
-//Access to the "Marker" switch (so you can make the hitbox super small)
+// Access to the "Marker" switch (so you can make the hitbox super small)
