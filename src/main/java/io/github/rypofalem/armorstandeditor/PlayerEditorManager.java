@@ -416,8 +416,10 @@ public class PlayerEditorManager implements Listener {
 			boolean itemFrameInvis = ((ItemFrame) event.getRightClicked()).isVisible();
 			if(itemFrameInvis) {
 				itemFrameRotated = getFrameTargets(player);
+				if(itemFrameRotated.isEmpty()) return; //Sanity Check
 				if (!itemFrameRotated.isEmpty()) {
 					for (int i = 0; i < itemFrameRotated.size(); i++) {
+						if (!itemFrameRotated.get(i).isVisible()) continue; //Only apply if the ItemFrame is Invisible. Skip if not.
 						if (itemFrameRotated.get(i).getItem().getType() == Material.FLINT) {
 							event.setCancelled(true);
 						}
