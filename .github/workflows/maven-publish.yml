@@ -2,20 +2,8 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
 name: Java CI with Maven
+on: [push, pull_request]
 
-on:
-  push:
-    branches: [ master ]
-    paths:
-      - 'src/**'
-      - 'pom.xml'
-      - '.github/workflows/maven-publish.yml'
-
-  pull_request:
-    paths:
-      - 'src/*'
-      - 'pom.xml'
-      
 jobs:
   compile:
     if: "!contains(github.event.head_commit.message, 'ci-skip') || !contains(github.event.head_commit.message, 'CI-SKIP') || !contains(github.event.head_commit.message, 'CI SKIP') || !contains(github.event.head_commit.message, 'ci skip') "
