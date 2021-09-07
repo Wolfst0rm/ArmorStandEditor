@@ -12,7 +12,6 @@ on:
       - '.github/workflows/maven-publish.yml'
 
   pull_request:
-    branches: [ master ]
     paths:
       - 'src/*'
       - 'pom.xml'
