@@ -414,7 +414,6 @@ public class PlayerEditorManager implements Listener {
 		final Entity clicked = event.getRightClicked();
 		final ItemFrame itemFrame = (ItemFrame) clicked;
 		final ItemStack itemInFrame = itemFrame.getItem();
-		final Rotation currentRot = itemFrame.getRotation();
 		final Player currentPlayer = event.getPlayer();
 		final PlayerInventory currentInv = currentPlayer.getInventory();
 		final Material itemInHand = currentInv.getItemInMainHand().getType();
@@ -427,7 +426,7 @@ public class PlayerEditorManager implements Listener {
 				//Firstly, Does ItemFrame contain an Item
 				//If so Keep the Current Rotation and get out ASAP
 				if(itemInFrame.getItemMeta() != null){
-					itemFrame.setRotation(currentRot);
+					((ItemFrame) clicked).setRotation(itemFrame.getRotation());
 					return;
 				} else { //No Item
 					//Secondly, If there is no item within and Is the player Holding a Flint
@@ -439,13 +438,15 @@ public class PlayerEditorManager implements Listener {
 						return;
 					}
 				}
-			} else{
+			} else{ //ItemFrame Invisible
 				if(itemInFrame.getItemMeta() != null){
-					itemFrame.setRotation(currentRot);
+					//Firstly, Does ItemFrame contain an Item
+					//If so Keep the Current Rotation and get out ASAP
+					((ItemFrame) clicked).setRotation(itemFrame.getRotation());
 					event.setCancelled(true); //Cancel all Events
 					if (event.isCancelled()) return; //Get out once event has been canceled
-				} else{
-					return;
+				}else {
+					return;//So we can toggle visiblity later
 				}
 			}
 		} else{
