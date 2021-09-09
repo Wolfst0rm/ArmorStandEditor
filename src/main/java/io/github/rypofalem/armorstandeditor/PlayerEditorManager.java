@@ -432,17 +432,24 @@ public class PlayerEditorManager implements Listener {
 				} else { //No Item
 					//Secondly, If there is no item within and Is the player Holding a Flint
 					//Assume that intention is to add Flint to the ItemFrame
-					if(itemInHand == FLINT){
+					if (itemInHand == FLINT) {
 						event.setCancelled(true); //Cancel all Events
-						if(event.isCancelled()) return; //Get out once event has been canceled
-
-					} else{
-						return; //BreakOut
+						if (event.isCancelled()) return; //Get out once event has been canceled
+					} else {
+						return;
 					}
 				}
-			} 
+			} else{
+				if(itemInFrame.getItemMeta() != null){
+					itemFrame.setRotation(currentRot);
+					event.setCancelled(true); //Cancel all Events
+					if (event.isCancelled()) return; //Get out once event has been canceled
+				} else{
+					return;
+				}
+			}
 		} else{
-			return; //Break Out as doesnt apply!
+			return;
 		}
 	}
 
