@@ -422,34 +422,31 @@ public class PlayerEditorManager implements Listener {
 
 		if (clicked != null && clicked instanceof ItemFrame){ //Only apply the below Logic to Entity ItemFrame
 
+			//Get out once event has been canceled
 			if(isItemFrameVisible){ //ItemFrame is Visible Check - Deal with it being Visible First
 
 				//Firstly, Does ItemFrame contain an Item
 				//If so Keep the Current Rotation and get out ASAP
+				//Get out once event has been canceled
 				if(itemInFrame.getItemMeta() != null){
 					((ItemFrame) clicked).setRotation(itemFrameRot);
-					return;
 				} else { //No Item
 					//Secondly, If there is no item within and Is the player Holding a Flint
 					//Assume that intention is to add Flint to the ItemFrame
 					if (itemInHand == FLINT) {
 						event.setCancelled(true); //Cancel all Events
-						if (event.isCancelled()) return; //Get out once event has been canceled
-					} else {
-						return;
 					}
 				}
 			} else{ //ItemFrame Invisible
+				//So we can toggle visiblity later
 				if(itemInFrame.getItemMeta() != null){
 					//Firstly, Does ItemFrame contain an Item
 					//If so Keep the Current Rotation and get out ASAP
 					((ItemFrame) clicked).setRotation(itemFrameRot);
 					event.setCancelled(true); //Cancel all Events
-					if (event.isCancelled()) return; //Get out once event has been canceled
-				}else {
-					return;//So we can toggle visiblity later
 				}
 			}
+			return;
 		} else{
 			return;
 		}
