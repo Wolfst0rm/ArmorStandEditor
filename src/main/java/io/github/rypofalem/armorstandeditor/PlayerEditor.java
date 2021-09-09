@@ -375,7 +375,6 @@ public class PlayerEditor {
 
 	}
 
-
 	void toggleSize(ArmorStand armorStand) {
 		armorStand.setSmall(!armorStand.isSmall());
 	}

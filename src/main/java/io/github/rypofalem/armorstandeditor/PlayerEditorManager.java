@@ -410,30 +410,42 @@ public class PlayerEditorManager implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-	void checkItemFrameRotate(PlayerInteractEntityEvent event) {
-		Player player = event.getPlayer();
-		if (event.getRightClicked() instanceof ItemFrame) {
-			ItemFrame itemF = ((ItemFrame) event.getRightClicked());
-			boolean itemFrameInvis = itemF.isVisible();
+	void checkItemFrameRotate(PlayerInteractAtEntityEvent event) {
+		//So get ItemFrame RightClicked and the item contained within
+		ItemFrame itemFrameEntity = ((ItemFrame)event.getRightClicked());
+		ItemStack itemInFrame = itemFrameEntity.getItem();
 
-			if (!itemFrameInvis) {  //If Visible then we do nothing and do not cancel the event - So if we want to set it Invis we can
+		//Get Player doing the event - So we can track Inventory
+		Player playerInv = event.getPlayer();
 
-				event.setCancelled(false);
+		//Get Visibility Status
+		boolean itemFrameVisibility = itemFrameEntity.isVisible();
 
-			} else { //ItemFrame is Invisible - Regardless of if it has an item or not
+		if(itemFrameVisibility){ //If Visibile is TRUE
 
-				//Dont Bother looking at it if not holding flint
-				if (player.getInventory().getItemInMainHand().getType() != Material.FLINT)
-					event.setCancelled(false);
+			return; // DO NOTHING
 
-				//If we are HOLDING Flint and when we rightclick the ItemFrame
-				if (player.getInventory().getItemInMainHand().getType().equals(Material.FLINT)
-						&& event.getRightClicked().getType().equals(itemF.getType())) {
+		} else { //If Inivisible
+
+			if (itemInFrame.getType() != null) { //Item Frame doesnt contain an item
+
+				if(playerInv.getInventory().getItemInMainHand().getType() == Material.FLINT){
+
 					event.setCancelled(true);
+
+				} else{
+
+					return;
+
 				}
+
+			} else { //Item in the ItemFrame
+
+				event.setCancelled(true); //Cancel the Rotation
+
 			}
-		} else{ // if if not then we dont do anything and cancel the event.
-			event.setCancelled(false);
+
+
 		}
 	}
 
