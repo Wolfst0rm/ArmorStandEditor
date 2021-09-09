@@ -410,45 +410,39 @@ public class PlayerEditorManager implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-	void checkItemFrameRotate(PlayerInteractAtEntityEvent event) {
+	void checkItemFrameRotate(PlayerInteractEntityEvent event) {
 		final Entity clicked = event.getRightClicked();
 		final ItemFrame itemFrame = (ItemFrame) clicked;
 		final ItemStack itemInFrame = itemFrame.getItem();
 		final Rotation currentRot = itemFrame.getRotation();
-		final PlayerInventory currentInv = event.getPlayer().getInventory();
+		final Player currentPlayer = event.getPlayer();
+		final PlayerInventory currentInv = currentPlayer.getInventory();
+		final Material itemInHand = currentInv.getItemInMainHand().getType();
 		final boolean isItemFrameVisible = itemFrame.isVisible();
 
-		if (clicked != null && clicked instanceof ItemFrame){
+		if (clicked != null && clicked instanceof ItemFrame){ //Only apply the below Logic to Entity ItemFrame
 
-			if(event.isCancelled()) return;
+			if(isItemFrameVisible){ //ItemFrame is Visible Check - Deal with it being Visible First
 
-			if(isItemFrameVisible == true){ //ItemFrame is Visible
-				//First Check: Does ItemFrame contain an Item
-				if(itemInFrame.getItemMeta() != null){ //We can get Item's MetaData and Cancel Rotate
-					itemFrame.setRotation(currentRot); // So Keep Current Rotation
+				//Firstly, Does ItemFrame contain an Item
+				//If so Keep the Current Rotation and get out ASAP
+				if(itemInFrame.getItemMeta() != null){
+					itemFrame.setRotation(currentRot);
 					return;
 				} else { //No Item
-					//Second Check: Is the player Holding a Flint
-					if(currentInv.getItemInMainHand().getType() == FLINT){ //Player is Holding Flint, attempt to block it from going in.
-						itemFrame.setRotation(currentRot); //Keep Current Rotation
-						event.setCancelled(true); //STop Flint from going in???
-						if(event.isCancelled()) return;
+					//Secondly, If there is no item within and Is the player Holding a Flint
+					//Assume that intention is to add Flint to the ItemFrame
+					if(itemInHand == FLINT){
+						event.setCancelled(true); //Cancel all Events
+						if(event.isCancelled()) return; //Get out once event has been canceled
 
 					} else{
-						return;
+						return; //BreakOut
 					}
 				}
-			} else{ //Item Frame is Invisible
-				if(itemInFrame.getItemMeta() == null && currentInv.getItemInMainHand().getType() == FLINT){ //Regardless we do not want FLINT in an ItemFrame\
-					itemFrame.setRotation(currentRot);
-					event.setCancelled(true);
-					if(event.isCancelled()) return;
-				}else{
-					return;
-				}
-			}
+			} 
 		} else{
-			return;
+			return; //Break Out as doesnt apply!
 		}
 	}
 
