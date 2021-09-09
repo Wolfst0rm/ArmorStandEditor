@@ -21,6 +21,7 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
@@ -31,6 +32,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
@@ -43,20 +45,18 @@ import static org.bukkit.Material.*;
 
 //Manages PlayerEditors and Player Events related to editing armorstands
 public class PlayerEditorManager implements Listener {
-	private  ArmorStandEditorPlugin plugin;
-	private  HashMap<UUID, PlayerEditor> players;
-	private  ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
-	private  ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
+	private ArmorStandEditorPlugin plugin;
+	private HashMap<UUID, PlayerEditor> players;
+	private ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
+	private ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
 	double coarseAdj;
 	double fineAdj;
 	double coarseMov;
 	double fineMov;
 	private boolean ignoreNextInteract = false;
-	private  TickCounter counter;
+	private TickCounter counter;
 	private ArrayList<ArmorStand> as = null;
 	private ArrayList<ItemFrame> itemF = null;
-	private ArrayList<ItemFrame> itemFrameLookedAt = null;
-
 
 	PlayerEditorManager( ArmorStandEditorPlugin plugin) {
 		this.plugin = plugin;
@@ -411,41 +411,44 @@ public class PlayerEditorManager implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	void checkItemFrameRotate(PlayerInteractAtEntityEvent event) {
-		//So get ItemFrame RightClicked and the item contained within
-		ItemFrame itemFrameEntity = ((ItemFrame)event.getRightClicked());
-		ItemStack itemInFrame = itemFrameEntity.getItem();
+		final Entity clicked = event.getRightClicked();
+		final ItemFrame itemFrame = (ItemFrame) clicked;
+		final ItemStack itemInFrame = itemFrame.getItem();
+		final Rotation currentRot = itemFrame.getRotation();
+		final PlayerInventory currentInv = event.getPlayer().getInventory();
+		final boolean isItemFrameVisible = itemFrame.isVisible();
 
-		//Get Player doing the event - So we can track Inventory
-		Player playerInv = event.getPlayer();
+		if (clicked != null && clicked instanceof ItemFrame){
 
-		//Get Visibility Status
-		boolean itemFrameVisibility = itemFrameEntity.isVisible();
+			if(event.isCancelled()) return;
 
-		if(itemFrameVisibility){ //If Visibile is TRUE
-
-			return; // DO NOTHING
-
-		} else { //If Inivisible
-
-			if (itemInFrame.getType() != null) { //Item Frame doesnt contain an item
-
-				if(playerInv.getInventory().getItemInMainHand().getType() == Material.FLINT){
-
-					event.setCancelled(true);
-
-				} else{
-
+			if(isItemFrameVisible == true){ //ItemFrame is Visible
+				//First Check: Does ItemFrame contain an Item
+				if(itemInFrame.getItemMeta() != null){ //We can get Item's MetaData and Cancel Rotate
+					itemFrame.setRotation(currentRot); // So Keep Current Rotation
 					return;
+				} else { //No Item
+					//Second Check: Is the player Holding a Flint
+					if(currentInv.getItemInMainHand().getType() == FLINT){ //Player is Holding Flint, attempt to block it from going in.
+						itemFrame.setRotation(currentRot); //Keep Current Rotation
+						event.setCancelled(true); //STop Flint from going in???
+						if(event.isCancelled()) return;
 
+					} else{
+						return;
+					}
 				}
-
-			} else { //Item in the ItemFrame
-
-				event.setCancelled(true); //Cancel the Rotation
-
+			} else{ //Item Frame is Invisible
+				if(itemInFrame.getItemMeta() == null && currentInv.getItemInMainHand().getType() == FLINT){ //Regardless we do not want FLINT in an ItemFrame\
+					itemFrame.setRotation(currentRot);
+					event.setCancelled(true);
+					if(event.isCancelled()) return;
+				}else{
+					return;
+				}
 			}
-
-
+		} else{
+			return;
 		}
 	}
 
