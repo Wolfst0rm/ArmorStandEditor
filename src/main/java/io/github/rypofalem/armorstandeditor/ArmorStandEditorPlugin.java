@@ -73,7 +73,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	public Scoreboard scoreboard;
 	public Team team;
 
-	private static ArmorStandEditorPlugin plugin;
 
 	private static final int PLUGIN_ID = 12668;
 

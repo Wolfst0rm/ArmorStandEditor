@@ -21,7 +21,6 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
@@ -32,7 +31,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
@@ -45,18 +43,20 @@ import static org.bukkit.Material.*;
 
 //Manages PlayerEditors and Player Events related to editing armorstands
 public class PlayerEditorManager implements Listener {
-	private ArmorStandEditorPlugin plugin;
-	private HashMap<UUID, PlayerEditor> players;
-	private ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
-	private ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
+	private  ArmorStandEditorPlugin plugin;
+	private  HashMap<UUID, PlayerEditor> players;
+	private  ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
+	private  ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
 	double coarseAdj;
 	double fineAdj;
 	double coarseMov;
 	double fineMov;
 	private boolean ignoreNextInteract = false;
-	private TickCounter counter;
+	private  TickCounter counter;
 	private ArrayList<ArmorStand> as = null;
 	private ArrayList<ItemFrame> itemF = null;
+	private ArrayList<ItemFrame> itemFrameLookedAt = null;
+
 
 	PlayerEditorManager( ArmorStandEditorPlugin plugin) {
 		this.plugin = plugin;
@@ -406,49 +406,6 @@ public class PlayerEditorManager implements Listener {
 		if (e.getInventory().getHolder() == equipmentHolder) {
 			 PlayerEditor pe = players.get(e.getPlayer().getUniqueId());
 			pe.equipMenu.equipArmorstand();
-		}
-	}
-
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-	void checkItemFrameRotate(PlayerInteractEntityEvent event) {
-		final Entity clicked = event.getRightClicked();
-		final ItemFrame itemFrame = (ItemFrame) clicked;
-		final ItemStack itemInFrame = itemFrame.getItem();
-		final Player currentPlayer = event.getPlayer();
-		final Rotation itemFrameRot = itemFrame.getRotation();
-		final PlayerInventory currentInv = currentPlayer.getInventory();
-		final Material itemInHand = currentInv.getItemInMainHand().getType();
-		final boolean isItemFrameVisible = itemFrame.isVisible();
-
-		if (clicked != null && clicked instanceof ItemFrame){ //Only apply the below Logic to Entity ItemFrame
-
-			//Get out once event has been canceled
-			if(isItemFrameVisible){ //ItemFrame is Visible Check - Deal with it being Visible First
-
-				//Firstly, Does ItemFrame contain an Item
-				//If so Keep the Current Rotation and get out ASAP
-				//Get out once event has been canceled
-				if(itemInFrame.getItemMeta() != null){
-					((ItemFrame) clicked).setRotation(itemFrameRot);
-				} else { //No Item
-					//Secondly, If there is no item within and Is the player Holding a Flint
-					//Assume that intention is to add Flint to the ItemFrame
-					if (itemInHand == FLINT) {
-						event.setCancelled(true); //Cancel all Events
-					}
-				}
-			} else{ //ItemFrame Invisible
-				//So we can toggle visiblity later
-				if(itemInFrame.getItemMeta() != null){
-					//Firstly, Does ItemFrame contain an Item
-					//If so Keep the Current Rotation and get out ASAP
-					((ItemFrame) clicked).setRotation(itemFrameRot);
-					event.setCancelled(true); //Cancel all Events
-				}
-			}
-			return;
-		} else{
-			return;
 		}
 	}
 

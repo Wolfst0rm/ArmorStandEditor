@@ -369,7 +369,13 @@ public class PlayerEditor {
 	}
 
 	void toggleItemFrameVisible(ItemFrame itemFrame) {//Should run checKItemFrameRotate before doing any of this
-		if (!getPlayer().hasPermission("asedit.invisible")) return; //Changed to Invisible, better that visibility is all under same permission node
+		Player player = getPlayer();
+		if (!player.hasPermission("asedit.invisible")) return; //Changed to Invisible, better that visibility is all under same permission node
+
+		if(player.getInventory().getItemInMainHand().getType() == Material.FLINT){
+			//Holding Flint and Toggle Enabled
+			//TODO: Cancel Flint going in
+		}
 
 		itemFrame.setVisible(!itemFrame.isVisible());
 
