@@ -47,6 +47,8 @@ setgravity:
   false: aus
 nomode: 
   msg: Klicke mit dem Bearbeitungswerkzeug weg vom Ruestungsstaender um den Bearbeitungsmodus auszuwählen!
+nomodeif:
+  msg: Click with the Edit Tool away from the ItemFrame to select a mode first!
 copied: 
   msg: Zustand des Ruestungsstaenders wurde zum Slot <x> kopiert.
 pasted: 

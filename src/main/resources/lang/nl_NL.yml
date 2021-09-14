@@ -47,6 +47,8 @@ setgravity:
   false: uit
 nomode:
   msg: Klik met het aanpas tool weg van een armorstand om een aanpas modus te selecteren!
+nomodeif:
+  msg: Klik met het aanpas tool weg van een itemframe om een aanpas modus te selecteren!
 copied:
   msg: Armorstand status gekopieerd naar slot <x>.
 pasted:

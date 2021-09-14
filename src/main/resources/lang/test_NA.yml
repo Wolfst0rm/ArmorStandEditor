@@ -45,6 +45,8 @@ setgravity:
   false: off
 nomode: 
   msg: Click with the edit tool away from an armorstand to select an editing mode first!
+nomodeif:
+  msg: Click with the Edit Tool away from the ItemFrame to select a mode first!
 copied: 
   msg: ArmorStand state copied to slot <x>.
 pasted: 

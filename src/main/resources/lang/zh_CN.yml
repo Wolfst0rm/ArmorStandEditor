@@ -48,6 +48,8 @@ setgravity:
   false: 关闭
 nomode:
   msg: 请先点击空气选择设定模式!
+nomodeif:
+  msg: Click with the Edit Tool away from the ItemFrame to select a mode first!
 copied:
   msg: 盔甲架装备存档在 <x>.
 pasted:

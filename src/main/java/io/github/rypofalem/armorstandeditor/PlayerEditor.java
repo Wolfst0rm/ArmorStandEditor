@@ -183,7 +183,7 @@ public class PlayerEditor {
 			case RESET:
 				itemFrame.setVisible(true);
 			case NONE:
-				sendMessage("nomode", null);
+				sendMessage("nomodeif", null);
 				break;
 		}
 	}

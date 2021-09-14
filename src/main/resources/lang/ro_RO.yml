@@ -45,6 +45,8 @@ setgravity:
   false: oprita
 nomode: 
   msg: Click cu unealta de editare departe de un armorstand pentru a selecta mai intai modul de editare!
+nomodeif:
+  msg: Click with the Edit Tool away from the ItemFrame to select a mode first!
 copied: 
   msg: Starea ArmorStand-ului copiata in slotul <x>.
 pasted: 

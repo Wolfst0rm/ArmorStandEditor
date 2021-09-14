@@ -47,6 +47,8 @@ setgravity:
   false: OFF
 nomode:
   msg: 編集ツールをアーマスタンドから目を逸らした方向でクリックをして、最初の編集モードを選択してください！
+nomodeif:
+  msg: Click with the Edit Tool away from the ItemFrame to select a mode firs
 copied:
   msg: <x>スロットにアーマースタンドの状態をコピーしました。
 pasted:

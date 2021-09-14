@@ -44,6 +44,8 @@ setgravity:
   false: off
 nomode: 
   msg: Haz click con la herramienta de edicion en un soporte de armaduras para seleccionar un modo de edicion primero
+nomodeif:
+  msg: Click with the Edit Tool away from the ItemFrame to select a mode first!
 copied: 
   msg: El estado del soporte de armaduras se copio al slot <x>.
 pasted: 
