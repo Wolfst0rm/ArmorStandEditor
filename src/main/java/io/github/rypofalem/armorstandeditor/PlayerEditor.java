@@ -381,12 +381,8 @@ public class PlayerEditor {
 			itemFrame.setFixed(!itemFrame.isFixed());
 			itemFrame.setItem(AIR_BLOCK);
 			itemFrame.setFixed(!itemFrame.isFixed());
-		} else if(itemCurrentlyInFrame.getType() != Material.AIR && player.getInventory().getItemInMainHand().getType() == Material.FLINT){
-			ItemStack BLOCK_IN_FRAME = new ItemStack(itemCurrentlyInFrame.getType(), 1);
-			itemFrame.setFixed(!itemFrame.isFixed());
-			itemFrame.setItem(BLOCK_IN_FRAME);
-			itemFrame.setFixed(!itemFrame.isFixed());
 		}
+
 		itemFrame.setVisible(!itemFrame.isVisible());
 	}
 
