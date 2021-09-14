@@ -372,13 +372,19 @@ public class PlayerEditor {
 
 	void toggleItemFrameVisible(ItemFrame itemFrame) {//Should run checKItemFrameRotate before doing any of this
 		Player player = getPlayer();
-		ItemStack itemCurrentlyInFrame = itemFrame.getItem();
+		ItemStack itemCurrentlyInFrame = itemFrame.getItem(); //get the Item that is currently in the ItemFrame
 		if (!player.hasPermission("asedit.invisible")) return; //Changed to Invisible, better that visibility is all under same permission node
 
-		if(player.getInventory().getItemInMainHand().getType() == Material.FLINT){
-			//Holding Flint and Toggle Enabled
+		if(itemCurrentlyInFrame.getType() == Material.AIR && player.getInventory().getItemInMainHand().getType() == Material.FLINT){
+			//Player is HOLDING Flint and ItemFrame is Empty (Common Scenario)
+			ItemStack AIR_BLOCK = new ItemStack(Material.AIR , 1);
 			itemFrame.setFixed(!itemFrame.isFixed());
-			itemFrame.setItem(itemCurrentlyInFrame);
+			itemFrame.setItem(AIR_BLOCK);
+			itemFrame.setFixed(!itemFrame.isFixed());
+		} else if(itemCurrentlyInFrame.getType() != Material.AIR && player.getInventory().getItemInMainHand().getType() == Material.FLINT){
+			ItemStack BLOCK_IN_FRAME = new ItemStack(itemCurrentlyInFrame.getType(), 1);
+			itemFrame.setFixed(!itemFrame.isFixed());
+			itemFrame.setItem(BLOCK_IN_FRAME);
 			itemFrame.setFixed(!itemFrame.isFixed());
 		}
 		itemFrame.setVisible(!itemFrame.isVisible());
