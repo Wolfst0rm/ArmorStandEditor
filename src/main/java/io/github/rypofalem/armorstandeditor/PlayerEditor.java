@@ -36,7 +36,9 @@ import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -370,15 +372,16 @@ public class PlayerEditor {
 
 	void toggleItemFrameVisible(ItemFrame itemFrame) {//Should run checKItemFrameRotate before doing any of this
 		Player player = getPlayer();
+		ItemStack itemCurrentlyInFrame = itemFrame.getItem();
 		if (!player.hasPermission("asedit.invisible")) return; //Changed to Invisible, better that visibility is all under same permission node
 
 		if(player.getInventory().getItemInMainHand().getType() == Material.FLINT){
 			//Holding Flint and Toggle Enabled
-			//TODO: Cancel Flint going in
+			itemFrame.setFixed(!itemFrame.isFixed());
+			itemFrame.setItem(itemCurrentlyInFrame);
+			itemFrame.setFixed(!itemFrame.isFixed());
 		}
-
 		itemFrame.setVisible(!itemFrame.isVisible());
-
 	}
 
 	void toggleSize(ArmorStand armorStand) {
