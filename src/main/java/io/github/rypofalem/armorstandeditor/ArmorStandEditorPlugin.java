@@ -81,7 +81,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	}
 
 	@Override
-	public void onEnable(){
+	public void onEnable(){ //FIX for Complexity will be done in 1.17.1-31
 		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 		registerScoreboards();
 
