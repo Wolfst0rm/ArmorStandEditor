@@ -36,8 +36,8 @@ import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -48,7 +48,7 @@ import org.bukkit.util.EulerAngle;
 public class PlayerEditor {
 	public ArmorStandEditorPlugin plugin;
 	Team team;
-	private UUID uuid;
+	private final UUID uuid;
 	UUID armorStandID;
 	EditMode eMode;
 	AdjustmentMode adjMode;
@@ -68,7 +68,6 @@ public class PlayerEditor {
 	int frameTargetIndex = 0;
 	EquipmentMenu equipMenu;
 	long lastCancelled = 0;
-	private boolean state;
 
 	public PlayerEditor(UUID uuid, ArmorStandEditorPlugin plugin) {
 		this.uuid = uuid;
@@ -351,8 +350,6 @@ public class PlayerEditor {
 	private void toggleGravity(ArmorStand armorStand) { //Fix for Wolfst0rm/ArmorStandEditor-Issues#6: Translation of On/Off Keys are broken
 
 		armorStand.setGravity(!armorStand.hasGravity());
-		//String state = armorStand.hasGravity() ? "on" : "off";
-		//sendMessage("setgravity", state);
 		sendMessage("setgravity", String.valueOf(armorStand.hasGravity()));
 
 	}
@@ -377,14 +374,15 @@ public class PlayerEditor {
 
 		if(itemCurrentlyInFrame.getType() == Material.AIR && player.getInventory().getItemInMainHand().getType() == Material.FLINT){
 			//Player is HOLDING Flint and ItemFrame is Empty (Common Scenario)
-			ItemStack AIR_BLOCK = new ItemStack(Material.AIR , 1);
 			itemFrame.setFixed(!itemFrame.isFixed());
-			itemFrame.setItem(AIR_BLOCK);
+			itemFrame.setItem(itemCurrentlyInFrame); //So in this case we set it to be air
 			itemFrame.setFixed(!itemFrame.isFixed());
 		}
 
 		itemFrame.setVisible(!itemFrame.isVisible());
 	}
+
+	//TODO: ToggleItemFrameFixed Status - For v1.17.1-31
 
 	void toggleSize(ArmorStand armorStand) {
 		armorStand.setSmall(!armorStand.isSmall());
