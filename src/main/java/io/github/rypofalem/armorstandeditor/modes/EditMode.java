@@ -24,7 +24,7 @@ public enum EditMode {
 	HEAD("Head"), BODY("Body"), LEFTARM("LeftArm"), RIGHTARM("RightArm"), LEFTLEG("LeftLeg"), RIGHTLEG("RightLeg"),
 	PLACEMENT("Placement"), DISABLESLOTS("DisableSlots"), ROTATE("Rotate"), EQUIPMENT("Equipment"), RESET("Reset"), ITEMFRAME("ItemFrame"), ITEMFRAMEGLOW("ItemFrameGlow");
 
-	//TODO: Implement ,ITEMFRAMEFIX("FixItemFrame"); in v1.17.1-31
+	//TODO: Implement ,ITEMFRAMEFIX("FixItemFrame"); in v1.17.1-31 or see Wolfst0rm/ArmorStandEditor-Issues#9
 	
 	private String name;
 	

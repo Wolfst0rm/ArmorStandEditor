@@ -382,7 +382,7 @@ public class PlayerEditor {
 		itemFrame.setVisible(!itemFrame.isVisible());
 	}
 
-	//TODO: ToggleItemFrameFixed Status - For v1.17.1-31
+	//TODO: ToggleItemFrameFixed Status - For v1.17.1-31 or see Wolfst0rm/ArmorStandEditor-Issues#9
 
 	void toggleSize(ArmorStand armorStand) {
 		armorStand.setSmall(!armorStand.isSmall());
