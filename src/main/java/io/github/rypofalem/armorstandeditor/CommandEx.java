@@ -43,6 +43,7 @@ public class CommandEx implements CommandExecutor {
 	final String LISTSLOT = ChatColor.YELLOW + "/ase slot <1-9>";
 	final String RELOAD = ChatColor.YELLOW + "/ase reload";
 	final String HELP = ChatColor.YELLOW + "/ase help";
+	final String VERSION = ChatColor.YELLOW + "/ase version";
 
 	/*//Reload Stuff
 	Material editTool;
@@ -93,15 +94,24 @@ public class CommandEx implements CommandExecutor {
 			case "help":
 			case "?": commandHelp(player);
 				break;
+			case "version": commandVersion(player);
+				break;
 			default:
 				sender.sendMessage(LISTMODE);
 				sender.sendMessage(LISTAXIS);
 				sender.sendMessage(LISTSLOT);
 				sender.sendMessage(LISTADJUSTMENT);
-				sender.sendMessage(RELOAD);
+				//sender.sendMessage(RELOAD);
+				sender.sendMessage(VERSION);
 				sender.sendMessage(HELP);
 		}
 		return true;
+	}
+
+	private void commandVersion(Player player) {
+		if (!(checkPermission(player, "basic", true))) return;
+		String verString = plugin.pdfFile.getVersion();
+		player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
 	}
 
 	//Reload Command Now Expanded Upon.
