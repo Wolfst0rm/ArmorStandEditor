@@ -137,7 +137,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		if (    nmsVersion.startsWith("v1_13") ||
 				nmsVersion.startsWith("v1_14") ||
 				nmsVersion.startsWith("v1_15") ||
-				nmsVersion.startsWith("v1_16")){
+				nmsVersion.startsWith("v1_16") ){/*||
+			    nmsVersion.startsWith("v1_17")){
+			    Uncomment this after V1_18 is released (So not RC or Pre)*/
 			getLogger().warning("Minecraft Version: " + nmsVersion + " is supported, but not latest.");
 			getLogger().warning("ArmorStandEditor will still work, but please update to the latest Version of " + nmsVersionNotLatest + ". Loading continuing.");
 		} else {
