@@ -114,7 +114,7 @@ public class PlayerEditor {
 	public void editArmorStand(ArmorStand armorStand) {
 		if (!getPlayer().hasPermission("asedit.basic")) return;
 
-		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15 - Towny Support not working!
+		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15
 		if (plugin.getServer().getPluginManager().getPlugin("Towny") != null) {
 			if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
 			if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND)) return;
