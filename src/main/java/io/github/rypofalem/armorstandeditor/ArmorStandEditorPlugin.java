@@ -54,6 +54,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	private String nmsVersion = null;
 	private String nmsVersionNotLatest = null;
 	PluginDescriptionFile pdfFile = this.getDescription();
+	final String SEPERATOR = "================================";
 
 	public PlayerEditorManager editorManager;
 
@@ -121,32 +122,36 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 
 		//Minimum Version Check - No Lower than 1.13-API. Will be tuned out in the future
+		//TODO: Move V1_13 to Unsupported List, as we do not want to keep versions supported longer than necessary
+		//ETA on V1_13 Support being Dropped - Jan 2022!
 		if (    nmsVersion.startsWith("v1_8")  ||
 				nmsVersion.startsWith("v1_9")  ||
 				nmsVersion.startsWith("v1_10") ||
 				nmsVersion.startsWith("v1_11") ||
 				nmsVersion.startsWith("v1_12")){
 			getLogger().warning("Minecraft Version: " + nmsVersion + " is not supported. Loading Plugin Failed.");
-			getLogger().info("================================");
+			getLogger().info(SEPERATOR);
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
 
 		//Also Warn People to Update if using nmsVersion lower than latest
-		//TODO: Add 1.17 to Non Latest ONCE 1.18 Spigot is Available
+		//TODO: Uncomment things
 		if (    nmsVersion.startsWith("v1_13") ||
 				nmsVersion.startsWith("v1_14") ||
 				nmsVersion.startsWith("v1_15") ||
-				nmsVersion.startsWith("v1_16") ){/*||
-			    nmsVersion.startsWith("v1_17")){
-			    Uncomment this after V1_18 is released (So not RC or Pre)*/
+				nmsVersion.startsWith("v1_16") ){
 			getLogger().warning("Minecraft Version: " + nmsVersion + " is supported, but not latest.");
 			getLogger().warning("ArmorStandEditor will still work, but please update to the latest Version of " + nmsVersionNotLatest + ". Loading continuing.");
+		} else if (nmsVersion.startsWith("V1_18")){ //Do Not Report this!
+			getLogger().warning("Minecraft Version: " + nmsVersion + "currently has preliminary support.");
+			getLogger().warning("Please note: Things are confirmed working and we will update to support 1.18 ASAP!");
+			getLogger().warning("Thanks for understanding. King Regards, Wolfstorm!");
 		} else {
 			getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
 		}
 		getServer().getPluginManager().enablePlugin(this);
-		getLogger().info("================================");
+		getLogger().info(SEPERATOR);
 
 		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
 		updateConfig("", "config.yml");
@@ -173,7 +178,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			editTool = Material.getMaterial(toolType); //Ignore Warning
 		} else {
 			 getLogger().severe("Unable to get Tool for Use with Plugin. Unable to continue!");
-			 getLogger().info("================================");
+			 getLogger().info(SEPERATOR);
 			 getServer().getPluginManager().disablePlugin(this);
 			 return;
 		}
