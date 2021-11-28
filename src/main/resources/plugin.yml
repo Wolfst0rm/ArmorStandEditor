@@ -1,6 +1,6 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.18-pre5-30
+version: 1.18-rc3-31
 api-version: "1.13"
 website: rypofalem.github.io
 author: Wolfstorm
@@ -27,7 +27,3 @@ permissions:
     asedit.disableslots:
       description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
       default: true
-#   NOT CURRENTLY IN USE! Coming in a future update
-#    asedit.reload:
-#      description: Reload Configs for ArmorStandEditor
-#      default: false
