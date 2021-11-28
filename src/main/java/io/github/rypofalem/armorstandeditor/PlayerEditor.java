@@ -19,6 +19,8 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.event.executors.TownyActionEventExecutor;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -111,6 +113,9 @@ public class PlayerEditor {
 
 	public void editArmorStand(ArmorStand armorStand) {
 		if (!getPlayer().hasPermission("asedit.basic")) return;
+		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15 - Towny Support not working!
+		if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
+		if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation(), Material.ARMOR_STAND)) return;
 		armorStand = attemptTarget(armorStand);
 		switch (eMode) {
 			case LEFTARM:
@@ -204,6 +209,9 @@ public class PlayerEditor {
 
 	public void reverseEditArmorStand(ArmorStand armorStand) {
 		if (!getPlayer().hasPermission("asedit.basic")) return;
+		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15 - Towny Support not working!
+		if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
+		if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND)) return;
 		armorStand = attemptTarget(armorStand);
 		switch (eMode) {
 			case LEFTARM:
