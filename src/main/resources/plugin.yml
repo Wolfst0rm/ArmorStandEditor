@@ -6,6 +6,7 @@ website: rypofalem.github.io
 author: Wolfstorm
 authors: [Wolfstorm, Marfjeh, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone]
 description: Allows players to edit data of armorstands without any commands.
+softdepend: [Towny]
 commands:
   ase:
     description: Changes the function of the armorstand edit tool.
