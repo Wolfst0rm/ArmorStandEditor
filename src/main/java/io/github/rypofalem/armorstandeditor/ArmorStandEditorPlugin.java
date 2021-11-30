@@ -54,7 +54,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	private String nmsVersion = null;
 	private String nmsVersionNotLatest = null;
 	PluginDescriptionFile pdfFile = this.getDescription();
-	final String SEPERATOR = "================================";
+	final static String SEPERATOR = "================================";
 
 	public PlayerEditorManager editorManager;
 
@@ -135,7 +135,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 
 		//Also Warn People to Update if using nmsVersion lower than latest
-		//TODO: Uncomment things
 		if (    nmsVersion.startsWith("v1_13") ||
 				nmsVersion.startsWith("v1_14") ||
 				nmsVersion.startsWith("v1_15") ||
