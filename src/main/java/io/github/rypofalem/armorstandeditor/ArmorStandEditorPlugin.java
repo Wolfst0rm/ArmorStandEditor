@@ -122,12 +122,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 
 		//Minimum Version Check - No Lower than 1.13-API. Will be tuned out in the future
-		//TODO: Move V1_13 to Unsupported List, as we do not want to keep versions supported longer than necessary
 		if (    nmsVersion.startsWith("v1_8")  ||
 				nmsVersion.startsWith("v1_9")  ||
 				nmsVersion.startsWith("v1_10") ||
 				nmsVersion.startsWith("v1_11") ||
-				nmsVersion.startsWith("v1_12")){
+				nmsVersion.startsWith("v1_12") ||
+				nmsVersion.startsWith("v1_13")
+				){
 			getLogger().warning("Minecraft Version: " + nmsVersion + " is not supported. Loading Plugin Failed.");
 			getLogger().info(SEPERATOR);
 			getServer().getPluginManager().disablePlugin(this);
@@ -135,8 +136,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 
 		//Also Warn People to Update if using nmsVersion lower than latest
-		if (    nmsVersion.startsWith("v1_13") ||
-				nmsVersion.startsWith("v1_14") ||
+		if (    nmsVersion.startsWith("v1_14") ||
 				nmsVersion.startsWith("v1_15") ||
 				nmsVersion.startsWith("v1_16") ||
 				nmsVersion.startsWith("v1_17")){

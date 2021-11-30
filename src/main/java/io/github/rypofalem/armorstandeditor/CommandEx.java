@@ -78,7 +78,6 @@ public class CommandEx implements CommandExecutor {
 				sender.sendMessage(LISTAXIS);
 				sender.sendMessage(LISTSLOT);
 				sender.sendMessage(LISTADJUSTMENT);
-				//sender.sendMessage(RELOAD);
 				sender.sendMessage(VERSION);
 				sender.sendMessage(HELP);
 		}
