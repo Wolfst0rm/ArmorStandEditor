@@ -123,7 +123,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		//Minimum Version Check - No Lower than 1.13-API. Will be tuned out in the future
 		//TODO: Move V1_13 to Unsupported List, as we do not want to keep versions supported longer than necessary
-		//ETA on V1_13 Support being Dropped - Jan 2022!
 		if (    nmsVersion.startsWith("v1_8")  ||
 				nmsVersion.startsWith("v1_9")  ||
 				nmsVersion.startsWith("v1_10") ||
@@ -140,13 +139,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		if (    nmsVersion.startsWith("v1_13") ||
 				nmsVersion.startsWith("v1_14") ||
 				nmsVersion.startsWith("v1_15") ||
-				nmsVersion.startsWith("v1_16") ){
+				nmsVersion.startsWith("v1_16") ||
+				nmsVersion.startsWith("v1_17")){
 			getLogger().warning("Minecraft Version: " + nmsVersion + " is supported, but not latest.");
 			getLogger().warning("ArmorStandEditor will still work, but please update to the latest Version of " + nmsVersionNotLatest + ". Loading continuing.");
-		} else if (nmsVersion.startsWith("V1_18")){ //Do Not Report this!
-			getLogger().warning("Minecraft Version: " + nmsVersion + "currently has preliminary support.");
-			getLogger().warning("Please note: Things are confirmed working and we will update to support 1.18 ASAP!");
-			getLogger().warning("Thanks for understanding. King Regards, Wolfstorm!");
 		} else {
 			getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
 		}
