@@ -375,12 +375,12 @@ public class PlayerEditor {
 	}
 
 	void toggleVisible(ArmorStand armorStand) {
-		if (!getPlayer().hasPermission("asedit.invisible")) return;
+		if (!getPlayer().hasPermission("asedit.armorstand.invisible")) return;
 		armorStand.setVisible(!armorStand.isVisible());
 	}
 
 	void toggleItemFrameVisible(ItemFrame itemFrame) {
-		if (!getPlayer().hasPermission("asedit.invisible")) return; //Changed to Invisible, better that visibility is all under same permission node
+		if (!getPlayer().hasPermission("asedit.itemframe.invisible")) return; //Changed to Invisible, better that visibility is all under same permission node
 		//W0lfstorm/ArmorStandEditor-Issues#3 isnt going to be fixed in the near future. Ignoring for now
 		itemFrame.setVisible(!itemFrame.isVisible());
 	}

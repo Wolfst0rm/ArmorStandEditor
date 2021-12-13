@@ -13,11 +13,17 @@ commands:
     usage: /<command> ? - list subcommands
     permission: asedit.basic
 permissions:
+    asedit.*:
+      description: Give All Perms for ArmorStands easily.
+      default: op
     asedit.basic:
       description: Allow use armorstand edit functions. If set to false it will override all other functions.
       default: true
-    asedit.invisible:
-      description: Toggles ArmorStand and ItemFrame visibility.
+    asedit.armorstand.invisible:
+      description: Toggles ArmorStand visibility.
+      default: true
+    asedit.itemframe.invisible:
+      description: Allows setting of ItemFrame Visibility
       default: true
     asedit.rename:
       description: Rename armorstands
