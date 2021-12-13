@@ -205,11 +205,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		getLogger().info("Registering Scoreboards required for Glowing Effects");
 
 		//Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
-		if (scoreboard.getTeam("ASLocked") != null){
-			getLogger().warning("Scoreboard for ASLocked: Already exists");
-		} else {
+		if (scoreboard.getTeam("ASLocked") == null) {
 			scoreboard.registerNewTeam("ASLocked");
 			scoreboard.getTeam("ASLocked").setColor(ChatColor.RED);
+		} else {
+			getLogger().warning("Scoreboard for ASLocked: Already exists");
 		}
 	}
 
