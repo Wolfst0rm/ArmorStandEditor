@@ -85,7 +85,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	@Override
 	public void onEnable(){
 		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
-		registerScoreboards();
 
 		//Get NMS Version
 		nmsVersion = getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
@@ -146,6 +145,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
 		}
 		getServer().getPluginManager().enablePlugin(this);
+		registerScoreboards();
 		getLogger().info(SEPERATOR);
 
 		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
@@ -203,9 +203,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	//Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
 	private void registerScoreboards() {
 		getLogger().info("Registering Scoreboards required for Glowing Effects");
-		scoreboard.registerNewTeam("ASLocked");
-		scoreboard.getTeam("ASLocked").setColor(ChatColor.RED);
 
+		//Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
+		if (scoreboard.getTeam("ASLocked") != null){
+			getLogger().warning("Scoreboard for ASLocked: Already exists");
+		} else {
+			scoreboard.registerNewTeam("ASLocked");
+			scoreboard.getTeam("ASLocked").setColor(ChatColor.RED);
+		}
 	}
 
 	private void unregisterScoreboards() {
