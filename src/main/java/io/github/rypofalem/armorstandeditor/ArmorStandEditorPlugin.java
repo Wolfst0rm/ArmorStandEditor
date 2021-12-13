@@ -71,7 +71,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	boolean glowItemFrames;
 
 	//Glow Entity Colors
-	public Scoreboard scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();;
+	public Scoreboard scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 	public Team team;
 
 	private static ArmorStandEditorPlugin plugin;
