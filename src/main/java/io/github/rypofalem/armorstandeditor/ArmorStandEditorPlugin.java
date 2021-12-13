@@ -71,7 +71,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	boolean glowItemFrames;
 
 	//Glow Entity Colors
-	public Scoreboard scoreboard;
+	public Scoreboard scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();;
 	public Team team;
 
 	private static ArmorStandEditorPlugin plugin;
@@ -84,7 +84,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	@Override
 	public void onEnable(){
-		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 
 		//Get NMS Version
 		nmsVersion = getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
@@ -209,7 +208,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			scoreboard.registerNewTeam("ASLocked");
 			scoreboard.getTeam("ASLocked").setColor(ChatColor.RED);
 		} else {
-			getLogger().warning("Scoreboard for ASLocked: Already exists");
+			getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
 		}
 	}
 
@@ -236,7 +235,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			if(player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
 		}
 
-		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 		unregisterScoreboards();
 	}
 
