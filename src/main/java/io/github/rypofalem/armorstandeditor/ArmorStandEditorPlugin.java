@@ -73,8 +73,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	boolean requireSneaking = false;
 
 	//Glow Entity Colors
-	public Scoreboard scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+	public final Scoreboard scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 	public Team team;
+	String lockedTeam = "ASLocked";
 
 	private static ArmorStandEditorPlugin plugin;
 
@@ -209,9 +210,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		getLogger().info("Registering Scoreboards required for Glowing Effects");
 
 		//Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
-		if (scoreboard.getTeam("ASLocked") == null) {
-			scoreboard.registerNewTeam("ASLocked");
-			scoreboard.getTeam("ASLocked").setColor(ChatColor.RED);
+		if (scoreboard.getTeam(lockedTeam) == null) {
+			scoreboard.registerNewTeam(lockedTeam);
+			scoreboard.getTeam(lockedTeam).setColor(ChatColor.RED);
 		} else {
 			getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
 		}
@@ -220,7 +221,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	private void unregisterScoreboards() {
 		getLogger().info("Removing Scoreboards required for Glowing Effects");
 
-		team = scoreboard.getTeam("ASLocked");
+		team = scoreboard.getTeam(lockedTeam);
 		if(team != null) { //Basic Sanity Check to ensure that the team is there
 			team.unregister();
 		} else{
