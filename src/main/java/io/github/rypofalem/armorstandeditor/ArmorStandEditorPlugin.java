@@ -61,16 +61,16 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	Material editTool;
 	String toolType;
-	public boolean requireToolData = false;
-	public boolean sendToActionBar = true;
-	public int editToolData = Integer.MIN_VALUE;
-	public boolean requireSneaking = false;
-	public boolean requireToolLore = false;
-	public String editToolLore = null;
+	boolean requireToolData = false;
+	boolean sendToActionBar = true;
+	int editToolData = Integer.MIN_VALUE;
+	boolean requireSneaking = false;
+	boolean requireToolLore = false;
+	String editToolLore = null;
 	boolean debug = false; //weather or not to broadcast messages via print(String message)
 	double coarseRot;
 	double fineRot;
-	public boolean glowItemFrames = false;
+	boolean glowItemFrames = false;
 
 	//Glow Entity Colors
 	public Scoreboard scoreboard;
