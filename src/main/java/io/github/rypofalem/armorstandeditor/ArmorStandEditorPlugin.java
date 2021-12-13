@@ -32,6 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -73,7 +74,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	boolean requireSneaking = false;
 
 	//Glow Entity Colors
-	public final Scoreboard scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+	public Scoreboard scoreboard;
 	public Team team;
 	String lockedTeam = "ASLocked";
 
@@ -87,6 +88,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	@Override
 	public void onEnable(){
+
+		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 
 		//Get NMS Version
 		nmsVersion = getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
@@ -147,7 +150,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
 		}
 		getServer().getPluginManager().enablePlugin(this);
-		registerScoreboards();
+		registerScoreboards(scoreboard);
 		getLogger().info(SEPERATOR);
 
 		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
@@ -206,7 +209,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	}
 
 	//Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
-	private void registerScoreboards() {
+	private void registerScoreboards(Scoreboard scoreboard) {
 		getLogger().info("Registering Scoreboards required for Glowing Effects");
 
 		//Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
@@ -218,7 +221,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 	}
 
-	private void unregisterScoreboards() {
+	private void unregisterScoreboards(Scoreboard scoreboard) {
 		getLogger().info("Removing Scoreboards required for Glowing Effects");
 
 		team = scoreboard.getTeam(lockedTeam);
@@ -241,7 +244,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			if(player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
 		}
 
-		unregisterScoreboards();
+		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+		unregisterScoreboards(scoreboard);
 	}
 
 	public void log(String message){
