@@ -13,9 +13,6 @@ commands:
     usage: /<command> ? - list subcommands
     permission: asedit.basic
 permissions:
-    asedit.*:
-      description: Give All Perms for ArmorStands easily.
-      default: op
     asedit.basic:
       description: Allow use armorstand edit functions. If set to false it will override all other functions.
       default: true
