@@ -43,6 +43,7 @@ import java.util.Map;
 
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
+
 	private NamespacedKey iconKey;
 	private static ArmorStandEditorPlugin instance;
 	private CommandEx execute;
@@ -69,6 +70,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	double coarseRot;
 	double fineRot;
 	boolean glowItemFrames;
+	boolean requireSneaking = false;
 
 	//Glow Entity Colors
 	public Scoreboard scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
@@ -147,7 +149,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		registerScoreboards();
 		getLogger().info(SEPERATOR);
 
-		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
+				//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
 		updateConfig("", "config.yml");
 		updateConfig("lang/", "test_NA.yml");
 		updateConfig("lang/", "nl_NL.yml");
@@ -182,6 +184,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		if(requireToolData) editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
 		requireToolLore = getConfig().getBoolean("requireToolLore", false);
 		if(requireToolLore) editToolLore= getConfig().getString("toolLore", null);
+
+		//Require Sneaking
+		requireSneaking = getConfig().getBoolean("requireSneaking", false);
 
 		//Optional Information
 		debug = getConfig().getBoolean("debug", true);
