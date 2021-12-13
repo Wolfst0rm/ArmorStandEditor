@@ -150,7 +150,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		registerScoreboards();
 		getLogger().info(SEPERATOR);
 
-				//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
+		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
 		updateConfig("", "config.yml");
 		updateConfig("lang/", "test_NA.yml");
 		updateConfig("lang/", "nl_NL.yml");

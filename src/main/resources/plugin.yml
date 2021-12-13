@@ -11,7 +11,9 @@ commands:
   ase:
     description: Changes the function of the armorstand edit tool.
     usage: /<command> ? - list subcommands
+    aliases: [ase, asedit, armorstandeditor]
     permission: asedit.basic
+    permission-message: "You are lacking the permission node 'asedit.basic'"
 permissions:
     asedit.basic:
       description: Allow use armorstand edit functions. If set to false it will override all other functions.
