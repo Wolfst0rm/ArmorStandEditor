@@ -55,7 +55,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	String nmsVersion = null;
 	String nmsVersionNotLatest = null;
 	PluginDescriptionFile pdfFile = this.getDescription();
-	final String SEPARATOR = "================================";
+	static final String separatorField = "================================";
 
 	public PlayerEditorManager editorManager;
 
@@ -133,7 +133,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 				nmsVersion.startsWith("v1_13")
 				){
 			getLogger().warning("Minecraft Version: " + nmsVersion + " is not supported. Loading Plugin Failed.");
-			getLogger().info(SEPARATOR);
+			getLogger().info(separatorField);
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
@@ -150,7 +150,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 		getServer().getPluginManager().enablePlugin(this);
 		registerScoreboards(scoreboard);
-		getLogger().info(SEPARATOR);
+		getLogger().info(separatorField);
 
 		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
 		updateConfig("", "config.yml");
@@ -177,7 +177,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			editTool = Material.getMaterial(toolType); //Ignore Warning
 		} else {
 			 getLogger().severe("Unable to get Tool for Use with Plugin. Unable to continue!");
-			 getLogger().info(SEPARATOR);
+			 getLogger().info(separatorField);
 			 getServer().getPluginManager().disablePlugin(this);
 			 return;
 		}
