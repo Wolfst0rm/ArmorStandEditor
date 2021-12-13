@@ -345,10 +345,12 @@ public class PlayerEditorManager implements Listener {
 	//Unused?
 	@EventHandler(priority = EventPriority.LOWEST)
 	void onRightClickTool( PlayerInteractEvent e) {
-      	Player player = e.getPlayer();
+		Player player = e.getPlayer();
 		if (!player.hasPermission("asedit.basic")) return;
 		if (plugin.requireSneaking && !player.isSneaking()) return;
+
 		if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
+		if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
 		e.setCancelled(true);
 		getPlayerEditor(player.getUniqueId()).openMenu();
 	}
@@ -356,9 +358,11 @@ public class PlayerEditorManager implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	void onScrollNCrouch( PlayerItemHeldEvent e) {
 		Player player = e.getPlayer();
-		if(!player.hasPermission("asedit.basic")) return;
+		if (!player.hasPermission("asedit.basic")) return;
+
 		if (plugin.requireSneaking && !player.isSneaking()) return;
 		if (!plugin.isEditTool(player.getInventory().getItem(e.getPreviousSlot()))) return;
+
 		e.setCancelled(true);
 		if (e.getNewSlot() == e.getPreviousSlot() + 1 || (e.getNewSlot() == 0 && e.getPreviousSlot() == 8)) {
 			getPlayerEditor(player.getUniqueId()).cycleAxis(1);
