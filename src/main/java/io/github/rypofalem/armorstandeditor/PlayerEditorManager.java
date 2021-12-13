@@ -358,8 +358,6 @@ public class PlayerEditorManager implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	void onScrollNCrouch( PlayerItemHeldEvent e) {
 		Player player = e.getPlayer();
-		if (!player.hasPermission("asedit.basic")) return;
-
 		if (plugin.requireSneaking && !player.isSneaking()) return;
 		if (!plugin.isEditTool(player.getInventory().getItem(e.getPreviousSlot()))) return;
 
