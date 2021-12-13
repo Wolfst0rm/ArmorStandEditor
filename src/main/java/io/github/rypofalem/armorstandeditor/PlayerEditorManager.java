@@ -346,11 +346,13 @@ public class PlayerEditorManager implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	void onRightClickTool( PlayerInteractEvent e) {
 		Player player = e.getPlayer();
+		if (!(e.getAction() == Action.LEFT_CLICK_AIR
+				|| e.getAction() == Action.RIGHT_CLICK_AIR
+				|| e.getAction() == Action.LEFT_CLICK_BLOCK
+				|| e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
+		if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
 		if (!player.hasPermission("asedit.basic")) return;
 		if (plugin.requireSneaking && !player.isSneaking()) return;
-
-		if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
-		if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
 		e.setCancelled(true);
 		getPlayerEditor(player.getUniqueId()).openMenu();
 	}
