@@ -185,7 +185,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		requireToolLore = getConfig().getBoolean("requireToolLore", false);
 		if(requireToolLore) editToolLore= getConfig().getString("toolLore", null);
 
-		//Require Sneaking
+		//Require Sneaking - Wolfst0rm/ArmorStandEditor#17
 		requireSneaking = getConfig().getBoolean("requireSneaking", false);
 
 		//Optional Information

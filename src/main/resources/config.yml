@@ -1,5 +1,5 @@
 #If true, the GUI will only open if the player is sneaking
-requireSneaking: true
+requireSneaking: false
 
 #How many rotations to make a full circle in Coarse adjustment mode
 coarse: 12
@@ -23,7 +23,6 @@ lang: en_US.yml
 
 #If false plugin notifications will be sent to the chat box. If true messages will be sent to the action bar.
 sendMessagesToActionBar: true
-
 
 #(Optional) Glowing Item Frames Support for Item Frames in 1.17 - WILL NOT WORK IN 1.16 OR LOWER AND 1.17.1 OR HIGHER
 #If true, players can make itemFrames glow by right clicking with a Glow Ink Sac
