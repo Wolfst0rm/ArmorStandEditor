@@ -32,7 +32,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -53,8 +52,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	//Server Version Detection: Paper or Spigot and Invalid NMS Version
 	public boolean hasSpigot = false;
 	public boolean hasPaper = false;
-	private String nmsVersion = null;
-	private String nmsVersionNotLatest = null;
+	String nmsVersion = null;
+	String nmsVersionNotLatest = null;
 	PluginDescriptionFile pdfFile = this.getDescription();
 	final static String SEPERATOR = "================================";
 
@@ -62,16 +61,16 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	Material editTool;
 	String toolType;
-	boolean requireToolData = false;
-	boolean sendToActionBar = true;
-	int editToolData = Integer.MIN_VALUE;
-	boolean requireToolLore = false;
-	String editToolLore = null;
+	public boolean requireToolData = false;
+	public boolean sendToActionBar = true;
+	public int editToolData = Integer.MIN_VALUE;
+	public boolean requireSneaking = false;
+	public boolean requireToolLore = false;
+	public String editToolLore = null;
 	boolean debug = false; //weather or not to broadcast messages via print(String message)
 	double coarseRot;
 	double fineRot;
-	boolean glowItemFrames;
-	boolean requireSneaking = false;
+	public boolean glowItemFrames = false;
 
 	//Glow Entity Colors
 	public Scoreboard scoreboard;
@@ -190,7 +189,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		if(requireToolLore) editToolLore= getConfig().getString("toolLore", null);
 
 		//Require Sneaking - Wolfst0rm/ArmorStandEditor#17
-		requireSneaking = getConfig().getBoolean("requireSneaking", false);
+		requireSneaking = getConfig().getBoolean("requireSneaking",false);
 
 		//Optional Information
 		debug = getConfig().getBoolean("debug", true);
