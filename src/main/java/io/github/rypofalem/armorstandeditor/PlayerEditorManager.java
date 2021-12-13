@@ -348,22 +348,17 @@ public class PlayerEditorManager implements Listener {
       	Player player = e.getPlayer();
 		if (!player.hasPermission("asedit.basic")) return;
 		if (plugin.requireSneaking && !player.isSneaking()) return;
-		if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
-		if (!(e.getAction() == Action.LEFT_CLICK_AIR
-				|| e.getAction() == Action.RIGHT_CLICK_AIR
-				|| e.getAction() == Action.LEFT_CLICK_BLOCK
-				|| e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
+		if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
 		e.setCancelled(true);
 		getPlayerEditor(player.getUniqueId()).openMenu();
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	void onScrollNCrouch( PlayerItemHeldEvent e) {
-		 Player player = e.getPlayer();
-		 if(!player.hasPermission("asedit.basic")) return;
-		if(plugin.requireSneaking && !player.isSneaking()) return;
+		Player player = e.getPlayer();
+		if(!player.hasPermission("asedit.basic")) return;
+		if (plugin.requireSneaking && !player.isSneaking()) return;
 		if (!plugin.isEditTool(player.getInventory().getItem(e.getPreviousSlot()))) return;
-
 		e.setCancelled(true);
 		if (e.getNewSlot() == e.getPreviousSlot() + 1 || (e.getNewSlot() == 0 && e.getPreviousSlot() == 8)) {
 			getPlayerEditor(player.getUniqueId()).cycleAxis(1);
