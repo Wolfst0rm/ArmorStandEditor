@@ -55,7 +55,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	String nmsVersion = null;
 	String nmsVersionNotLatest = null;
 	PluginDescriptionFile pdfFile = this.getDescription();
-	final static String SEPARATOR = "================================";
+	final String SEPARATOR = "================================";
 
 	public PlayerEditorManager editorManager;
 
