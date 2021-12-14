@@ -10,6 +10,10 @@ tool: FLINT
 #If true, the GUI will only open if the player is sneaking
 requireSneaking: false
 
+#Allow the option to toggle invisiblity for ItemFrames and ArmorStand
+ivisibleItemFrames: true
+armorStandVisibility: true
+
 #(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
 requireToolData: false
 toolData: 0
@@ -17,10 +21,6 @@ toolData: 0
 #(Optional) The first "Lore" entry that the plugin looks for to identify the edit tool.
 requireToolLore: false
 toolLore: Let's get dangerous
-
-#Allow the option to toggle invisiblity for ItemFrames and ArmorStand
-ivisibleItemFrames: true
-armorStandVisibility: true
 
 #Name of the language file you wish to use
 lang: en_US.yml

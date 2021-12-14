@@ -160,6 +160,7 @@ public class CommandEx implements CommandExecutor {
 					if (args[1].equals("invisible") && !checkPermission(player, "armorstand.invisible", true)) return;
 					if (args[1].equals("itemframe") && !checkPermission(player, "itemframe.invisible", true)) return;
 					plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
+					plugin.print("Mode set to '" + mode + "' for player '" + player.getDisplayName());
 					return;
 				}
 			}

@@ -292,7 +292,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	*   set debug: true in Config.yml
 	*   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
 	*
-	* 	To be refactored - Per person messages MAYBE!
+	* 	To be refactored - Apart Log File.
 	*/
 	public void print(String message){
 		if(debug){
