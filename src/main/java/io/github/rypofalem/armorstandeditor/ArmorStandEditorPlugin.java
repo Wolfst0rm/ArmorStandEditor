@@ -197,16 +197,18 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		requireToolData = getConfig().getBoolean("requireToolData", false);
 		print("NBT Data Required: " + requireToolData);
 
-		if(requireToolData)
+		if(requireToolData) {
 			editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
 			print("Tool Data is: " + editToolData);
+		}
 
 		requireToolLore = getConfig().getBoolean("requireToolLore", false);
 		print("Lore Required?: " + requireToolLore);
 
-		if(requireToolLore)
-			editToolLore= getConfig().getString("toolLore", null);
+		if(requireToolLore) {
+			editToolLore = getConfig().getString("toolLore", null);
 			print("Lore needs to be: " + editToolLore);
+		}
 
 		//Require Sneaking - Wolfst0rm/ArmorStandEditor#17
 		requireSneaking = getConfig().getBoolean("requireSneaking",false);
