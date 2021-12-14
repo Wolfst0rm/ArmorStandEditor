@@ -10,6 +10,9 @@ fine: 120
 #Name of the edit tool's item Material. You can find a full list at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 tool: FLINT
 
+#If true, the GUI will only open if the player is sneaking
+requireSneaking: false
+
 #(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
 requireToolData: false
 toolData: 0

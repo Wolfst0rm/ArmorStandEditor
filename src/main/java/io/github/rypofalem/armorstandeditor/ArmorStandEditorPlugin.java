@@ -92,6 +92,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		//Get NMS Version
 		nmsVersion = getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
+		print("Net.Minecraft.Server version is: " + nmsVersion);
 
 		//Load Messages in Console
 		getLogger().info("======= ArmorStandEditor =======");
@@ -101,6 +102,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		try {
 			Class.forName("org.spigotmc.SpigotConfig");
 			hasSpigot = true;
+			print("SpigotMC Detected.");
 			nmsVersionNotLatest = "SpigotMC ASAP";
 		} catch (ClassNotFoundException e){
 			hasSpigot = false;
@@ -111,6 +113,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		try{
 			Class.forName("com.destroystokyo.paper.PaperConfig");
 			hasPaper = true;
+			print("PaperMC Detected");
 			nmsVersionNotLatest = "Paper ASAP";
 		} catch (ClassNotFoundException e){
 			hasPaper = false;
@@ -166,6 +169,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//English is the default language and needs to be unaltered to so that there is always a backup message string
 		saveResource("lang/en_US.yml", true);
 		lang = new Language(getConfig().getString("lang"), this);
+		print("Language in use: " + getConfig().getString("lang"));
 
 		//Rotation
 		coarseRot = getConfig().getDouble("coarse");
@@ -174,6 +178,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//Set Tool to be used in game
 		toolType = getConfig().getString("tool");
 		if (toolType != null) {
+			print("Edit Tool used to interact with Plugin is: " + toolType);
 			editTool = Material.getMaterial(toolType); //Ignore Warning
 		} else {
 			 getLogger().severe("Unable to get Tool for Use with Plugin. Unable to continue!");
@@ -184,16 +189,30 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		//Is there NBT Required for the tool
 		requireToolData = getConfig().getBoolean("requireToolData", false);
-		if(requireToolData) editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+		print("NBT Data Required: " + requireToolData);
+
+		if(requireToolData)
+			editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+			print("Tool Data is: " + editToolData);
+
 		requireToolLore = getConfig().getBoolean("requireToolLore", false);
-		if(requireToolLore) editToolLore= getConfig().getString("toolLore", null);
+		print("Lore Required?: " + requireToolLore);
+
+		if(requireToolLore)
+			editToolLore= getConfig().getString("toolLore", null);
+			print("Lore needs to be: " + editToolLore);
 
 		//Require Sneaking - Wolfst0rm/ArmorStandEditor#17
 		requireSneaking = getConfig().getBoolean("requireSneaking",false);
+		print("Sneaking required to activate the UI: " + requireSneaking);
 
 		//Optional Information
 		debug = getConfig().getBoolean("debug", true);
+
 		sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+		print("Messages being sent to action bar?: " + sendToActionBar);
+
+		//All ItemFrame Stuff
 		glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
 
 		//Get Metrics from bStats
@@ -213,7 +232,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		//Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
 		if (scoreboard.getTeam(lockedTeam) == null) {
+			print("Team '" + lockedTeam + "' does not exist, proceeding to create new team");
 			scoreboard.registerNewTeam(lockedTeam);
+
+			print("Setting Team '" + lockedTeam + "' color to RED");
 			scoreboard.getTeam(lockedTeam).setColor(ChatColor.RED);
 		} else {
 			getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
@@ -226,6 +248,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		team = scoreboard.getTeam(lockedTeam);
 		if(team != null) { //Basic Sanity Check to ensure that the team is there
 			team.unregister();
+			print("Team '" + lockedTeam + "sucessfully removed.");
 		} else{
 			getLogger().severe("Team Already Appears to be removed. Please do not do this manually!");
 		}
@@ -251,12 +274,19 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		this.getServer().getLogger().info("ArmorStandEditor: " + message);
 	}
 
+	/*
+	*	For Internal Debugging -
+	*
+	*   set debug: true in Config.yml
+	*   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
+	*/
 	public void print(String message){
 		if(debug){
 			this.getServer().broadcastMessage(message);
 			log(message);
 		}
 	}
+
 
 	public static ArmorStandEditorPlugin instance(){
 		return instance;

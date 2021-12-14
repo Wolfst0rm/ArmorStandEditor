@@ -87,6 +87,7 @@ public class CommandEx implements CommandExecutor {
 	private void commandVersion(Player player) {
 		if (!(checkPermission(player, "basic", true))) return;
 		String verString = plugin.pdfFile.getVersion();
+		plugin.print("Output of VerString: " + verString);
 		player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
 	}
 
@@ -156,8 +157,8 @@ public class CommandEx implements CommandExecutor {
 		if (args.length > 1) {
 			for ( EditMode mode : EditMode.values()) {
 				if (mode.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
-					if (args[1].equals("invisible") && !checkPermission(player, "invisible", true)) return;
-					if (args[1].equals("itemframe") && !checkPermission(player, "invisible", true)) return;
+					if (args[1].equals("invisible") && !checkPermission(player, "armorstand.invisible", true)) return;
+					if (args[1].equals("itemframe") && !checkPermission(player, "itemframe.invisible", true)) return;
 					plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
 					return;
 				}
@@ -180,9 +181,11 @@ public class CommandEx implements CommandExecutor {
 			permName = "copy";
 		}
 		if (player.hasPermission("asedit." + permName.toLowerCase())) {
+			plugin.print("Player '"+ player.getDisplayName() +" has Permission: asedit." + permName.toLowerCase());
 			return true;
 		} else {
 			if (sendMessageOnInvalidation) {
+				plugin.print("Player '"+ player.getDisplayName() +" does not have Permission: asedit." + permName.toLowerCase());
 				player.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
 			}
 			return false;
