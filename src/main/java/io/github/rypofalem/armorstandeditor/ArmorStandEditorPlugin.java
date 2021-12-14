@@ -71,6 +71,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	double coarseRot;
 	double fineRot;
 	boolean glowItemFrames = false;
+	boolean invisibleItemFrames = true;
+	boolean armorStandVisiblity = true;
 
 	//Glow Entity Colors
 	public Scoreboard scoreboard;
@@ -187,6 +189,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			 return;
 		}
 
+		//ArmorStandVisility Node
+		armorStandVisiblity = getConfig().getBoolean("armorStandVisiblity", true);
+		print("ArmorStands allowed to be made visible/invisible?: " + armorStandVisiblity);
+
 		//Is there NBT Required for the tool
 		requireToolData = getConfig().getBoolean("requireToolData", false);
 		print("NBT Data Required: " + requireToolData);
@@ -214,6 +220,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		//All ItemFrame Stuff
 		glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
+		print("Are glowing Item Frames enabled for 1.17 Users?: " + glowItemFrames);
+
+		invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
+		print("Can users turn ItemFrames invisible?: " + invisibleItemFrames);
 
 		//Get Metrics from bStats
 		getMetrics();

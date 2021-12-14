@@ -375,12 +375,13 @@ public class PlayerEditor {
 	}
 
 	void toggleVisible(ArmorStand armorStand) {
-		if (!getPlayer().hasPermission("asedit.armorstand.invisible")) return;
+		if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisiblity) return;
 		armorStand.setVisible(!armorStand.isVisible());
 	}
 
 	void toggleItemFrameVisible(ItemFrame itemFrame) {
-		if (!getPlayer().hasPermission("asedit.itemframe.invisible")) return; //Changed to Invisible, better that visibility is all under same permission node
+		if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return;
+		//So choice of if players have the permission note OR the option for toggling invisibleItemFrames is enabled in config.yml
 		//W0lfstorm/ArmorStandEditor-Issues#3 isnt going to be fixed in the near future. Ignoring for now
 		itemFrame.setVisible(!itemFrame.isVisible());
 	}

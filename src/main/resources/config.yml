@@ -1,6 +1,3 @@
-#If true, the GUI will only open if the player is sneaking
-requireSneaking: false
-
 #How many rotations to make a full circle in Coarse adjustment mode
 coarse: 12
 
@@ -21,6 +18,10 @@ toolData: 0
 requireToolLore: false
 toolLore: Let's get dangerous
 
+#Allow the option to toggle invisiblity for ItemFrames and ArmorStand
+ivisibleItemFrames: true
+armorStandVisibility: true
+
 #Name of the language file you wish to use
 lang: en_US.yml
 
@@ -30,6 +31,3 @@ sendMessagesToActionBar: true
 #(Optional) Glowing Item Frames Support for Item Frames in 1.17 - WILL NOT WORK IN 1.16 OR LOWER AND 1.17.1 OR HIGHER
 #If true, players can make itemFrames glow by right clicking with a Glow Ink Sac
 glowingItemFrame: true
-
-#Don't set to true unless you want players to see random messages or other undesirable behavior
-debug: false
