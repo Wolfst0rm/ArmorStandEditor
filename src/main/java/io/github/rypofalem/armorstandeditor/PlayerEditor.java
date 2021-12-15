@@ -183,7 +183,7 @@ public class PlayerEditor {
 	}
 
 	public void editItemFrame(ItemFrame itemFrame) {
-		if (!getPlayer().hasPermission("asedit.invisible")) return; //Change to be asedit.invisible?
+		if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
 		switch (eMode) {
 			case ITEMFRAME:
 				toggleItemFrameVisible(itemFrame);
@@ -329,7 +329,7 @@ public class PlayerEditor {
 	private void toggleDisableSlots(ArmorStand armorStand) {
 		if (!getPlayer().hasPermission("asedit.disableSlots")) return;
 		if (armorStand.hasEquipmentLock(EquipmentSlot.HAND, ArmorStand.LockType.REMOVING_OR_CHANGING)) { //Adds a lock to every slot or removes it
-			team = plugin.scoreboard.getTeam("ASLocked");
+			team = plugin.scoreboard.getTeam(plugin.lockedTeam);
 			armorStandID = armorStand.getUniqueId();
 
 			for (final EquipmentSlot slot : EquipmentSlot.values()) { // UNLOCKED
@@ -375,14 +375,12 @@ public class PlayerEditor {
 	}
 
 	void toggleVisible(ArmorStand armorStand) {
-		if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisiblity) return;
+		if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisiblity) return; //Option to use perms or Config
 		armorStand.setVisible(!armorStand.isVisible());
 	}
 
 	void toggleItemFrameVisible(ItemFrame itemFrame) {
-		if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return;
-		//So choice of if players have the permission note OR the option for toggling invisibleItemFrames is enabled in config.yml
-		//W0lfstorm/ArmorStandEditor-Issues#3 isnt going to be fixed in the near future. Ignoring for now
+		if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
 		itemFrame.setVisible(!itemFrame.isVisible());
 	}
 
