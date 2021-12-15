@@ -90,10 +90,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	@Override
 	public void onEnable(){
 
-		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+		scoreboard = getScoreboard();
 
 		//Get NMS Version
-		nmsVersion = getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
+		nmsVersion = getNmsVersion();
 		print("Net.Minecraft.Server version is: " + nmsVersion);
 
 		//Load Messages in Console
@@ -101,25 +101,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		getLogger().info("Plugin Version: " + pdfFile.getVersion());
 
 		//Spigot Check
-		try {
-			Class.forName("org.spigotmc.SpigotConfig");
-			hasSpigot = true;
-			print("SpigotMC Detected.");
-			nmsVersionNotLatest = "SpigotMC ASAP";
-		} catch (ClassNotFoundException e){
-			hasSpigot = false;
-		}
+		hasSpigot = getHasSpigot();
 		getLogger().info("SpigotMC: " + hasSpigot);
 
 		//Paper Check
-		try{
-			Class.forName("com.destroystokyo.paper.PaperConfig");
-			hasPaper = true;
-			print("PaperMC Detected");
-			nmsVersionNotLatest = "Paper ASAP";
-		} catch (ClassNotFoundException e){
-			hasPaper = false;
-		}
+		hasPaper = getHasPaper();
 		getLogger().info("PaperMC: " + hasPaper);
 
 		//If Paper and Spigot are both FALSE - Disable the plugin
@@ -217,6 +203,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//Optional Information
 		debug = getConfig().getBoolean("debug", true);
 
+		//SendMessages to Chat or ActionBar
 		sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
 		print("Messages being sent to action bar?: " + sendToActionBar);
 
@@ -278,7 +265,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			if(player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
 		}
 
-		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+		scoreboard = getScoreboard();
 		unregisterScoreboards(scoreboard);
 	}
 
@@ -286,6 +273,31 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		this.getServer().getLogger().info("ArmorStandEditor: " + message);
 	}
 
+	public String getNmsVersion(){
+		return this.getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
+	}
+
+	public boolean getHasSpigot(){
+		try {
+			Class.forName("org.spigotmc.SpigotConfig");
+			print("SpigotMC Detected.");
+			nmsVersionNotLatest = "SpigotMC ASAP.";
+			return true;
+		} catch (ClassNotFoundException e){
+			return false;
+		}
+	}
+
+	public boolean getHasPaper(){
+		try {
+			Class.forName("com.destroystokyo.paper.PaperConfig");
+			print("PaperMC Detected.");
+			nmsVersionNotLatest = "Paper ASAP";
+			return true;
+		} catch (ClassNotFoundException e){
+			return false;
+		}
+	}
 	/*
 	*	For Internal Debugging -
 	*
@@ -301,6 +313,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 	}
 
+	public Scoreboard getScoreboard(){
+		Scoreboard scoreboard;
+		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+		return scoreboard;
+	}
 
 	public static ArmorStandEditorPlugin instance(){
 		return instance;
