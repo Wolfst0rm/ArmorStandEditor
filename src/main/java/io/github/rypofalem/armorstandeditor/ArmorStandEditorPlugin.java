@@ -75,7 +75,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	boolean armorStandVisiblity = true;
 
 	//Glow Entity Colors
-	public Scoreboard scoreboard;
+	Scoreboard retrieveScoreboard;
 	public Team team;
 	String lockedTeam = "ASLocked";
 
@@ -90,7 +90,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	@Override
 	public void onEnable(){
 
-		scoreboard = getScoreboard();
+		retrieveScoreboard = getScoreboard();
 
 		//Get NMS Version
 		nmsVersion = getNmsVersion();
@@ -140,7 +140,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
 		}
 		getServer().getPluginManager().enablePlugin(this);
-		registerScoreboards(scoreboard);
+		registerScoreboards(retrieveScoreboard);
 		getLogger().info(SEPARATOR_FIELD);
 
 		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
@@ -265,8 +265,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			if(player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
 		}
 
-		scoreboard = getScoreboard();
-		unregisterScoreboards(scoreboard);
+		retrieveScoreboard = getScoreboard();
+		unregisterScoreboards(retrieveScoreboard);
 	}
 
 	public void log(String message){
