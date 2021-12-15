@@ -75,7 +75,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	boolean armorStandVisiblity = true;
 
 	//Glow Entity Colors
-	Scoreboard retrieveScoreboard;
+	public Scoreboard scoreboard;
 	public Team team;
 	String lockedTeam = "ASLocked";
 
@@ -90,7 +90,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	@Override
 	public void onEnable(){
 
-		retrieveScoreboard = getScoreboard();
+		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 
 		//Get NMS Version
 		nmsVersion = getNmsVersion();
@@ -140,7 +140,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
 		}
 		getServer().getPluginManager().enablePlugin(this);
-		registerScoreboards(retrieveScoreboard);
+		registerScoreboards(scoreboard);
 		getLogger().info(SEPARATOR_FIELD);
 
 		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
@@ -203,7 +203,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//Optional Information
 		debug = getConfig().getBoolean("debug", true);
 
-		//SendMessages to Chat or ActionBar
 		sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
 		print("Messages being sent to action bar?: " + sendToActionBar);
 
@@ -265,8 +264,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			if(player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
 		}
 
-		retrieveScoreboard = getScoreboard();
-		unregisterScoreboards(retrieveScoreboard);
+		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+		unregisterScoreboards(scoreboard);
 	}
 
 	public void log(String message){
@@ -284,6 +283,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			nmsVersionNotLatest = "SpigotMC ASAP.";
 			return true;
 		} catch (ClassNotFoundException e){
+			nmsVersionNotLatest = "";
 			return false;
 		}
 	}
@@ -292,9 +292,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		try {
 			Class.forName("com.destroystokyo.paper.PaperConfig");
 			print("PaperMC Detected.");
-			nmsVersionNotLatest = "Paper ASAP";
+			nmsVersionNotLatest = "SpigotMC ASAP.";
 			return true;
 		} catch (ClassNotFoundException e){
+			nmsVersionNotLatest = "";
 			return false;
 		}
 	}
@@ -311,12 +312,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			this.getServer().broadcastMessage(message);
 			log(message);
 		}
-	}
-
-	public Scoreboard getScoreboard(){
-		Scoreboard scoreboard;
-		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
-		return scoreboard;
 	}
 
 	public static ArmorStandEditorPlugin instance(){
