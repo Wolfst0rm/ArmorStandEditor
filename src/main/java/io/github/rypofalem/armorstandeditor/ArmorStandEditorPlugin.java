@@ -93,6 +93,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	@Override
 	public void onEnable(){
 
+		//Run UpdateChecker
+		runUpdateChecker();
+
 		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 
 		//Get NMS Version
@@ -219,9 +222,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//Get Metrics from bStats
 		getMetrics();
 
-		//Run UpdateChecker
-		runUpdateChecker();
-
 		editorManager = new PlayerEditorManager(this);
 		execute = new CommandEx(this);
 		getCommand("ase").setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
@@ -231,14 +231,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	}
 
 	private void runUpdateChecker() {
-		// Example Update Checker
-		UpdateChecker.init(this,SPIGOT_RESOURCE_ID)
+		UpdateChecker.init(this, "https://www.spigotmc.org/resources/" + SPIGOT_RESOURCE_ID)
 				.setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
-				.setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
+				.setChangelogLink(SPIGOT_RESOURCE_ID)
 				.setNotifyOpsOnJoin(true)
 				.setNotifyByPermissionOnJoin("asedit.update")
 				.setColoredConsoleOutput(true)
-				.setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
+				.setUserAgent(new UserAgentBuilder().addPluginNameAndVersion())
 				.checkEveryXHours(72) //Warn people every 72 hours
 				.checkNow();
 	}

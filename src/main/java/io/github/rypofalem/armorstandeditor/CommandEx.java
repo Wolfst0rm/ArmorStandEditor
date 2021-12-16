@@ -178,14 +178,15 @@ public class CommandEx implements CommandExecutor {
 
 	private void commandUpdate(Player player) {
 		if(!(checkPermission(player, "update", true))) return;
-		UpdateChecker.getInstance().checkNow(player);
+		player.sendMessage(ChatColor.YELLOW + "" + UpdateChecker.getInstance().checkNow(player) + "");
 	}
 
 	private void commandVersion(Player player) {
-		if (!(checkPermission(player, "basic", true))) return;
+		if (!(checkPermission(player, "update", true))) return;
 		String verString = plugin.pdfFile.getVersion();
 		plugin.print("Output of VerString: " + verString);
 		player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
+		player.sendMessage(ChatColor.YELLOW + "" + UpdateChecker.getInstance().checkNow(player) + "");
 	}
 
 
