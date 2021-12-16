@@ -232,12 +232,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private void runUpdateChecker() {
 		UpdateChecker.init(this, "https://www.spigotmc.org/resources/" + SPIGOT_RESOURCE_ID)
-				.setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
+				.setDownloadLink(SPIGOT_RESOURCE_ID)
 				.setChangelogLink(SPIGOT_RESOURCE_ID)
 				.setNotifyOpsOnJoin(true)
 				.setNotifyByPermissionOnJoin("asedit.update")
 				.setColoredConsoleOutput(true)
-				.setUserAgent(new UserAgentBuilder().addPluginNameAndVersion())
+				.setUserAgent(UserAgentBuilder.getDefaultUserAgent())
 				.checkEveryXHours(72) //Warn people every 72 hours
 				.checkNow();
 	}
