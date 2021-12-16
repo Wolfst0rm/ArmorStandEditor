@@ -46,7 +46,7 @@ import java.util.Map;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
-	private static final int SPIGOT_RESOURCE_ID = 94503;
+	private static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
 	private NamespacedKey iconKey;
 	private static ArmorStandEditorPlugin instance;
 	private CommandEx execute;
@@ -237,7 +237,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 				.setNotifyOpsOnJoin(true)
 				.setNotifyByPermissionOnJoin("asedit.update")
 				.setColoredConsoleOutput(true)
-				.setUserAgent(UserAgentBuilder.getDefaultUserAgent())
+				.setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
 				.checkEveryXHours(72) //Warn people every 72 hours
 				.checkNow();
 	}
