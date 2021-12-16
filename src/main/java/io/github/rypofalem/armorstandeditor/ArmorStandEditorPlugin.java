@@ -231,7 +231,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	}
 
 	private void runUpdateChecker() {
-		UpdateChecker.init(this, "https://www.spigotmc.org/resources/" + SPIGOT_RESOURCE_ID)
+		UpdateChecker.init(this, SPIGOT_RESOURCE_ID)
 				.setDownloadLink(SPIGOT_RESOURCE_ID)
 				.setChangelogLink(SPIGOT_RESOURCE_ID)
 				.setNotifyOpsOnJoin(true)
