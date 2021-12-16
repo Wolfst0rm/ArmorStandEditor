@@ -91,19 +91,6 @@ public class CommandEx implements CommandExecutor {
 		return true;
 	}
 
-	private void commandUpdate(Player player) {
-		if(!(checkPermission(player, "update", true))) return;
-		UpdateChecker.getInstance().checkNow(player);
-	}
-
-	private void commandVersion(Player player) {
-		if (!(checkPermission(player, "basic", true))) return;
-		String verString = plugin.pdfFile.getVersion();
-		plugin.print("Output of VerString: " + verString);
-		player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
-	}
-
-
 	private void commandSlot(Player player, String[] args) {
 
 		if (args.length <= 1) {
@@ -188,6 +175,20 @@ public class CommandEx implements CommandExecutor {
 		player.sendMessage("");
 		player.sendRawMessage(plugin.getLang().getMessage("helpurl", ""));
 	}
+
+	private void commandUpdate(Player player) {
+		if(!(checkPermission(player, "update", true))) return;
+		UpdateChecker.getInstance().checkNow(player);
+	}
+
+	private void commandVersion(Player player) {
+		if (!(checkPermission(player, "basic", true))) return;
+		String verString = plugin.pdfFile.getVersion();
+		plugin.print("Output of VerString: " + verString);
+		player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
+	}
+
+
 
 	private boolean checkPermission( Player player, String permName,  boolean sendMessageOnInvalidation) {
 		if (permName.equalsIgnoreCase("paste")) {
