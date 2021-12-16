@@ -19,6 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import de.jeff_media.updatechecker.UpdateChecker;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
@@ -37,6 +38,7 @@ public class CommandEx implements CommandExecutor {
 	final String LISTSLOT = ChatColor.YELLOW + "/ase slot <1-9>";
 	final String HELP = ChatColor.YELLOW + "/ase help";
 	final String VERSION = ChatColor.YELLOW + "/ase version";
+	final String UPDATE = ChatColor.YELLOW + "/ase update";
 
 	public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
 		this.plugin = armorStandEditorPlugin;
@@ -56,11 +58,13 @@ public class CommandEx implements CommandExecutor {
 			player.sendMessage(LISTAXIS);
 			player.sendMessage(LISTSLOT);
 			player.sendMessage(LISTADJUSTMENT);
+			player.sendMessage(VERSION);
+			player.sendMessage(UPDATE);
+			player.sendMessage(HELP);
 			return true;
 		}
 		switch (args[0].toLowerCase()) {
-			case "mode":
-				commandMode(player, args);
+			case "mode": commandMode(player, args);
 				break;
 			case "axis": commandAxis(player, args);
 				break;
@@ -73,15 +77,23 @@ public class CommandEx implements CommandExecutor {
 				break;
 			case "version": commandVersion(player);
 				break;
+			case "update": commandUpdate(player);
+				break;
 			default:
 				sender.sendMessage(LISTMODE);
 				sender.sendMessage(LISTAXIS);
 				sender.sendMessage(LISTSLOT);
 				sender.sendMessage(LISTADJUSTMENT);
 				sender.sendMessage(VERSION);
+				sender.sendMessage(UPDATE);
 				sender.sendMessage(HELP);
 		}
 		return true;
+	}
+
+	private void commandUpdate(Player player) {
+		if(!(checkPermission(player, "update", true))) return;
+		UpdateChecker.getInstance().checkNow(player);
 	}
 
 	private void commandVersion(Player player) {
@@ -178,7 +190,7 @@ public class CommandEx implements CommandExecutor {
 	}
 
 	private boolean checkPermission( Player player, String permName,  boolean sendMessageOnInvalidation) {
-		if (permName.toLowerCase().equals("paste")) {
+		if (permName.equalsIgnoreCase("paste")) {
 			permName = "copy";
 		}
 		if (player.hasPermission("asedit." + permName.toLowerCase())) {

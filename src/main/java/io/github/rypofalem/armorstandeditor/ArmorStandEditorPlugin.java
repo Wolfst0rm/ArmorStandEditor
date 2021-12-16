@@ -19,6 +19,8 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import de.jeff_media.updatechecker.UpdateChecker;
+import de.jeff_media.updatechecker.UserAgentBuilder;
 import io.github.rypofalem.armorstandeditor.language.Language;
 import io.github.rypofalem.armorstandeditor.Metrics.DrilldownPie;
 import io.github.rypofalem.armorstandeditor.Metrics.SimplePie;
@@ -44,6 +46,7 @@ import java.util.Map;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
+	private static final int SPIGOT_RESOURCE_ID = 94503;
 	private NamespacedKey iconKey;
 	private static ArmorStandEditorPlugin instance;
 	private CommandEx execute;
@@ -72,7 +75,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	double fineRot;
 	boolean glowItemFrames = false;
 	boolean invisibleItemFrames = true;
-	boolean armorStandVisiblity = true;
+	boolean armorStandVisibility = true;
 
 	//Glow Entity Colors
 	public Scoreboard scoreboard;
@@ -143,7 +146,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		registerScoreboards(scoreboard);
 		getLogger().info(SEPARATOR_FIELD);
 
-		//saveResource doesn't accept File.separator on windows, need to hardcode unix separator "/" instead
+		//saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
 		updateConfig("", "config.yml");
 		updateConfig("lang/", "test_NA.yml");
 		updateConfig("lang/", "nl_NL.yml");
@@ -176,8 +179,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 
 		//ArmorStandVisility Node
-		armorStandVisiblity = getConfig().getBoolean("armorStandVisiblity", true);
-		print("ArmorStands allowed to be made visible/invisible?: " + armorStandVisiblity);
+		armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+		print("ArmorStands allowed to be made visible/invisible?: " + armorStandVisibility);
 
 		//Is there NBT Required for the tool
 		requireToolData = getConfig().getBoolean("requireToolData", false);
@@ -216,12 +219,28 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//Get Metrics from bStats
 		getMetrics();
 
+		//Run UpdateChecker
+		runUpdateChecker();
+
 		editorManager = new PlayerEditorManager(this);
 		execute = new CommandEx(this);
 		getCommand("ase").setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
 		getServer().getPluginManager().registerEvents(editorManager, this);
 
 
+	}
+
+	private void runUpdateChecker() {
+		// Example Update Checker
+		UpdateChecker.init(this,SPIGOT_RESOURCE_ID)
+				.setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
+				.setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
+				.setNotifyOpsOnJoin(true)
+				.setNotifyByPermissionOnJoin("asedit.update")
+				.setColoredConsoleOutput(true)
+				.setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
+				.checkEveryXHours(72) //Warn people every 72 hours
+				.checkNow();
 	}
 
 	//Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default

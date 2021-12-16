@@ -41,7 +41,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.EulerAngle;
 
@@ -375,7 +374,7 @@ public class PlayerEditor {
 	}
 
 	void toggleVisible(ArmorStand armorStand) {
-		if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisiblity) return; //Option to use perms or Config
+		if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisibility) return; //Option to use perms or Config
 		armorStand.setVisible(!armorStand.isVisible());
 	}
 

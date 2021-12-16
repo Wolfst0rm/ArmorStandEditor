@@ -33,3 +33,6 @@ permissions:
     asedit.disableslots:
       description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
       default: true
+    asedit.update:
+      description: Allows the checking for updates.
+      default: false
