@@ -178,7 +178,7 @@ public class CommandEx implements CommandExecutor {
 
 	private void commandUpdate(Player player) {
 		if(!(checkPermission(player, "update", true))) return;
-		player.sendMessage(ChatColor.YELLOW + "" + UpdateChecker.getInstance().checkNow(player) + "");
+		UpdateChecker.getInstance().checkNow(player);
 	}
 
 	private void commandVersion(Player player) {
@@ -186,7 +186,7 @@ public class CommandEx implements CommandExecutor {
 		String verString = plugin.pdfFile.getVersion();
 		plugin.print("Output of VerString: " + verString);
 		player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
-		player.sendMessage(ChatColor.YELLOW + "" + UpdateChecker.getInstance().checkNow(player) + "");
+		UpdateChecker.getInstance().checkNow(player);
 	}
 
 

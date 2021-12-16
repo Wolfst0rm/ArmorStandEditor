@@ -232,8 +232,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private void runUpdateChecker() {
 		UpdateChecker.init(this, SPIGOT_RESOURCE_ID)
-				.setDownloadLink(SPIGOT_RESOURCE_ID)
-				.setChangelogLink(SPIGOT_RESOURCE_ID)
+				.setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
+				.setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
 				.setNotifyOpsOnJoin(true)
 				.setNotifyByPermissionOnJoin("asedit.update")
 				.setColoredConsoleOutput(true)
