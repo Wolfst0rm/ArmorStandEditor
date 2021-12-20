@@ -41,8 +41,6 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.File;
-import java.util.logging.Logger;
-
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
@@ -314,13 +312,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			//Convert message to bites
 			byte[] debugMessageAsBytes = message.getBytes();
 			bufferedOutput.write(debugMessageAsBytes);
-			bufferedOutput.close();
-			fileOutput.close();
+			bufferedOutput.flush();
+			fileOutput.flush();
 		}  catch(Exception e) {
 			this.getServer().getLogger().severe(e.getMessage());
 		}
-
-
 	}
 
 	public String getNmsVersion(){
@@ -360,7 +356,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	*/
 	public void print(String message){
 		if(debug){
-			//this.getServer().broadcastMessage(message);
 			log(message);
 		}
 	}
