@@ -37,11 +37,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
@@ -81,6 +80,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	public Scoreboard scoreboard;
 	public Team team;
 	String lockedTeam = "ASLocked";
+
+	//Better Debug Output
+	File debugOutput;
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	Date date = Calendar.getInstance().getTime();
+	String dateAsString = dateFormat.format(date);
+
 
 	private static ArmorStandEditorPlugin plugin;
 
@@ -222,12 +228,22 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//Get Metrics from bStats
 		getMetrics();
 
+		//Create Debug File - better Debug Output
+		createDebugFile();
+
 		editorManager = new PlayerEditorManager(this);
 		execute = new CommandEx(this);
 		getCommand("ase").setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
 		getServer().getPluginManager().registerEvents(editorManager, this);
 
 
+	}
+
+	private void createDebugFile() {
+		if(debug){
+			//Make a Debug-Date.out file
+			debugOutput = new File("debug/debug" + dateAsString + ".out");
+		}
 	}
 
 	private void runUpdateChecker() {
@@ -287,7 +303,23 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	}
 
 	public void log(String message){
+		//Output to Server Console
 		this.getServer().getLogger().info("ArmorStandEditor: " + message);
+
+		//Also write to file
+		try(FileOutputStream fileOutput = new FileOutputStream(debugOutput);
+			BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOutput)){
+
+			//Convert meesage to bites
+			byte[] debugMessageAsBytes = message.getBytes();
+			bufferedOutput.write(debugMessageAsBytes);
+			bufferedOutput.close();
+			fileOutput.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
 	}
 
 	public String getNmsVersion(){
@@ -327,7 +359,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	*/
 	public void print(String message){
 		if(debug){
-			this.getServer().broadcastMessage(message);
+			//this.getServer().broadcastMessage(message);
 			log(message);
 		}
 	}
