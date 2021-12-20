@@ -72,8 +72,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	double coarseRot;
 	double fineRot;
 	boolean glowItemFrames = false;
-	boolean invisibleItemFrames = true;
-	boolean armorStandVisibility = true;
+	public boolean invisibleItemFrames = true;
+	public boolean armorStandVisibility = true;
 
 	//Glow Entity Colors
 	public Scoreboard scoreboard;
