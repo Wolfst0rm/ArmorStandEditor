@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.18.1-33</version>
+    <version>1.18.1-32</version>
     <name>armorstandeditor</name>
     <url>http://maven.apache.org</url>
 
@@ -31,11 +31,6 @@
             <id>jeff-media-public</id>
             <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
         </repository>
-        <!-- PlotSquared -->
-        <repository>
-            <id>intellectualsites snapshots</id>
-            <url>https://mvn.intellectualsites.com/content/repositories/snapshots/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -59,13 +54,6 @@
             <artifactId>SpigotUpdateChecker</artifactId>
             <version>1.3.0</version> <!-- Check on GitHub for the latest version -->
             <scope>compile</scope>
-        </dependency>
-        <!-- PlotSquared Core API -->
-        <dependency>
-            <groupId>com.plotsquared</groupId>
-            <artifactId>PlotSquared-Core</artifactId>
-            <version>6.2.1</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
     <!--Java 8-->
