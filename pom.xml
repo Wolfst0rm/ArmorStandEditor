@@ -31,6 +31,11 @@
             <id>jeff-media-public</id>
             <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
         </repository>
+        <!--- Going on an Adventure -->
+        <repository>
+            <id>sonatype-oss-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -54,6 +59,12 @@
             <artifactId>SpigotUpdateChecker</artifactId>
             <version>1.3.0</version> <!-- Check on GitHub for the latest version -->
             <scope>compile</scope>
+        </dependency>
+        <!--- Adventure -->
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-api</artifactId>
+            <version>4.9.3</version>
         </dependency>
     </dependencies>
     <!--Java 8-->

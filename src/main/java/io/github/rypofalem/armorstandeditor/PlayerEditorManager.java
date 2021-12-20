@@ -111,7 +111,7 @@ public class PlayerEditorManager implements Listener {
 			//Attempt rename
 			if (player.getInventory().getItemInMainHand().getType() == Material.NAME_TAG && player.hasPermission("asedit.rename")) {
 				ItemStack nameTag = player.getInventory().getItemInMainHand();
-				 String name;
+				String name;
 				if (nameTag.getItemMeta() != null && nameTag.getItemMeta().hasDisplayName()) {
 					name = nameTag.getItemMeta().getDisplayName().replace('&', ChatColor.COLOR_CHAR);
 				} else {
