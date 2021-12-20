@@ -31,6 +31,3 @@ sendMessagesToActionBar: true
 #(Optional) Glowing Item Frames Support for Item Frames in 1.17 - WILL NOT WORK IN 1.16 OR LOWER AND 1.17.1 OR HIGHER
 #If true, players can make itemFrames glow by right clicking with a Glow Ink Sac
 glowingItemFrame: true
-
-#DO NOT REMOVE THIS - Internal Testing Usage. Enable => Unintended Side Effects
-debug: false
