@@ -13,8 +13,14 @@
   
 
   ArmorStandEditor is a plugin for [Spigot and related forks](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) to allow players in survival to easily edit armor stand pose and attributes.
-  
+
 </div>
+
+## Credits
+
+* RypoFalem for the original version of this plugin. Thank you for all your hard work (Archived in branch [Original-Version](https://github.com/Wolfst0rm/ArmorStandEditor/tree/Original-Version) )
+* Anyone who has contributed to this project with tests, issues, code reviews etc. Thank you!
+* Shamblecraft for allowing me to test on the server as required before publishing to production.
 
 ## Downloads
 Downloads for Version 1.17 and higher can be obtained from the [download page](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) or our [release tracker](https://github.com/Wolfst0rm/ArmorStandEditor/releases) here on Github. 
@@ -47,17 +53,16 @@ subject to change in the future. The minimum enforced API Version is 1.13.
 * Editing ArmorStands with no commands required
 * Rotation of all ArmorStand Parts along each axis
 * Rotation of entire ArmorStand after Placement. Supported by Crouching and Scrolling, so you never have to open the menu
-* Finer Adjustment to allow for Fine Tuning of Positions.
-* Coarser Adustments to allow you to quikly to get to the intended position
-* Toggles for: Disabling Slots, Invisiblity, Gravity, Base Plates, Size (Normal and Small)
+* Finer Adjustment to allow for Fine-Tuning of Positions.
+* Coarser Adjustments to allow you to quickly to get to the intended position
+* Toggles for: Disabling Slots, Invisibility, Gravity, Base Plates, Size (Normal and Small)
 * Copying and Pasting ArmorStand Settings between ArmorStandEditor in a Survival Friendly way 
 * Storage of Copied Settings in one of 9 available slots.
 * Naming of ArmorStands through the use of Vanilla Name tags, with colored name support
 * Multiple Language Support through the use of community translations 
-* Respects multiple protection plugins: WorldGaurd, Towny, GriefPrevention, Residence etc.
+* Respects multiple protection plugins: WorldGuard, Towny, GriefPrevention, Residence etc.
 * Targeting of an ArmorStand by pressing F with the tool in your hand
-* Glowing ArmorStand to signify Targetting and Slot Disables through the use of Scoreboards.
-* 
+* Glowing ArmorStand to signify Targeting and Slot Disables through the use of Scoreboards.
 
 You can also follow our [Feature Roadmap](https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/11) to see what we have planned (Updated as required).
 
