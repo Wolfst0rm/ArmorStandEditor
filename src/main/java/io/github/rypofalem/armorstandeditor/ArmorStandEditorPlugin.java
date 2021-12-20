@@ -41,6 +41,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.File;
+import java.util.logging.Logger;
 
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
@@ -310,13 +311,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		try(FileOutputStream fileOutput = new FileOutputStream(debugOutput);
 			BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOutput)){
 
-			//Convert meesage to bites
+			//Convert message to bites
 			byte[] debugMessageAsBytes = message.getBytes();
 			bufferedOutput.write(debugMessageAsBytes);
 			bufferedOutput.close();
 			fileOutput.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		}  catch(Exception e) {
+			this.getServer().getLogger().severe(e.getMessage());
 		}
 
 
@@ -412,24 +413,16 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		Metrics metrics = new Metrics(this, PLUGIN_ID);
 
 		//RequireToolLore Metric
-		metrics.addCustomChart(new SimplePie("tool_lore_enabled", () -> {
-			return getConfig().getString("requireToolLore");
-		}));
+		metrics.addCustomChart(new SimplePie("tool_lore_enabled", () -> getConfig().getString("requireToolLore")));
 
 		//RequireToolData
-		metrics.addCustomChart(new SimplePie("tool_data_enabled", () ->{
-			return getConfig().getString("requireToolData");
-		}));
+		metrics.addCustomChart(new SimplePie("tool_data_enabled", () -> getConfig().getString("requireToolData")));
 
 		//Send Messages to ActionBar
-		metrics.addCustomChart(new SimplePie("action_bar_messages", () -> {
-			return getConfig().getString("sendMessagesToActionBar");
-		}));
+		metrics.addCustomChart(new SimplePie("action_bar_messages", () -> getConfig().getString("sendMessagesToActionBar")));
 
 		//Debug Mode Enabled?
-		metrics.addCustomChart(new SimplePie("uses_debug_mode", () -> {
-			return getConfig().getString("debug");
-		}));
+		metrics.addCustomChart(new SimplePie("uses_debug_mode", () -> getConfig().getString("debug")));
 
 		//Language is used
 		metrics.addCustomChart(new DrilldownPie("language_used", () -> {
@@ -461,7 +454,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			} else{
 				map.put("Other", entry);
 			}
-
 			return map;
 		}));
 
