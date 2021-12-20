@@ -23,7 +23,7 @@ For versions older than 1.17, then please use [the original versions download pa
 
 The Latest Downloads Shortcut Links:
 * [Unstable 1.1x-DEV Versions](https://github.com/Wolfst0rm/ArmorStandEditor/actions) - **Use these at your own risk. Limited Support is provided for testing purposes**
-* [1.18.1 - Coming SOON!](https://www.spigotmc.org/threads/armorstandeditor-reborn.517132)
+* [1.18.1](https://www.spigotmc.org/threads/armorstandeditor-reborn.517132)
 * [1.18](https://github.com/Wolfst0rm/ArmorStandEditor/releases/tag/1.18-31)
 * [1.17.1](https://github.com/Wolfst0rm/ArmorStandEditor/releases/tag/1.17.1-30) 
 * [1.17](https://github.com/Wolfst0rm/ArmorStandEditor/releases/tag/1.17.1-27)
