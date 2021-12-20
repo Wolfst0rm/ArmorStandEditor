@@ -130,7 +130,7 @@ public class Menu {
 			visibility = createIcon(visibility, "invisible", "mode invisible");
 		}
 
-		if (pe.getPlayer().hasPermission("asedit.invisible")) {
+		if (pe.getPlayer().hasPermission("asedit.itemframe.invisible")) { //Nicely spotted Sikatsu
 			itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
 			itemFrameVisible = createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
 		}
