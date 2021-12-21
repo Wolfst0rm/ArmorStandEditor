@@ -72,8 +72,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	double coarseRot;
 	double fineRot;
 	boolean glowItemFrames = false;
-	public boolean invisibleItemFrames = true;
-	public boolean armorStandVisibility = true;
+	boolean invisibleItemFrames = true;
+	boolean armorStandVisibility = true;
 
 	//Glow Entity Colors
 	public Scoreboard scoreboard;
@@ -333,6 +333,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			nmsVersionNotLatest = "";
 			return false;
 		}
+	}
+
+	public boolean getArmorStandVisibility(){
+		return armorStandVisibility;
+	}
+
+	public boolean getInvisibleItemFrames(){
+		return invisibleItemFrames;
 	}
 
 	public boolean getHasPaper(){

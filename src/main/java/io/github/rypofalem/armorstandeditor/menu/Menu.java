@@ -39,6 +39,7 @@ public class Menu {
 	private PlayerEditor pe;
 	private static String name = "Armor Stand Editor Menu";
 
+
 	public Menu(PlayerEditor pe) {
 		this.pe = pe;
 		name = pe.plugin.getLang().getMessage("mainmenutitle", "menutitle");
@@ -121,7 +122,7 @@ public class Menu {
 		showArms = createIcon(new ItemStack(Material.STICK),
 				"showarms", "mode showarms");
 
-		if (pe.getPlayer().hasPermission("asedit.armorstand.invisible") || pe.plugin.armorStandVisibility ) {
+		if (pe.getPlayer().hasPermission("asedit.armorstand.invisible") || pe.plugin.getArmorStandVisibility() ) {
 			visibility = new ItemStack(Material.POTION, 1);
 			PotionMeta potionMeta = (PotionMeta) visibility.getItemMeta();
 			PotionEffect eff1 = new PotionEffect(PotionEffectType.INVISIBILITY, 1, 0);
@@ -130,7 +131,7 @@ public class Menu {
 			visibility = createIcon(visibility, "invisible", "mode invisible");
 		}
 
-		if (pe.getPlayer().hasPermission("asedit.itemframe.invisible") || pe.plugin.invisibleItemFrames ) { //Nicely spotted Sikatsu
+		if (pe.getPlayer().hasPermission("asedit.itemframe.invisible") || pe.plugin.getInvisibleItemFrames() ) { //Nicely spotted Sikatsu
 			itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
 			itemFrameVisible = createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
 		}
