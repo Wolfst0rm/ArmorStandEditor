@@ -186,7 +186,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			 return;
 		}
 
-		//ArmorStandVisility Node
+		//ArmorStandVisibility Node
 		armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
 		print("ArmorStands allowed to be made visible/invisible?: " + armorStandVisibility);
 
@@ -279,7 +279,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		team = scoreboard.getTeam(lockedTeam);
 		if(team != null) { //Basic Sanity Check to ensure that the team is there
 			team.unregister();
-			print("Team '" + lockedTeam + "sucessfully removed.");
+			print("Team '" + lockedTeam + "successfully removed.");
 		} else{
 			getLogger().severe("Team Already Appears to be removed. Please do not do this manually!");
 		}
@@ -391,7 +391,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		if(requireToolLore && editToolLore != null){
 
-			//If the ItemStack does not have Meta Data then we return false
+			//If the ItemStack does not have Metadata then we return false
 			if(!itemStk.hasItemMeta()) { return false; }
 
 			//Get the lore of the Item and if it is null - Return False
