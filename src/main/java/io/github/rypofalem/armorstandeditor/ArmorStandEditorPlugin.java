@@ -336,11 +336,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	}
 
 	public boolean getArmorStandVisibility(){
-		return armorStandVisibility;
+		return getConfig().getBoolean("armorStandVisibility", true);
 	}
 
 	public boolean getInvisibleItemFrames(){
-		return invisibleItemFrames;
+		return getConfig().getBoolean("invisibleItemFrames", true);
 	}
 
 	public boolean getHasPaper(){
