@@ -250,7 +250,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 				.setNotifyOpsOnJoin(true)
 				.setNotifyByPermissionOnJoin("asedit.update")
 				.setColoredConsoleOutput(true)
-				.setNotifyRequesters(false)
 				.setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
 				.checkEveryXHours(72) //Warn people every 72 hours
 				.checkNow();
