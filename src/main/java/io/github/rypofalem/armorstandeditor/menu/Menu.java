@@ -122,6 +122,7 @@ public class Menu {
 		showArms = createIcon(new ItemStack(Material.STICK),
 				"showarms", "mode showarms");
 
+		//Praise Start - Nicely spotted Sikatsu for this being broken
 		if (pe.getPlayer().hasPermission("asedit.armorstand.invisible") || pe.plugin.getArmorStandVisibility() ) {
 			visibility = new ItemStack(Material.POTION, 1);
 			PotionMeta potionMeta = (PotionMeta) visibility.getItemMeta();
@@ -129,12 +130,18 @@ public class Menu {
 			potionMeta.addCustomEffect(eff1, true);
 			visibility.setItemMeta(potionMeta);
 			visibility = createIcon(visibility, "invisible", "mode invisible");
+		} else {
+			visibility = null;
 		}
 
-		if (pe.getPlayer().hasPermission("asedit.itemframe.invisible") || pe.plugin.getInvisibleItemFrames() ) { //Nicely spotted Sikatsu
+		if (pe.getPlayer().hasPermission("asedit.itemframe.invisible") || pe.plugin.getInvisibleItemFrames() ) {
 			itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
 			itemFrameVisible = createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
+		} else {
+			itemFrameVisible = null;
 		}
+
+		//Praise end
 
 		size = createIcon(new ItemStack(Material.PUFFERFISH, 1),
 				"size", "mode size");
