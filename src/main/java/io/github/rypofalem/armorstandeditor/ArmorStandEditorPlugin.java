@@ -22,8 +22,7 @@ package io.github.rypofalem.armorstandeditor;
 import de.jeff_media.updatechecker.UpdateChecker;
 import de.jeff_media.updatechecker.UserAgentBuilder;
 import io.github.rypofalem.armorstandeditor.language.Language;
-import io.github.rypofalem.armorstandeditor.Metrics.DrilldownPie;
-import io.github.rypofalem.armorstandeditor.Metrics.SimplePie;
+import io.github.rypofalem.armorstandeditor.Metrics.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

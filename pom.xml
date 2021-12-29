@@ -88,7 +88,7 @@
                         <!-- Using the maven-shade-plugin to shade and relocate the UpdateChecker -->
                         <!-- Replace "your.package" with your plugin's package name -->
                         <relocation>
-                            <pattern>de.jeff_media.updatechecker</pattern>
+                            <pattern>de.jeff_media.updatechecker.UpdateChecker</pattern>
                             <shadedPattern>io.github.rypofalem.armorstandeditor.updatechecker</shadedPattern>
                         </relocation>
                     </relocations>
