@@ -19,8 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor;
 
-import de.jeff_media.updatechecker.UpdateChecker;
-import de.jeff_media.updatechecker.UserAgentBuilder;
+import de.jeff_media.updatechecker.*;
 import io.github.rypofalem.armorstandeditor.language.Language;
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 
@@ -251,6 +250,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 				.setNotifyOpsOnJoin(true)
 				.setNotifyByPermissionOnJoin("asedit.update")
 				.setColoredConsoleOutput(true)
+				.setNotifyRequesters(false)
 				.setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
 				.checkEveryXHours(72) //Warn people every 72 hours
 				.checkNow();
