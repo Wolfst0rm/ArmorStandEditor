@@ -136,7 +136,7 @@ public class Menu {
 		}
 
 		if (pe.getPlayer().hasPermission("asedit.itemframe.invisible") ||
-				pe.plugin.getInvisibleItemFrames() ) {
+				pe.plugin.getItemFrameVisibility() ) {
 			itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
 			itemFrameVisible = createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
 		} else {
