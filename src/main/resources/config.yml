@@ -33,4 +33,5 @@ sendMessagesToActionBar: true
 glowingItemFrame: true
 
 #DO NOT ENABLE - For Testing Purposes. Can lead to unwanted sideaffects
+#Enable if you are submitting a bug report PLEASE!
 debug: false
