@@ -123,7 +123,8 @@ public class Menu {
 				"showarms", "mode showarms");
 
 		//Praise Start - Nicely spotted Sikatsu for this being broken
-		if (pe.getPlayer().hasPermission("asedit.armorstand.invisible") || pe.plugin.getArmorStandVisibility() ) {
+		if (pe.getPlayer().hasPermission("asedit.armorstand.invisible") ||
+				pe.plugin.getArmorStandVisibility() ) {
 			visibility = new ItemStack(Material.POTION, 1);
 			PotionMeta potionMeta = (PotionMeta) visibility.getItemMeta();
 			PotionEffect eff1 = new PotionEffect(PotionEffectType.INVISIBILITY, 1, 0);
@@ -134,7 +135,8 @@ public class Menu {
 			visibility = null;
 		}
 
-		if (pe.getPlayer().hasPermission("asedit.itemframe.invisible") || pe.plugin.getInvisibleItemFrames() ) {
+		if (pe.getPlayer().hasPermission("asedit.itemframe.invisible") ||
+				pe.plugin.getInvisibleItemFrames() ) {
 			itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
 			itemFrameVisible = createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
 		} else {
