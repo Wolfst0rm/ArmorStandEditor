@@ -122,7 +122,7 @@ public class Menu {
 		showArms = createIcon(new ItemStack(Material.STICK),
 				"showarms", "mode showarms");
 
-		//Praise Start - Nicely spotted Sikatsu for this being broken
+		//Praise Start - Sikatsu and cowgod, Nicely spotted this being broken
 		if (pe.getPlayer().hasPermission("asedit.armorstand.invisible") ||
 				pe.plugin.getArmorStandVisibility() ) {
 			visibility = new ItemStack(Material.POTION, 1);
