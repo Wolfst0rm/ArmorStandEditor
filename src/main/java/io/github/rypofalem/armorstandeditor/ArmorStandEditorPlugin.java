@@ -36,7 +36,6 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
@@ -166,16 +165,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		print("Debug Mode Enabled? Well if you can read this its true");
 
 		if(debug){
-			try {
-				if (!f.exists()) {
-					f.createNewFile();
-					if(f.createNewFile()) {
-						Files.setAttribute(f.toPath(), "dos:hidden", false);
-					}
-				}
-			} catch (IOException e) {
-				this.getServer().getLogger().warning(e.getMessage());
-			}
+			createDebugFile();
 		}
 
 		//saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
@@ -293,7 +283,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		team = scoreboard.getTeam(lockedTeam);
 		if(team != null) { //Basic Sanity Check to ensure that the team is there
 			team.unregister();
-			print("Team '" + lockedTeam + "successfully removed.");
+			print("Team '" + lockedTeam + "' successfully removed.");
 		} else{
 			getLogger().severe("Team Already Appears to be removed. Please do not do this manually!");
 		}
@@ -315,8 +305,21 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		unregisterScoreboards(scoreboard);
 	}
 
+	public void createDebugFile(){
+			try {
+				if (!f.exists()) {
+					if(f.createNewFile()) {
+						Files.setAttribute(f.toPath(), "dos:hidden", false);
+					}
+				}
+			} catch (IOException e) {
+				this.getServer().getLogger().warning(e.getMessage());
+			}
+	}
+
 	public void log(String message){
 		//Output to Server Console - Safer than doing a Broadcast to everyone on the Server
+		String timeMsgSep = ": ";
 		this.getServer().getLogger().info("ArmorStandEditor: " + message);
 
 		try{
@@ -324,6 +327,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 			//Write the Content as Bytes
 			fos.write(timeAsString.getBytes());
+			fos.write(timeMsgSep.getBytes());
 			fos.write(message.getBytes());
 			fos.write(10);
 			fos.flush();
