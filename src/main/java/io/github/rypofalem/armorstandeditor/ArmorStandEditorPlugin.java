@@ -37,8 +37,11 @@ import org.bukkit.scoreboard.Team;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.*;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.*;
 import java.io.File;
 
@@ -83,7 +86,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	//Better Debug Output
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	Date date = Calendar.getInstance().getTime();
+	Instant instant = Instant.now();
+	DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.UK ).withZone( ZoneId.systemDefault() );
 	String dateAsString = dateFormat.format(date);
+	String timeAsString = formatter.format(instant);
 	final String debugOutputFileName = getDataFolder() + File.separator + "DEBUG-" + dateAsString +  ".log";
 	FileOutputStream fos = null;
 	File f = new File(debugOutputFileName);
@@ -161,14 +167,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		if(debug){
 			try {
-				f.mkdirs();
-
 				if (!f.exists()) {
 					f.createNewFile();
-					Files.setAttribute(f.toPath(), "dos:hidden", false);
+					if(f.createNewFile()) {
+						Files.setAttribute(f.toPath(), "dos:hidden", false);
+					}
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				this.getServer().getLogger().warning(e.getMessage());
 			}
 		}
 
@@ -317,11 +323,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			fos = new FileOutputStream(f, true);
 
 			//Write the Content as Bytes
+			fos.write(timeAsString.getBytes());
 			fos.write(message.getBytes());
 			fos.write(10);
 			fos.flush();
 		}catch(IOException e){
-			e.printStackTrace();
+			this.getServer().getLogger().warning(e.getMessage());
 		}
 	}
 
