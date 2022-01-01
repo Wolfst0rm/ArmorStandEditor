@@ -307,10 +307,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	public void createDebugFile(){
 			try {
-				if (!f.exists()) {
-					if(f.createNewFile()) {
-						Files.setAttribute(f.toPath(), "dos:hidden", false);
-					}
+				if (!f.exists() && f.createNewFile()) {
+					Files.setAttribute(f.toPath(), "dos:hidden", false);
 				}
 			} catch (IOException e) {
 				this.getServer().getLogger().warning(e.getMessage());
