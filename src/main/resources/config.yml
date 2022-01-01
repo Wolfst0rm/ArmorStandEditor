@@ -10,7 +10,7 @@ tool: FLINT
 #If true, the GUI will only open if the player is sneaking
 requireSneaking: false
 
-#Allow the option to toggle invisiblity for ItemFrames and ArmorStand
+#Allow the option to toggle invisibility for ItemFrames and ArmorStand
 ivisibleItemFrames: true
 armorStandVisibility: true
 

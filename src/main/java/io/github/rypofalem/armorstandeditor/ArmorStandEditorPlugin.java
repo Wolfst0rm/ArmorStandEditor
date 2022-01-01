@@ -36,6 +36,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.File;
@@ -79,11 +81,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	String lockedTeam = "ASLocked";
 
 	//Better Debug Output
-	File debugOutput;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	Date date = Calendar.getInstance().getTime();
 	String dateAsString = dateFormat.format(date);
-
+	final String debugOutputFileName = getDataFolder() + File.separator + "DEBUG-" + dateAsString +  ".log";
+	FileOutputStream fos = null;
+	File f = new File(debugOutputFileName);
 
 	private static ArmorStandEditorPlugin plugin;
 
@@ -152,6 +155,23 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		registerScoreboards(scoreboard);
 		getLogger().info(SEPARATOR_FIELD);
 
+		//Is Debug Enabled
+		debug = getConfig().getBoolean("debug", true);
+		print("Debug Mode Enabled? Well if you can read this its true");
+
+		if(debug){
+			try {
+				f.mkdirs();
+
+				if (!f.exists()) {
+					f.createNewFile();
+					Files.setAttribute(f.toPath(), "dos:hidden", false);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
 		//saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
 		updateConfig("", "config.yml");
 		updateConfig("lang/", "test_NA.yml");
@@ -209,9 +229,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		requireSneaking = getConfig().getBoolean("requireSneaking",false);
 		print("Sneaking required to activate the UI: " + requireSneaking);
 
-		//Optional Information
-		debug = getConfig().getBoolean("debug", true);
 
+		//Send Messages to Action Bar - NEW SINCE 1.16 at least (?)
+		//TODO: Fix above comment with correct version - FUTURE CHORE!
 		sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
 		print("Messages being sent to action bar?: " + sendToActionBar);
 
@@ -225,22 +245,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//Get Metrics from bStats
 		getMetrics();
 
-		//Create Debug File - better Debug Output
-		createDebugFile();
-
 		editorManager = new PlayerEditorManager(this);
 		execute = new CommandEx(this);
 		getCommand("ase").setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
 		getServer().getPluginManager().registerEvents(editorManager, this);
 
 
-	}
-
-	private void createDebugFile() {
-		if(debug){
-			//Make a Debug-Date.out file
-			debugOutput = new File("debug/debug" + dateAsString + ".out");
-		}
 	}
 
 	private void runUpdateChecker() {
@@ -300,20 +310,18 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	}
 
 	public void log(String message){
-		//Output to Server Console
+		//Output to Server Console - Safer than doing a Broadcast to everyone on the Server
 		this.getServer().getLogger().info("ArmorStandEditor: " + message);
 
-		//Also write to file
-		try(FileOutputStream fileOutput = new FileOutputStream(debugOutput);
-			BufferedOutputStream bufferedOutput = new BufferedOutputStream(fileOutput)){
+		try{
+			fos = new FileOutputStream(f, true);
 
-			//Convert message to bites
-			byte[] debugMessageAsBytes = message.getBytes();
-			bufferedOutput.write(debugMessageAsBytes);
-			bufferedOutput.flush();
-			fileOutput.flush();
-		}  catch(Exception e) {
-			this.getServer().getLogger().severe(e.getMessage());
+			//Write the Content as Bytes
+			fos.write(message.getBytes());
+			fos.write(10);
+			fos.flush();
+		}catch(IOException e){
+			e.printStackTrace();
 		}
 	}
 
