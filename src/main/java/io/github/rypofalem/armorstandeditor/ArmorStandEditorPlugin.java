@@ -333,6 +333,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			fos.flush();
 		}catch(IOException e){
 			this.getServer().getLogger().warning(e.getMessage());
+		}finally{
+			if(fos != null){
+				try {
+					fos.close();
+				} catch (IOException e) {
+					this.getServer().getLogger().warning(e.getMessage());
+				}
+			}
 		}
 	}
 
