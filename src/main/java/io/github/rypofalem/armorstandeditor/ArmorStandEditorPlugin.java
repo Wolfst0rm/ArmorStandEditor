@@ -26,6 +26,8 @@ import de.jeff_media.updatechecker.*;
 import org.bstats.bukkit.Metrics;
 import org.bstats.bukkit.Metrics.*;
 
+import net.coreprotect.CoreProtect;
+import net.coreprotect.CoreProtectAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -33,6 +35,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -47,9 +50,9 @@ import java.time.format.FormatStyle;
 import java.util.*;
 import java.io.File;
 
+
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
-	private static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
 	private NamespacedKey iconKey;
 	private static ArmorStandEditorPlugin instance;
 	private CommandEx execute;
@@ -98,7 +101,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private static ArmorStandEditorPlugin plugin;
 
-	private static final int PLUGIN_ID = 12668;
+	//BStats/UpdateChecker Plugin ID Requirements
+	private static final int PLUGIN_ID = 12668; //BStats Plugin API ID
+	private static final int SPIGOT_RESOURCE_ID = 94503; //Update Checker Resource ID from SpigotMC.org
 
 	public ArmorStandEditorPlugin(){
 		instance = this;
@@ -142,7 +147,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 				nmsVersion.startsWith("v1_11") ||
 				nmsVersion.startsWith("v1_12") ||
 				nmsVersion.startsWith("v1_13")
-				){
+		){
 			getLogger().warning("Minecraft Version: " + nmsVersion + " is not supported. Loading Plugin Failed.");
 			getLogger().info(SEPARATOR_FIELD);
 			getServer().getPluginManager().disablePlugin(this);
@@ -196,10 +201,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			print("Edit Tool used to interact with Plugin is: " + toolType);
 			editTool = Material.getMaterial(toolType); //Ignore Warning
 		} else {
-			 getLogger().severe("Unable to get Tool for Use with Plugin. Unable to continue!");
-			 getLogger().info(SEPARATOR_FIELD);
-			 getServer().getPluginManager().disablePlugin(this);
-			 return;
+			getLogger().severe("Unable to get Tool for Use with Plugin. Unable to continue!");
+			getLogger().info(SEPARATOR_FIELD);
+			getServer().getPluginManager().disablePlugin(this);
+			return;
 		}
 
 		//ArmorStandVisibility Node
@@ -306,29 +311,69 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		unregisterScoreboards(scoreboard);
 	}
 
-	public void createDebugFile(){
-			try {
-				if (!f.exists() && f.createNewFile()) {
-					Files.setAttribute(f.toPath(), "dos:hidden", false);
-				}
-			} catch (IOException e) {
-				this.getServer().getLogger().warning(e.getMessage());
-			}
+	/*
+	 * Accessor to Access CoreProtect API
+	 *
+	 * Args:
+	 * None
+	 *
+	 * FIX:
+	 * Wolfieheart/ArmorStandEditor-Issues#23
+	 */
+	private CoreProtectAPI getCoreProtect(){
+		Plugin coreProtectPlugin = getServer().getPluginManager().getPlugin("CoreProtect");
+
+		//Check if Plugin is Loaded?
+		if(coreProtectPlugin == null) return null;
+
+		//Check if Plugin is Enabled
+		if(!isPluginEnabled("CoreProtect")) return null;
+
+		//Check that the API is Enabled
+		CoreProtectAPI coreProtectAPI = ((CoreProtect) coreProtectPlugin).getAPI();
+		if(!coreProtectAPI.isEnabled()) return null;
+
+		//API Compatible Version Check
+		if (coreProtectAPI.APIVersion() < 7) return null;
+
+		return coreProtectAPI;
 	}
 
+	/*
+	 * Creation of Debug Output File
+	 *
+	 * Args:
+	 * None
+	 */
+	public void createDebugFile(){
+		try {
+			if (!f.exists() && f.createNewFile()) {
+				Files.setAttribute(f.toPath(), "dos:hidden", false);
+			}
+		} catch (IOException e) {
+			this.getServer().getLogger().warning(e.getMessage());
+		}
+	}
+
+	/*
+	 * Better Method of Logging Debug Output
+	 *
+	 * Args:
+	 * Message as String
+	 */
 	public void log(String message){
 		//Output to Server Console - Safer than doing a Broadcast to everyone on the Server
 		String timeMsgSep = ": ";
 		this.getServer().getLogger().info("ArmorStandEditor: " + message);
 
 		try{
-			fos = new FileOutputStream(f, true);
+			fos = new FileOutputStream(f, true); //append all data to file
 
 			//Write the Content as Bytes
 			fos.write(timeAsString.getBytes());
-			fos.write(timeMsgSep.getBytes());
-			fos.write(message.getBytes());
-			fos.write(10);
+			fos.write(timeMsgSep.getBytes()); //Write Date Time First
+			fos.write(message.getBytes()); //Write Debug Message
+			fos.write(10); //Write New Line
 			fos.flush();
 		}catch(IOException e){
 			this.getServer().getLogger().warning(e.getMessage());
@@ -343,13 +388,25 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 	}
 
+	/*
+	 * get Net Minecraft Server version
+	 *
+	 * Args:
+	 * None
+	 */
 	public String getNmsVersion(){
 		return this.getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
 	}
 
+	/*
+	 * get if Spigot or its Forks are being used
+	 *
+	 * Args:
+	 * None
+	 */
 	public boolean getHasSpigot(){
 		try {
-			Class.forName("org.spigotmc.SpigotConfig");
+			Class.forName("org.spigotmc.SpigotConfig"); //Class that only Spigot has
 			print("SpigotMC Detected.");
 			nmsVersionNotLatest = "SpigotMC ASAP.";
 			return true;
@@ -359,33 +416,53 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		}
 	}
 
-	public boolean getArmorStandVisibility(){
-		return getConfig().getBoolean("armorStandVisibility");
-	}
-
-	public boolean getItemFrameVisibility(){
-		return getConfig().getBoolean("invisibleItemFrames");
-	}
-
+	/*
+	 * get if Paper or its Forks are being used
+	 *
+	 * Args:
+	 * None
+	 */
 	public boolean getHasPaper(){
 		try {
-			Class.forName("com.destroystokyo.paper.PaperConfig");
+			Class.forName("com.destroystokyo.paper.PaperConfig"); //Replace this?
 			print("PaperMC Detected.");
-			nmsVersionNotLatest = "SpigotMC ASAP.";
+			nmsVersionNotLatest = "PaperMC ASAP.";
 			return true;
 		} catch (ClassNotFoundException e){
 			nmsVersionNotLatest = "";
 			return false;
 		}
 	}
+
 	/*
-	*	For Internal Debugging -
-	*
-	*   set debug: true in Config.yml
-	*   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
-	*
-	* 	To be refactored - Apart Log File.
-	*/
+	 * get if ArmorStand Visibility can be toggled
+	 *
+	 * Args:
+	 * None
+	 */
+	public boolean getArmorStandVisibility(){
+		return getConfig().getBoolean("armorStandVisibility");
+	}
+
+	/*
+	 * get if ItemFrame Visibility can be toggled
+	 *
+	 * Args:
+	 * None
+	 */
+	public boolean getItemFrameVisibility(){
+		return getConfig().getBoolean("invisibleItemFrames");
+	}
+
+
+	/*
+	 *	For Internal Debugging -
+	 *
+	 *   set debug: true in Config.yml
+	 *   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
+	 *
+	 * 	To be refactored - Apart Log File.
+	 */
 	public void print(String message){
 		if(debug){
 			log(message);
@@ -396,16 +473,33 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		return instance;
 	}
 
+	/*
+	 * Return the Language being used by the Plugin
+	 *
+	 * Args:
+	 * None
+	 */
 	public Language getLang(){
 		return lang;
 	}
+
+	/*
+	 * Quick way to return if the server has a plugin
+	 *
+	 * Args:
+	 * pluginName as String
+	 */
+	public boolean isPluginEnabled(String pluginName){
+		if(getServer().getPluginManager().getPlugin(pluginName) == null) return false; //If No PluginName is Specified
+		else return getServer().getPluginManager().getPlugin(pluginName).isEnabled();
+	}
+
 
 	public boolean isEditTool(ItemStack itemStk){
 		if (itemStk == null) { return false; }
 		if (editTool != itemStk.getType()) { return false; }
 
 		//FIX: Depreciated Stack for getDurability
-		//		if(requireToolData && item.getDurability() != (short)editToolData) return false;
 		if (requireToolData){
 			Damageable d1 = (Damageable) itemStk.getItemMeta(); //Get the Damageable Options for itemStk
 			if (d1 != null) { //We do this to prevent NullPointers

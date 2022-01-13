@@ -19,8 +19,20 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+//Protection - Towny
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.event.executors.TownyActionEventExecutor;
+
+//Protection - WorldGuard
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
+import com.sk89q.worldguard.session.SessionManager;
+
+//Hooks into other Classes here
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -29,9 +41,11 @@ import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.CopySlots;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
+//Java
 import java.util.ArrayList;
 import java.util.UUID;
 
+//Bukkit/Spigot/Bungeecord
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -59,6 +73,9 @@ public class PlayerEditor {
 	Menu chestMenu;
 	ArmorStand target;
 	ArrayList<ArmorStand> targetList = null;
+
+	//Protections
+	boolean queryResult; //WorldGuard
 
 	//NEW: ItemFrame Stuff
 	ItemFrame frameTarget;
@@ -114,9 +131,14 @@ public class PlayerEditor {
 		if (!getPlayer().hasPermission("asedit.basic")) return;
 
 		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15
-		if (plugin.getServer().getPluginManager().getPlugin("Towny") != null) {
-			if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
-			if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND)) return;
+		//Towny Protection
+		if (plugin.isPluginEnabled("Towny")) {
+			townyProtection();
+		}
+
+		//WorldGuard Support
+		if(plugin.isPluginEnabled("WorldGuard")){
+			worldGuardSupportProtection(armorStand);
 		}
 
 		armorStand = attemptTarget(armorStand);
@@ -181,8 +203,29 @@ public class PlayerEditor {
 		}
 	}
 
+	private void townyProtection() {
+		if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
+		if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND)) return;
+
+	}
+
+	private void worldGuardSupportProtection(ArmorStand armorStand) {
+		SessionManager session = WorldGuard.getInstance().getPlatform().getSessionManager(); //Get Session Information
+		RegionContainer regionCont = WorldGuard.getInstance().getPlatform().getRegionContainer(); //Get List of Regions
+		RegionQuery regionQuery = regionCont.createQuery(); //Create Query for Region
+
+		com.sk89q.worldedit.util.Location loc = BukkitAdapter.adapt(armorStand.getLocation()); //Get Location of ArmorStand
+		com.sk89q.worldedit.world.World world = BukkitAdapter.adapt(armorStand.getWorld()); //Get World of ArmorStand
+
+		if(!session.hasBypass(WorldGuardPlugin.inst().wrapPlayer(getPlayer()), world)){ //Check if Player has Bypass Permissions only run if false
+			queryResult = regionQuery.testState(loc, WorldGuardPlugin.inst().wrapPlayer(getPlayer()), Flags.BUILD); //Check if player can build
+			if(!queryResult) return; //Cant build...
+		}
+	}
+
 	public void editItemFrame(ItemFrame itemFrame) {
 		if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
+
 		switch (eMode) {
 			case ITEMFRAME:
 				toggleItemFrameVisible(itemFrame);
@@ -212,11 +255,18 @@ public class PlayerEditor {
 
 	public void reverseEditArmorStand(ArmorStand armorStand) {
 		if (!getPlayer().hasPermission("asedit.basic")) return;
-		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15 - Towny Support not working!
-		if (plugin.getServer().getPluginManager().getPlugin("Towny") != null) {
-			if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
-			if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND)) return;
+
+		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15
+		//Towny Protection
+		if (plugin.isPluginEnabled("Towny")) {
+			townyProtection();
 		}
+
+		//WorldGuard Support
+		if(plugin.isPluginEnabled("WorldGuard")){
+			worldGuardSupportProtection(armorStand);
+		}
+
 		armorStand = attemptTarget(armorStand);
 		switch (eMode) {
 			case LEFTARM:
@@ -462,7 +512,7 @@ public class PlayerEditor {
 			}
 			target = targetList.get(targetIndex);
 			highlight(target); //NOTE: If Targeted and Locked, it displays the TEAM Color Glow: RED
-			                   //      Otherwise, its unlocked and will display WHITE as its not in a team by default
+			//      Otherwise, its unlocked and will display WHITE as its not in a team by default
 
 		}
 	}
@@ -500,6 +550,7 @@ public class PlayerEditor {
 			}
 		}
 	}
+
 
 
 
