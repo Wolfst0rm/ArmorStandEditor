@@ -376,7 +376,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	 * FIX:
 	 * Wolfieheart/ArmorStandEditor-Issues#23
 	 */
-	private CoreProtectAPI getCoreProtect(){
+	public CoreProtectAPI getCoreProtect(){
 		Plugin coreProtectPlugin = getServer().getPluginManager().getPlugin("CoreProtect");
 
 		//Check if Plugin is Loaded?
