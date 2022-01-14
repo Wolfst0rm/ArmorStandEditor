@@ -24,6 +24,13 @@ permissions:
     asedit.itemframe.invisible:
       description: Allows setting of ItemFrame Visibility
       default: true
+
+    asedit.invisible:
+      default: false
+      children:
+        asedit.itemframe.invisible: true
+        asedit.armorstand.invisible: true
+
     asedit.rename:
       description: Rename armorstands - Now Supports Color
       default: true
@@ -47,8 +54,6 @@ permissions:
       default: false
       children:
         asedit.basic: true
-        asedit.itemframe.invisible: true
-        asedit.armorstand.invisible: true
         asedit.equipment: true
         asedit.disableslots: true
         asedit.rename: true
