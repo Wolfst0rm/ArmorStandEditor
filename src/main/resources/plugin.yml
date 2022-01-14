@@ -36,3 +36,25 @@ permissions:
     asedit.update:
       description: Allows the checking for updates.
       default: false
+
+    asedit.permpack.admin:
+      default: false
+      children:
+        asedit.basic: true
+        asedit.itemframe.invisible: true
+        asedit.armorstand.invisible: true
+        asedit.equipment: true
+        asedit.disableslots: true
+        asedit.rename: true
+        asedit.update: true
+
+    asedit.permback.basic:
+      default: false
+      children:
+        asedit.basic: true
+        asedit.itemframe.invisible: true
+        asedit.armorstand.invisible: true
+        asedit.equipment: true
+        asedit.disableslots: true
+        asedit.rename: true
+        asedit.update: false
