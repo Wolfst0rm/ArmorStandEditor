@@ -68,6 +68,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	public PlayerEditorManager editorManager;
 
+	//Config Options
 	Material editTool;
 	String toolType;
 	boolean requireToolData = false;
@@ -178,8 +179,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		print("Do Server OPs get Update Notifications?: " + opUpdateNotification);
 
 		if(opUpdateNotification){
+			print("Running Update Checker with OP Notifications");
 			runOPNotifyUpdateChecker();
 		}else{
+			print("Running Update Checker with Console Only Notifications");
 			runConsoleNotifyUpdateChecker();
 		}
 
@@ -329,6 +332,39 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 		unregisterScoreboards(scoreboard);
+	}
+
+	public boolean isEditTool(ItemStack itemStk){
+		if (itemStk == null) { return false; }
+		if (editTool != itemStk.getType()) { return false; }
+
+		//FIX: Depreciated Stack for getDurability
+		if (requireToolData){
+			Damageable d1 = (Damageable) itemStk.getItemMeta(); //Get the Damageable Options for itemStk
+			if (d1 != null) { //We do this to prevent NullPointers
+				if (d1.getDamage() != (short) editToolData) { return false; }
+			}
+		}
+
+		if(requireToolLore && editToolLore != null){
+
+			//If the ItemStack does not have Metadata then we return false
+			if(!itemStk.hasItemMeta()) { return false; }
+
+			//Get the lore of the Item and if it is null - Return False
+			List<String> itemLore = itemStk.getItemMeta().getLore(); //Ignore warnings this gives. Will be fixed in the future
+			if (itemLore == null){ return false; }
+
+			//If the Item does not have Lore - Return False
+			boolean hasTheItemLore = itemStk.getItemMeta().hasLore();
+			if (!hasTheItemLore)  { return false; }
+
+			//Item the first thing in the ItemLore List does not Equal the Config Value "editToolLore" - return false
+			if (!itemLore.get(0).equals(editToolLore))  { return false; } //Does not need simplified - IntelliJ likes to complain here
+
+		}
+
+		return true;
 	}
 
 	/*
@@ -512,40 +548,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	public boolean isPluginEnabled(String pluginName){
 		if(getServer().getPluginManager().getPlugin(pluginName) == null) return false; //If No PluginName is Specified
 		else return getServer().getPluginManager().getPlugin(pluginName).isEnabled();
-	}
-
-
-	public boolean isEditTool(ItemStack itemStk){
-		if (itemStk == null) { return false; }
-		if (editTool != itemStk.getType()) { return false; }
-
-		//FIX: Depreciated Stack for getDurability
-		if (requireToolData){
-			Damageable d1 = (Damageable) itemStk.getItemMeta(); //Get the Damageable Options for itemStk
-			if (d1 != null) { //We do this to prevent NullPointers
-				if (d1.getDamage() != (short) editToolData) { return false; }
-			}
-		}
-
-		if(requireToolLore && editToolLore != null){
-
-			//If the ItemStack does not have Metadata then we return false
-			if(!itemStk.hasItemMeta()) { return false; }
-
-			//Get the lore of the Item and if it is null - Return False
-			List<String> itemLore = itemStk.getItemMeta().getLore(); //Ignore warnings this gives. Will be fixed in the future
-			if (itemLore == null){ return false; }
-
-			//If the Item does not have Lore - Return False
-			boolean hasTheItemLore = itemStk.getItemMeta().hasLore();
-			if (!hasTheItemLore)  { return false; }
-
-			//Item the first thing in the ItemLore List does not Equal the Config Value "editToolLore" - return false
-			if (!itemLore.get(0).equals(editToolLore))  { return false; } //Does not need simplified - IntelliJ likes to complain here
-
-		}
-
-		return true;
 	}
 
 	//Metrics/bStats Support
