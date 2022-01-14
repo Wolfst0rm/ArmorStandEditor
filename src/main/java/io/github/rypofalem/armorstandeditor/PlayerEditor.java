@@ -224,7 +224,7 @@ public class PlayerEditor {
 	}
 
 	public void editItemFrame(ItemFrame itemFrame) {
-		if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
+		if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.getItemFrameVisibility()) return; //Option to use perms or Config
 
 		switch (eMode) {
 			case ITEMFRAME:
@@ -424,12 +424,12 @@ public class PlayerEditor {
 	}
 
 	void toggleVisible(ArmorStand armorStand) {
-		if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisibility) return; //Option to use perms or Config
+		if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.getArmorStandVisibility()) return; //Option to use perms or Config
 		armorStand.setVisible(!armorStand.isVisible());
 	}
 
 	void toggleItemFrameVisible(ItemFrame itemFrame) {
-		if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
+		if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.getItemFrameVisibility()) return; //Option to use perms or Config
 		itemFrame.setVisible(!itemFrame.isVisible());
 	}
 

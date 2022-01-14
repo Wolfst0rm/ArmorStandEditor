@@ -80,8 +80,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	double coarseRot;
 	double fineRot;
 	boolean glowItemFrames = false;
-	boolean invisibleItemFrames = true;
+	boolean itemFrameVisibility = true;
 	boolean armorStandVisibility = true;
+	boolean opUpdateNotification = false;
 
 	//Glow Entity Colors
 	public Scoreboard scoreboard;
@@ -111,9 +112,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	@Override
 	public void onEnable(){
-
-		//Run UpdateChecker
-		runUpdateChecker();
 
 		scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 
@@ -173,6 +171,16 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		if(debug){
 			createDebugFile();
+		}
+
+		//Do Ops get Update Notifications?
+		opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
+		print("Do Server OPs get Update Notifications?: " + opUpdateNotification);
+
+		if(opUpdateNotification){
+			runOPNotifyUpdateChecker();
+		}else{
+			runConsoleNotifyUpdateChecker();
 		}
 
 		//saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
@@ -241,8 +249,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
 		print("Are glowing Item Frames enabled for 1.17 Users?: " + glowItemFrames);
 
-		invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
-		print("Can users turn ItemFrames invisible?: " + invisibleItemFrames);
+		itemFrameVisibility = getConfig().getBoolean("itemFrameVisibility", true);
+		print("Can users turn ItemFrames invisible?: " + itemFrameVisibility);
 
 		//Get Metrics from bStats
 		getMetrics();
@@ -255,15 +263,27 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	}
 
-	private void runUpdateChecker() {
+	private void runConsoleNotifyUpdateChecker() {
+		UpdateChecker.init(this, SPIGOT_RESOURCE_ID)
+				.setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
+				.setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
+				.setNotifyOpsOnJoin(false)
+				.setColoredConsoleOutput(true)
+				.setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
+				.checkEveryXHours(72) //Warn every 72 hours
+				.setTimeout(90000) //Times Out after 90 Seconds
+				.checkNow();
+	}
+
+	private void runOPNotifyUpdateChecker() {
 		UpdateChecker.init(this, SPIGOT_RESOURCE_ID)
 				.setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
 				.setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
 				.setNotifyOpsOnJoin(true)
-				.setNotifyByPermissionOnJoin("asedit.update")
 				.setColoredConsoleOutput(true)
 				.setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
 				.checkEveryXHours(72) //Warn people every 72 hours
+				.setTimeout(90000) //Times Out after 90 Seconds
 				.checkNow();
 	}
 
@@ -451,7 +471,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	 * None
 	 */
 	public boolean getItemFrameVisibility(){
-		return getConfig().getBoolean("invisibleItemFrames");
+		return getConfig().getBoolean("itemFrameVisibility");
 	}
 
 

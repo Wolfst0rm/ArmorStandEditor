@@ -1,3 +1,6 @@
+#Set this to allow your operators to get messages w.r.t Plugin updates
+opUpdateNotification: true
+
 #How many rotations to make a full circle in Coarse adjustment mode
 coarse: 12
 
@@ -11,7 +14,7 @@ tool: FLINT
 requireSneaking: false
 
 #Allow the option to toggle invisibility for ItemFrames and ArmorStand
-ivisibleItemFrames: true
+itemFrameVisibility: true
 armorStandVisibility: true
 
 #(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
