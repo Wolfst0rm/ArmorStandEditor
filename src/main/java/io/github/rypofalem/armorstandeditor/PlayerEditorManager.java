@@ -93,7 +93,7 @@ public class PlayerEditorManager implements Listener {
 	void onArmorStandInteract( PlayerInteractAtEntityEvent event) {
 		if (ignoreNextInteract) return;
 		if (event.getHand() != EquipmentSlot.HAND) return;
-		 Player player = event.getPlayer();
+		Player player = event.getPlayer();
 		if (!((event.getRightClicked() instanceof ArmorStand) || event.getRightClicked() instanceof ItemFrame)) return;
 
 		if (event.getRightClicked() instanceof ArmorStand) {
@@ -278,7 +278,7 @@ public class PlayerEditorManager implements Listener {
 		ignoreNextInteract = true;
 		ArrayList<Event> events = new ArrayList<>();
 		//events.add(new PlayerInteractEntityEvent(player, as, EquipmentSlot.HAND));
-		events.add(new PlayerInteractAtEntityEvent(player, as, as.getLocation().toVector(), EquipmentSlot.HAND)); //FIX for Issue RypoFalem/ArmorStandEditor #48: PlayerInteractAtEntityEvent
+		//events.add(new PlayerInteractAtEntityEvent(player, as, as.getLocation().toVector(), EquipmentSlot.HAND)); //FIX for Issue RypoFalem/ArmorStandEditor #48: PlayerInteractAtEntityEvent
 		//events.add(new PlayerArmorStandManipulateEvent(player, as, player.getEquipment().getItemInMainHand(), as.getItemInHand(), EquipmentSlot.HAND));
 		for ( Event event : events) {
 			if (!(event instanceof Cancellable)) continue;
@@ -302,7 +302,7 @@ public class PlayerEditorManager implements Listener {
 		ignoreNextInteract = true;
 		ArrayList<Event> events = new ArrayList<>();
 		//events.add(new PlayerInteractEntityEvent(player, itemf, EquipmentSlot.HAND));
-		events.add(new PlayerInteractAtEntityEvent(player, itemf, itemf.getLocation().toVector(), EquipmentSlot.HAND));
+		//events.add(new PlayerInteractAtEntityEvent(player, itemf, itemf.getLocation().toVector(), EquipmentSlot.HAND));
 		//events.add(new PlayerArmorStandManipulateEvent(player, as, player.getEquipment().getItemInMainHand(), as.getItemInHand(), EquipmentSlot.HAND));
 		for ( Event event : events) {
 			if (!(event instanceof Cancellable)) continue;
