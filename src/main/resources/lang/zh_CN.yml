@@ -2,16 +2,16 @@
 #A section symbol will be inserted between each character in this section
 #http://minecraft.gamepedia.com/Formatting_codes
 #translated by sumdream
-#由 sumdream 翻译
+#由 sumdream 和 10935336 翻译
 iconname: 2n
 icondescription: 5
-info: 2
+info: 6
 warn: c
 menutitle: 8
 
-#info
+#信息
 setmode:
-  msg: 设置为 <x> ,点击盔甲架开始调整.
+  msg: 设置对象更改为 <x> , 点击盔甲架开始调整。
   head: 头部
   body: 躯体
   leftleg: 左腿
@@ -27,73 +27,106 @@ setmode:
   baseplate: 底座切换
   placement: 位置
   rotate: 旋转
-  target: 目标
   copy: 复制
   paste: 粘贴
   reset: 重设角度
 setaxis:
-  msg: 设置坐标为 <x>.
+  msg: 设置坐标为 <x>。
   x: X
   y: Y
   z: Z
 setslot:
-  msg: 设定存档 <x>.
+  msg: 设定存档槽位 <x>。
 setadj:
-  msg: 设置调整模式 <x>.
+  msg: 设置调整模式 <x>。
   coarse: 粗调
   fine: 微调
 setgravity:
-  msg: 重力 <x>.
-  true: 开启
-  false: 关闭
+  msg: 重力 <x>。
+  on: 开启
+  off: 关闭
 nomode:
   msg: 请先点击空气选择设定模式!
 nomodeif:
-  msg: Click with the Edit Tool away from the ItemFrame to select a mode first!
+  msg: 请先点击空气选择设定模式!
 copied:
-  msg: 盔甲架装备存档在 <x>.
+  msg: 盔甲架状态已保存于 <x>。
 pasted:
-  msg: 盔甲架装备复制于 <x>.
+  msg: 已从 <x> 粘贴盔甲架状态。
+target:
+  msg: 目标盔甲架已锁定。
+notarget:
+  msg: 目标盔甲架已解锁。
+frametarget:
+  msg: 目标物品展示框已锁定。
+noframetarget:
+  msg: 目标物品展示框已解锁。
+doubletarget:
+  msg: 请看向盔甲架或物品展示框，不要两个同时看！
+reloaded:
+  msg: 配置文件已重新加载。
+help:
+  msg: "1. 手持编辑工具(<x>)
 
-#warn
+      2. 对着盔甲架“左键或右键”来打开菜单。
+
+      3. 选择标记的菜单选项。
+
+      4. 使用编辑工具对着盔甲架“左键”以应用那些选项。
+
+      5. 右键单击可反方向编辑!"
+helptips:
+  msg: "小提示:
+
+  1. 当有别的盔甲架挡着你要编辑的盔甲架时，你可以拿着编辑工具按下“切换副手物品”键 (默认为 F) 来标记你想要编辑的盔甲架。
+
+  2. 你可以将“命名牌(NameTags)”用于盔甲架 。更重要的是，你可以使用“&样式代码”标签赋予命名牌更多色彩。
+
+  3. 你可以在手持编辑工具时使用“潜行(Shift) + 鼠标滚轮”来快速更改要修改的轴而不需要打开菜单。"
+helpurl:
+  msg: "更多信息: https://github.com/RypoFalem/ArmorStandEditor/wiki"
+
+#警告
 cantedit:
-  msg: 对不起,你无法在这边编辑盔甲架!
+  msg: 对不起,你无法在这编辑盔甲架!
 noperm:
-  msg: 你没有权限这么做!
+  msg: 你没有权限这样做！
 noslotnumcom:
-  msg: 你必须选择一个畜存栏!
+  msg: 你必须选择一个物品栏!
 noadjcom:
   msg: 你必须选择一个调整模式（粗调/微调）!
 noaxiscom:
   msg: 你必须选择一个坐标轴!
 nomodecom:
   msg: 你必须选择一个部位!
+noreloadcom:
+  msg: 你没有权限运行重载命令！
 
-#menutitle
+#菜单标题
 mainmenutitle:
   msg: 盔甲架编辑器
 equiptitle:
   msg: 盔甲架装备
 
-#icons
+#图标
 xaxis:
   msg: X 轴
   description:
-    msg: 在 X 轴调整位置
+    msg: 调整 X 轴位置
 yaxis:
   msg: Y 轴
   description:
-    msg: 在 Y 轴调整位置
+    msg: 调整 Y 轴位置
 zaxis:
   msg: Z 轴
   description:
-    msg: 在 Z 轴调整位置
+    msg: 调整 Z 轴位置
 coarseadj:
-  msg: 粗调
+  msg: 粗略调整
   description:
     msg: 调整幅度较大
 fineadj:
-  msg: 微调
+  msg: 精细调整
   description:
     msg: 调整幅度较小
 head:
@@ -129,21 +162,21 @@ showarms:
   description:
     msg: 切换是否显示手臂
 invisible:
-  msg: 显隐
-  description:
-    msg: 是否显示盔甲架
+  msg: 盔甲架显隐切换
+  description: 
+    msg: 显示/隐形盔甲架
 size:
   msg: 大小
   description:
     msg: 调整大小
 disableslots:
-  msg: 禁用slots
+  msg: 禁用盔甲槽操作
   description:
-    msg: 开启关闭装备锁定
+    msg: 开启或关闭装备锁定
 gravity:
   msg: 重力
   description:
-    msg: 开启关闭重力
+    msg: 开启或关闭盔甲架重力
 baseplate:
   msg: 底座
   description:
@@ -156,10 +189,6 @@ rotate:
   msg: 旋转
   description:
     msg: 旋转盔甲架位置
-target:
-  msg: 目标
-  description:
-    msg: 马上实现!
 copy:
   msg: 复制
   description:
@@ -171,19 +200,27 @@ paste:
 copyslot:
   msg: 设定存档<x>
   description:
-    msg: 选择存档保存盔甲架设定
+    msg: 选择保存盔甲架设定的一个存档位
 reset:
   msg: 重设角度
   description:
     msg: 重设各个部件的角度
-
-#icons (equipment)
+helpgui:
+  msg: 我需要帮助!
+  description:
+    msg: 点击获得帮助!
+itemframevisible:
+  msg: 物品展示框显隐切换
+  description:
+    msg: 显示/隐形物品展示框
+    
+#图标 (装备)
 disabled:
   msg: 关闭
 equipslot:
-  msg: <x> Slot
+  msg: <x> 槽
   description:
-    msg: 拖动你的 <x> 放置到
+    msg: 将你的 <x> 放置到下面的格子
     helm: 头盔
     chest: 胸甲
     pants: 护膝
