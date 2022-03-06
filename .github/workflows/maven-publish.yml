@@ -11,7 +11,7 @@ jobs:
     steps:
       # 1. Check out the current working tree
       - name: Checkout ArmorStandEditor Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
