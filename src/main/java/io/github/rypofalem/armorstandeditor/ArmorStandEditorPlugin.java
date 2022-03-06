@@ -19,9 +19,12 @@
 
 package io.github.rypofalem.armorstandeditor;
 
-import de.jeff_media.updatechecker.*;
 import io.github.rypofalem.armorstandeditor.language.Language;
-import io.github.rypofalem.armorstandeditor.Metrics.*;
+
+import de.jeff_media.updatechecker.*;
+
+import org.bstats.bukkit.Metrics;
+import org.bstats.bukkit.Metrics.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -153,7 +156,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 				nmsVersion.startsWith("v1_17")){
 			getLogger().warning("Minecraft Version: " + nmsVersion + " is supported, but not latest.");
 			getLogger().warning("ArmorStandEditor will still work, but please update to the latest Version of " + nmsVersionNotLatest + ". Loading continuing.");
-		} else {
 			getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
 		}
 		getServer().getPluginManager().enablePlugin(this);
