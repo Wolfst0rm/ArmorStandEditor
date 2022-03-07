@@ -20,7 +20,11 @@
 package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
+import io.github.rypofalem.armorstandeditor.protections.PlotSquaredProtection;
+import io.github.rypofalem.armorstandeditor.protections.TownyProtection;
+import io.github.rypofalem.armorstandeditor.protections.WorldGuardProtection;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
@@ -274,52 +278,18 @@ public class PlayerEditorManager implements Listener {
 		return itemFrames;
 	}
 
-	boolean canEdit( Player player,  ArmorStand as) {
-		ignoreNextInteract = true;
-		ArrayList<Event> events = new ArrayList<>();
-		//events.add(new PlayerInteractEntityEvent(player, as, EquipmentSlot.HAND));
-		//events.add(new PlayerInteractAtEntityEvent(player, as, as.getLocation().toVector(), EquipmentSlot.HAND)); //FIX for Issue RypoFalem/ArmorStandEditor #48: PlayerInteractAtEntityEvent
-		//events.add(new PlayerArmorStandManipulateEvent(player, as, player.getEquipment().getItemInMainHand(), as.getItemInHand(), EquipmentSlot.HAND));
-		for ( Event event : events) {
-			if (!(event instanceof Cancellable)) continue;
-			try {
-				plugin.getServer().getPluginManager().callEvent(event);
-			} catch ( IllegalStateException ise) {
-				ise.printStackTrace();
-				ignoreNextInteract = false;
-				return false; //Something went wrong, don't allow edit just in case
-			}
-			if (((Cancellable) event).isCancelled()) {
-				ignoreNextInteract = false;
-				return false;
-			}
-		}
-		ignoreNextInteract = false;
-		return true;
-	}
+	boolean canEdit( Player player,  Entity entity) {
+		Block block = entity.getLocation().getBlock();
 
-	boolean canEdit( Player player,  ItemFrame itemf) {
-		ignoreNextInteract = true;
-		ArrayList<Event> events = new ArrayList<>();
-		//events.add(new PlayerInteractEntityEvent(player, itemf, EquipmentSlot.HAND));
-		//events.add(new PlayerInteractAtEntityEvent(player, itemf, itemf.getLocation().toVector(), EquipmentSlot.HAND));
-		//events.add(new PlayerArmorStandManipulateEvent(player, as, player.getEquipment().getItemInMainHand(), as.getItemInHand(), EquipmentSlot.HAND));
-		for ( Event event : events) {
-			if (!(event instanceof Cancellable)) continue;
-			try {
-				plugin.getServer().getPluginManager().callEvent(event);
-			} catch ( IllegalStateException ise) {
-				ise.printStackTrace();
-				ignoreNextInteract = false;
-				return false; //Something went wrong, don't allow edit just in case
-			}
-			if (((Cancellable) event).isCancelled()) {
-				ignoreNextInteract = false;
-				return false;
-			}
-		}
-		ignoreNextInteract = false;
-		return true;
+		PlotSquaredProtection plotSquaredProtection = new PlotSquaredProtection();
+		WorldGuardProtection worldGuardProtection = new WorldGuardProtection();
+		TownyProtection townyProtection = new TownyProtection();
+
+		boolean protectTActive = townyProtection.checkPermission(block, player);
+		boolean protectPSActive = plotSquaredProtection.checkPermission(block, player);
+		boolean protectWGActive = worldGuardProtection.checkPermission(block, player);
+
+		return protectTActive && protectPSActive && protectWGActive;
 	}
 
 	void applyLeftTool( Player player,  ArmorStand as) {

@@ -10,7 +10,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 //FIX for https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/15
-
 public class TownyProtection {
     private final boolean tEnabled;
 
@@ -20,14 +19,15 @@ public class TownyProtection {
         if (!tEnabled) return;
     }
 
-    public void checkPermission(Block block, Player player){
-        if(!tEnabled) return;
-        if(tEnabled && player.isOp()) return;
+    public boolean checkPermission(Block block, Player player){
+        if(!tEnabled) return true;
+        if(tEnabled && player.isOp()) return true;
 
         Location playerLoc = player.getLocation();
 
-        if (TownyAPI.getInstance().isWilderness(playerLoc)) return;
-        if (!TownyActionEventExecutor.canDestroy(player, block.getLocation(), Material.ARMOR_STAND)) return;
+        if (TownyAPI.getInstance().isWilderness(playerLoc)) return false;
+        if (!TownyActionEventExecutor.canDestroy(player, block.getLocation(), Material.ARMOR_STAND)) return false;
+        return false;
     }
 }
 
