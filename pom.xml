@@ -24,6 +24,16 @@
     </pluginRepositories>
 
     <repositories>
+        <!-- Worldguard -->
+        <repository>
+            <id>sk89q-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
+        <!-- PlotSquared -->
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
         <!-- Spigot MC -->
         <repository>
             <id>spigot-repo</id>
@@ -39,6 +49,11 @@
             <id>jeff-media-public</id>
             <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
         </repository>
+        <!--- Grief Prevention -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -49,11 +64,32 @@
             <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!--- Worldguard -->
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-bukkit</artifactId>
+            <version>7.0.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--- PlotSquared -->
+        <dependency>
+            <groupId>com.plotsquared</groupId>
+            <artifactId>PlotSquared-Core</artifactId>
+            <version>6.5.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--- GriefPrevention -->
+        <dependency>
+            <groupId>com.github.TechFortress</groupId>
+            <artifactId>GriefPrevention</artifactId>
+            <version>16.18</version>
+            <scope>provided</scope>
+        </dependency>
         <!--- Towny -->
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.98.0.3</version>
+            <version>0.98.0.0</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
