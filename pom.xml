@@ -72,12 +72,25 @@
             <scope>provided</scope>
         </dependency>
         <!--- PlotSquared -->
-        <dependency>
-            <groupId>com.plotsquared</groupId>
-            <artifactId>PlotSquared-Core</artifactId>
-            <version>6.5.1</version>
-            <scope>provided</scope>
-        </dependency>
+            <dependency>
+                <groupId>com.plotsquared</groupId>
+                <artifactId>PlotSquared-Core</artifactId>
+                <version>6.4.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.plotsquared</groupId>
+                <artifactId>PlotSquared-Bukkit</artifactId>
+                <version>6.4.0</version>
+                <scope>provided</scope>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>PlotSquared-Core</artifactId>
+                        <groupId>*</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         <!--- GriefPrevention -->
         <dependency>
             <groupId>com.github.TechFortress</groupId>
