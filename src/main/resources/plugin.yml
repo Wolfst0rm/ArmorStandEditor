@@ -1,12 +1,12 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.18.2-34.1
+version: 1.18.2-35
 api-version: "1.13"
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny]
+softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared]
 commands:
   ase:
     description: Changes the function of the armorstand edit tool.
@@ -36,3 +36,23 @@ permissions:
     asedit.update:
       description: Allows the checking for updates.
       default: false
+
+    asedit.permpack.basic:
+      default: false
+      children:
+        asedit.basic: true
+        asedit.equipment: true
+        asedit.disableslots: true
+        asedit.rename: true
+        asedit.update: false
+
+    asedit.permpack.admin:
+      default: false
+      children:
+        asedit.basic: true
+        asedit.itemframe.invisible: true
+        asedit.armorstand.invisible: true
+        asedit.equipment: true
+        asedit.disableslots: true
+        asedit.rename: true
+        asedit.update: true
