@@ -8,10 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 
-import static me.ryanhamshire.GriefPrevention.ClaimPermission.Build;
 
 public class GriefPreventionProtection {
 
