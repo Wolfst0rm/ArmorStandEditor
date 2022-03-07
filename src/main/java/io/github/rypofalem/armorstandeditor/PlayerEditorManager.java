@@ -20,6 +20,7 @@
 package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
+import io.github.rypofalem.armorstandeditor.protections.GriefPreventionProtection;
 import io.github.rypofalem.armorstandeditor.protections.PlotSquaredProtection;
 import io.github.rypofalem.armorstandeditor.protections.TownyProtection;
 import io.github.rypofalem.armorstandeditor.protections.WorldGuardProtection;
@@ -70,7 +71,7 @@ public class PlayerEditorManager implements Listener {
 		Bukkit.getServer().getScheduler().runTaskTimer(plugin, counter, 0, 1);
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	void onArmorStandDamage( EntityDamageByEntityEvent event) {
 		if (!(event.getDamager() instanceof Player)) return;
 		 Player player = (Player) event.getDamager();
@@ -93,7 +94,7 @@ public class PlayerEditorManager implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	void onArmorStandInteract( PlayerInteractAtEntityEvent event) {
 		if (ignoreNextInteract) return;
 		if (event.getHand() != EquipmentSlot.HAND) return;
@@ -285,12 +286,14 @@ public class PlayerEditorManager implements Listener {
 		PlotSquaredProtection plotSquaredProtection = new PlotSquaredProtection();
 		WorldGuardProtection worldGuardProtection = new WorldGuardProtection();
 		TownyProtection townyProtection = new TownyProtection();
+		GriefPreventionProtection griefPreventionProtection = new GriefPreventionProtection();
 
 		boolean protectTActive = townyProtection.checkPermission(block, player);
 		boolean protectPSActive = plotSquaredProtection.checkPermission(block, player);
 		boolean protectWGActive = worldGuardProtection.checkPermission(block, player);
+		boolean protectGPActive = griefPreventionProtection.checkPermission(block, player);
 
-		return protectTActive && protectPSActive && protectWGActive;
+		return protectTActive && protectPSActive && protectWGActive && protectGPActive;
 	}
 
 	void applyLeftTool( Player player,  ArmorStand as) {
