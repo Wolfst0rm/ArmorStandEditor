@@ -232,7 +232,7 @@ public class PlayerEditorManager implements Listener {
 				boolean endLaser = false;
 				for ( Entity e : nearby) {
 					if (e instanceof ArmorStand) {
-						if (canEdit(player, (ArmorStand) e)) {
+						if (canEdit(player, e)) {
 							armorStands.add((ArmorStand) e);
 							endLaser = true;
 						}
@@ -264,7 +264,7 @@ public class PlayerEditorManager implements Listener {
 				boolean endLaser = false;
 				for ( Entity e : nearby) {
 					if (e instanceof ItemFrame) {
-						if (canEdit(player, (ItemFrame) e)) {
+						if (canEdit(player, e)) {
 							itemFrames.add((ItemFrame) e);
 							endLaser = true;
 						}

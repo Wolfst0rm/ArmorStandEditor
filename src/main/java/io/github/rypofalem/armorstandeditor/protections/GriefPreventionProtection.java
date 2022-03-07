@@ -4,15 +4,19 @@ import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.jetbrains.annotations.Nullable;
+
+import static me.ryanhamshire.GriefPrevention.ClaimPermission.Build;
 
 public class GriefPreventionProtection {
 
     private boolean gpEnabled;
     private GriefPrevention griefPrevention = null;
-    private Material blockType = null;
 
     public GriefPreventionProtection(){
         gpEnabled = Bukkit.getPluginManager().isPluginEnabled("GriefPrevention");
@@ -24,13 +28,16 @@ public class GriefPreventionProtection {
     public boolean checkPermission(Block block, Player player){
         if(!gpEnabled) return true;
 
-        Claim landClaim = griefPrevention.dataStore.getClaimAt(block.getLocation(), false, null);
-        blockType = block.getType();
+        Location blockLoc = block.getLocation();
+        Claim landClaim = griefPrevention.dataStore.getClaimAt(blockLoc, false, null);
+        Material blockMat = block.getType();
 
-        if(landClaim != null && landClaim.allowBuild(player, blockType) != null){
-            player.sendMessage(ChatColor.RED + landClaim.allowBuild(player, blockType));
+        if(landClaim != null && landClaim.allowBuild(player,blockMat) != null){
+            player.sendMessage(ChatColor.RED + landClaim.allowBuild(player, blockMat));
             return false;
         }
         return true;
+
+
     }
 }

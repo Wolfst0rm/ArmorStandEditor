@@ -21,13 +21,14 @@ public class TownyProtection {
 
     public boolean checkPermission(Block block, Player player){
         if(!tEnabled) return true;
-        if(tEnabled && player.isOp()) return true;
+        if(player.isOp()) return true;
 
         Location playerLoc = player.getLocation();
 
         if (TownyAPI.getInstance().isWilderness(playerLoc)) return false;
         if (!TownyActionEventExecutor.canDestroy(player, block.getLocation(), Material.ARMOR_STAND)) return false;
-        return false;
+
+        return true;
     }
 }
 
