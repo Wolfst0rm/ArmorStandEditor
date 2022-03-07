@@ -281,6 +281,7 @@ public class PlayerEditorManager implements Listener {
 	boolean canEdit( Player player,  Entity entity) {
 		Block block = entity.getLocation().getBlock();
 
+		//Implementation of Protection Support - PlotSquared, WorldGuard, Towny, GriefPrevention etc.
 		PlotSquaredProtection plotSquaredProtection = new PlotSquaredProtection();
 		WorldGuardProtection worldGuardProtection = new WorldGuardProtection();
 		TownyProtection townyProtection = new TownyProtection();
