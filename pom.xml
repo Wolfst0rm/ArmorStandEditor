@@ -68,7 +68,7 @@
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.5</version>
+            <version>7.0.7</version>
             <scope>provided</scope>
         </dependency>
         <!--- PlotSquared -->
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.98.0.0</version>
+            <version>0.98.0.3</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
