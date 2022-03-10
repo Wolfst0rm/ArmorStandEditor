@@ -216,7 +216,7 @@ itemframevisible:
 disabled:
   msg: Выключен
 equipslot:
-  msg: <x> слот
+  msg: <x>
   description:
     msg: Положи <x> в нижний слот
     helm: шлем
