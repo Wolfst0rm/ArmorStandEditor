@@ -289,14 +289,12 @@ public class PlayerEditorManager implements Listener {
 		PlotSquaredProtection plotSquaredProtection 		= new PlotSquaredProtection();
 		WorldGuardProtection worldGuardProtection 			= new WorldGuardProtection();
 		GriefPreventionProtection griefPreventionProtection = new GriefPreventionProtection();
-		//ResidencesProtection residenceProtection			= new ResidencesProtection();
 
 		//Permission checks for Protection
 		boolean protectTActive  							= townyProtection.checkPermission(block, player);
 		boolean protectPSActive 							= plotSquaredProtection.checkPermission(block, player);
 		boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
 		boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
-		//boolean protectResActive							= ResidencesProtection.checkPermission(block, player);
 
 		return protectTActive && protectPSActive && protectWGActive && protectGPActive;
 	}
