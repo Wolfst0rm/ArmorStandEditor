@@ -280,18 +280,23 @@ public class PlayerEditorManager implements Listener {
 	}
 
 	boolean canEdit( Player player,  Entity entity) {
+
+		//Get the Entity being checked for editing
 		Block block = entity.getLocation().getBlock();
 
 		//Implementation of Protection Support - PlotSquared, WorldGuard, Towny, GriefPrevention etc.
-		PlotSquaredProtection plotSquaredProtection = new PlotSquaredProtection();
-		WorldGuardProtection worldGuardProtection = new WorldGuardProtection();
-		TownyProtection townyProtection = new TownyProtection();
+		TownyProtection townyProtection 					= new TownyProtection();
+		PlotSquaredProtection plotSquaredProtection 		= new PlotSquaredProtection();
+		WorldGuardProtection worldGuardProtection 			= new WorldGuardProtection();
 		GriefPreventionProtection griefPreventionProtection = new GriefPreventionProtection();
+		//ResidencesProtection residenceProtection			= new ResidencesProtection();
 
-		boolean protectTActive = townyProtection.checkPermission(block, player);
-		boolean protectPSActive = plotSquaredProtection.checkPermission(block, player);
-		boolean protectWGActive = worldGuardProtection.checkPermission(block, player);
-		boolean protectGPActive = griefPreventionProtection.checkPermission(block, player);
+		//Permission checks for Protection
+		boolean protectTActive  							= townyProtection.checkPermission(block, player);
+		boolean protectPSActive 							= plotSquaredProtection.checkPermission(block, player);
+		boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
+		boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
+		//boolean protectResActive							= ResidencesProtection.checkPermission(block, player);
 
 		return protectTActive && protectPSActive && protectWGActive && protectGPActive;
 	}
