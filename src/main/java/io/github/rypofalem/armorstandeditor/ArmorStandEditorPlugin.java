@@ -459,19 +459,23 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			entry.put(languageUsed, 1);
 
 			assert languageUsed != null;
-			if(languageUsed.startsWith("nl")){
+			if (languageUsed.startsWith("nl")) {
 				map.put("Dutch", entry);
-			} else if(languageUsed.startsWith("de")){
+			} else if (languageUsed.startsWith("de")) {
 				map.put("German", entry);
-			} else if(languageUsed.startsWith("es")){
+			} else if (languageUsed.startsWith("en")) {
+				map.put("English", entry);
+			} else if (languageUsed.startsWith("es")) {
 				map.put("Spanish", entry);
-			} else if(languageUsed.startsWith("fr")){
+			} else if (languageUsed.startsWith("fr")) {
 				map.put("French", entry);
-			} else if(languageUsed.startsWith("ja")){
+			} else if (languageUsed.startsWith("ja")) {
 				map.put("Japanese", entry);
-			} else if(languageUsed.startsWith("pl")){
+			} else if (languageUsed.startsWith("pl")) {
 				map.put("Polish", entry);
-			} else if(languageUsed.startsWith("ro")){
+			}else if(languageUsed.startsWith("ru")){
+				map.put("Russian", entry);
+			}else if(languageUsed.startsWith("ro")){
 				map.put("Romanian", entry);
 			} else if(languageUsed.startsWith("uk")){
 				map.put("Ukrainian", entry);
