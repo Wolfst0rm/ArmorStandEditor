@@ -459,6 +459,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			entry.put(languageUsed, 1);
 
 			assert languageUsed != null;
+
 			if (languageUsed.startsWith("nl")) {
 				map.put("Dutch", entry);
 			} else if (languageUsed.startsWith("de")) {
@@ -473,7 +474,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 				map.put("Japanese", entry);
 			} else if (languageUsed.startsWith("pl")) {
 				map.put("Polish", entry);
-			}else if(languageUsed.startsWith("ru")){
+			}else if(languageUsed.startsWith("ru")){ //See PR# 41 by KPidS
 				map.put("Russian", entry);
 			}else if(languageUsed.startsWith("ro")){
 				map.put("Romanian", entry);
