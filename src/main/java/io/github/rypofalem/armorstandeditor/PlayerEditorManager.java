@@ -231,13 +231,12 @@ public class PlayerEditorManager implements Listener {
 			if (!nearby.isEmpty()) {
 				boolean endLaser = false;
 				for ( Entity e : nearby) {
-					if (e instanceof ArmorStand) {
-						if (canEdit(player, e)) {
-							armorStands.add((ArmorStand) e);
-							endLaser = true;
-						}
+					if (e instanceof ArmorStand && canEdit(player, e)) {
+						armorStands.add((ArmorStand) e);
+						endLaser = true;
 					}
 				}
+
 				if (endLaser) break;
 			}
 			if (eyeLaser.getBlock().getType().isSolid()) break;
@@ -259,17 +258,16 @@ public class PlayerEditorManager implements Listener {
 		if (nearbyEntities.isEmpty()) return null;
 
 		for (double i = 0; i < RANGE; i += STEPSIZE) {
-			 List<Entity> nearby = (List<Entity>) player.getWorld().getNearbyEntities(eyeLaser, LASERRADIUS, LASERRADIUS, LASERRADIUS);
+			List<Entity> nearby = (List<Entity>) player.getWorld().getNearbyEntities(eyeLaser, LASERRADIUS, LASERRADIUS, LASERRADIUS);
 			if (!nearby.isEmpty()) {
 				boolean endLaser = false;
 				for ( Entity e : nearby) {
-					if (e instanceof ItemFrame) {
-						if (canEdit(player, e)) {
-							itemFrames.add((ItemFrame) e);
-							endLaser = true;
-						}
+					if (e instanceof ItemFrame && canEdit(player, e)) {
+						itemFrames.add((ItemFrame) e);
+						endLaser = true;
 					}
 				}
+
 				if (endLaser) break;
 			}
 			if (eyeLaser.getBlock().getType().isSolid()) break;
