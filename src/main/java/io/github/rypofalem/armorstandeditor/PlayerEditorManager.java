@@ -231,7 +231,7 @@ public class PlayerEditorManager implements Listener {
 			if (!nearby.isEmpty()) {
 				boolean endLaser = false;
 				for ( Entity e : nearby) {
-					if (e instanceof ArmorStand && canEdit(player, e)) {
+					if (e instanceof ArmorStand) {
 						armorStands.add((ArmorStand) e);
 						endLaser = true;
 					}
@@ -262,7 +262,7 @@ public class PlayerEditorManager implements Listener {
 			if (!nearby.isEmpty()) {
 				boolean endLaser = false;
 				for ( Entity e : nearby) {
-					if (e instanceof ItemFrame && canEdit(player, e)) {
+					if (e instanceof ItemFrame) {
 						itemFrames.add((ItemFrame) e);
 						endLaser = true;
 					}
@@ -277,10 +277,30 @@ public class PlayerEditorManager implements Listener {
 		return itemFrames;
 	}
 
-	boolean canEdit( Player player,  Entity entity) {
+	boolean canEdit( Player player,  ArmorStand as) {
 
 		//Get the Entity being checked for editing
-		Block block = entity.getLocation().getBlock();
+		Block block = as.getLocation().getBlock();
+
+		//Implementation of Protection Support - PlotSquared, WorldGuard, Towny, GriefPrevention etc.
+		TownyProtection townyProtection 					= new TownyProtection();
+		PlotSquaredProtection plotSquaredProtection 		= new PlotSquaredProtection();
+		WorldGuardProtection worldGuardProtection 			= new WorldGuardProtection();
+		GriefPreventionProtection griefPreventionProtection = new GriefPreventionProtection();
+
+		//Permission checks for Protection
+		boolean protectTActive  							= townyProtection.checkPermission(block, player);
+		boolean protectPSActive 							= plotSquaredProtection.checkPermission(block, player);
+		boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
+		boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
+
+		return protectTActive && protectPSActive && protectWGActive && protectGPActive;
+	}
+
+	boolean canEdit( Player player,  ItemFrame itemF) {
+
+		//Get the Entity being checked for editing
+		Block block = itemF.getLocation().getBlock();
 
 		//Implementation of Protection Support - PlotSquared, WorldGuard, Towny, GriefPrevention etc.
 		TownyProtection townyProtection 					= new TownyProtection();
