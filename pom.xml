@@ -102,7 +102,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.98.1.0</version>
+            <version>0.98.1.2</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
