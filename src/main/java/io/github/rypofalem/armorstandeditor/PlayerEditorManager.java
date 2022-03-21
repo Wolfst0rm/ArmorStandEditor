@@ -58,7 +58,10 @@ public class PlayerEditorManager implements Listener {
 	private  TickCounter counter;
 	private ArrayList<ArmorStand> as = null;
 	private ArrayList<ItemFrame> itemF = null;
-
+	private TownyProtection townyProtection;
+	private PlotSquaredProtection plotSquaredProtection;
+	private WorldGuardProtection worldGuardProtection;
+	private GriefPreventionProtection griefPreventionProtection;
 
 	PlayerEditorManager( ArmorStandEditorPlugin plugin) {
 		this.plugin = plugin;
@@ -69,9 +72,15 @@ public class PlayerEditorManager implements Listener {
 		fineMov = .03125; // 1/32
 		counter = new TickCounter();
 		Bukkit.getServer().getScheduler().runTaskTimer(plugin, counter, 0, 1);
+
+		//Implementation of Protection Support - PlotSquared, WorldGuard, Towny, GriefPrevention etc.
+		townyProtection 		  = new TownyProtection();
+		plotSquaredProtection 	  = new PlotSquaredProtection();
+		worldGuardProtection 	  = new WorldGuardProtection();
+		griefPreventionProtection = new GriefPreventionProtection();
 	}
 
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST)
 	void onArmorStandDamage( EntityDamageByEntityEvent event) {
 		if (!(event.getDamager() instanceof Player)) return;
 		 Player player = (Player) event.getDamager();
@@ -85,7 +94,8 @@ public class PlayerEditorManager implements Listener {
 			 ArmorStand as = (ArmorStand) event.getEntity();
 			getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
 			event.setCancelled(true);
-			if (canEdit(player, as)) applyLeftTool(player, as);
+			if (canEdit(player, as))
+				applyLeftTool(player, as);
 		} else if (event.getEntity() instanceof ItemFrame) {
 			ItemFrame itemf = (ItemFrame) event.getEntity();
 			getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
@@ -94,7 +104,7 @@ public class PlayerEditorManager implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST)
 	void onArmorStandInteract( PlayerInteractAtEntityEvent event) {
 		if (ignoreNextInteract) return;
 		if (event.getHand() != EquipmentSlot.HAND) return;
@@ -277,16 +287,11 @@ public class PlayerEditorManager implements Listener {
 		return itemFrames;
 	}
 
+
 	boolean canEdit( Player player,  ArmorStand as) {
 
 		//Get the Entity being checked for editing
 		Block block = as.getLocation().getBlock();
-
-		//Implementation of Protection Support - PlotSquared, WorldGuard, Towny, GriefPrevention etc.
-		TownyProtection townyProtection 					= new TownyProtection();
-		PlotSquaredProtection plotSquaredProtection 		= new PlotSquaredProtection();
-		WorldGuardProtection worldGuardProtection 			= new WorldGuardProtection();
-		GriefPreventionProtection griefPreventionProtection = new GriefPreventionProtection();
 
 		//Permission checks for Protection
 		boolean protectTActive  							= townyProtection.checkPermission(block, player);
@@ -297,16 +302,10 @@ public class PlayerEditorManager implements Listener {
 		return protectTActive && protectPSActive && protectWGActive && protectGPActive;
 	}
 
-	boolean canEdit( Player player,  ItemFrame itemF) {
+	boolean canEdit( Player player,  ItemFrame itemf) {
 
 		//Get the Entity being checked for editing
-		Block block = itemF.getLocation().getBlock();
-
-		//Implementation of Protection Support - PlotSquared, WorldGuard, Towny, GriefPrevention etc.
-		TownyProtection townyProtection 					= new TownyProtection();
-		PlotSquaredProtection plotSquaredProtection 		= new PlotSquaredProtection();
-		WorldGuardProtection worldGuardProtection 			= new WorldGuardProtection();
-		GriefPreventionProtection griefPreventionProtection = new GriefPreventionProtection();
+		Block block = itemf.getLocation().getBlock();
 
 		//Permission checks for Protection
 		boolean protectTActive  							= townyProtection.checkPermission(block, player);
