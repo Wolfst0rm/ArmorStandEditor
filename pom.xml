@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.18.2-34.1</version>
+    <version>1.18.2-35</version>
     <name>armorstandeditor</name>
     <url>http://maven.apache.org</url>
 
@@ -24,6 +24,16 @@
     </pluginRepositories>
 
     <repositories>
+        <!-- Worldguard -->
+        <repository>
+            <id>sk89q-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
+        <!-- PlotSquared -->
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
         <!-- Spigot MC -->
         <repository>
             <id>spigot-repo</id>
@@ -39,6 +49,11 @@
             <id>jeff-media-public</id>
             <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
         </repository>
+        <!--- Grief Prevention -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -47,6 +62,40 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.18.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--- Worldguard -->
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-bukkit</artifactId>
+            <version>7.0.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--- PlotSquared -->
+            <dependency>
+                <groupId>com.plotsquared</groupId>
+                <artifactId>PlotSquared-Core</artifactId>
+                <version>6.6.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.plotsquared</groupId>
+                <artifactId>PlotSquared-Bukkit</artifactId>
+                <version>6.6.0</version>
+                <scope>provided</scope>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>PlotSquared-Core</artifactId>
+                        <groupId>*</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        <!--- GriefPrevention -->
+        <dependency>
+            <groupId>com.github.TechFortress</groupId>
+            <artifactId>GriefPrevention</artifactId>
+            <version>16.18</version>
             <scope>provided</scope>
         </dependency>
         <!--- Towny -->
@@ -63,6 +112,7 @@
             <version>1.3.2</version> <!-- Check on GitHub for the latest version -->
             <scope>compile</scope>
         </dependency>
+        <!--- CoreProtect TODO -->
     </dependencies>
     <!--Java 8-->
     <build>
@@ -70,7 +120,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.3.0</version>
                 <configuration>
                     <relocations>
                         <!-- Using the maven-shade-plugin to shade and relocate the UpdateChecker -->
@@ -93,7 +143,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.0</version>
+                <version>3.10.1</version>
                 <configuration>
                     <source>11</source>
                     <target>11</target>
