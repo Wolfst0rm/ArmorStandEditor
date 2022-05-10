@@ -23,6 +23,7 @@ public class PlotSquaredProtection {
 
     public boolean checkPermission(Block block, Player player){
         if(!psEnabled) return true;
+        if(player.hasPermission("asedit.ignoreProtection.plotSquared")) return true;
 
         Location location = Location.at(block.getWorld().getName(),
                 block.getLocation().getBlockX(),

@@ -22,6 +22,7 @@ public class TownyProtection {
     public boolean checkPermission(Block block, Player player){
         if(!tEnabled) return true;
         if(player.isOp()) return true;
+        if(player.hasPermission("asedit.ignoreProtection.towny")) return true; //Add Additional Permission
 
         Location playerLoc = player.getLocation();
 

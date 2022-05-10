@@ -24,6 +24,7 @@ public class GriefPreventionProtection {
 
     public boolean checkPermission(Block block, Player player){
         if(!gpEnabled) return true;
+        if(player.hasPermission("asedit.ignoreProtection.griefPrevention")) return true;
 
         Location blockLoc = block.getLocation();
         Claim landClaim = griefPrevention.dataStore.getClaimAt(blockLoc, false, null);
