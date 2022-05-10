@@ -75,14 +75,14 @@
             <dependency>
                 <groupId>com.plotsquared</groupId>
                 <artifactId>PlotSquared-Core</artifactId>
-                <version>6.6.0</version>
+                <version>6.6.3</version>
                 <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>com.plotsquared</groupId>
                 <artifactId>PlotSquared-Bukkit</artifactId>
-                <version>6.6.0</version>
+                <version>6.6.3</version>
                 <scope>provided</scope>
                 <exclusions>
                     <exclusion>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.98.1.4</version>
+            <version>0.98.1.10</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
@@ -112,7 +112,7 @@
             <version>1.3.2</version> <!-- Check on GitHub for the latest version -->
             <scope>compile</scope>
         </dependency>
-        <!--- CoreProtect TODO -->
+        <!--- CoreProtect TODO: 1.19? -->
     </dependencies>
     <!--Java 8-->
     <build>
