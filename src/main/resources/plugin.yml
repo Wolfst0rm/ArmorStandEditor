@@ -15,7 +15,6 @@ commands:
     permission: asedit.basic
     permission-message: "You are lacking the permission node 'asedit.basic'"
 permissions:
-
     asedit.*:
       description: All ArmorStandEditor Commands
       default: op
