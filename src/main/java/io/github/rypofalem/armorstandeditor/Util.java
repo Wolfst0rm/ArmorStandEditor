@@ -21,7 +21,7 @@ package io.github.rypofalem.armorstandeditor;
 
 public abstract class Util {
 	
-	public static final double FULLCIRCLE = Math.PI*2;
+	public static final double fullCircle = Math.PI*2;
 	
 	public static <T extends Enum<?>> String getEnumList(Class<T> enumType){
 		return getEnumList(enumType, " | ");
@@ -52,7 +52,7 @@ public abstract class Util {
 
 	//clamps angle to 0 if it exceeds 2PI rad (360 degrees), is closer to 0 than angleChange value, or is closer to 2PI rad than 2PI rad - angleChange value.
 	private static double fixAngle(double angle, double angleChange){
-		if(angle > FULLCIRCLE){
+		if(angle > fullCircle){
 			return 0;
 		}
 
@@ -60,7 +60,7 @@ public abstract class Util {
 			return 0;
 		}
 
-		if(angle > FULLCIRCLE-angle && angle > FULLCIRCLE - (angleChange/2)){
+		if(angle > fullCircle -angle && angle > fullCircle - (angleChange/2)){
 			return 0;
 		}
 
