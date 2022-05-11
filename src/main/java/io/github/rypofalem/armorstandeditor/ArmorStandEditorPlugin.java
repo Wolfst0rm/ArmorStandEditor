@@ -18,7 +18,11 @@
  */
 
 package io.github.rypofalem.armorstandeditor;
-
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
+import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import io.github.rypofalem.armorstandeditor.language.Language;
 
 import de.jeff_media.updatechecker.*;
@@ -99,8 +103,38 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private static final int PLUGIN_ID = 12668;
 
+	public static StateFlag WG_ASEDIT_FLAG;
+
 	public ArmorStandEditorPlugin(){
 		instance = this;
+	}
+
+	/*
+	 *	For Internal Debugging -
+	 *
+	 *   set debug: true in Config.yml
+	 *   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
+	 *
+	 * 	To be refactored - Apart Log File.
+	 */
+	public void print(String message){
+		if(debug){
+			log(message);
+		}
+	}
+
+	@Override
+	public void onLoad(){
+		FlagRegistry registry = WorldGuard.getInstance().getFlagRegistry();
+		try {
+			StateFlag wgFlag = new StateFlag("asedit", false);
+			registry.register(wgFlag);
+			WG_ASEDIT_FLAG = wgFlag; // only set our field if there was no error
+			getLogger().info("SUCCESS: ASEDIT Flag has been set/enabled.");
+		} catch (Exception e) {
+			getLogger().warning("FAIL: Unable to set ASEDIT Flag.");
+			getLogger().warning(e.getMessage());
+		}
 	}
 
 	@Override
@@ -346,13 +380,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		return this.getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
 	}
 
-	public boolean getHasSpigot(){
+	public boolean getHasSpigot() {
 		try {
 			Class.forName("org.spigotmc.SpigotConfig");
 			print("SpigotMC Detected.");
 			nmsVersionNotLatest = "SpigotMC ASAP.";
 			return true;
-		} catch (ClassNotFoundException e){
+		} catch (ClassNotFoundException e) {
 			nmsVersionNotLatest = "";
 			return false;
 		}
@@ -375,19 +409,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		} catch (ClassNotFoundException e){
 			nmsVersionNotLatest = "";
 			return false;
-		}
-	}
-	/*
-	*	For Internal Debugging -
-	*
-	*   set debug: true in Config.yml
-	*   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
-	*
-	* 	To be refactored - Apart Log File.
-	*/
-	public void print(String message){
-		if(debug){
-			log(message);
 		}
 	}
 
