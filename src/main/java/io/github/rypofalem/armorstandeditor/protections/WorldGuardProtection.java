@@ -28,7 +28,6 @@ import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.protection.regions.RegionQuery;
 
 
-import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -51,6 +50,6 @@ public class WorldGuardProtection {
 
         LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
 
-        return regionQry.testState(BukkitAdapter.adapt(block.getLocation()), localPlayer, ArmorStandEditorPlugin.WG_ASEDIT_FLAG);
+        return regionQry.testState(BukkitAdapter.adapt(block.getLocation()), localPlayer, Flags.BUILD);
     }
 }
