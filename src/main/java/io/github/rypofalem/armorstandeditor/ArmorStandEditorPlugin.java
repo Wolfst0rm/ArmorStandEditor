@@ -488,6 +488,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			return map;
 		}));
 
+		//TODO: Add in Metrics for Use of Invisibility Flags
 	}
 
 	public NamespacedKey getIconKey() {
