@@ -488,7 +488,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			return map;
 		}));
 
-		//TODO: Add in Metrics for Use of Invisibility Flags
+		//ArmorStandInvis Config
+		metrics.addCustomChart(new SimplePie("armor_stand_invisibility_usage", () -> getConfig().getString("armorStandVisibility")));
+
+		//ArmorStandInvis Config
+		metrics.addCustomChart(new SimplePie("itemframe_invisibility_used", () -> getConfig().getString("invisibleItemFrames")));
+
 	}
 
 	public NamespacedKey getIconKey() {
