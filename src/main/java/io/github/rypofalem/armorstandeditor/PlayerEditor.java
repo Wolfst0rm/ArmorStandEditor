@@ -363,6 +363,9 @@ public class PlayerEditor {
 
 	void toggleVisible(ArmorStand armorStand) {
 		if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisibility) return; //Option to use perms or Config
+		String asLoc = armorStand.getLocation().toString();
+		String result = String.valueOf(!armorStand.isVisible());
+		plugin.log("Player (" + getPlayer().getDisplayName() + ") has made the ArmorStand at " + asLoc + " " + result);
 		armorStand.setVisible(!armorStand.isVisible());
 	}
 
@@ -424,14 +427,14 @@ public class PlayerEditor {
 			target = null;
 			targetList = null;
 			sendMessage("notarget", null);
-			//plugin.getServer().getLogger().info("ArmorStand Target Unlocked");
+			plugin.log("ArmorStand targeted: UNLOCKED");
 		} else {
 
 			if (targetList == null) {
 				targetList = armorStands;
 				targetIndex = 0;
 				sendMessage("target", null);
-				//plugin.getServer().getLogger().info("ArmorStand Target Locked");
+				plugin.log("ArmorStand targeted: UNLOCKED");
 			} else {
 				boolean same = targetList.size() == armorStands.size();
 				if (same) for (ArmorStand as : armorStands) {
@@ -445,7 +448,7 @@ public class PlayerEditor {
 					targetList = armorStands;
 					targetIndex = 0;
 					sendMessage("target", null);
-					//plugin.getServer().getLogger().info("ArmorStand Target Locked");
+					plugin.log("ArmorStand targeted: LOCKED");
 				}
 			}
 			target = targetList.get(targetIndex);
@@ -461,14 +464,14 @@ public class PlayerEditor {
 			frameTarget = null;
 			frameTargetList = null;
 			sendMessage("noframetarget", null);
-			//plugin.getServer().getLogger().info("ItemFrame Target Unlocked");
+			plugin.log("ItemFrame targeted: UNLOCKED");
 		} else {
 
 			if (frameTargetList == null) {
 				frameTargetList = itemFrames;
 				frameTargetIndex = 0;
 				sendMessage("frametarget", null);
-				//plugin.getServer().getLogger().info("ItemFrame Target Un;ocked");
+				plugin.log("ItemFrame targeted: UNLOCKED");
 			} else {
 				boolean same = frameTargetList.size() == itemFrames.size();
 				if (same) for (final ItemFrame itemf : itemFrames) {
@@ -482,7 +485,7 @@ public class PlayerEditor {
 					frameTargetList = itemFrames;
 					frameTargetIndex = 0;
 					sendMessage("frametarget", null);
-					//plugin.getServer().getLogger().info("ItemFrame Target Locked");
+					plugin.log("ItemFrame targeted: LOCKED");
 				}
 				frameTarget = frameTargetList.get(frameTargetIndex);
 			}

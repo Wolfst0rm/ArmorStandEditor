@@ -49,6 +49,8 @@ import java.io.File;
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
+	private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
+
 	private NamespacedKey iconKey;
 	private static ArmorStandEditorPlugin instance;
 	private CommandEx execute;
@@ -57,7 +59,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	//Server Version Detection: Paper or Spigot and Invalid NMS Version
 	public boolean hasSpigot = false;
 	public boolean hasPaper = false;
-	String nmsVersion = null;
 	String nmsVersionNotLatest = null;
 	PluginDescriptionFile pdfFile = this.getDescription();
 	static final String SEPARATOR_FIELD = "================================";
@@ -97,7 +98,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private static ArmorStandEditorPlugin plugin;
 
-	private static final int PLUGIN_ID = 12668;
+	//TODO: Probably in the longer run add in Custom WG Flag.
 
 	public ArmorStandEditorPlugin(){
 		instance = this;
@@ -377,6 +378,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			return false;
 		}
 	}
+
 	/*
 	*	For Internal Debugging -
 	*

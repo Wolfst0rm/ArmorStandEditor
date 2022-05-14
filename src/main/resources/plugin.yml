@@ -6,7 +6,7 @@ website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, Havens-Edge-MC, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny, WorldGuard, PlotSquared, GriefPrevention]
+softdepend: [Towny, WorldGuard, PlotSquared, GriefPrevention, SuperiorSkyblock2]
 commands:
   ase:
     description: Changes the function of the armorstand edit tool.
@@ -56,6 +56,9 @@ permissions:
     asedit.ignoreProtection.worldGuard:
       description: Allows user to ignore PlotSquared's Protection Limitations.
       default: false
+    asedit.ignoreProtection.skyblock:
+      description: Allows user to ignore PlotSquared's Protection Limitations.
+      default: false
 
     asedit.ignoreProtection.*:
       description: Ignore all Protection Limitations
@@ -65,6 +68,7 @@ permissions:
         asedit.ignoreProtection.griefProtection: true
         asedit.ignoreProtection.plotSquared: true
         asedit.ignoreProtection.worldGuard:  true
+        asedit.ignoreProtection.skyblock: true
 
     asedit.permpack.dontIgnoreProtections:
       default: true
@@ -73,6 +77,7 @@ permissions:
         asedit.ignoreProtection.griefProtection: false
         asedit.ignoreProtection.plotSquared: false
         asedit.ignoreProtection.worldGuard:  false
+        asedit.ignoreProtection.skyblock: false
 
     asedit.permpack.basic:
       default: false

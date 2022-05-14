@@ -20,10 +20,7 @@
 package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
-import io.github.rypofalem.armorstandeditor.protections.GriefPreventionProtection;
-import io.github.rypofalem.armorstandeditor.protections.PlotSquaredProtection;
-import io.github.rypofalem.armorstandeditor.protections.TownyProtection;
-import io.github.rypofalem.armorstandeditor.protections.WorldGuardProtection;
+import io.github.rypofalem.armorstandeditor.protections.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -62,6 +59,7 @@ public class PlayerEditorManager implements Listener {
 	private PlotSquaredProtection plotSquaredProtection;
 	private WorldGuardProtection worldGuardProtection;
 	private GriefPreventionProtection griefPreventionProtection;
+	private SkyblockProtection skyblockProtection;
 
 	PlayerEditorManager( ArmorStandEditorPlugin plugin) {
 		this.plugin = plugin;
@@ -298,8 +296,10 @@ public class PlayerEditorManager implements Listener {
 		boolean protectPSActive 							= plotSquaredProtection.checkPermission(block, player);
 		boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
 		boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
+		boolean protectSkyActive 							= skyblockProtection.checkPermission(player);
 
-		return protectTActive && protectPSActive && protectWGActive && protectGPActive;
+		return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive;
+
 	}
 
 	boolean canEdit( Player player,  ItemFrame itemf) {
@@ -312,8 +312,9 @@ public class PlayerEditorManager implements Listener {
 		boolean protectPSActive 							= plotSquaredProtection.checkPermission(block, player);
 		boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
 		boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
+		boolean protectSkyActive 							= skyblockProtection.checkPermission(player);
 
-		return protectTActive && protectPSActive && protectWGActive && protectGPActive;
+		return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive;
 	}
 
 	void applyLeftTool( Player player,  ArmorStand as) {
