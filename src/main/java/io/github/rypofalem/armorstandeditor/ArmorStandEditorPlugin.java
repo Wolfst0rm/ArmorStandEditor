@@ -57,6 +57,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	private Language lang;
 
 	//Server Version Detection: Paper or Spigot and Invalid NMS Version
+	String nmsVersion;
 	public boolean hasSpigot = false;
 	public boolean hasPaper = false;
 	String nmsVersionNotLatest = null;
