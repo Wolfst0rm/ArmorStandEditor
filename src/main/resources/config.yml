@@ -11,7 +11,7 @@ tool: FLINT
 requireSneaking: false
 
 #Allow the option to toggle invisibility for ItemFrames and ArmorStand
-ivisibleItemFrames: true
+invisibleItemFrames: true
 armorStandVisibility: true
 
 #(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
