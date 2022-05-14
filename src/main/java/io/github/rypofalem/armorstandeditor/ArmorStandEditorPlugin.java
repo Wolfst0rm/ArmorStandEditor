@@ -386,7 +386,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	* 	To be refactored - Apart Log File.
 	*/
 	public void print(String message){
-		if(getConfig().getBoolean("debug") == true){
+		if(debug){
 			log(message);
 		}
 	}
