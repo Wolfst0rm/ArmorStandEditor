@@ -7,6 +7,7 @@ author: Wolfstorm
 authors: [Wolfstorm, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone]
 description: Allows players to edit data of armorstands without any commands.
 softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared]
+
 commands:
   ase:
     description: Changes the function of the armorstand edit tool.
@@ -14,7 +15,15 @@ commands:
     aliases: [ase, asedit, armorstandeditor]
     permission: asedit.basic
     permission-message: "You are lacking the permission node 'asedit.basic'"
+
 permissions:
+    asedit.*:
+      description: All ArmorStandEditor Commands
+      default: op
+      children:
+        asedit.permpack.admin: true
+        asedit.ignoreProtection.*: true
+
     asedit.basic:
       description: Allow use armorstand edit functions. If set to false it will override all other functions.
       default: true
@@ -37,6 +46,36 @@ permissions:
       description: Allows the checking for updates.
       default: false
 
+    asedit.ignoreProtection.towny:
+      description: Allows user to ignore Towny's Protection Limitations.
+      default: false
+    asedit.ignoreProtection.griefProtection:
+      description: Allows user to ignore GriefProtection's Protection Limitations.
+      default: false
+    asedit.ignoreProtection.plotSquared:
+      description: Allows user to ignore PlotSquared's Protection Limitations.
+      default: false
+    asedit.ignoreProtection.worldGuard:
+      description: Allows user to ignore PlotSquared's Protection Limitations.
+      default: false
+
+    asedit.ignoreProtection.*:
+      description: Ignore all Protection Limitations
+      default: op
+      children:
+        asedit.ignoreProtection.towny: true
+        asedit.ignoreProtection.griefProtection: true
+        asedit.ignoreProtection.plotSquared: true
+        asedit.ignoreProtection.worldGuard:  true
+
+    asedit.permpack.dontIgnoreProtections:
+      default: true
+      children:
+        asedit.ignoreProtection.towny: false
+        asedit.ignoreProtection.griefProtection: false
+        asedit.ignoreProtection.plotSquared: false
+        asedit.ignoreProtection.worldGuard:  false
+
     asedit.permpack.basic:
       default: false
       children:
@@ -56,3 +95,4 @@ permissions:
         asedit.disableslots: true
         asedit.rename: true
         asedit.update: true
+        asedit.ignorePermissions.*: true
