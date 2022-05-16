@@ -30,10 +30,14 @@ public class GriefPreventionProtection {
         Claim landClaim = griefPrevention.dataStore.getClaimAt(blockLoc, false, null);
         Material blockMat = block.getType();
 
-        if(landClaim != null && landClaim.allowBuild(player,blockMat) != null){
-            player.sendMessage(ChatColor.RED + landClaim.allowBuild(player, blockMat));
-            return false;
+        if(GriefPrevention.instance.claimsEnabledForWorld(blockLoc.getWorld())){
+            if(landClaim != null && landClaim.allowEdit(player) != null && landClaim.allowBuild(player,blockMat) != null){
+                player.sendMessage(ChatColor.RED + landClaim.allowEdit(player));
+                player.sendMessage(ChatColor.RED + landClaim.allowBuild(player, blockMat));
+                return false;
+            }
         }
+
         return true;
 
 
