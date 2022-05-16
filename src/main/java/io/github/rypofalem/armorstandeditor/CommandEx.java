@@ -101,7 +101,7 @@ public class CommandEx implements CommandExecutor {
 
 	private void commandGive(Player player) {
 		if (plugin.getAllowCustomModelData() && checkPermission(player, "give", true)) {
-			ItemStack stack = new ItemStack(plugin.getEditTool()); //Only Support EditTool
+			ItemStack stack = new ItemStack(plugin.getEditTool()); //Only Support EditTool at the MOMENT
 			ItemMeta meta = stack.getItemMeta();
 			meta.setCustomModelData(plugin.getCustomModelDataInt());
 			meta.setUnbreakable(true);
