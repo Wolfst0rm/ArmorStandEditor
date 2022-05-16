@@ -42,7 +42,7 @@ public class CommandEx implements CommandExecutor {
 	final String HELP = ChatColor.YELLOW + "/ase help";
 	final String VERSION = ChatColor.YELLOW + "/ase version";
 	final String UPDATE = ChatColor.YELLOW + "/ase update";
-	final String GIVE_CUSTOMMODEL = ChatColor.YELLOW + "/ase give";
+	final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
 
 	public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
 		this.plugin = armorStandEditorPlugin;
@@ -65,7 +65,7 @@ public class CommandEx implements CommandExecutor {
 			player.sendMessage(VERSION);
 			player.sendMessage(UPDATE);
 			player.sendMessage(HELP);
-			player.sendMessage(GIVE_CUSTOMMODEL);
+			player.sendMessage(GIVECUSTOMMODEL);
 			return true;
 		}
 		switch (args[0].toLowerCase()) {
@@ -94,6 +94,7 @@ public class CommandEx implements CommandExecutor {
 				sender.sendMessage(VERSION);
 				sender.sendMessage(UPDATE);
 				sender.sendMessage(HELP);
+				player.sendMessage(GIVECUSTOMMODEL);
 		}
 		return true;
 	}
@@ -107,6 +108,10 @@ public class CommandEx implements CommandExecutor {
 			meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 			stack.setItemMeta(meta);
 			player.getInventory().addItem(stack);
+		} else{
+			player.sendMessage(plugin.getLang().getMessage("nogive", "warn"));
+			//TODO: Add nogive to Message file
+			player.sendMessage(GIVECUSTOMMODEL);
 		}
 	}
 	private void commandSlot(Player player, String[] args) {
