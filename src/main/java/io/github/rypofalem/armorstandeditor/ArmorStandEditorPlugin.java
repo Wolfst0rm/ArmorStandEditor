@@ -99,7 +99,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private static ArmorStandEditorPlugin plugin;
 
-	//TODO: Probably in the longer run add in Custom WG Flag.
+	//1.19?: Add in Custom WG Flag? To be seen if needed if WG Protection is enough!
 
 	public ArmorStandEditorPlugin(){
 		instance = this;
