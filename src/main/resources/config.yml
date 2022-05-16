@@ -1,18 +1,21 @@
-#How many rotations to make a full circle in Coarse adjustment mode
-coarse: 12
+#-----------------------------#
+#   ArmorStandEditor-Reborn   #
+#-----------------------------#
 
-#How many rotations to make a full circle in Fine adjustment mode
-fine: 120
+#DO NOT CHANGE THIS
+version: 1.18.2-35
+
+#----------- LANGUAGE
+#Name of the language file you wish to use
+
+#NOTE: If you are editing en_US.yml, it will not persist across restarts due to it being overwritten
+#Please read the comments at the top of that file before editing/changing/modifying.
+lang: en_US.yml
+
+#----------- TOOL SETTINGS
 
 #Name of the edit tool's item Material. You can find a full list at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 tool: FLINT
-
-#If true, the GUI will only open if the player is sneaking
-requireSneaking: false
-
-#Allow the option to toggle invisibility for ItemFrames and ArmorStand
-invisibleItemFrames: true
-armorStandVisibility: true
 
 #(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
 requireToolData: false
@@ -22,16 +25,34 @@ toolData: 0
 requireToolLore: false
 toolLore: Let's get dangerous
 
-#Name of the language file you wish to use
-lang: en_US.yml
+#(Optional) Allow the use of CustomModelData - NOTE: This looks at the editTool set by Config
+#and at the Int set here to know what to set.
+allowCustomModelData: false
+customModelDataInt: 0
 
-#If false plugin notifications will be sent to the chat box. If true messages will be sent to the action bar.
-sendMessagesToActionBar: true
+#----------- ARMOR STAND SPECIFICS
+
+#How many rotations to make a full circle in Coarse adjustment mode
+coarse: 12
+
+#How many rotations to make a full circle in Fine adjustment mode
+fine: 120
+
+#Allow the option to toggle invisibility for ItemFrames and ArmorStand
+invisibleItemFrames: true
+armorStandVisibility: true
+
+#------ GUI Options
+
+#If true, the GUI will only open if the player is sneaking
+requireSneaking: false
+
+#------ Misc Options
 
 #(Optional) Glowing Item Frames Support for Item Frames in 1.17 - WILL NOT WORK IN 1.16 OR LOWER AND 1.17.1 OR HIGHER
-#If true, players can make itemFrames glow by right clicking with a Glow Ink Sac
+#If true, players can make itemFrames glow by right-clicking with a Glow Ink Sac
 glowingItemFrame: true
 
-#DO NOT ENABLE - For Testing Purposes. Can lead to unwanted sideaffects
+#DO NOT ENABLE - For Testing Purposes. Can lead to unwanted side effects
 #Enable if you are submitting a bug report PLEASE!
 debug: false

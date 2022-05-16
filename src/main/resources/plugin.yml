@@ -42,6 +42,9 @@ permissions:
     asedit.disableslots:
       description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
       default: true
+    asedit.give:
+      description: Gives player the EditTool with Proper CustomModelData
+      default: false
     asedit.update:
       description: Allows the checking for updates.
       default: false
@@ -77,16 +80,17 @@ permissions:
         asedit.ignoreProtection.worldGuard:  false
 
     asedit.permpack.basic:
-      default: false
+      default: true
       children:
         asedit.basic: true
         asedit.equipment: true
         asedit.disableslots: true
         asedit.rename: true
         asedit.update: false
+        asedit.give: false
 
     asedit.permpack.admin:
-      default: false
+      default: op
       children:
         asedit.basic: true
         asedit.itemframe.invisible: true

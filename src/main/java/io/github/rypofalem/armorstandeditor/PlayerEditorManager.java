@@ -81,7 +81,7 @@ public class PlayerEditorManager implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	void onArmorStandDamage( EntityDamageByEntityEvent event) {
 		if (!(event.getDamager() instanceof Player)) return;
-		 Player player = (Player) event.getDamager();
+		Player player = (Player) event.getDamager();
 		if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
 		if (!((event.getEntity() instanceof ArmorStand) || event.getEntity() instanceof ItemFrame)) {
 			event.setCancelled(true);

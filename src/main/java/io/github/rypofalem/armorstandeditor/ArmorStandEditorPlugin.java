@@ -70,10 +70,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	String toolType;
 	boolean requireToolData = false;
 	boolean sendToActionBar = true;
+
 	int editToolData = Integer.MIN_VALUE;
 	boolean requireSneaking = false;
 	boolean requireToolLore = false;
 	String editToolLore = null;
+	boolean allowCustomModelData = false;
+	Integer customModelDataInt = Integer.MIN_VALUE;
+
 	boolean debug = false; //weather or not to broadcast messages via print(String message)
 	double coarseRot;
 	double fineRot;
@@ -166,7 +170,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//Is Debug Enabled
 		debug = getConfig().getBoolean("debug", false);
 		print("Debug Mode Enabled? Well if you can read this its true");
-
 		if(debug){
 			createDebugFile();
 		}
@@ -201,6 +204,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			 getLogger().info(SEPARATOR_FIELD);
 			 getServer().getPluginManager().disablePlugin(this);
 			 return;
+		}
+
+		//Custom Model Data
+		allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
+		print("Do we allow CustomModelData?: " + allowCustomModelData);
+
+		if(allowCustomModelData){
+			customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
+			print("CustomModelData Integer is: " + customModelDataInt);
 		}
 
 		//ArmorStandVisibility Node
@@ -317,32 +329,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			}
 	}
 
-	public void log(String message){
-		//Output to Server Console - Safer than doing a Broadcast to everyone on the Server
-		String timeMsgSep = ": ";
-		this.getServer().getLogger().info("ArmorStandEditor: " + message);
-
-		try{
-			fos = new FileOutputStream(f, true);
-
-			//Write the Content as Bytes
-			fos.write(timeAsString.getBytes());
-			fos.write(timeMsgSep.getBytes());
-			fos.write(message.getBytes());
-			fos.write(10);
-			fos.flush();
-		}catch(IOException e){
-			this.getServer().getLogger().warning(e.getMessage());
-		}finally{
-			if(fos != null){
-				try {
-					fos.close();
-				} catch (IOException e) {
-					this.getServer().getLogger().warning(e.getMessage());
-				}
-			}
-		}
-	}
 
 	public String getNmsVersion(){
 		return this.getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
@@ -379,28 +365,19 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			return false;
 		}
 	}
-
-	/*
-	*	For Internal Debugging -
-	*
-	*   set debug: true in Config.yml
-	*   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
-	*
-	* 	To be refactored - Apart Log File.
-	*/
-	public void print(String message){
-		if(debug){
-			log(message);
-		}
-	}
-
-	public static ArmorStandEditorPlugin instance(){
-		return instance;
-	}
-
 	public Language getLang(){
 		return lang;
 	}
+
+	public boolean getAllowCustomModelData() {
+		return this.getConfig().getBoolean("allowCustomModelData");
+	}
+
+	public Material getEditTool() {
+		return this.editTool;
+	}
+
+	public Integer getCustomModelDataInt() { return this.getConfig().getInt("customModelDataInt"); }
 
 	public boolean isEditTool(ItemStack itemStk){
 		if (itemStk == null) { return false; }
@@ -433,7 +410,62 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		}
 
+		if (customModelDataInt != null) {
+			//If the ItemStack does not have Metadata then we return false
+			if(!itemStk.hasItemMeta()) { return false; }
+
+			Integer itemCustomModel = itemStk.getItemMeta().getCustomModelData();
+			if (itemCustomModel == null) { return false; }
+
+			if(!itemCustomModel.equals(customModelDataInt)) { return false;	}
+		}
+
 		return true;
+	}
+
+	public void log(String message){
+		//Output to Server Console - Safer than doing a Broadcast to everyone on the Server
+		String timeMsgSep = ": ";
+		this.getServer().getLogger().info("ArmorStandEditor: " + message);
+
+		try{
+			fos = new FileOutputStream(f, true);
+
+			//Write the Content as Bytes
+			fos.write(timeAsString.getBytes());
+			fos.write(timeMsgSep.getBytes());
+			fos.write(message.getBytes());
+			fos.write(10);
+			fos.flush();
+		}catch(IOException e){
+			this.getServer().getLogger().warning(e.getMessage());
+		}finally{
+			if(fos != null){
+				try {
+					fos.close();
+				} catch (IOException e) {
+					this.getServer().getLogger().warning(e.getMessage());
+				}
+			}
+		}
+	}
+
+	/*
+	*	For Internal Debugging -
+	*
+	*   set debug: true in Config.yml
+	*   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
+	*
+	* 	To be refactored - Apart Log File.
+	*/
+	public void print(String message){
+		if(debug){
+			log(message);
+		}
+	}
+
+	public static ArmorStandEditorPlugin instance(){
+		return instance;
 	}
 
 	//Metrics/bStats Support
