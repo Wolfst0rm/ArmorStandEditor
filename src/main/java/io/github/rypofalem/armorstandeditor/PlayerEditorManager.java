@@ -64,8 +64,8 @@ public class PlayerEditorManager implements Listener {
 	PlayerEditorManager( ArmorStandEditorPlugin plugin) {
 		this.plugin = plugin;
 		players = new HashMap<>();
-		coarseAdj = Util.fullCircle / plugin.coarseRot;
-		fineAdj = Util.fullCircle / plugin.fineRot;
+		coarseAdj = Util.FULL_CIRCLE / plugin.coarseRot;
+		fineAdj = Util.FULL_CIRCLE / plugin.fineRot;
 		coarseMov = 1;
 		fineMov = .03125; // 1/32
 		counter = new TickCounter();

@@ -8,18 +8,18 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 public class SkyblockProtection {
-    private final boolean SkyblockEnabled;
+    private final boolean skyblockEnabled;
 
     public SkyblockProtection(){
         //NOTE FROM AUTHOR: I know there are many plugins that have Skyblock. I am using SuperiorSkyBlock2 as an Example!
         //IF YOU WANT YOUR SKYBLOCK ADDED, PLEASE SUBMIT A FEATURE REQUEST!
 
-        SkyblockEnabled = Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2");
-        if (!SkyblockEnabled) return;
+        skyblockEnabled = Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2");
+        if (!skyblockEnabled) return;
     }
 
     public boolean checkPermission(Player player){
-        if(!SkyblockEnabled) return true;
+        if(!skyblockEnabled) return true;
         if(player.isOp()) return true;
         if(player.hasPermission("asedit.ignoreProtection.skyblock") || SuperiorSkyblockAPI.getPlayer(player).hasBypassModeEnabled()) return true; //Add Additional Permission
 

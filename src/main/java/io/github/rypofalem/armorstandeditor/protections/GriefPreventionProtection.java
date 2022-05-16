@@ -27,15 +27,19 @@ public class GriefPreventionProtection {
         if(player.hasPermission("asedit.ignoreProtection.griefPrevention")) return true;
 
         Location blockLoc = block.getLocation();
-        Claim landClaim = griefPrevention.dataStore.getClaimAt(blockLoc, false, null);
-        Material blockMat = block.getType();
 
-        if(GriefPrevention.instance.claimsEnabledForWorld(blockLoc.getWorld())){
+        if(GriefPrevention.instance.claimsEnabledForWorld(blockLoc.getWorld()) == true){
+
+            Claim landClaim = griefPrevention.dataStore.getClaimAt(blockLoc, false, null);
+            Material blockMat = block.getType();
+
             if(landClaim != null && landClaim.allowEdit(player) != null && landClaim.allowBuild(player,blockMat) != null){
                 player.sendMessage(ChatColor.RED + landClaim.allowEdit(player));
                 player.sendMessage(ChatColor.RED + landClaim.allowBuild(player, blockMat));
                 return false;
             }
+        } else{
+            return true;
         }
 
         return true;
