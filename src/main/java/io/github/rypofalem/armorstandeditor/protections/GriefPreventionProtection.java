@@ -28,7 +28,7 @@ public class GriefPreventionProtection {
 
         Location blockLoc = block.getLocation();
 
-        if(GriefPrevention.instance.claimsEnabledForWorld(blockLoc.getWorld()) == true){
+        if(GriefPrevention.instance.claimsEnabledForWorld(blockLoc.getWorld())){
 
             Claim landClaim = griefPrevention.dataStore.getClaimAt(blockLoc, false, null);
             Material blockMat = block.getType();
