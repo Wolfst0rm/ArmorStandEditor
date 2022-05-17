@@ -108,6 +108,7 @@ public class CommandEx implements CommandExecutor {
 			meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 			stack.setItemMeta(meta);
 			player.getInventory().addItem(stack);
+			player.sendMessage(plugin.getLang().getMessage("give", "info"));
 		} else{
 			player.sendMessage(plugin.getLang().getMessage("nogive", "warn"));
 			//TODO: Add nogive to Message file
