@@ -76,6 +76,7 @@ public class PlayerEditorManager implements Listener {
 		plotSquaredProtection 	  = new PlotSquaredProtection();
 		worldGuardProtection 	  = new WorldGuardProtection();
 		griefPreventionProtection = new GriefPreventionProtection();
+		skyblockProtection        = new SkyblockProtection();
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
