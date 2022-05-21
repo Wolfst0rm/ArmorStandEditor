@@ -23,11 +23,9 @@ public class SkyblockProtection {
         if(player.hasPermission("asedit.ignoreProtection.skyblock") || SuperiorSkyblockAPI.getPlayer(player).hasBypassModeEnabled()) return true; //Add Additional Permission
 
         SuperiorPlayer sp = SuperiorSkyblockAPI.getPlayer(player);
-        assert sp == null;
 
         //GET ISLAND FOR A GIVEN LOCATION
         Island island = SuperiorSkyblockAPI.getIslandAt(sp.getLocation());
-        assert island == null;
 
         if(!island.isMember(sp) && !island.isCoop(sp)){
             return false;
