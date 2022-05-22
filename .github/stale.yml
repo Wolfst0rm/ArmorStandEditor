@@ -1,0 +1,21 @@
+daysUntilStale: 60
+daysUntilClose: 7
+exemptLabels:
+  - "Build: Devel"
+  - "bug"
+  - "NF-0: Accepted"
+  - "NF-2: Implementation - In Progress"
+  - "NF-4: Rebase Required"
+  - "BUG-1: Reproduced"
+  - "Work in Progress"
+  - "Blocked"
+  - "question"
+staleLabel: "Stale"
+markComment: >
+  This issue has been automatically marked as stale because it has not had
+  recent activity. It will be closed if no further activity occurs. Thank you
+  for your contributions.
+closeComment: >
+  This issue has been automatically closed because it has not had activity in
+  a long time. If the issue still applies to the most recent supported
+  version, please open a new issue referencing this original issue.
