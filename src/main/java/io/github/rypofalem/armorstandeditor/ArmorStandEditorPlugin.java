@@ -1,6 +1,6 @@
 /*
  * ArmorStandEditor: Bukkit plugin to allow editing armor stand attributes
- * Copyright (C) 2016  RypoFalem
+ * Copyright (C) 2016-2022  RypoFalem
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,15 +49,17 @@ import java.io.File;
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
+	private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
+
 	private NamespacedKey iconKey;
 	private static ArmorStandEditorPlugin instance;
 	private CommandEx execute;
 	private Language lang;
 
 	//Server Version Detection: Paper or Spigot and Invalid NMS Version
+	String nmsVersion;
 	public boolean hasSpigot = false;
 	public boolean hasPaper = false;
-	String nmsVersion = null;
 	String nmsVersionNotLatest = null;
 	PluginDescriptionFile pdfFile = this.getDescription();
 	static final String SEPARATOR_FIELD = "================================";
@@ -68,10 +70,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	String toolType;
 	boolean requireToolData = false;
 	boolean sendToActionBar = true;
+
 	int editToolData = Integer.MIN_VALUE;
 	boolean requireSneaking = false;
 	boolean requireToolLore = false;
 	String editToolLore = null;
+	boolean allowCustomModelData = false;
+	Integer customModelDataInt = Integer.MIN_VALUE;
+
 	boolean debug = false; //weather or not to broadcast messages via print(String message)
 	double coarseRot;
 	double fineRot;
@@ -97,7 +103,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 	private static ArmorStandEditorPlugin plugin;
 
-	private static final int PLUGIN_ID = 12668;
+	//1.19?: Add in Custom WG Flag? To be seen if needed if WG Protection is enough!
 
 	public ArmorStandEditorPlugin(){
 		instance = this;
@@ -164,7 +170,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		//Is Debug Enabled
 		debug = getConfig().getBoolean("debug", false);
 		print("Debug Mode Enabled? Well if you can read this its true");
-
 		if(debug){
 			createDebugFile();
 		}
@@ -199,6 +204,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			 getLogger().info(SEPARATOR_FIELD);
 			 getServer().getPluginManager().disablePlugin(this);
 			 return;
+		}
+
+		//Custom Model Data
+		allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
+		print("Do we allow CustomModelData?: " + allowCustomModelData);
+
+		if(allowCustomModelData){
+			customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
+			print("CustomModelData Integer is: " + customModelDataInt);
 		}
 
 		//ArmorStandVisibility Node
@@ -315,32 +329,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			}
 	}
 
-	public void log(String message){
-		//Output to Server Console - Safer than doing a Broadcast to everyone on the Server
-		String timeMsgSep = ": ";
-		this.getServer().getLogger().info("ArmorStandEditor: " + message);
-
-		try{
-			fos = new FileOutputStream(f, true);
-
-			//Write the Content as Bytes
-			fos.write(timeAsString.getBytes());
-			fos.write(timeMsgSep.getBytes());
-			fos.write(message.getBytes());
-			fos.write(10);
-			fos.flush();
-		}catch(IOException e){
-			this.getServer().getLogger().warning(e.getMessage());
-		}finally{
-			if(fos != null){
-				try {
-					fos.close();
-				} catch (IOException e) {
-					this.getServer().getLogger().warning(e.getMessage());
-				}
-			}
-		}
-	}
 
 	public String getNmsVersion(){
 		return this.getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
@@ -377,27 +365,19 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			return false;
 		}
 	}
-	/*
-	*	For Internal Debugging -
-	*
-	*   set debug: true in Config.yml
-	*   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
-	*
-	* 	To be refactored - Apart Log File.
-	*/
-	public void print(String message){
-		if(debug){
-			log(message);
-		}
-	}
-
-	public static ArmorStandEditorPlugin instance(){
-		return instance;
-	}
-
 	public Language getLang(){
 		return lang;
 	}
+
+	public boolean getAllowCustomModelData() {
+		return this.getConfig().getBoolean("allowCustomModelData");
+	}
+
+	public Material getEditTool() {
+		return this.editTool;
+	}
+
+	public Integer getCustomModelDataInt() { return this.getConfig().getInt("customModelDataInt"); }
 
 	public boolean isEditTool(ItemStack itemStk){
 		if (itemStk == null) { return false; }
@@ -430,7 +410,62 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		}
 
+		if (customModelDataInt != null) {
+			//If the ItemStack does not have Metadata then we return false
+			if(!itemStk.hasItemMeta()) { return false; }
+
+			Integer itemCustomModel = itemStk.getItemMeta().getCustomModelData();
+			if (itemCustomModel == null) { return false; }
+
+			if(!itemCustomModel.equals(customModelDataInt)) { return false;	}
+		}
+
 		return true;
+	}
+
+	public void log(String message){
+		//Output to Server Console - Safer than doing a Broadcast to everyone on the Server
+		String timeMsgSep = ": ";
+		this.getServer().getLogger().info("ArmorStandEditor: " + message);
+
+		try{
+			fos = new FileOutputStream(f, true);
+
+			//Write the Content as Bytes
+			fos.write(timeAsString.getBytes());
+			fos.write(timeMsgSep.getBytes());
+			fos.write(message.getBytes());
+			fos.write(10);
+			fos.flush();
+		}catch(IOException e){
+			this.getServer().getLogger().warning(e.getMessage());
+		}finally{
+			if(fos != null){
+				try {
+					fos.close();
+				} catch (IOException e) {
+					this.getServer().getLogger().warning(e.getMessage());
+				}
+			}
+		}
+	}
+
+	/*
+	*	For Internal Debugging -
+	*
+	*   set debug: true in Config.yml
+	*   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
+	*
+	* 	To be refactored - Apart Log File.
+	*/
+	public void print(String message){
+		if(debug){
+			log(message);
+		}
+	}
+
+	public static ArmorStandEditorPlugin instance(){
+		return instance;
 	}
 
 	//Metrics/bStats Support
@@ -459,19 +494,24 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			entry.put(languageUsed, 1);
 
 			assert languageUsed != null;
-			if(languageUsed.startsWith("nl")){
+
+			if (languageUsed.startsWith("nl")) {
 				map.put("Dutch", entry);
-			} else if(languageUsed.startsWith("de")){
+			} else if (languageUsed.startsWith("de")) {
 				map.put("German", entry);
-			} else if(languageUsed.startsWith("es")){
+			} else if (languageUsed.startsWith("en")) {
+				map.put("English", entry);
+			} else if (languageUsed.startsWith("es")) {
 				map.put("Spanish", entry);
-			} else if(languageUsed.startsWith("fr")){
+			} else if (languageUsed.startsWith("fr")) {
 				map.put("French", entry);
-			} else if(languageUsed.startsWith("ja")){
+			} else if (languageUsed.startsWith("ja")) {
 				map.put("Japanese", entry);
-			} else if(languageUsed.startsWith("pl")){
+			} else if (languageUsed.startsWith("pl")) {
 				map.put("Polish", entry);
-			} else if(languageUsed.startsWith("ro")){
+			}else if(languageUsed.startsWith("ru")){ //See PR# 41 by KPidS
+				map.put("Russian", entry);
+			}else if(languageUsed.startsWith("ro")){
 				map.put("Romanian", entry);
 			} else if(languageUsed.startsWith("uk")){
 				map.put("Ukrainian", entry);
@@ -482,6 +522,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 			}
 			return map;
 		}));
+
+		//ArmorStandInvis Config
+		metrics.addCustomChart(new SimplePie("armor_stand_invisibility_usage", () -> getConfig().getString("armorStandVisibility")));
+
+		//ArmorStandInvis Config
+		metrics.addCustomChart(new SimplePie("itemframe_invisibility_used", () -> getConfig().getString("invisibleItemFrames")));
 
 	}
 

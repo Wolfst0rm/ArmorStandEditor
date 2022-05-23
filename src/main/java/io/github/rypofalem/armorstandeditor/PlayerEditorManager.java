@@ -20,7 +20,9 @@
 package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
+import io.github.rypofalem.armorstandeditor.protections.*;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
@@ -53,23 +55,34 @@ public class PlayerEditorManager implements Listener {
 	private  TickCounter counter;
 	private ArrayList<ArmorStand> as = null;
 	private ArrayList<ItemFrame> itemF = null;
-
+	private TownyProtection townyProtection;
+	private PlotSquaredProtection plotSquaredProtection;
+	private WorldGuardProtection worldGuardProtection;
+	private GriefPreventionProtection griefPreventionProtection;
+	private SkyblockProtection skyblockProtection;
 
 	PlayerEditorManager( ArmorStandEditorPlugin plugin) {
 		this.plugin = plugin;
 		players = new HashMap<>();
-		coarseAdj = Util.FULLCIRCLE / plugin.coarseRot;
-		fineAdj = Util.FULLCIRCLE / plugin.fineRot;
+		coarseAdj = Util.FULL_CIRCLE / plugin.coarseRot;
+		fineAdj = Util.FULL_CIRCLE / plugin.fineRot;
 		coarseMov = 1;
 		fineMov = .03125; // 1/32
 		counter = new TickCounter();
 		Bukkit.getServer().getScheduler().runTaskTimer(plugin, counter, 0, 1);
+
+		//Implementation of Protection Support - PlotSquared, WorldGuard, Towny, GriefPrevention etc.
+		townyProtection 		  = new TownyProtection();
+		plotSquaredProtection 	  = new PlotSquaredProtection();
+		worldGuardProtection 	  = new WorldGuardProtection();
+		griefPreventionProtection = new GriefPreventionProtection();
+		skyblockProtection        = new SkyblockProtection();
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	void onArmorStandDamage( EntityDamageByEntityEvent event) {
 		if (!(event.getDamager() instanceof Player)) return;
-		 Player player = (Player) event.getDamager();
+		Player player = (Player) event.getDamager();
 		if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
 		if (!((event.getEntity() instanceof ArmorStand) || event.getEntity() instanceof ItemFrame)) {
 			event.setCancelled(true);
@@ -80,7 +93,8 @@ public class PlayerEditorManager implements Listener {
 			 ArmorStand as = (ArmorStand) event.getEntity();
 			getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
 			event.setCancelled(true);
-			if (canEdit(player, as)) applyLeftTool(player, as);
+			if (canEdit(player, as))
+				applyLeftTool(player, as);
 		} else if (event.getEntity() instanceof ItemFrame) {
 			ItemFrame itemf = (ItemFrame) event.getEntity();
 			getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
@@ -227,12 +241,11 @@ public class PlayerEditorManager implements Listener {
 				boolean endLaser = false;
 				for ( Entity e : nearby) {
 					if (e instanceof ArmorStand) {
-						if (canEdit(player, (ArmorStand) e)) {
-							armorStands.add((ArmorStand) e);
-							endLaser = true;
-						}
+						armorStands.add((ArmorStand) e);
+						endLaser = true;
 					}
 				}
+
 				if (endLaser) break;
 			}
 			if (eyeLaser.getBlock().getType().isSolid()) break;
@@ -254,17 +267,16 @@ public class PlayerEditorManager implements Listener {
 		if (nearbyEntities.isEmpty()) return null;
 
 		for (double i = 0; i < RANGE; i += STEPSIZE) {
-			 List<Entity> nearby = (List<Entity>) player.getWorld().getNearbyEntities(eyeLaser, LASERRADIUS, LASERRADIUS, LASERRADIUS);
+			List<Entity> nearby = (List<Entity>) player.getWorld().getNearbyEntities(eyeLaser, LASERRADIUS, LASERRADIUS, LASERRADIUS);
 			if (!nearby.isEmpty()) {
 				boolean endLaser = false;
 				for ( Entity e : nearby) {
 					if (e instanceof ItemFrame) {
-						if (canEdit(player, (ItemFrame) e)) {
-							itemFrames.add((ItemFrame) e);
-							endLaser = true;
-						}
+						itemFrames.add((ItemFrame) e);
+						endLaser = true;
 					}
 				}
+
 				if (endLaser) break;
 			}
 			if (eyeLaser.getBlock().getType().isSolid()) break;
@@ -274,52 +286,36 @@ public class PlayerEditorManager implements Listener {
 		return itemFrames;
 	}
 
+
 	boolean canEdit( Player player,  ArmorStand as) {
-		ignoreNextInteract = true;
-		ArrayList<Event> events = new ArrayList<>();
-		//events.add(new PlayerInteractEntityEvent(player, as, EquipmentSlot.HAND));
-		//events.add(new PlayerInteractAtEntityEvent(player, as, as.getLocation().toVector(), EquipmentSlot.HAND)); //FIX for Issue RypoFalem/ArmorStandEditor #48: PlayerInteractAtEntityEvent
-		//events.add(new PlayerArmorStandManipulateEvent(player, as, player.getEquipment().getItemInMainHand(), as.getItemInHand(), EquipmentSlot.HAND));
-		for ( Event event : events) {
-			if (!(event instanceof Cancellable)) continue;
-			try {
-				plugin.getServer().getPluginManager().callEvent(event);
-			} catch ( IllegalStateException ise) {
-				ise.printStackTrace();
-				ignoreNextInteract = false;
-				return false; //Something went wrong, don't allow edit just in case
-			}
-			if (((Cancellable) event).isCancelled()) {
-				ignoreNextInteract = false;
-				return false;
-			}
-		}
-		ignoreNextInteract = false;
-		return true;
+
+		//Get the Entity being checked for editing
+		Block block = as.getLocation().getBlock();
+
+		//Permission checks for Protection
+		boolean protectTActive  							= townyProtection.checkPermission(block, player);
+		boolean protectPSActive 							= plotSquaredProtection.checkPermission(block, player);
+		boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
+		boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
+		boolean protectSkyActive 							= skyblockProtection.checkPermission(player);
+
+		return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive;
+
 	}
 
 	boolean canEdit( Player player,  ItemFrame itemf) {
-		ignoreNextInteract = true;
-		ArrayList<Event> events = new ArrayList<>();
-		//events.add(new PlayerInteractEntityEvent(player, itemf, EquipmentSlot.HAND));
-		//events.add(new PlayerInteractAtEntityEvent(player, itemf, itemf.getLocation().toVector(), EquipmentSlot.HAND));
-		//events.add(new PlayerArmorStandManipulateEvent(player, as, player.getEquipment().getItemInMainHand(), as.getItemInHand(), EquipmentSlot.HAND));
-		for ( Event event : events) {
-			if (!(event instanceof Cancellable)) continue;
-			try {
-				plugin.getServer().getPluginManager().callEvent(event);
-			} catch ( IllegalStateException ise) {
-				ise.printStackTrace();
-				ignoreNextInteract = false;
-				return false; //Something went wrong, don't allow edit just in case
-			}
-			if (((Cancellable) event).isCancelled()) {
-				ignoreNextInteract = false;
-				return false;
-			}
-		}
-		ignoreNextInteract = false;
-		return true;
+
+		//Get the Entity being checked for editing
+		Block block = itemf.getLocation().getBlock();
+
+		//Permission checks for Protection
+		boolean protectTActive  							= townyProtection.checkPermission(block, player);
+		boolean protectPSActive 							= plotSquaredProtection.checkPermission(block, player);
+		boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
+		boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
+		boolean protectSkyActive 							= skyblockProtection.checkPermission(player);
+
+		return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive;
 	}
 
 	void applyLeftTool( Player player,  ArmorStand as) {

@@ -29,6 +29,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class CommandEx implements CommandExecutor {
 	ArmorStandEditorPlugin plugin;
@@ -39,6 +42,7 @@ public class CommandEx implements CommandExecutor {
 	final String HELP = ChatColor.YELLOW + "/ase help";
 	final String VERSION = ChatColor.YELLOW + "/ase version";
 	final String UPDATE = ChatColor.YELLOW + "/ase update";
+	final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
 
 	public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
 		this.plugin = armorStandEditorPlugin;
@@ -61,6 +65,7 @@ public class CommandEx implements CommandExecutor {
 			player.sendMessage(VERSION);
 			player.sendMessage(UPDATE);
 			player.sendMessage(HELP);
+			player.sendMessage(GIVECUSTOMMODEL);
 			return true;
 		}
 		switch (args[0].toLowerCase()) {
@@ -79,6 +84,8 @@ public class CommandEx implements CommandExecutor {
 				break;
 			case "update": commandUpdate(player);
 				break;
+			case "give": commandGive(player);
+				break;
 			default:
 				sender.sendMessage(LISTMODE);
 				sender.sendMessage(LISTAXIS);
@@ -87,10 +94,27 @@ public class CommandEx implements CommandExecutor {
 				sender.sendMessage(VERSION);
 				sender.sendMessage(UPDATE);
 				sender.sendMessage(HELP);
+				player.sendMessage(GIVECUSTOMMODEL);
 		}
 		return true;
 	}
 
+	private void commandGive(Player player) {
+		if (plugin.getAllowCustomModelData() && checkPermission(player, "give", true)) {
+			ItemStack stack = new ItemStack(plugin.getEditTool()); //Only Support EditTool at the MOMENT
+			ItemMeta meta = stack.getItemMeta();
+			meta.setCustomModelData(plugin.getCustomModelDataInt());
+			meta.setUnbreakable(true);
+			meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+			stack.setItemMeta(meta);
+			player.getInventory().addItem(stack);
+			player.sendMessage(plugin.getLang().getMessage("give", "info"));
+		} else{
+			player.sendMessage(plugin.getLang().getMessage("nogive", "warn"));
+			//TODO: Add nogive to Message file
+			player.sendMessage(GIVECUSTOMMODEL);
+		}
+	}
 	private void commandSlot(Player player, String[] args) {
 
 		if (args.length <= 1) {

@@ -19,8 +19,6 @@
 
 package io.github.rypofalem.armorstandeditor;
 
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.event.executors.TownyActionEventExecutor;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -112,12 +110,6 @@ public class PlayerEditor {
 
 	public void editArmorStand(ArmorStand armorStand) {
 		if (!getPlayer().hasPermission("asedit.basic")) return;
-
-		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15
-		if (plugin.getServer().getPluginManager().getPlugin("Towny") != null) {
-			if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
-			if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND)) return;
-		}
 
 		armorStand = attemptTarget(armorStand);
 		switch (eMode) {
@@ -212,11 +204,7 @@ public class PlayerEditor {
 
 	public void reverseEditArmorStand(ArmorStand armorStand) {
 		if (!getPlayer().hasPermission("asedit.basic")) return;
-		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15 - Towny Support not working!
-		if (plugin.getServer().getPluginManager().getPlugin("Towny") != null) {
-			if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
-			if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND)) return;
-		}
+
 		armorStand = attemptTarget(armorStand);
 		switch (eMode) {
 			case LEFTARM:
@@ -375,6 +363,9 @@ public class PlayerEditor {
 
 	void toggleVisible(ArmorStand armorStand) {
 		if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisibility) return; //Option to use perms or Config
+		String asLoc = armorStand.getLocation().toString();
+		String result = String.valueOf(!armorStand.isVisible());
+		plugin.log("Player (" + getPlayer().getDisplayName() + ") has made the ArmorStand at " + asLoc + " " + result);
 		armorStand.setVisible(!armorStand.isVisible());
 	}
 
@@ -436,14 +427,14 @@ public class PlayerEditor {
 			target = null;
 			targetList = null;
 			sendMessage("notarget", null);
-			//plugin.getServer().getLogger().info("ArmorStand Target Unlocked");
+			plugin.log("ArmorStand targeted: UNLOCKED");
 		} else {
 
 			if (targetList == null) {
 				targetList = armorStands;
 				targetIndex = 0;
 				sendMessage("target", null);
-				//plugin.getServer().getLogger().info("ArmorStand Target Locked");
+				plugin.log("ArmorStand targeted: UNLOCKED");
 			} else {
 				boolean same = targetList.size() == armorStands.size();
 				if (same) for (ArmorStand as : armorStands) {
@@ -457,7 +448,7 @@ public class PlayerEditor {
 					targetList = armorStands;
 					targetIndex = 0;
 					sendMessage("target", null);
-					//plugin.getServer().getLogger().info("ArmorStand Target Locked");
+					plugin.log("ArmorStand targeted: LOCKED");
 				}
 			}
 			target = targetList.get(targetIndex);
@@ -473,14 +464,14 @@ public class PlayerEditor {
 			frameTarget = null;
 			frameTargetList = null;
 			sendMessage("noframetarget", null);
-			//plugin.getServer().getLogger().info("ItemFrame Target Unlocked");
+			plugin.log("ItemFrame targeted: UNLOCKED");
 		} else {
 
 			if (frameTargetList == null) {
 				frameTargetList = itemFrames;
 				frameTargetIndex = 0;
 				sendMessage("frametarget", null);
-				//plugin.getServer().getLogger().info("ItemFrame Target Un;ocked");
+				plugin.log("ItemFrame targeted: UNLOCKED");
 			} else {
 				boolean same = frameTargetList.size() == itemFrames.size();
 				if (same) for (final ItemFrame itemf : itemFrames) {
@@ -494,7 +485,7 @@ public class PlayerEditor {
 					frameTargetList = itemFrames;
 					frameTargetIndex = 0;
 					sendMessage("frametarget", null);
-					//plugin.getServer().getLogger().info("ItemFrame Target Locked");
+					plugin.log("ItemFrame targeted: LOCKED");
 				}
 				frameTarget = frameTargetList.get(frameTargetIndex);
 			}
