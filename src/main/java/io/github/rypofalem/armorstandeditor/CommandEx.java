@@ -43,6 +43,7 @@ public class CommandEx implements CommandExecutor {
 	final String VERSION = ChatColor.YELLOW + "/ase version";
 	final String UPDATE = ChatColor.YELLOW + "/ase update";
 	final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
+	String debugPlayerDisplayName;
 
 	public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
 		this.plugin = armorStandEditorPlugin;
@@ -53,11 +54,14 @@ public class CommandEx implements CommandExecutor {
 		if (!(sender instanceof Player
 				&& checkPermission((Player) sender, "basic", true))) {
 			sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
+			plugin.log("CommandSender is not an instance of Player");
 			return true;
 		}
 
 		Player player = (Player) sender;
+		debugPlayerDisplayName = player.getDisplayName();
 		if (args.length == 0) {
+			plugin.log("Sending List of Commands to: " + debugPlayerDisplayName);
 			player.sendMessage(LISTMODE);
 			player.sendMessage(LISTAXIS);
 			player.sendMessage(LISTSLOT);
@@ -87,6 +91,7 @@ public class CommandEx implements CommandExecutor {
 			case "give": commandGive(player);
 				break;
 			default:
+				plugin.log("Sending List of Commands to: " + debugPlayerDisplayName);
 				sender.sendMessage(LISTMODE);
 				sender.sendMessage(LISTAXIS);
 				sender.sendMessage(LISTSLOT);
@@ -94,13 +99,18 @@ public class CommandEx implements CommandExecutor {
 				sender.sendMessage(VERSION);
 				sender.sendMessage(UPDATE);
 				sender.sendMessage(HELP);
-				player.sendMessage(GIVECUSTOMMODEL);
+				sender.sendMessage(GIVECUSTOMMODEL);
 		}
 		return true;
 	}
 
+	// Implemented to fix:
+	// https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/35 &
+	// https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/30 - See Remarks OTHER
 	private void commandGive(Player player) {
 		if (plugin.getAllowCustomModelData() && checkPermission(player, "give", true)) {
+			plugin.log("Does Plugin Allow CustomModelData?: " + plugin.getAllowCustomModelData());
+			plugin.log("CustomModelData Int is: " + plugin.getCustomModelDataInt());
 			ItemStack stack = new ItemStack(plugin.getEditTool()); //Only Support EditTool at the MOMENT
 			ItemMeta meta = stack.getItemMeta();
 			meta.setCustomModelData(plugin.getCustomModelDataInt());
@@ -111,7 +121,6 @@ public class CommandEx implements CommandExecutor {
 			player.sendMessage(plugin.getLang().getMessage("give", "info"));
 		} else{
 			player.sendMessage(plugin.getLang().getMessage("nogive", "warn"));
-			//TODO: Add nogive to Message file
 			player.sendMessage(GIVECUSTOMMODEL);
 		}
 	}
@@ -126,6 +135,7 @@ public class CommandEx implements CommandExecutor {
 			try {
 				byte slot = (byte) (Byte.parseByte(args[1]) - 0b1);
 				if (slot >= 0 && slot < 9) {
+					plugin.log("Copying ArmorStand to slot: " + slot);
 					plugin.editorManager.getPlayerEditor(player.getUniqueId()).setCopySlot(slot);
 				} else {
 					player.sendMessage(LISTSLOT);
@@ -146,6 +156,7 @@ public class CommandEx implements CommandExecutor {
 		if (args.length > 1) {
 			for ( AdjustmentMode adj : AdjustmentMode.values()) {
 				if (adj.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
+					plugin.log("Adjustment mode set to: " + adj);
 					plugin.editorManager.getPlayerEditor(player.getUniqueId()).setAdjMode(adj);
 					return;
 				}
@@ -163,6 +174,7 @@ public class CommandEx implements CommandExecutor {
 		if (args.length > 1) {
 			for ( Axis axis : Axis.values()) {
 				if (axis.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
+					plugin.log("Axis set to: " + axis);
 					plugin.editorManager.getPlayerEditor(player.getUniqueId()).setAxis(axis);
 					return;
 				}
@@ -180,10 +192,11 @@ public class CommandEx implements CommandExecutor {
 		if (args.length > 1) {
 			for ( EditMode mode : EditMode.values()) {
 				if (mode.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
+					plugin.log("Argument 1 is: " + args[1].toLowerCase());
 					if (args[1].equals("invisible") && !checkPermission(player, "armorstand.invisible", true)) return;
 					if (args[1].equals("itemframe") && !checkPermission(player, "itemframe.invisible", true)) return;
 					plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
-					plugin.print("Mode set to '" + mode + "' for player '" + player.getDisplayName());
+					plugin.log("Mode set to '" + mode + "' for player '" + debugPlayerDisplayName + "'");
 					return;
 				}
 			}
@@ -191,6 +204,7 @@ public class CommandEx implements CommandExecutor {
 	}
 
 	private void commandHelp( Player player) {
+		plugin.log("Player '" + debugPlayerDisplayName + "' has ran the help command, closing Inventory");
 		player.closeInventory();
 		player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
 		player.sendMessage(plugin.getLang().getMessage("help", "info", plugin.editTool.name()));
@@ -202,13 +216,14 @@ public class CommandEx implements CommandExecutor {
 
 	private void commandUpdate(Player player) {
 		if(!(checkPermission(player, "update", true))) return;
+		plugin.log("Running the Built in UpdateChecker - Activated by '" + debugPlayerDisplayName + "'");
 		UpdateChecker.getInstance().checkNow(player);
 	}
 
 	private void commandVersion(Player player) {
 		if (!(checkPermission(player, "update", true))) return;
 		String verString = plugin.pdfFile.getVersion();
-		plugin.print("Output of VerString: " + verString);
+		plugin.log("Output of VerString: " + verString);
 		player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
 		UpdateChecker.getInstance().checkNow(player);
 	}
