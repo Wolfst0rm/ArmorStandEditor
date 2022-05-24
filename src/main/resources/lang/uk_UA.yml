@@ -53,6 +53,9 @@ target:
   msg: Ціль стенду заблоковано.
 notarget:
   msg: Ціль стенду розблоковано.
+give:
+  msg: Player given Item with CustomModelData
+
   
 #warn  
 cantedit:
@@ -67,7 +70,9 @@ noaxiscom:
   msg: Оберіть вісь!
 nomodecom:
   msg: Оберіть режим!
-  
+nogive:
+  msg: You have no permission to use the give command!
+
 #menutitle
 mainmenutitle:
   msg: Меню редагування стенду

@@ -83,6 +83,8 @@ helptips:
   3. 編集ツールを手に持ち、メニューを開かずにしゃがみ+ホイールスクロールで軸方向を切り替えれます。"
 helpurl:
   msg: "More info: https://github.com/RypoFalem/ArmorStandEditor/wiki"
+give:
+  msg: Player given Item with CustomModelData
 
 #warn
 cantedit:
@@ -97,6 +99,9 @@ noaxiscom:
   msg: 軸方向を指定する必要があります！
 nomodecom:
   msg: 目的の設定を指定する必要があります！
+nogive:
+  msg: You have no permission to use the give command!
+
 
 #menutitle
 mainmenutitle:

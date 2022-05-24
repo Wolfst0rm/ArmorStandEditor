@@ -82,6 +82,8 @@ helptips:
   3. Vous pouvez vous accroupir puis utiliser la molette de la souris tout en maintenant l'outil d'édition pour changer d'axe de modification sans ouvrir le menu."
 helpurl:
   msg: "Plus d'infos : https://github.com/RypoFalem/ArmorStandEditor/wiki"
+give:
+  msg: Player given Item with CustomModelData
 
 #warn
 cantedit:
@@ -96,6 +98,9 @@ noaxiscom:
   msg: Vous devez préciser un axe !
 nomodecom:
   msg: Vous devez préciser un mode !
+nogive:
+  msg: You have no permission to use the give command !
+
 
 #menutitle
 mainmenutitle:

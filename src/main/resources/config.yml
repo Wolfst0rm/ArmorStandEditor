@@ -2,7 +2,7 @@
 #   ArmorStandEditor-Reborn   #
 #-----------------------------#
 
-#DO NOT CHANGE THIS
+#DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
 version: 1.18.2-35
 
 #----------- LANGUAGE
@@ -26,7 +26,9 @@ requireToolLore: false
 toolLore: Let's get dangerous
 
 #(Optional) Allow the use of CustomModelData - NOTE: This looks at the editTool set by Config
-#and at the Int set here to know what to set.
+#and at the Int set here to know what to set. Also please if you are using this, ensure that
+#you also give people the ability asedit.give in order to allow them to change their edit
+#tool for the right Custom Model Data
 allowCustomModelData: false
 customModelDataInt: 0
 

@@ -85,6 +85,8 @@ helptips:
   3. 你可以在手持编辑工具时使用“潜行(Shift) + 鼠标滚轮”来快速更改要修改的轴而不需要打开菜单。"
 helpurl:
   msg: "更多信息: https://github.com/RypoFalem/ArmorStandEditor/wiki"
+give:
+  msg: Player given Item with CustomModelData
 
 #警告
 cantedit:
@@ -101,6 +103,8 @@ nomodecom:
   msg: 你必须选择一个部位!
 noreloadcom:
   msg: 你没有权限运行重载命令！
+nogive:
+  msg: You have no permission to use the give command!
 
 #菜单标题
 mainmenutitle:

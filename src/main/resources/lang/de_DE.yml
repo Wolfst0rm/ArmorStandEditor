@@ -83,6 +83,8 @@ helptips:
   3. Du kannst sneaken und das Scrollrad drehen während du das Bearbeitungswerkzeug hältst um die Achsen zu wechseln ohne das Menü zu öffnen."
 helpurl:
   msg: "Weitere Infos: https://github.com/RypoFalem/ArmorStandEditor/wiki"
+give:
+  msg: Player given Item with CustomModelData
 
 #warn
 cantedit:
@@ -97,6 +99,8 @@ noaxiscom:
   msg: Du musst eine Achse auswählen!
 nomodecom:
   msg: Du musst einen Modus auswählen!
+nogive:
+  msg: You have no permission to use the give command!
 
 #menutitle
 mainmenutitle:

@@ -84,6 +84,8 @@ helptips:
   3. Используйте Shift + Колёсико мыши, чтобы переключать ось (X, Y, Z) не открывая меню."
 helpurl:
   msg: "Больше информации: https://github.com/Wolfieheart/ArmorStandEditor"
+give:
+  msg: Player given Item with CustomModelData
 
 #warn
 cantedit:
@@ -100,6 +102,8 @@ nomodecom:
   msg: Укажите режим (None, Invisible, ShowArms, Gravity, BasePlate, Size, Copy, Paste, Head, Body, LeftArm, RightArm, LeftLeg, RightLeg, Placement, DisableSlots, Rotate, Equipment, Reset, ItemFrame, ItemFrameGlow)
 noreloadcom:
   msg: У вас нет прав, чтобы использовать эту команду
+nogive:
+  msg: You have no permission to use the give command!
 
 #menutitle
 mainmenutitle:

@@ -60,13 +60,15 @@ frametarget:
 noframetarget:
   msg: Itemframe target unlocked.
 doubletarget:
-  msg: Please look at either an ArmorStand or an ItemFrame, not both!
+  msg: Kijk aub naar een ArmorStand of een ItemFrame, niet allebei!
+give:
+  msg: Speler heeft een item met CustomModelData ontvangen
 
 #warn
 cantedit:
   msg: Sorry, je kunt hier geen armorstands aanpassen!
 noperm:
-  msg: Je hebt geen toestemming om dit te gebruiken!
+  msg: Sorry, je hebt geen tostemming om dit command te gebruiken!
 noslotnumcom:
   msg: Je moet een slot nummer opgeven!
 noadjcom:
@@ -75,6 +77,8 @@ noaxiscom:
   msg: Je moet een as opgeven!
 nomodecom:
   msg: Je moet een modus opgeven!
+nogive:
+  msg: Sorry, je hebt geen tostemming om dit command te gebruiken!
 
 #menutitle
 mainmenutitle:
