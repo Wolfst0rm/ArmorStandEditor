@@ -411,7 +411,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		}
 
-		if (customModelDataInt != null) {
+		if (allowCustomModelData && customModelDataInt != null) {
 			//If the ItemStack does not have Metadata then we return false
 			if(!itemStk.hasItemMeta()) { return false; }
 
