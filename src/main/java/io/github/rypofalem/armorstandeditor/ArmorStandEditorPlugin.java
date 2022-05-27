@@ -233,6 +233,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 		if(requireToolLore) {
 			editToolLore = getConfig().getString("toolLore", null);
+			if(editToolLore != null) editToolLore = ChatColor.translateAlternateColorCodes('&', editToolLore);
 			print("Lore needs to be: " + editToolLore);
 		}
 

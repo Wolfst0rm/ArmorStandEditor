@@ -20,14 +20,14 @@ public class SkyblockProtection {
     public boolean checkPermission(Player player){
         if(!skyblockEnabled) return true;
         if(player.isOp()) return true;
-        if(player.hasPermission("asedit.ignoreProtection.skyblock") || SuperiorSkyblockAPI.getPlayer(player).hasBypassModeEnabled()) return true; //Add Additional Permission
+        if(player.hasPermission("asedit.ignoreProtection.skyblock")) return true; //Add Additional Permission
 
         SuperiorPlayer sp = SuperiorSkyblockAPI.getPlayer(player);
 
         //GET ISLAND FOR A GIVEN LOCATION
         Island island = SuperiorSkyblockAPI.getIslandAt(sp.getLocation());
 
-        if(!island.isMember(sp) && !island.isCoop(sp)){
+        if(!island.isMember(sp) && !island.isCoop(sp) && !sp.hasBypassModeEnabled()){
             return false;
         } else {
             return true;

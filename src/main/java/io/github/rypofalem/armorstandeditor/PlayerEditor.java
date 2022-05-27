@@ -27,6 +27,7 @@ import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.CopySlots;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
+
 import java.util.ArrayList;
 import java.util.UUID;
 
