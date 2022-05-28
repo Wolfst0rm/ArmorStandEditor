@@ -158,7 +158,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 		if (    nmsVersion.startsWith("v1_14") ||
 				nmsVersion.startsWith("v1_15") ||
 				nmsVersion.startsWith("v1_16") ||
-				nmsVersion.startsWith("v1_17")){
+				nmsVersion.startsWith("v1_17") ||
+		        nmsVersion.startsWith("v1_18")){
 			getLogger().warning("Minecraft Version: " + nmsVersion + " is supported, but not latest.");
 			getLogger().warning("ArmorStandEditor will still work, but please update to the latest Version of " + nmsVersionNotLatest + ". Loading continuing.");
 			getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
@@ -323,7 +324,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 	public void createDebugFile(){
 			try {
 				if (!f.exists() && f.createNewFile()) {
-					Files.setAttribute(f.toPath(), "dos:hidden", false);
+					Files.setAttribute(f.toPath(), "dos:hidden", true);
 				}
 			} catch (IOException e) {
 				this.getServer().getLogger().warning(e.getMessage());
