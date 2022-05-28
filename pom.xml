@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.18.2-35</version>
+    <version>1.19.x-35</version>
     <name>armorstandeditor</name>
     <url>http://maven.apache.org</url>
 
@@ -181,7 +181,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven-release-plugin.version}</version>
                 <configuration>
-                    <scmCommentPrefix>[ci skip]</scmCommentPrefix>
+                    <scmCommentPrefix>[ci skip] || [CI SKIP]</scmCommentPrefix>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
