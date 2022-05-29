@@ -8,6 +8,9 @@ jobs:
   compile:
     if: "!contains(github.event.head_commit.message, 'ci-skip') || !contains(github.event.head_commit.message, 'CI-SKIP') || !contains(github.event.head_commit.message, 'CI SKIP') || !contains(github.event.head_commit.message, 'ci skip') "
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['11', '17']
     steps:
       # 1. Check out the current working tree
       - name: Checkout ArmorStandEditor Repository
@@ -15,11 +18,11 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      # 2. Setup Java 17 JDK
-      - name: Set up JDK 17 Environment
+      # 2. Setup Java JDK
+      - name: Set up JDK Environments
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: ${{ matrix.java }}
           distribution: 'zulu'
 
       # 3. Setup local Maven package cache to speed up building
