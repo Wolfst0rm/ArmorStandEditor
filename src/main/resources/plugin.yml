@@ -1,6 +1,6 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.18.2-35
+version: 1.19.x-35
 api-version: "1.13"
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
@@ -59,7 +59,10 @@ permissions:
       description: Allows user to ignore PlotSquared's Protection Limitations.
       default: false
     asedit.ignoreProtection.worldGuard:
-      description: Allows user to ignore PlotSquared's Protection Limitations.
+      description: Allows user to ignore WorldGuard's Protection Limitations.
+      default: false
+    asedit.ignoreProtection.skyblock:
+      description: Allows user to ignore Skyblock's Protection Limitations.
       default: false
 
     asedit.ignoreProtection.*:
@@ -70,6 +73,7 @@ permissions:
         asedit.ignoreProtection.griefProtection: true
         asedit.ignoreProtection.plotSquared: true
         asedit.ignoreProtection.worldGuard:  true
+        asedit.ignoreProtection.skyblock: true
 
     asedit.permpack.dontIgnoreProtections:
       default: true
@@ -78,6 +82,7 @@ permissions:
         asedit.ignoreProtection.griefProtection: false
         asedit.ignoreProtection.plotSquared: false
         asedit.ignoreProtection.worldGuard:  false
+        asedit.ignoreProtection.skyblock: false
 
     asedit.permpack.basic:
       default: true
