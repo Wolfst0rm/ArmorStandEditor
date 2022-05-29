@@ -36,3 +36,6 @@ permissions:
     asedit.update:
       description: Allows the checking for updates.
       default: false
+    asedit.bypass:
+      description: Allows for bypassing of towny protections.
+      default: false

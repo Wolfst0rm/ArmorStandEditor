@@ -115,8 +115,8 @@ public class PlayerEditor {
 
 		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15
 		if (plugin.getServer().getPluginManager().getPlugin("Towny") != null) {
-			if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
-			if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND)) return;
+			if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation()) && !getPlayer().hasPermission("asedit.bypass")) return;
+			if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND) && !getPlayer().hasPermission("asedit.bypass")) return;
 		}
 
 		armorStand = attemptTarget(armorStand);
@@ -214,8 +214,8 @@ public class PlayerEditor {
 		if (!getPlayer().hasPermission("asedit.basic")) return;
 		//FIX for https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/15 - Towny Support not working!
 		if (plugin.getServer().getPluginManager().getPlugin("Towny") != null) {
-			if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation())) return;
-			if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND)) return;
+			if (TownyAPI.getInstance().isWilderness(getPlayer().getLocation()) && !getPlayer().hasPermission("asedit.bypass")) return;
+			if (!TownyActionEventExecutor.canDestroy(getPlayer(), getPlayer().getLocation().getBlock().getLocation(), Material.ARMOR_STAND) && !getPlayer().hasPermission("asedit.bypass")) return;
 		}
 		armorStand = attemptTarget(armorStand);
 		switch (eMode) {
