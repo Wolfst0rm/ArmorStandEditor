@@ -2,14 +2,27 @@
 #### Description:
 <!--- Describe your Pull Request's purpose here please. --->
 
-____
-#### New Nodes / Commands / ConfigOptions:
-<!--- If your PR includes any new permission nodes, commands or config options list them here. --->
+----
+### [CORE] Changes
+*Changes to the core of the plugin - Performance Fixes, Bug Fixes, New Features, New Permission Nodes, New Config Options etc.* 
+<!---- List your changes under this in a bullet point list --->
 
 
-____
-#### Relevant ArmorStandEditor Issue ticket:
-<!--- If your pull request addresses an Issue ticket please provide the link to that --->
+
+----
+### [CI] Changes
+*Changes relating to the Continuous Integration of other Plugin APIs, Github Workflows, Issue Templates etc.*
+<!---- List your changes under this in a bullet point list --->
+
+----
+### [DOC] Changes
+*Changes relating to plugin Documentation - See the Wiki for more info*
+<!---- List your changes under this in a bullet point list --->
+
+----
+### [MISC] Changes
+*Changes that does not fit in the above list*
+<!---- List your changes under this in a bullet point list --->
 
 
 ____
