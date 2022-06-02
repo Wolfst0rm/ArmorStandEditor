@@ -82,7 +82,7 @@
             <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <!--- Worldguard -->
+        <!--- WorldGuard -->
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
@@ -93,14 +93,14 @@
             <dependency>
                 <groupId>com.plotsquared</groupId>
                 <artifactId>PlotSquared-Core</artifactId>
-                <version>6.6.3</version>
+                <version>6.7.0</version>
                 <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>com.plotsquared</groupId>
                 <artifactId>PlotSquared-Bukkit</artifactId>
-                <version>6.6.3</version>
+                <version>6.7.0</version>
                 <scope>provided</scope>
                 <exclusions>
                     <exclusion>
@@ -120,7 +120,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.98.1.13</version>
+            <version>0.98.2.2</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
