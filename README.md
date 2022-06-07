@@ -23,14 +23,13 @@ ArmorStandEditor is a plugin for [Spigot and related forks](https://www.spigotmc
 * Shamblecraft for allowing me to test on the server as required before publishing to production.
 
 ## Downloads
-Downloads for Version 1.17 and higher can be obtained from the [download page](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) or our [release tracker](https://github.com/Wolfst0rm/ArmorStandEditor/releases) here on Github.
-
+Downloads for Version 1.17 and higher can be obtained from the [download page](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) or our [release tracker](https://github.com/Wolfst0rm/ArmorStandEditor/releases) here on GitHub.
 For versions older than 1.17, then please use [the original versions download page](https://www.spigotmc.org/resources/armor-stand-editor-dead.7688/).
 
 The Latest Downloads Shortcut Links:
-* [Unstable Developmental Versions/Releases](https://github.com/Wolfst0rm/ArmorStandEditor/actions) - **Use these at your own risk. Limited Support is provided for testing purposes**
-* 1.19.x - Coming SOON TM
-* [1.18.2](https://www.spigotmc.org/threads/armorstandeditor-reborn.517132)
+* [Unstable 1.1x-DEV Versions](https://github.com/Wolfst0rm/ArmorStandEditor/actions) - **Use these at your own risk. Limited Support is provided for testing purposes**
+* [1.19](https://www.spigotmc.org/threads/armorstandeditor-reborn.517132)
+* [1.18.2](https://github.com/Wolfieheart/ArmorStandEditor/releases/tag/1.18.2-34.2)
 * [1.18.1](https://github.com/Wolfieheart/ArmorStandEditor/releases/tag/1.18.1-33)
 * [1.18](https://github.com/Wolfst0rm/ArmorStandEditor/releases/tag/1.18-31)
 * [1.17.1](https://github.com/Wolfst0rm/ArmorStandEditor/releases/tag/1.17.1-30)
@@ -78,7 +77,4 @@ If there are issues with the plugin on the latest release, you can report them [
 
 If there are new feature requests, you can ask them to be implemented [here](https://github.com/Wolfst0rm/ArmorStandEditor/issues/new?assignees=&labels=&template=feature-request.yml).
 
-**NOTE:** Bugs are also first tested to ensure that they can be reproduced according to the reported steps. If they can not, we will ask for more info. 
-
-## Contributing
-More Info soon....
+**NOTE:** Bugs are also first tested to ensure that they can be reproduced according to the reported steps. If they can not, we will ask for more info.

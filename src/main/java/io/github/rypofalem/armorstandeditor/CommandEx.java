@@ -121,7 +121,6 @@ public class CommandEx implements CommandExecutor {
             player.sendMessage(plugin.getLang().getMessage("give", "info"));
         } else{
             player.sendMessage(plugin.getLang().getMessage("nogive", "warn"));
-            player.sendMessage(GIVECUSTOMMODEL);
         }
     }
     private void commandSlot(Player player, String[] args) {
