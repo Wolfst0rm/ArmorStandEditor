@@ -129,9 +129,9 @@
         </dependency>
         <!--- UpdateChecker -->
         <dependency>
-            <groupId>de.jeff_media</groupId>
+            <groupId>com.jeff_media</groupId>
             <artifactId>SpigotUpdateChecker</artifactId>
-            <version>1.3.2</version> <!-- Check on GitHub for the latest version -->
+            <version>3.0.0</version>
             <scope>compile</scope>
         </dependency>
         <!-- SuperiorSkyblock API -->
@@ -161,7 +161,7 @@
                         <!-- Using the maven-shade-plugin to shade and relocate the UpdateChecker -->
                         <!-- Replace "your.package" with your plugin's package name -->
                         <relocation>
-                            <pattern>de.jeff_media.updatechecker</pattern>
+                            <pattern>com.jeff_media.updatechecker</pattern>
                             <shadedPattern>io.github.rypofalem.armorstandeditor.updatechecker</shadedPattern>
                         </relocation>
                     </relocations>
