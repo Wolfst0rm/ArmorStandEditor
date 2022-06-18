@@ -19,7 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor;
 
-import de.jeff_media.updatechecker.UpdateChecker;
+import com.jeff_media.updatechecker.UpdateChecker;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;

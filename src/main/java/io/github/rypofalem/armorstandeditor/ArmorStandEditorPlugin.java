@@ -21,7 +21,7 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.language.Language;
 
-import de.jeff_media.updatechecker.*;
+import com.jeff_media.updatechecker.*;
 
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 
