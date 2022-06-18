@@ -64,6 +64,10 @@ permissions:
     asedit.ignoreProtection.skyblock:
       description: Allows user to ignore Skyblock's Protection Limitations.
       default: false
+    asedit.ignoreProtection.griefDefender:
+      description: Allows user to ignore GriefProtection's Protection Limitations.
+      default: false
+
 
     asedit.ignoreProtection.*:
       description: Ignore all Protection Limitations
@@ -74,6 +78,7 @@ permissions:
         asedit.ignoreProtection.plotSquared: true
         asedit.ignoreProtection.worldGuard:  true
         asedit.ignoreProtection.skyblock: true
+        asedit.ignoreProtection.griefDefender: true
 
     asedit.permpack.dontIgnoreProtections:
       default: true
@@ -83,6 +88,7 @@ permissions:
         asedit.ignoreProtection.plotSquared: false
         asedit.ignoreProtection.worldGuard:  false
         asedit.ignoreProtection.skyblock: false
+        asedit.ignoreProtection.griefDefender: false
 
     asedit.permpack.basic:
       default: true
