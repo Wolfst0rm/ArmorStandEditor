@@ -46,6 +46,7 @@ public class WorldGuardProtection {
 
     public boolean checkPermission(Block block, Player player){
         if (!wgEnabled) return true;
+        if(player.isOp()) return true;
         if (player.hasPermission("asedit.ignoreProtection.worldGuard")) return true;
 
         LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);

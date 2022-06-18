@@ -21,6 +21,7 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -60,6 +61,7 @@ public class PlayerEditorManager implements Listener {
     private WorldGuardProtection worldGuardProtection;
     private GriefPreventionProtection griefPreventionProtection;
     private SkyblockProtection skyblockProtection;
+    private GriefDefenderProtection griefDefenderProtection;
 
     PlayerEditorManager( ArmorStandEditorPlugin plugin) {
         this.plugin = plugin;
@@ -77,6 +79,7 @@ public class PlayerEditorManager implements Listener {
         worldGuardProtection 	  = new WorldGuardProtection();
         griefPreventionProtection = new GriefPreventionProtection();
         skyblockProtection        = new SkyblockProtection();
+        griefDefenderProtection   = new GriefDefenderProtection();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -298,8 +301,9 @@ public class PlayerEditorManager implements Listener {
         boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
         boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
         boolean protectSkyActive 							= skyblockProtection.checkPermission(player);
+        boolean protectGDActive                             = griefDefenderProtection.checkPermission(block, player);
 
-        return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive;
+        return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive && protectGDActive;
 
     }
 
@@ -314,8 +318,9 @@ public class PlayerEditorManager implements Listener {
         boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
         boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
         boolean protectSkyActive 							= skyblockProtection.checkPermission(player);
+        boolean protectGDActive                             = griefDefenderProtection.checkPermission(block, player);
 
-        return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive;
+        return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive && protectGDActive;
     }
 
     void applyLeftTool( Player player,  ArmorStand as) {
