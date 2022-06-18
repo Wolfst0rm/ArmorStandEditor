@@ -80,6 +80,8 @@ helptips:
   3. Puedes usar Shift + rueda del raton mientras usas la herramienta de edición para cambiar el eje sin abrir el menu. "
 helpurl:
   msg: " More info: https://github.com/RypoFalem/ArmorStandEditor/wiki "
+give:
+  msg: Player given Item with CustomModelData
 
 #warn
 cantedit:
@@ -94,6 +96,8 @@ noaxiscom:
   msg: Tienes que especificar un eje.
 nomodecom:
   msg: Tienes que especificar un modo
+nogive:
+  msg: You have no permission to use the give command!
 
 #menutitle
 mainmenutitle:

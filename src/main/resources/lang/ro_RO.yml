@@ -55,6 +55,8 @@ target:
   msg: Tinta ArmorStand-ului blocata.
 notarget:
   msg: Tinta ArmorStand-ului deblocata.
+give:
+  msg: Player given Item with CustomModelData
 
 #warn
 cantedit:
@@ -69,6 +71,8 @@ noaxiscom:
   msg: Trebuie sa specifici o axa!
 nomodecom:
   msg: Trebuie sa specifici un mod!
+nogive:
+  msg: You have no permission to use the give command!
 
 #menutitle
 mainmenutitle:

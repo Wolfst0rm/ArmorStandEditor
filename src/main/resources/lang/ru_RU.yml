@@ -1,0 +1,237 @@
+# Translated by KPidS
+
+iconname: 2n
+icondescription: 5
+info: 6
+warn: c
+menutitle: 8
+
+#info
+setmode:
+  msg: Режим <x>
+  head: изменения поворота головы
+  body: изменения поворота тела
+  leftleg: изменения поворота левой ноги
+  rightleg: изменения поворота правой ноги
+  leftarm: изменения поворота левой руки
+  rightarm: изменения поворота правой руки
+  equipment: редактирования экипировки
+  showarms: переключения отображения рук
+  invisible: переключения видимости
+  size: переключения размера
+  disableslots: переключения блокировки снаряжения
+  gravity: переключения гравитации
+  baseplate: переключения плиты
+  placement: изменения расположения
+  rotate: изменения вращения
+  copy: копирования
+  paste: вставки
+  reset: сброса позы
+  itemframe: переключения видимости рамки
+setaxis:
+  msg: Установлена ось <x>
+  x: X
+  y: Y
+  z: Z
+setslot:
+  msg: Копируем в слот <x>
+setadj:
+  msg: Установлена <x> чувствительность
+  coarse: грубая
+  fine: точная
+setgravity:
+  msg: Гравитация <x>
+  true: включена
+  false: выключена
+nomode:
+  msg: Нажми ЛКМ или ПКМ по воздуху или блоку, чтобы выбрать режим редактирования стойки
+nomodeif:
+  msg: Нажми ЛКМ или ПКМ по воздуху или блоку, чтобы выбрать режим редактирования рамки
+copied:
+  msg: Скопировали стойку в слот <x>
+pasted:
+  msg: Вставили стойку из слота <x>
+disabledslots:
+  msg: Переключили блокирование экипировки стойки
+target:
+  msg: Цель стойки заблокирована
+notarget:
+  msg: Цель стойки разблокирована
+frametarget:
+  msg: Цель рамки заблокирована
+noframetarget:
+  msg: Цель рамки разблокирована
+doubletarget:
+  msg: Наведитесь на стойку или на рамку, а не на то и другое одновременно.
+reloaded:
+  msg: Конфиг перезагружен.
+help:
+  msg: "1. Возьмите инструмент для редактирования стойки (<x>) в основную руку.
+
+      2. Нажмите ЛКМ или ПКМ по воздуху или блоку, чтобы открыть меню.
+
+      3. Выберите режим редактирования стойки.
+
+      4. Нажмите ЛКМ или ПКМ по стойке, чтобы редактировать её при помощи выбранного режима."
+
+helptips:
+  msg: "Подсказки:
+
+  1. Если рядом находится несколько стоек, и у вас не получается отредактировать нужную вам стойку, то нажмите кнопку \"Заменить предмет во второй руке\" (По умолчанию F).
+
+  2. Вы можете назвать стойку при помощи бирки. Используйте символ &, чтобы сделать название цветным.
+
+  3. Используйте Shift + Колёсико мыши, чтобы переключать ось (X, Y, Z) не открывая меню."
+helpurl:
+  msg: "Больше информации: https://github.com/Wolfieheart/ArmorStandEditor"
+give:
+  msg: Player given Item with CustomModelData
+
+#warn
+cantedit:
+  msg: Вы не можете редактировать стойки тут
+noperm:
+  msg: У вас нет прав, чтобы использовать эту команду
+noslotnumcom:
+  msg: Укажите номер слота (1-9)
+noadjcom:
+  msg: Укажите Coarse (Грубую) или Fine (Точную) чувствительность
+noaxiscom:
+  msg: Укажите ось (X, Y, Z)
+nomodecom:
+  msg: Укажите режим (None, Invisible, ShowArms, Gravity, BasePlate, Size, Copy, Paste, Head, Body, LeftArm, RightArm, LeftLeg, RightLeg, Placement, DisableSlots, Rotate, Equipment, Reset, ItemFrame, ItemFrameGlow)
+noreloadcom:
+  msg: У вас нет прав, чтобы использовать эту команду
+nogive:
+  msg: You have no permission to use the give command!
+
+#menutitle
+mainmenutitle:
+  msg: Редактирование стойки
+equiptitle:
+  msg: Снаряжение стойки
+
+#icons
+xaxis:
+  msg: Ось X
+  description:
+    msg: Поворачивайте части тела по оси X
+yaxis:
+  msg: Ось Y
+  description:
+    msg: Поворачивайте части тела по оси Y
+zaxis:
+  msg: Ось Z
+  description:
+    msg: Поворачивайте части тела по оси Z
+coarseadj:
+  msg: Грубая чувствительность
+  description:
+    msg: Большие корректирования
+fineadj:
+  msg: Точная чувствительность
+  description:
+    msg: Маленькие корректирования
+head:
+  msg: Голова
+  description:
+    msg: Поворачивайте голову
+body:
+  msg: Тело
+  description:
+    msg: Поворачивайте тело
+leftleg:
+  msg: Левая нога
+  description:
+    msg: Поворачивайте левую ногу
+rightleg:
+  msg: Правая нога
+  description:
+    msg: Поворачивайте правую ногу
+leftarm:
+  msg: Левая рука
+  description:
+    msg: Поворачивайте левую руку
+rightarm:
+  msg: Правая рука
+  description:
+    msg: Поворачивайте правую руку
+equipment:
+  msg: Снаряжение
+  description:
+    msg: Редактируйте снаряжение стойки
+showarms:
+  msg: Руки
+  description:
+    msg: Включите или выключите отображение рук
+invisible:
+  msg: Видимость
+  description:
+    msg: Сделайте стойку видимой или невидимой
+size:
+  msg: Размер
+  description:
+    msg: Сделайте стойку маленькой или большой
+disableslots:
+  msg: Заблокриовать снаряжение
+  description:
+    msg: Включите или выключите блокировку снаряжение, чтобы с стойки нельзя было снять броню или предметы
+gravity:
+  msg: Гравитация
+  description:
+    msg: Включите или выключите гравитацию
+baseplate:
+  msg: Плита
+  description:
+    msg: Включите или выключите плиту
+placement:
+  msg: Положение
+  description:
+    msg: Двигайте всю стойку
+rotate:
+  msg: Вращение
+  description:
+    msg: Поворачивайте всю стойку
+copy:
+  msg: Копировать
+  description:
+    msg: Копируйте настройки стойки
+paste:
+  msg: Вставить
+  description:
+    msg: Вставьте настройки стойки
+copyslot:
+  msg: Слот хранения <x>
+  description:
+    msg: Выберите слот для хранения настроек
+reset:
+  msg: Сбросить позу
+  description:
+    msg: Сбросить положение всех частей тела
+helpgui:
+  msg: Помощь
+  description:
+    msg: Нажмите, чтобы прочитать гайд по использованию плагина
+itemframevisible:
+  msg: Видимость рамки
+  description:
+    msg: Включить или выключить видимость рамки
+#icons (equipment menu)
+disabled:
+  msg: Выключен
+equipslot:
+  msg: <x>
+  description:
+    msg: Положи <x> в нижний слот
+    helm: шлем
+    chest: нагрудник
+    pants: штаны
+    boots: ботинки
+    rhand: предмет для правой руки 
+    lhand: предмет для левой руки
+  helm: Шлем
+  chest: Нагрудник
+  pants: Штаны
+  boots: Ботинки
+  rhand: Правая рука
+  lhand: Левая рука

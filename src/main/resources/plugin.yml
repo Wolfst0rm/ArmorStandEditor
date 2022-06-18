@@ -1,12 +1,13 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.18.2-34.2
+version: 1.19-35
 api-version: "1.13"
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny]
+softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared]
+
 commands:
   ase:
     description: Changes the function of the armorstand edit tool.
@@ -14,7 +15,15 @@ commands:
     aliases: [ase, asedit, armorstandeditor]
     permission: asedit.basic
     permission-message: "You are lacking the permission node 'asedit.basic'"
+
 permissions:
+    asedit.*:
+      description: All ArmorStandEditor Commands
+      default: op
+      children:
+        asedit.permpack.admin: true
+        asedit.ignoreProtection.*: true
+
     asedit.basic:
       description: Allow use armorstand edit functions. If set to false it will override all other functions.
       default: true
@@ -33,6 +42,66 @@ permissions:
     asedit.disableslots:
       description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
       default: true
+    asedit.give:
+      description: Gives player the EditTool with Proper CustomModelData
+      default: false
     asedit.update:
       description: Allows the checking for updates.
       default: false
+
+    asedit.ignoreProtection.towny:
+      description: Allows user to ignore Towny's Protection Limitations.
+      default: false
+    asedit.ignoreProtection.griefProtection:
+      description: Allows user to ignore GriefProtection's Protection Limitations.
+      default: false
+    asedit.ignoreProtection.plotSquared:
+      description: Allows user to ignore PlotSquared's Protection Limitations.
+      default: false
+    asedit.ignoreProtection.worldGuard:
+      description: Allows user to ignore WorldGuard's Protection Limitations.
+      default: false
+    asedit.ignoreProtection.skyblock:
+      description: Allows user to ignore Skyblock's Protection Limitations.
+      default: false
+
+    asedit.ignoreProtection.*:
+      description: Ignore all Protection Limitations
+      default: op
+      children:
+        asedit.ignoreProtection.towny: true
+        asedit.ignoreProtection.griefProtection: true
+        asedit.ignoreProtection.plotSquared: true
+        asedit.ignoreProtection.worldGuard:  true
+        asedit.ignoreProtection.skyblock: true
+
+    asedit.permpack.dontIgnoreProtections:
+      default: true
+      children:
+        asedit.ignoreProtection.towny: false
+        asedit.ignoreProtection.griefProtection: false
+        asedit.ignoreProtection.plotSquared: false
+        asedit.ignoreProtection.worldGuard:  false
+        asedit.ignoreProtection.skyblock: false
+
+    asedit.permpack.basic:
+      default: true
+      children:
+        asedit.basic: true
+        asedit.equipment: true
+        asedit.disableslots: true
+        asedit.rename: true
+        asedit.update: false
+        asedit.give: false
+
+    asedit.permpack.admin:
+      default: op
+      children:
+        asedit.basic: true
+        asedit.itemframe.invisible: true
+        asedit.armorstand.invisible: true
+        asedit.equipment: true
+        asedit.disableslots: true
+        asedit.rename: true
+        asedit.update: true
+        asedit.ignorePermissions.*: true

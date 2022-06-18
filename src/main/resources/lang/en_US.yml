@@ -66,6 +66,8 @@ frametarget:
   msg: Itemframe target locked
 noframetarget:
   msg: Itemframe target unlocked.
+give:
+  msg: Player given Item with CustomModelData
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
 reloaded:
@@ -106,6 +108,8 @@ nomodecom:
   msg: You must specify a Mode!
 noreloadcom:
   msg: You don't have permission to use the reload command!
+nogive:
+  msg: You do not have permission to use the give command.
 
 #menutitle
 mainmenutitle:

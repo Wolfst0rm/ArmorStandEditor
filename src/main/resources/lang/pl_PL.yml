@@ -62,26 +62,8 @@ noframetarget:
   msg: Itemframe target unlocked.
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
-help:
-  msg: "1. Trzymaj narzędzie edycji (<x>).
-
-      2. Kliknij zdala od stojaka, aby otworzyć menu.
-
-      3. Wybierz opcję.
-
-      4. Kliknij lewym przyciskim myszy na armorstand'a, aby to wykonać.
-
-      5. Kliknij prawym, aby odwrócić akcję."
-helptips:
-  msg: "Porady:
-
-  1. Naciśnij klawisz (Przenoszenie przedmiotu do lewej ręki) (domyślnie F), przytrzymując edytor, celując w stojak, jeśli coś stoi przed nim.
-
-  2. Możesz zastosować NameTagi do stojaka. Możesz użyć symbolu &, aby utworzyć kolorowe nazwy.
-
-  3. Możesz użyć shift + kółko do przewijania, przytrzymując narzędzie, aby zmienić Oś bez otwierania menu"
-helpurl:
-  msg: "Więcej informacji - https://patbox.ml/t/boxcraft"
+give:
+  msg: Player given Item with CustomModelData
 
 #warn
 cantedit:
@@ -96,6 +78,8 @@ noaxiscom:
   msg: Musisz wybrać oś.
 nomodecom:
   msg: Musisz wybrać tryb.
+nogive:
+  msg: You have no permission to use the give command!
 
 #menutitle
 mainmenutitle:
