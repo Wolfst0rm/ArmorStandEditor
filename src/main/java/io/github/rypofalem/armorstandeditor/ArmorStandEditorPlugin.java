@@ -240,9 +240,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
-        requireSneaking = getConfig().getBoolean("requireSneaking",false);
+        requireSneaking = getConfig().getBoolean("requireSneaking", false);
         print("Sneaking required to activate the UI: " + requireSneaking);
-
 
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
