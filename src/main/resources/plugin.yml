@@ -65,7 +65,7 @@ permissions:
       description: Allows user to ignore Skyblock's Protection Limitations.
       default: false
     asedit.ignoreProtection.griefDefender:
-      description: Allows user to ignore GriefProtection's Protection Limitations.
+      description: Allows user to ignore GriefDefender's Protection Limitations.
       default: false
 
 
