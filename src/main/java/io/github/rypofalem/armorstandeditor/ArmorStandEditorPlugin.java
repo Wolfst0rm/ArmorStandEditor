@@ -276,7 +276,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     private void runUpdateCheckerConsoleUpdateCheck() {
-        if (new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "").getLatestVersion().contains(".x")) {
+        if (getConfig().getString("version").contains(".x")) {
             return;
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
@@ -290,7 +290,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { //We Can Not Dynamically change the setting for NotifyOpsOnJoin :(
-        if (new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "").getLatestVersion().contains(".x")) {
+        if (getConfig().getString("version").contains(".x")) {
             return;
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
