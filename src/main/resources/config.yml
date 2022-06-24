@@ -30,8 +30,9 @@ requireToolLore: false
 toolLore: Let's get dangerous
 
 #(Optional) Allow the use of CustomModelData - NOTE: This looks at the editTool set by Config
-#and at the Int set here to know what to set. Also please if you are using this, ensure that
-#you also give people the ability asedit.give in order to allow them to change their edit
+#and at the Int set here to know what to set.
+#Also please if you are using this, ensure that you also give people the ability asedit.give in
+#order to allow them to change their edit
 #tool for the right Custom Model Data
 allowCustomModelData: false
 customModelDataInt: 0
@@ -45,8 +46,12 @@ coarse: 12
 fine: 120
 
 #Allow the option to toggle invisibility for ItemFrames and ArmorStand
-invisibleItemFrames: true
+#YOu can either use this or the below permissions to allow visibility changes
+#asedit.armorstand.invisible
 armorStandVisibility: true
+#asedit.itemframe.invisible
+invisibleItemFrames: true
+
 
 #------ GUI Options
 
@@ -58,7 +63,3 @@ requireSneaking: false
 #(Optional) Glowing Item Frames Support for Item Frames in 1.17 - WILL NOT WORK IN 1.16 OR LOWER AND 1.17.1 OR HIGHER
 #If true, players can make itemFrames glow by right-clicking with a Glow Ink Sac
 glowingItemFrame: true
-
-#DO NOT ENABLE - For Testing Purposes. Can lead to unwanted side effects
-#Enable if you are submitting a bug report PLEASE!
-debug: false
