@@ -12,6 +12,10 @@ version: 1.19.x-36
 #Please read the comments at the top of that file before editing/changing/modifying.
 lang: en_US.yml
 
+#----------- UPDATE NOTIFICATIONS
+#Set this to allow your operators to get messages w.r.t Plugin updates
+opUpdateNotification: false
+
 #----------- TOOL SETTINGS
 
 #Name of the edit tool's item Material. You can find a full list at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html

@@ -19,6 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
@@ -214,9 +215,10 @@ public class CommandEx implements CommandExecutor {
     }
 
     private void commandUpdate(Player player) {
-        if(!(checkPermission(player, "update", true))) return;
+        if (!(checkPermission(player, "update", true))) return;
         plugin.log("Running the Built in UpdateChecker - Activated by '" + debugPlayerDisplayName + "'");
-        UpdateChecker.getInstance().checkNow(player);
+        new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID + "").checkNow(player); //Runs Update Check
+
     }
 
     private void commandVersion(Player player) {
@@ -224,9 +226,7 @@ public class CommandEx implements CommandExecutor {
         String verString = plugin.pdfFile.getVersion();
         plugin.log("Output of VerString: " + verString);
         player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
-        UpdateChecker.getInstance().checkNow(player);
     }
-
 
 
     private boolean checkPermission( Player player, String permName,  boolean sendMessageOnInvalidation) {

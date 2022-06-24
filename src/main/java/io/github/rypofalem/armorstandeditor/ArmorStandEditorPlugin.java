@@ -48,7 +48,7 @@ import java.io.File;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
-    private static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
+    public static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
     private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
 
     private NamespacedKey iconKey;
@@ -56,6 +56,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     private CommandEx execute;
     private Language lang;
 
+
+    public boolean opUpdateNotification = false;
     //Server Version Detection: Paper or Spigot and Invalid NMS Version
     String nmsVersion;
     public boolean hasSpigot = false;
@@ -112,9 +114,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     @Override
     public void onEnable(){
 
-        //Run UpdateChecker
-        runUpdateChecker();
-
         scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
 
         //Get NMS Version
@@ -170,9 +169,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         getLogger().info(SEPARATOR_FIELD);
 
         //Is Debug Enabled
-        debug = getConfig().getBoolean("debug", false);
+        debug = getConfig().getBoolean("debug", false); // Default is False for good reason
         print("Debug Mode Enabled? Well if you can read this its true");
-        if(debug){
+
+        if(getConfig().getBoolean("debug")){
             createDebugFile();
         }
 
@@ -254,6 +254,16 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
         print("Can users turn ItemFrames invisible?: " + invisibleItemFrames);
 
+        //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
+        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
+
+        //Run UpdateChecker - Reports out to Console on Startup ONLY!
+        if(opUpdateNotification){
+            runUpdateCheckerWithOPNotifyOnJoinEnabled();
+        } else {
+            runUpdateCheckerConsoleUpdateCheck();
+        }
+
         //Get Metrics from bStats
         getMetrics();
 
@@ -265,13 +275,22 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     }
 
-    private void runUpdateChecker() {
-        UpdateChecker.init(this, SPIGOT_RESOURCE_ID)
+    private void runUpdateCheckerConsoleUpdateCheck() {
+        new UpdateChecker(this, UpdateCheckSource.SPIGOT, "" + SPIGOT_RESOURCE_ID+ "")
                 .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
                 .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
-                .setNotifyOpsOnJoin(true)
-                .setNotifyByPermissionOnJoin("asedit.update")
                 .setColoredConsoleOutput(true)
+                .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
+                .checkEveryXHours(72) //Warn people every 72 hours
+                .checkNow();
+    }
+
+    private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { //We Can Not Dynamically change the setting for NotifyOpsOnJoin :(
+        new UpdateChecker(this, UpdateCheckSource.SPIGOT, "" + SPIGOT_RESOURCE_ID+ "")
+                .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
+                .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
+                .setColoredConsoleOutput(true)
+                .setNotifyOpsOnJoin(true)
                 .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
                 .checkEveryXHours(72) //Warn people every 72 hours
                 .checkNow();
@@ -461,7 +480,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
      * 	To be refactored - Apart Log File.
      */
     public void print(String message){
-        if(debug){
+        if(getConfig().getBoolean("debug")){
             log(message);
         }
     }
