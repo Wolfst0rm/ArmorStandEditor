@@ -36,6 +36,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+import org.checkerframework.framework.qual.Unused;
 
 import java.io.*;
 import java.time.*;
@@ -57,7 +58,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     private Language lang;
 
 
-    public boolean opUpdateNotification = false;
+    boolean opUpdateNotification = false;
     //Server Version Detection: Paper or Spigot and Invalid NMS Version
     String nmsVersion;
     public boolean hasSpigot = false;
@@ -104,8 +105,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     File f = new File(debugOutputFileName);
 
     private static ArmorStandEditorPlugin plugin;
-
-    //1.19?: Add in Custom WG Flag? To be seen if needed if WG Protection is enough!
 
     public ArmorStandEditorPlugin(){
         instance = this;
@@ -382,6 +381,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     public boolean getItemFrameVisibility(){
         return getConfig().getBoolean("invisibleItemFrames");
     }
+
 
     public boolean getHasPaper(){
         try {
