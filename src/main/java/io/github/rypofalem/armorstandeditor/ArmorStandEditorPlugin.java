@@ -276,24 +276,32 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     private void runUpdateCheckerConsoleUpdateCheck() {
-        new UpdateChecker(this, UpdateCheckSource.SPIGOT, "" + SPIGOT_RESOURCE_ID+ "")
-                .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
-                .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
-                .setColoredConsoleOutput(true)
-                .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
-                .checkEveryXHours(72) //Warn people every 72 hours
-                .checkNow();
+        if (new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "").getLatestVersion().contains(".x")) {
+            return;
+        } else {
+            new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
+                    .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
+                    .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
+                    .setColoredConsoleOutput(true)
+                    .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
+                    .checkEveryXHours(72) //Warn people every 72 hours
+                    .checkNow();
+        }
     }
 
     private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { //We Can Not Dynamically change the setting for NotifyOpsOnJoin :(
-        new UpdateChecker(this, UpdateCheckSource.SPIGOT, "" + SPIGOT_RESOURCE_ID+ "")
-                .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
-                .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
-                .setColoredConsoleOutput(true)
-                .setNotifyOpsOnJoin(true)
-                .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
-                .checkEveryXHours(72) //Warn people every 72 hours
-                .checkNow();
+        if (new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "").getLatestVersion().contains(".x")) {
+            return;
+        } else {
+            new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
+                    .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
+                    .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
+                    .setColoredConsoleOutput(true)
+                    .setNotifyOpsOnJoin(true)
+                    .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
+                    .checkEveryXHours(72) //Warn people every 72 hours
+                    .checkNow();
+        }
     }
 
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
