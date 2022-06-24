@@ -36,7 +36,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-import org.checkerframework.framework.qual.Unused;
 
 import java.io.*;
 import java.time.*;
@@ -143,8 +142,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
                 nmsVersion.startsWith("v1_10") ||
                 nmsVersion.startsWith("v1_11") ||
                 nmsVersion.startsWith("v1_12") ||
-                nmsVersion.startsWith("v1_13")
-        ){
+                nmsVersion.startsWith("v1_13")){
             getLogger().warning("Minecraft Version: " + nmsVersion + " is not supported. Loading Plugin Failed.");
             getLogger().info(SEPARATOR_FIELD);
             getServer().getPluginManager().disablePlugin(this);
@@ -162,6 +160,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         } else {
             getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
         }
+
         getServer().getPluginManager().enablePlugin(this);
         registerScoreboards(scoreboard);
         getLogger().info(SEPARATOR_FIELD);

@@ -364,8 +364,6 @@ public class PlayerEditor {
 
     void toggleVisible(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisibility) return; //Option to use perms or Config
-        String asLoc = armorStand.getLocation().toString();
-        String result = String.valueOf(!armorStand.isVisible());
         armorStand.setVisible(!armorStand.isVisible());
     }
 
