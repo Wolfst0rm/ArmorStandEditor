@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.19-35</version>
+    <version>1.19.x-36</version>
     <name>armorstandeditor</name>
     <url>http://maven.apache.org</url>
 
@@ -90,14 +90,14 @@
             <dependency>
                 <groupId>com.plotsquared</groupId>
                 <artifactId>PlotSquared-Core</artifactId>
-                <version>6.9.0</version>
+                <version>6.9.1</version>
                 <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>com.plotsquared</groupId>
                 <artifactId>PlotSquared-Bukkit</artifactId>
-                <version>6.9.0</version>
+                <version>6.9.1</version>
                 <scope>provided</scope>
                 <exclusions>
                     <exclusion>
@@ -131,7 +131,7 @@
         <dependency>
             <groupId>com.bgsoftware</groupId>
             <artifactId>SuperiorSkyblockAPI</artifactId>
-            <version>1.10.0</version>
+            <version>1.11.0</version>
             <scope>provided</scope>
         </dependency>
         <!--- GriefDefender -->

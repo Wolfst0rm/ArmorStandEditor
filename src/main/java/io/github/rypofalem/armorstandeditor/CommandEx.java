@@ -19,6 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
@@ -54,14 +55,12 @@ public class CommandEx implements CommandExecutor {
         if (!(sender instanceof Player
                 && checkPermission((Player) sender, "basic", true))) {
             sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
-            plugin.log("CommandSender is not an instance of Player");
             return true;
         }
 
         Player player = (Player) sender;
         debugPlayerDisplayName = player.getDisplayName();
         if (args.length == 0) {
-            plugin.log("Sending List of Commands to: " + debugPlayerDisplayName);
             player.sendMessage(LISTMODE);
             player.sendMessage(LISTAXIS);
             player.sendMessage(LISTSLOT);
@@ -91,7 +90,6 @@ public class CommandEx implements CommandExecutor {
             case "give": commandGive(player);
                 break;
             default:
-                plugin.log("Sending List of Commands to: " + debugPlayerDisplayName);
                 sender.sendMessage(LISTMODE);
                 sender.sendMessage(LISTAXIS);
                 sender.sendMessage(LISTSLOT);
@@ -109,8 +107,6 @@ public class CommandEx implements CommandExecutor {
     // https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/30 - See Remarks OTHER
     private void commandGive(Player player) {
         if (plugin.getAllowCustomModelData() && checkPermission(player, "give", true)) {
-            plugin.log("Does Plugin Allow CustomModelData?: " + plugin.getAllowCustomModelData());
-            plugin.log("CustomModelData Int is: " + plugin.getCustomModelDataInt());
             ItemStack stack = new ItemStack(plugin.getEditTool()); //Only Support EditTool at the MOMENT
             ItemMeta meta = stack.getItemMeta();
             meta.setCustomModelData(plugin.getCustomModelDataInt());
@@ -134,7 +130,6 @@ public class CommandEx implements CommandExecutor {
             try {
                 byte slot = (byte) (Byte.parseByte(args[1]) - 0b1);
                 if (slot >= 0 && slot < 9) {
-                    plugin.log("Copying ArmorStand to slot: " + slot);
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setCopySlot(slot);
                 } else {
                     player.sendMessage(LISTSLOT);
@@ -155,7 +150,6 @@ public class CommandEx implements CommandExecutor {
         if (args.length > 1) {
             for ( AdjustmentMode adj : AdjustmentMode.values()) {
                 if (adj.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
-                    plugin.log("Adjustment mode set to: " + adj);
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setAdjMode(adj);
                     return;
                 }
@@ -173,7 +167,6 @@ public class CommandEx implements CommandExecutor {
         if (args.length > 1) {
             for ( Axis axis : Axis.values()) {
                 if (axis.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
-                    plugin.log("Axis set to: " + axis);
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setAxis(axis);
                     return;
                 }
@@ -191,11 +184,9 @@ public class CommandEx implements CommandExecutor {
         if (args.length > 1) {
             for ( EditMode mode : EditMode.values()) {
                 if (mode.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
-                    plugin.log("Argument 1 is: " + args[1].toLowerCase());
                     if (args[1].equals("invisible") && !checkPermission(player, "armorstand.invisible", true)) return;
                     if (args[1].equals("itemframe") && !checkPermission(player, "itemframe.invisible", true)) return;
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
-                    plugin.log("Mode set to '" + mode + "' for player '" + debugPlayerDisplayName + "'");
                     return;
                 }
             }
@@ -203,7 +194,6 @@ public class CommandEx implements CommandExecutor {
     }
 
     private void commandHelp( Player player) {
-        plugin.log("Player '" + debugPlayerDisplayName + "' has ran the help command, closing Inventory");
         player.closeInventory();
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
         player.sendMessage(plugin.getLang().getMessage("help", "info", plugin.editTool.name()));
@@ -214,19 +204,16 @@ public class CommandEx implements CommandExecutor {
     }
 
     private void commandUpdate(Player player) {
-        if(!(checkPermission(player, "update", true))) return;
-        plugin.log("Running the Built in UpdateChecker - Activated by '" + debugPlayerDisplayName + "'");
-        UpdateChecker.getInstance().checkNow(player);
+        if (!(checkPermission(player, "update", true))) return;
+        new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID + "").checkNow(player); //Runs Update Check
+
     }
 
     private void commandVersion(Player player) {
         if (!(checkPermission(player, "update", true))) return;
         String verString = plugin.pdfFile.getVersion();
-        plugin.log("Output of VerString: " + verString);
         player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
-        UpdateChecker.getInstance().checkNow(player);
     }
-
 
 
     private boolean checkPermission( Player player, String permName,  boolean sendMessageOnInvalidation) {
@@ -234,11 +221,9 @@ public class CommandEx implements CommandExecutor {
             permName = "copy";
         }
         if (player.hasPermission("asedit." + permName.toLowerCase())) {
-            plugin.print("Player '"+ player.getDisplayName() +" has Permission: asedit." + permName.toLowerCase());
             return true;
         } else {
             if (sendMessageOnInvalidation) {
-                plugin.print("Player '"+ player.getDisplayName() +" does not have Permission: asedit." + permName.toLowerCase());
                 player.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
             }
             return false;
