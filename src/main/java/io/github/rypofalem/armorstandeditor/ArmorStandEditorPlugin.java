@@ -48,13 +48,15 @@ import java.io.File;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
-    private static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
+    public static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
     private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
 
     private NamespacedKey iconKey;
     private static ArmorStandEditorPlugin instance;
     private Language lang;
 
+
+    boolean opUpdateNotification = false;
     //Server Version Detection: Paper or Spigot and Invalid NMS Version
     String nmsVersion;
     public boolean hasSpigot = false;
@@ -102,8 +104,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     private static ArmorStandEditorPlugin plugin;
 
-    //1.19?: Add in Custom WG Flag? To be seen if needed if WG Protection is enough!
-
     public ArmorStandEditorPlugin(){
         instance = this;
     }
@@ -118,7 +118,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //Get NMS Version
         nmsVersion = getNmsVersion();
-        print("Net.Minecraft.Server version is: " + nmsVersion);
 
         //Load Messages in Console
         getLogger().info("======= ArmorStandEditor =======");
@@ -145,8 +144,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
                 nmsVersion.startsWith("v1_10") ||
                 nmsVersion.startsWith("v1_11") ||
                 nmsVersion.startsWith("v1_12") ||
-                nmsVersion.startsWith("v1_13")
-        ){
+                nmsVersion.startsWith("v1_13")){
             getLogger().warning("Minecraft Version: " + nmsVersion + " is not supported. Loading Plugin Failed.");
             getLogger().info(SEPARATOR_FIELD);
             getServer().getPluginManager().disablePlugin(this);
@@ -164,16 +162,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         } else {
             getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
         }
+
         getServer().getPluginManager().enablePlugin(this);
         registerScoreboards(scoreboard);
         getLogger().info(SEPARATOR_FIELD);
-
-        //Is Debug Enabled
-        debug = getConfig().getBoolean("debug", false);
-        print("Debug Mode Enabled? Well if you can read this its true");
-        if(debug){
-            createDebugFile();
-        }
 
         //saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
         updateConfig("", "config.yml");
@@ -190,7 +182,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //English is the default language and needs to be unaltered to so that there is always a backup message string
         saveResource("lang/en_US.yml", true);
         lang = new Language(getConfig().getString("lang"), this);
-        print("Language in use: " + getConfig().getString("lang"));
 
         //Rotation
         coarseRot = getConfig().getDouble("coarse");
@@ -199,7 +190,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Set Tool to be used in game
         toolType = getConfig().getString("tool");
         if (toolType != null) {
-            print("Edit Tool used to interact with Plugin is: " + toolType);
             editTool = Material.getMaterial(toolType); //Ignore Warning
         } else {
             getLogger().severe("Unable to get Tool for Use with Plugin. Unable to continue!");
@@ -210,49 +200,48 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //Custom Model Data
         allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
-        print("Do we allow CustomModelData?: " + allowCustomModelData);
 
         if(allowCustomModelData){
             customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
-            print("CustomModelData Integer is: " + customModelDataInt);
         }
 
         //ArmorStandVisibility Node
         armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
-        print("ArmorStands allowed to be made visible/invisible?: " + armorStandVisibility);
 
         //Is there NBT Required for the tool
         requireToolData = getConfig().getBoolean("requireToolData", false);
-        print("NBT Data Required: " + requireToolData);
 
         if(requireToolData) {
             editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
-            print("Tool Data is: " + editToolData);
         }
 
         requireToolLore = getConfig().getBoolean("requireToolLore", false);
-        print("Lore Required?: " + requireToolLore);
 
         if(requireToolLore) {
             editToolLore = getConfig().getString("toolLore", null);
             if(editToolLore != null) editToolLore = ChatColor.translateAlternateColorCodes('&', editToolLore);
-            print("Lore needs to be: " + editToolLore);
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
         requireSneaking = getConfig().getBoolean("requireSneaking", false);
-        print("Sneaking required to activate the UI: " + requireSneaking);
 
         //Send Messages to Action Bar
         sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
-        print("Messages being sent to action bar?: " + sendToActionBar);
 
         //All ItemFrame Stuff
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-        print("Are glowing Item Frames enabled for 1.17 Users?: " + glowItemFrames);
 
         invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
-        print("Can users turn ItemFrames invisible?: " + invisibleItemFrames);
+
+        //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
+        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
+
+        //Run UpdateChecker - Reports out to Console on Startup ONLY!
+        if(opUpdateNotification){
+            runUpdateCheckerWithOPNotifyOnJoinEnabled();
+        } else {
+            runUpdateCheckerConsoleUpdateCheck();
+        }
 
         //Get Metrics from bStats
         getMetrics();
@@ -265,17 +254,34 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     }
 
-    private void runUpdateChecker() {
-        //noinspection deprecation
-        UpdateChecker.init(this, SPIGOT_RESOURCE_ID)
-                .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
-                .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
-                .setNotifyOpsOnJoin(true)
-                .setNotifyByPermissionOnJoin("asedit.update")
-                .setColoredConsoleOutput(true)
-                .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
-                .checkEveryXHours(72) //Warn people every 72 hours
-                .checkNow();
+    //noinspection deprecation
+    private void runUpdateCheckerConsoleUpdateCheck() {
+        if (getConfig().getString("version").contains(".x")) {
+            return;
+        } else {
+            new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
+                    .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
+                    .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
+                    .setColoredConsoleOutput(true)
+                    .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
+                    .checkEveryXHours(72) //Warn people every 72 hours
+                    .checkNow();
+        }
+    }
+
+    private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { //We Can Not Dynamically change the setting for NotifyOpsOnJoin :(
+        if (getConfig().getString("version").contains(".x")) {
+            return;
+        } else {
+            new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
+                    .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
+                    .setChangelogLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/history")
+                    .setColoredConsoleOutput(true)
+                    .setNotifyOpsOnJoin(true)
+                    .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion().addServerVersion())
+                    .checkEveryXHours(72) //Warn people every 72 hours
+                    .checkNow();
+        }
     }
 
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
@@ -284,9 +290,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
         if (scoreboard.getTeam(lockedTeam) == null) {
-            print("Team '" + lockedTeam + "' does not exist, proceeding to create new team");
             scoreboard.registerNewTeam(lockedTeam);
-
             print("Setting Team '" + lockedTeam + "' color to RED");
             Objects.requireNonNull(scoreboard.getTeam(lockedTeam)).setColor(ChatColor.RED);
         } else {
@@ -300,7 +304,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         team = scoreboard.getTeam(lockedTeam);
         if(team != null) { //Basic Sanity Check to ensure that the team is there
             team.unregister();
-            print("Team '" + lockedTeam + "' successfully removed.");
         } else{
             getLogger().severe("Team Already Appears to be removed. Please do not do this manually!");
         }
@@ -340,7 +343,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     public boolean getHasSpigot(){
         try {
             Class.forName("org.spigotmc.SpigotConfig");
-            print("SpigotMC Detected.");
             nmsVersionNotLatest = "SpigotMC ASAP.";
             return true;
         } catch (ClassNotFoundException e){
@@ -357,10 +359,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         return getConfig().getBoolean("invisibleItemFrames");
     }
 
+
     public boolean getHasPaper(){
         try {
             Class.forName("com.destroystokyo.paper.PaperConfig");
-            print("PaperMC Detected.");
             nmsVersionNotLatest = "SpigotMC ASAP.";
             return true;
         } catch (ClassNotFoundException e){
@@ -423,47 +425,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
 
         return true;
-    }
-
-    public void log(String message){
-        //Output to Server Console - Safer than doing a Broadcast to everyone on the Server
-        String timeMsgSep = ": ";
-        this.getServer().getLogger().info("ArmorStandEditor: " + message);
-
-        try{
-            fos = new FileOutputStream(f, true);
-
-            //Write the Content as Bytes
-            fos.write(timeAsString.getBytes());
-            fos.write(timeMsgSep.getBytes());
-            fos.write(message.getBytes());
-            fos.write(10);
-            fos.flush();
-        }catch(IOException e){
-            this.getServer().getLogger().warning(e.getMessage());
-        }finally{
-            if(fos != null){
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    this.getServer().getLogger().warning(e.getMessage());
-                }
-            }
-        }
-    }
-
-    /*
-     *	For Internal Debugging -
-     *
-     *   set debug: true in Config.yml
-     *   NOTE: NOT RECOMMENDED FOR PROD! INTERNAL TESTING ONLY!
-     *
-     * 	To be refactored - Apart Log File.
-     */
-    public void print(String message){
-        if(debug){
-            log(message);
-        }
     }
 
     public static ArmorStandEditorPlugin instance(){
