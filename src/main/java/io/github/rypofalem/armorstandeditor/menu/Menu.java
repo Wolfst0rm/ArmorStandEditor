@@ -35,10 +35,9 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 
 public class Menu {
-    private Inventory menuInv;
-    private PlayerEditor pe;
+    private final Inventory menuInv;
+    private final PlayerEditor pe;
     private static String name = "Armor Stand Editor Menu";
-
 
     public Menu(PlayerEditor pe) {
         this.pe = pe;
@@ -48,38 +47,38 @@ public class Menu {
     }
 
     private void fillInventory() {
+
         menuInv.clear();
 
-        ItemStack xAxis = null;
-        ItemStack yAxis = null;
-        ItemStack zAxis = null;
-        ItemStack coarseAdj = null;
-        ItemStack fineAdj = null;
-        ItemStack rotate = null;
+        ItemStack xAxis;
+        ItemStack yAxis;
+        ItemStack zAxis;
+        ItemStack coarseAdj;
+        ItemStack fineAdj;
+        ItemStack rotate;
         ItemStack place = null;
-        ItemStack headPos = null;
-        ItemStack rightArmPos = null;
-        ItemStack bodyPos = null;
-        ItemStack leftArmPos = null;
-        ItemStack reset = null;
-        ItemStack showArms = null;
-        ItemStack visibility = null;
-        ItemStack size = null;
-        ItemStack rightLegPos = null;
+        ItemStack headPos;
+        ItemStack rightArmPos;
+        ItemStack bodyPos;
+        ItemStack leftArmPos;
+        ItemStack reset;
+        ItemStack showArms;
+        ItemStack visibility;
+        ItemStack size;
+        ItemStack rightLegPos;
         ItemStack equipment = null;
-        ItemStack leftLegPos = null;
+        ItemStack leftLegPos;
         ItemStack disableSlots = null;
         ItemStack gravity = null;
-        ItemStack plate = null;
-        ItemStack copy = null;
-        ItemStack paste = null;
-        ItemStack slot1 = null;
-        ItemStack slot2 = null;
-        ItemStack slot3 = null;
-        ItemStack slot4 = null;
-        ItemStack help = null;
-        ItemStack itemFrameVisible = null;
-        ItemStack itemFrameGlow = null; //Unused?
+        ItemStack plate;
+        ItemStack copy;
+        ItemStack paste;
+        ItemStack slot1;
+        ItemStack slot2;
+        ItemStack slot3;
+        ItemStack slot4;
+        ItemStack help;
+        ItemStack itemFrameVisible;
 
         xAxis = createIcon(new ItemStack(Material.RED_WOOL, 1),
                 "xaxis", "axis x");
@@ -124,21 +123,22 @@ public class Menu {
 
         //Praise Start - Sikatsu and cowgod, Nicely spotted this being broken
         if (pe.getPlayer().hasPermission("asedit.armorstand.invisible") ||
-                pe.plugin.getArmorStandVisibility() ) {
+                pe.plugin.getArmorStandVisibility()) {
             visibility = new ItemStack(Material.POTION, 1);
             PotionMeta potionMeta = (PotionMeta) visibility.getItemMeta();
             PotionEffect eff1 = new PotionEffect(PotionEffectType.INVISIBILITY, 1, 0);
+            assert potionMeta != null;
             potionMeta.addCustomEffect(eff1, true);
             visibility.setItemMeta(potionMeta);
-            visibility = createIcon(visibility, "invisible", "mode invisible");
+            createIcon(visibility, "invisible", "mode invisible");
         } else {
             visibility = null;
         }
 
         if (pe.getPlayer().hasPermission("asedit.itemframe.invisible") ||
-                pe.plugin.getItemFrameVisibility() ) {
+                pe.plugin.getItemFrameVisibility()) {
             itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
-            itemFrameVisible = createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
+            createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
         } else {
             itemFrameVisible = null;
         }
@@ -152,18 +152,22 @@ public class Menu {
             disableSlots = createIcon(new ItemStack(Material.BARRIER), "disableslots", "mode disableslots");
         }
 
-        gravity = createIcon(new ItemStack(Material.SAND), "gravity", "mode gravity");
+        if (pe.getPlayer().hasPermission("asedit.gravity")) {
+            gravity = createIcon(new ItemStack(Material.SAND), "gravity", "mode gravity");
+        }
 
         plate = createIcon(new ItemStack(Material.STONE_SLAB, 1),
                 "baseplate", "mode baseplate");
 
-        place = createIcon(new ItemStack(Material.MINECART, 1),
-                "placement", "mode placement");
+        if (pe.getPlayer().hasPermission("asedit.placement")) {
+            place = createIcon(new ItemStack(Material.MINECART, 1),
+                    "placement", "mode placement");
+        }
 
         rotate = createIcon(new ItemStack(Material.COMPASS, 1),
                 "rotate", "mode rotate");
 
-        if(pe.getPlayer().hasPermission("asedit.equipment")) {
+        if (pe.getPlayer().hasPermission("asedit.equipment")) {
             equipment = createIcon(new ItemStack(Material.CHEST, 1),
                     "equipment", "mode equipment");
         }
@@ -200,12 +204,13 @@ public class Menu {
         menuInv.setContents(items);
     }
 
-    private ItemStack createIcon( ItemStack icon,  String path,  String command) {
+    private ItemStack createIcon(ItemStack icon, String path, String command) {
         return createIcon(icon, path, command, null);
     }
 
-    private ItemStack createIcon( ItemStack icon,  String path,  String command,  String option) {
+    private ItemStack createIcon(ItemStack icon, String path, String command, String option) {
         ItemMeta meta = icon.getItemMeta();
+        assert meta != null;
         meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, "ase " + command);
         meta.setDisplayName(getIconName(path, option));
         ArrayList<String> loreList = new ArrayList<>();
@@ -218,12 +223,12 @@ public class Menu {
     }
 
 
-    private String getIconName( String path,  String option) {
+    private String getIconName(String path, String option) {
         return pe.plugin.getLang().getMessage(path, "iconname", option);
     }
 
 
-    private String getIconDescription( String path,  String option) {
+    private String getIconDescription(String path, String option) {
         return pe.plugin.getLang().getMessage(path + ".description", "icondescription", option);
     }
 
