@@ -39,6 +39,12 @@ permissions:
     asedit.equipment:
       description: Access armorstand equipment GUI
       default: true
+    asedit.gravity:
+      description: Changes whether the armor stand has gravity
+      default: true
+    asedit.placemant:
+      description: Changes whether the armor stand can be moved using the item for editing
+      default: true
     asedit.disableslots:
       description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
       default: true
@@ -95,6 +101,8 @@ permissions:
       children:
         asedit.basic: true
         asedit.equipment: true
+        asedit.gravity: true
+        asedit.placemant: true
         asedit.disableslots: true
         asedit.rename: true
         asedit.update: false
@@ -107,6 +115,8 @@ permissions:
         asedit.itemframe.invisible: true
         asedit.armorstand.invisible: true
         asedit.equipment: true
+        asedit.gravity: true
+        asedit.placemant: true
         asedit.disableslots: true
         asedit.rename: true
         asedit.update: true
