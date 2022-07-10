@@ -46,10 +46,11 @@ import java.time.format.FormatStyle;
 import java.util.*;
 import java.io.File;
 
-public class ArmorStandEditorPlugin extends JavaPlugin{
+
+public class ArmorStandEditorPlugin extends JavaPlugin {
 
     public static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
-    private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
+    private static final int PLUGIN_ID = 12668;             //Used for BStats Metrics
 
     private NamespacedKey iconKey;
     private static ArmorStandEditorPlugin instance;
@@ -95,24 +96,21 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = Calendar.getInstance().getTime();
     Instant instant = Instant.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.UK ).withZone( ZoneId.systemDefault() );
+    DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(Locale.UK).withZone(ZoneId.systemDefault());
     String dateAsString = dateFormat.format(date);
     String timeAsString = formatter.format(instant);
-    final String debugOutputFileName = getDataFolder() + File.separator + "DEBUG-" + dateAsString +  ".log";
+    final String debugOutputFileName = getDataFolder() + File.separator + "DEBUG-" + dateAsString + ".log";
     FileOutputStream fos = null;
     File f = new File(debugOutputFileName);
 
     private static ArmorStandEditorPlugin plugin;
 
-    public ArmorStandEditorPlugin(){
+    public ArmorStandEditorPlugin() {
         instance = this;
     }
 
     @Override
-    public void onEnable(){
-
-        //Run UpdateChecker
-        runUpdateChecker();
+    public void onEnable() {
 
         scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
@@ -132,19 +130,19 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         getLogger().info("PaperMC: " + hasPaper);
 
         //If Paper and Spigot are both FALSE - Disable the plugin
-        if (!hasPaper && !hasSpigot){
+        if (!hasPaper && !hasSpigot) {
             getLogger().severe("This plugin requires either Paper, Spigot or one of its forks to run");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
         //Minimum Version Check - No Lower than 1.13-API. Will be tuned out in the future
-        if (    nmsVersion.startsWith("v1_8")  ||
-                nmsVersion.startsWith("v1_9")  ||
+        if (nmsVersion.startsWith("v1_8") ||
+                nmsVersion.startsWith("v1_9") ||
                 nmsVersion.startsWith("v1_10") ||
                 nmsVersion.startsWith("v1_11") ||
                 nmsVersion.startsWith("v1_12") ||
-                nmsVersion.startsWith("v1_13")){
+                nmsVersion.startsWith("v1_13")) {
             getLogger().warning("Minecraft Version: " + nmsVersion + " is not supported. Loading Plugin Failed.");
             getLogger().info(SEPARATOR_FIELD);
             getServer().getPluginManager().disablePlugin(this);
@@ -152,11 +150,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
 
         //Also Warn People to Update if using nmsVersion lower than latest
-        if (    nmsVersion.startsWith("v1_14") ||
+        if (nmsVersion.startsWith("v1_14") ||
                 nmsVersion.startsWith("v1_15") ||
                 nmsVersion.startsWith("v1_16") ||
                 nmsVersion.startsWith("v1_17") ||
-                nmsVersion.startsWith("v1_18")){
+                nmsVersion.startsWith("v1_18")) {
             getLogger().warning("Minecraft Version: " + nmsVersion + " is supported, but not latest.");
             getLogger().warning("ArmorStandEditor will still work, but please update to the latest Version of " + nmsVersionNotLatest + ". Loading continuing.");
         } else {
@@ -201,7 +199,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Custom Model Data
         allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
 
-        if(allowCustomModelData){
+        if (allowCustomModelData) {
             customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
         }
 
@@ -211,15 +209,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Is there NBT Required for the tool
         requireToolData = getConfig().getBoolean("requireToolData", false);
 
-        if(requireToolData) {
+        if (requireToolData) {
             editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
         }
 
         requireToolLore = getConfig().getBoolean("requireToolLore", false);
 
-        if(requireToolLore) {
+        if (requireToolLore) {
             editToolLore = getConfig().getString("toolLore", null);
-            if(editToolLore != null) editToolLore = ChatColor.translateAlternateColorCodes('&', editToolLore);
+            if (editToolLore != null) editToolLore = ChatColor.translateAlternateColorCodes('&', editToolLore);
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
@@ -237,7 +235,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
-        if(opUpdateNotification){
+        if (opUpdateNotification) {
             runUpdateCheckerWithOPNotifyOnJoinEnabled();
         } else {
             runUpdateCheckerConsoleUpdateCheck();
@@ -254,9 +252,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     }
 
-    //noinspection deprecation
     private void runUpdateCheckerConsoleUpdateCheck() {
-        if (getConfig().getString("version").contains(".x")) {
+        if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
+            //noinspection UnnecessaryReturnStatement
             return;
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
@@ -270,7 +268,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { //We Can Not Dynamically change the setting for NotifyOpsOnJoin :(
-        if (getConfig().getString("version").contains(".x")) {
+        if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
+            //noinspection UnnecessaryReturnStatement
             return;
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
@@ -291,7 +290,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
         if (scoreboard.getTeam(lockedTeam) == null) {
             scoreboard.registerNewTeam(lockedTeam);
-            print("Setting Team '" + lockedTeam + "' color to RED");
             Objects.requireNonNull(scoreboard.getTeam(lockedTeam)).setColor(ChatColor.RED);
         } else {
             getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
@@ -302,30 +300,31 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         getLogger().info("Removing Scoreboards required for Glowing Effects");
 
         team = scoreboard.getTeam(lockedTeam);
-        if(team != null) { //Basic Sanity Check to ensure that the team is there
+        if (team != null) { //Basic Sanity Check to ensure that the team is there
             team.unregister();
-        } else{
+        } else {
             getLogger().severe("Team Already Appears to be removed. Please do not do this manually!");
         }
     }
 
     private void updateConfig(String folder, String config) {
-        if(!new File(getDataFolder() + File.separator + folder + config).exists()){
-            saveResource(folder  + config, false);
+        if (!new File(getDataFolder() + File.separator + folder + config).exists()) {
+            saveResource(folder + config, false);
         }
     }
 
     @Override
-    public void onDisable(){
-        for(Player player : Bukkit.getServer().getOnlinePlayers()){
-            if(player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
+    public void onDisable() {
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            if (player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder())
+                player.closeInventory();
         }
 
         scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
         unregisterScoreboards(scoreboard);
     }
 
-    public void createDebugFile(){
+    public void createDebugFile() {
         try {
             if (!f.exists() && f.createNewFile()) {
                 Files.setAttribute(f.toPath(), "dos:hidden", true);
@@ -336,41 +335,42 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
 
-    public String getNmsVersion(){
-        return this.getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];
+    public String getNmsVersion() {
+        return this.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
     }
 
-    public boolean getHasSpigot(){
+    public boolean getHasSpigot() {
         try {
             Class.forName("org.spigotmc.SpigotConfig");
             nmsVersionNotLatest = "SpigotMC ASAP.";
             return true;
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             nmsVersionNotLatest = "";
             return false;
         }
     }
 
-    public boolean getArmorStandVisibility(){
+    public boolean getArmorStandVisibility() {
         return getConfig().getBoolean("armorStandVisibility");
     }
 
-    public boolean getItemFrameVisibility(){
+    public boolean getItemFrameVisibility() {
         return getConfig().getBoolean("invisibleItemFrames");
     }
 
 
-    public boolean getHasPaper(){
+    public boolean getHasPaper() {
         try {
             Class.forName("com.destroystokyo.paper.PaperConfig");
             nmsVersionNotLatest = "SpigotMC ASAP.";
             return true;
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             nmsVersionNotLatest = "";
             return false;
         }
     }
-    public Language getLang(){
+
+    public Language getLang() {
         return lang;
     }
 
@@ -382,42 +382,60 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         return this.editTool;
     }
 
-    public Integer getCustomModelDataInt() { return this.getConfig().getInt("customModelDataInt"); }
+    public Integer getCustomModelDataInt() {
+        return this.getConfig().getInt("customModelDataInt");
+    }
 
-    public boolean isEditTool(ItemStack itemStk){
-        if (itemStk == null) { return false; }
-        if (editTool != itemStk.getType()) { return false; }
+    public boolean isEditTool(ItemStack itemStk) {
+        if (itemStk == null) {
+            return false;
+        }
+        if (editTool != itemStk.getType()) {
+            return false;
+        }
 
         //FIX: Depreciated Stack for getDurability
         //		if(requireToolData && item.getDurability() != (short)editToolData) return false;
-        if (requireToolData){
+        if (requireToolData) {
             Damageable d1 = (Damageable) itemStk.getItemMeta(); //Get the Damageable Options for itemStk
             if (d1 != null) { //We do this to prevent NullPointers
-                if (d1.getDamage() != (short) editToolData) { return false; }
+                if (d1.getDamage() != (short) editToolData) {
+                    return false;
+                }
             }
         }
 
-        if(requireToolLore && editToolLore != null){
+        if (requireToolLore && editToolLore != null) {
 
             //If the ItemStack does not have Metadata then we return false
-            if(!itemStk.hasItemMeta()) { return false; }
+            if (!itemStk.hasItemMeta()) {
+                return false;
+            }
 
             //Get the lore of the Item and if it is null - Return False
             List<String> itemLore = Objects.requireNonNull(itemStk.getItemMeta()).getLore(); //Ignore warnings this gives. Will be fixed in the future
-            if (itemLore == null){ return false; }
+            if (itemLore == null) {
+                return false;
+            }
 
             //If the Item does not have Lore - Return False
             boolean hasTheItemLore = itemStk.getItemMeta().hasLore();
-            if (!hasTheItemLore)  { return false; }
+            if (!hasTheItemLore) {
+                return false;
+            }
 
             //Item the first thing in the ItemLore List does not Equal the Config Value "editToolLore" - return false
-            if (!itemLore.get(0).equals(editToolLore))  { return false; } //Does not need simplified - IntelliJ likes to complain here
+            if (!itemLore.get(0).equals(editToolLore)) {
+                return false;
+            } //Does not need simplified - IntelliJ likes to complain here
 
         }
 
         if (allowCustomModelData && customModelDataInt != null) {
             //If the ItemStack does not have Metadata then we return false
-            if(!itemStk.hasItemMeta()) { return false; }
+            if (!itemStk.hasItemMeta()) {
+                return false;
+            }
 
             Integer itemCustomModel = Objects.requireNonNull(itemStk.getItemMeta()).getCustomModelData();
 
@@ -427,12 +445,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         return true;
     }
 
-    public static ArmorStandEditorPlugin instance(){
+    public static ArmorStandEditorPlugin instance() {
         return instance;
     }
 
     //Metrics/bStats Support
-    private void getMetrics(){
+    private void getMetrics() {
 
         Metrics metrics = new Metrics(this, PLUGIN_ID);
 
@@ -472,17 +490,17 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
                 map.put("Japanese", entry);
             } else if (languageUsed.startsWith("pl")) {
                 map.put("Polish", entry);
-            }else if(languageUsed.startsWith("ru")){ //See PR# 41 by KPidS
+            } else if (languageUsed.startsWith("ru")) { //See PR# 41 by KPidS
                 map.put("Russian", entry);
-            }else if(languageUsed.startsWith("ro")){
+            } else if (languageUsed.startsWith("ro")) {
                 map.put("Romanian", entry);
-            } else if(languageUsed.startsWith("uk")){
+            } else if (languageUsed.startsWith("uk")) {
                 map.put("Ukrainian", entry);
-            } else if(languageUsed.startsWith("zh")) {
+            } else if (languageUsed.startsWith("zh")) {
                 map.put("Chinese", entry);
-            } else if(languageUsed.startsWith("pt")) {
+            } else if (languageUsed.startsWith("pt")) {
                 map.put("Brazilian", entry);
-            } else{
+            } else {
                 map.put("Other", entry);
             }
             return map;
@@ -497,7 +515,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     public NamespacedKey getIconKey() {
-        if(iconKey == null) iconKey = new NamespacedKey(this, "command_icon");
+        if (iconKey == null) iconKey = new NamespacedKey(this, "command_icon");
         return iconKey;
     }
 }
