@@ -111,9 +111,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     @Override
     public void onEnable(){
 
-        //Run UpdateChecker
-        runUpdateChecker();
-
         scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
         //Get NMS Version
@@ -254,9 +251,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     }
 
-    //noinspection deprecation
     private void runUpdateCheckerConsoleUpdateCheck() {
-        if (getConfig().getString("version").contains(".x")) {
+        if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
+            //noinspection UnnecessaryReturnStatement
             return;
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
@@ -270,7 +267,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { //We Can Not Dynamically change the setting for NotifyOpsOnJoin :(
-        if (getConfig().getString("version").contains(".x")) {
+        if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
+            //noinspection UnnecessaryReturnStatement
             return;
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
@@ -291,7 +289,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
         if (scoreboard.getTeam(lockedTeam) == null) {
             scoreboard.registerNewTeam(lockedTeam);
-            print("Setting Team '" + lockedTeam + "' color to RED");
             Objects.requireNonNull(scoreboard.getTeam(lockedTeam)).setColor(ChatColor.RED);
         } else {
             getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
