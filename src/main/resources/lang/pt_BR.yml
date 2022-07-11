@@ -1,0 +1,239 @@
+#Traduzido por thiagogebrim
+
+iconname: e
+icondescription: 6
+info: 6
+warn: c
+menutitle: 8
+
+#info
+setmode:
+  msg: "Modo definido: <x>."
+  head: Posição da Cabeça
+  body: Posição do corpo
+  leftleg: Posição da perna esquerda
+  rightleg: Posição da perna direita
+  leftarm: Posição do braço esquerdo
+  rightarm: Posição do braço direito
+  equipment: Equipamento
+  showarms: Alternar exibição de braços
+  invisible: Toggle Visibility
+  size: Alterar tamanho
+  disableslots: Alternar Desativar Slots
+  gravity: Toggle Gravity
+  baseplate: Alternar a placa da base
+  placement: Placement
+  rotate: Rotação
+  copy: Copiar
+  paste: Colar
+  reset: Redefinir posição
+  itemframe: Toggle Itemframe Visibility
+setaxis:
+  msg: Configurando o eixo para <x>.
+  x: X
+  y: Y
+  z: Z
+setslot:
+  msg: Configurando o slot de cópia para <x>.
+setadj:
+  msg: Ajuste definido para <x>.
+  coarse: Grande
+  fine: Pequeno
+setgravity:
+  msg: A gravidade virou <x>.
+  true: sim
+  false: não
+nomode:
+  msg: Primeiro clique com a ferramenta de edição sem olhar para um suporte de armadura para selecionar um modo de edição!
+nomodeif:
+  msg: Click with the Edit Tool away from the ItemFrame to select a mode first!
+copied:
+  msg: ArmorStand state copied to slot <x>.
+pasted:
+  msg: ArmorStand state pasted from slot <x>.
+disabledslots:
+  msg: Toggled Equipment locks
+target:
+  msg: ArmorStand target locked.
+notarget:
+  msg: ArmorStand target unlocked.
+frametarget:
+  msg: Itemframe target locked
+noframetarget:
+  msg: Itemframe target unlocked.
+give:
+  msg: Player given Item with CustomModelData
+doubletarget:
+  msg: Please look at either an ArmorStand or an ItemFrame, not both!
+reloaded:
+  msg: Configuration File has been reloaded.
+help:
+  msg: "1. Segure a ferramenta de edição em sua mão principal.
+
+      2. Clique com o botão esquerdo ou direito longe de um suporte de armadura para abrir o menu.
+
+      3. Selecione as opções no menu.
+
+      4. Clique com o botão esquerdo no suporte de armadura com a ferramenta de edição na mão para aplicar as opções.
+
+      5. Clique com o botão direito para editar ao contrário!"
+helptips:
+  msg: "Tips:
+
+  1. Press the \"Swap Item in Hands\" key (default F) while holding the edit tool to target a specific armor stand, if other armor stands are in the way.
+
+  2. You can apply NameTags to armor stands. You may use the & symbol to make colored names.
+
+  3. You can use crouch + scroll wheel while holding the edit tool to change Axis without opening the menu"
+helpurl:
+  msg: ""
+
+#warn
+cantedit:
+  msg: Sorry, you cannot edit armor stands here!
+noperm:
+  msg: You don't have permission to use this!
+noslotnumcom:
+  msg: You must specify a slot number!
+noadjcom:
+  msg: You must specify Coarse or Fine adjustment!
+noaxiscom:
+  msg: You must specify an Axis!
+nomodecom:
+  msg: You must specify a Mode!
+noreloadcom:
+  msg: You don't have permission to use the reload command!
+nogive:
+  msg: You do not have permission to use the give command.
+
+#menutitle
+mainmenutitle:
+  msg: Editor do suporte de armaduras
+equiptitle:
+  msg: Suporte de armaduras equipamentos
+
+#icons
+xaxis:
+  msg: Eixo X
+  description:
+    msg: Girar partes do corpo ao longo do eixo X
+yaxis:
+  msg: Eixo Y
+  description:
+    msg: Girar partes do corpo ao longo do eixo Y
+zaxis:
+  msg: Eixo Z
+  description:
+    msg: Girar partes do corpo ao longo do eixo Z
+coarseadj:
+  msg: Ajuste grande
+  description:
+    msg: Faça grandes ajustes
+fineadj:
+  msg: Ajuste pequeno
+  description:
+    msg: Faça pequenos ajustes
+head:
+  msg: Posição da cabeça
+  description:
+    msg: Rotaciona a cabeça
+body:
+  msg: Posição do corpo
+  description:
+    msg: Rotaciona o corpo
+leftleg:
+  msg: Posição da perna esquerda
+  description:
+    msg: Rotaciona a perna esquerda
+rightleg:
+  msg: Posição da perna direita
+  description:
+    msg: Rotaciona a perna direita
+leftarm:
+  msg: Posição do braço esquerdo
+  description:
+    msg: Rotaciona o braço esquerdo
+rightarm:
+  msg: Posição do braço direito
+  description:
+    msg: Rotaciona o braço direito
+equipment:
+  msg: Equipamento
+  description:
+    msg: Edita o equipamento
+showarms:
+  msg: Exibir braços
+  description:
+    msg: Defina braços aparentes ou escondidos
+invisible:
+  msg: Visibility
+  description:
+    msg: Make it visibile or invisible
+size:
+  msg: Tamanho
+  description:
+    msg: Defina como grande ou pequeno
+disableslots:
+  msg: Desativar slots
+  description:
+    msg: Habilitar e desabilitar o bloqueio do equipamento
+gravity:
+  msg: Gravidade
+  description:
+    msg: (não funciona)
+baseplate:
+  msg: Placa da base
+  description:
+    msg: Ativar ou desativar a placa da base
+placement:
+  msg: Placement
+  description:
+    msg: Move the entire armorstand
+rotate:
+  msg: Girar
+  description:
+    msg: Gira a entidade do suporte de armaduras
+copy:
+  msg: Copiar
+  description:
+    msg: Copie as configurações do suporte de armaduras
+paste:
+  msg: Colar
+  description:
+    msg: Cole as configurações do suporte de armaduras
+copyslot:
+  msg: Copiar Slot <x>
+  description:
+    msg: Selecionar esse slot para copiar as configurações
+reset:
+  msg: Resetar Posição
+  description:
+    msg: Redefinir a posição da parte do corpo para o padrão
+helpgui:
+  msg: Ajuda!
+  description:
+    msg: Clique para conseguir ajuda!
+itemframevisible:
+  msg: Itemframe Visibility
+  description:
+    msg: Toggles an itemframes visibility
+
+#icons (equipment menu)
+disabled:
+  msg: Desativado
+equipslot:
+  msg: <x>
+  description:
+    msg: Arraste seu <x> para o slot abaixo
+    helm: Capacete
+    chest: Peitoral
+    pants: Calças
+    boots: Botas
+    rhand: Item na mão direita
+    lhand: Item na mão esquerda
+  helm: Capacete
+  chest: Peitoral
+  pants: Calças
+  boots: Botas
+  rhand: Mão direita
+  lhand: Mão esquerda

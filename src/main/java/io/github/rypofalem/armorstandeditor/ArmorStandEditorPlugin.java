@@ -53,7 +53,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     private NamespacedKey iconKey;
     private static ArmorStandEditorPlugin instance;
-    private CommandEx execute;
     private Language lang;
 
 
@@ -112,7 +111,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     @Override
     public void onEnable(){
 
-        scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+        scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
         //Get NMS Version
         nmsVersion = getNmsVersion();
@@ -176,6 +175,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         updateConfig("lang/", "ja_JP.yml");
         updateConfig("lang/", "de_DE.yml");
         updateConfig("lang/", "es_ES.yml");
+        updateConfig("lang/", "pt_BR.yml");
         //English is the default language and needs to be unaltered to so that there is always a backup message string
         saveResource("lang/en_US.yml", true);
         lang = new Language(getConfig().getString("lang"), this);
@@ -244,15 +244,16 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         getMetrics();
 
         editorManager = new PlayerEditorManager(this);
-        execute = new CommandEx(this);
-        getCommand("ase").setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
+        CommandEx execute = new CommandEx(this);
+        Objects.requireNonNull(getCommand("ase")).setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
         getServer().getPluginManager().registerEvents(editorManager, this);
 
 
     }
 
     private void runUpdateCheckerConsoleUpdateCheck() {
-        if (getConfig().getString("version").contains(".x")) {
+        if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
+            //noinspection UnnecessaryReturnStatement
             return;
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
@@ -266,7 +267,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { //We Can Not Dynamically change the setting for NotifyOpsOnJoin :(
-        if (getConfig().getString("version").contains(".x")) {
+        if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
+            //noinspection UnnecessaryReturnStatement
             return;
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
@@ -287,7 +289,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
         if (scoreboard.getTeam(lockedTeam) == null) {
             scoreboard.registerNewTeam(lockedTeam);
-            scoreboard.getTeam(lockedTeam).setColor(ChatColor.RED);
+            Objects.requireNonNull(scoreboard.getTeam(lockedTeam)).setColor(ChatColor.RED);
         } else {
             getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
         }
@@ -316,7 +318,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
         }
 
-        scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+        scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
         unregisterScoreboards(scoreboard);
     }
 
@@ -398,7 +400,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(!itemStk.hasItemMeta()) { return false; }
 
             //Get the lore of the Item and if it is null - Return False
-            List<String> itemLore = itemStk.getItemMeta().getLore(); //Ignore warnings this gives. Will be fixed in the future
+            List<String> itemLore = Objects.requireNonNull(itemStk.getItemMeta()).getLore(); //Ignore warnings this gives. Will be fixed in the future
             if (itemLore == null){ return false; }
 
             //If the Item does not have Lore - Return False
@@ -414,10 +416,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             //If the ItemStack does not have Metadata then we return false
             if(!itemStk.hasItemMeta()) { return false; }
 
-            Integer itemCustomModel = itemStk.getItemMeta().getCustomModelData();
-            if (itemCustomModel == null) { return false; }
+            Integer itemCustomModel = Objects.requireNonNull(itemStk.getItemMeta()).getCustomModelData();
 
-            if(!itemCustomModel.equals(customModelDataInt)) { return false;	}
+            return itemCustomModel.equals(customModelDataInt);
         }
 
         return true;
@@ -474,8 +475,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
                 map.put("Romanian", entry);
             } else if(languageUsed.startsWith("uk")){
                 map.put("Ukrainian", entry);
-            } else if(languageUsed.startsWith("zh")){
+            } else if(languageUsed.startsWith("zh")) {
                 map.put("Chinese", entry);
+            } else if(languageUsed.startsWith("pt")) {
+                map.put("Brazilian", entry);
             } else{
                 map.put("Other", entry);
             }
