@@ -16,11 +16,10 @@ import static com.griefdefender.api.claim.TrustTypes.RESIDENT;
 
 public class GriefDefenderProtection {
 
-    private boolean gdEnabled;
+    private final boolean gdEnabled;
 
     public GriefDefenderProtection() {
         gdEnabled = Bukkit.getPluginManager().isPluginEnabled("GriefDefender");
-        if (!gdEnabled) return;
     }
 
     public boolean checkPermission(Block block, Player player) {
@@ -35,16 +34,12 @@ public class GriefDefenderProtection {
 
             if (landClaim == null || landClaim.isWilderness() || landClaim.isAdminClaim()) {
                 return true;
-            } else if (landClaim.isBasicClaim() &&
-                    !landClaim.isUserTrusted(player.getUniqueId(), RESIDENT) &&
-                    !landClaim.allowEdit(player.getUniqueId()) ||
-                    landClaim.isBasicClaim() &&
-                            !landClaim.isUserTrusted(player.getUniqueId(), BUILDER) &&
-                            !landClaim.allowEdit(player.getUniqueId())) {
-                return false;
-            } else {
-                return true;
-            }
+            } else return (!landClaim.isBasicClaim() ||
+                    landClaim.isUserTrusted(player.getUniqueId(), BUILDER) ||
+                    landClaim.allowEdit(player.getUniqueId())) &&
+                    (!landClaim.isBasicClaim() ||
+                            landClaim.isUserTrusted(player.getUniqueId(), BUILDER) ||
+                            landClaim.allowEdit(player.getUniqueId()));
         } else {
             return true;
         }
