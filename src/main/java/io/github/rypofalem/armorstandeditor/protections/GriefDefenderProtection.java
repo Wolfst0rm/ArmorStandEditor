@@ -34,12 +34,8 @@ public class GriefDefenderProtection {
 
             if (landClaim == null || landClaim.isWilderness() || landClaim.isAdminClaim()) {
                 return true;
-            } else return (!landClaim.isBasicClaim() ||
-                    landClaim.isUserTrusted(player.getUniqueId(), BUILDER) ||
-                    landClaim.allowEdit(player.getUniqueId())) &&
-                    (!landClaim.isBasicClaim() ||
-                            landClaim.isUserTrusted(player.getUniqueId(), BUILDER) ||
-                            landClaim.allowEdit(player.getUniqueId()));
+            } else
+                return (!landClaim.isBasicClaim() || landClaim.isUserTrusted(player.getUniqueId(), BUILDER) || landClaim.allowEdit(player.getUniqueId()));
         } else {
             return true;
         }
