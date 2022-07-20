@@ -238,6 +238,7 @@ public class PlayerEditor {
     }
 
     private void move(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.placement")) return;
         Location loc = armorStand.getLocation();
         switch (axis) {
             case X:
@@ -254,6 +255,7 @@ public class PlayerEditor {
     }
 
     private void reverseMove(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.placement")) return;
         Location loc = armorStand.getLocation();
         switch (axis) {
             case X:

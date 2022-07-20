@@ -42,10 +42,10 @@ permissions:
     asedit.gravity:
       description: Changes whether the armor stand has gravity
       default: true
-    asedit.placemant:
+    asedit.placement:
       description: Changes whether the armor stand can be moved using the item for editing
       default: true
-    asedit.disableslots:
+    asedit.disableSlots:
       description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
       default: true
     asedit.give:
@@ -54,6 +54,7 @@ permissions:
     asedit.update:
       description: Allows the checking for updates.
       default: false
+
 
     asedit.ignoreProtection.towny:
       description: Allows user to ignore Towny's Protection Limitations.
@@ -102,8 +103,8 @@ permissions:
         asedit.basic: true
         asedit.equipment: true
         asedit.gravity: true
-        asedit.placemant: true
-        asedit.disableslots: true
+        asedit.placement: true
+        asedit.disableSlots: true
         asedit.rename: true
         asedit.update: false
         asedit.give: false
@@ -116,8 +117,8 @@ permissions:
         asedit.armorstand.invisible: true
         asedit.equipment: true
         asedit.gravity: true
-        asedit.placemant: true
-        asedit.disableslots: true
+        asedit.placement: true
+        asedit.disableSlots: true
         asedit.rename: true
         asedit.update: true
         asedit.ignorePermissions.*: true
