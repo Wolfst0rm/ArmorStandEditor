@@ -37,14 +37,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.io.*;
-import java.time.*;
-import java.nio.file.Files;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.*;
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
@@ -92,17 +89,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     String lockedTeam = "ASLocked";
 
     //Better Debug Output
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = Calendar.getInstance().getTime();
-    Instant instant = Instant.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.UK ).withZone( ZoneId.systemDefault() );
-    String dateAsString = dateFormat.format(date);
-    String timeAsString = formatter.format(instant);
-    final String debugOutputFileName = getDataFolder() + File.separator + "DEBUG-" + dateAsString +  ".log";
-    FileOutputStream fos = null;
-    File f = new File(debugOutputFileName);
-
-    private static ArmorStandEditorPlugin plugin;
+   private static ArmorStandEditorPlugin plugin;
 
     public ArmorStandEditorPlugin(){
         instance = this;
@@ -321,17 +308,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
         unregisterScoreboards(scoreboard);
     }
-
-    public void createDebugFile(){
-        try {
-            if (!f.exists() && f.createNewFile()) {
-                Files.setAttribute(f.toPath(), "dos:hidden", true);
-            }
-        } catch (IOException e) {
-            this.getServer().getLogger().warning(e.getMessage());
-        }
-    }
-
 
     public String getNmsVersion(){
         return this.getServer().getClass().getPackage().getName().replace(".",",").split(",")[3];

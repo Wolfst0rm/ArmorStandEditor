@@ -8,10 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import static com.griefdefender.api.claim.TrustTypes.BUILDER;
-import static com.griefdefender.api.claim.TrustTypes.RESIDENT;
 
 
 public class GriefDefenderProtection {

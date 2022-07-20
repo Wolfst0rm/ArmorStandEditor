@@ -34,12 +34,11 @@ import org.bukkit.entity.Player;
 
 public class WorldGuardProtection {
     private final boolean wgEnabled;
-    private RegionQuery regionQry = null;
+    private RegionQuery regionQry;
 
     public WorldGuardProtection(){
         wgEnabled = Bukkit.getPluginManager().isPluginEnabled("WorldGuard");
 
-        if(!wgEnabled) return;
         RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
         regionQry = regionContainer.createQuery();
     }
