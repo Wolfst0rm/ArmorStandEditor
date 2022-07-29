@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.19.x-36</version>
+    <version>1.19.1-36</version>
     <name>armorstandeditor</name>
     <url>http://maven.apache.org</url>
 
@@ -52,7 +52,7 @@
         </repository>
         <repository>
             <id>glaremasters</id>
-            <url>https://repo.glaremasters.me/repository/bloodshot</url>
+            <url>https://repo.glaremasters.me/repository/bloodshot/</url>
         </repository>
         <!--- Update Checker -->
         <repository>
@@ -76,7 +76,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
+            <version>1.19.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!--- WorldGuard -->
@@ -90,14 +90,14 @@
             <dependency>
                 <groupId>com.plotsquared</groupId>
                 <artifactId>PlotSquared-Core</artifactId>
-                <version>6.9.2</version>
+                <version>6.9.3</version>
                 <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>com.plotsquared</groupId>
                 <artifactId>PlotSquared-Bukkit</artifactId>
-                <version>6.9.2</version>
+                <version>6.9.3</version>
                 <scope>provided</scope>
                 <exclusions>
                     <exclusion>
