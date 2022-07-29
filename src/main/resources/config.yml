@@ -3,7 +3,7 @@
 #-----------------------------#
 
 #DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
-version: "1.19.1-36"
+version: "1.xx.x-37"
 
 #----------- LANGUAGE
 #Name of the language file you wish to use
@@ -51,7 +51,6 @@ fine: 120
 armorStandVisibility: true
 #asedit.itemframe.invisible
 invisibleItemFrames: true
-
 
 #------ GUI Options
 
