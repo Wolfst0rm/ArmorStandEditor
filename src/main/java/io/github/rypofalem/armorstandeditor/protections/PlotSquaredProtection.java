@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-public class PlotSquaredProtection {
+public class PlotSquaredProtection implements Protection  {
 
     private final boolean psEnabled;
     private BukkitPlatform psPlatform = null;

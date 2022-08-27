@@ -32,7 +32,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-public class WorldGuardProtection {
+public class WorldGuardProtection implements Protection {
     private final boolean wgEnabled;
     private RegionQuery regionQry;
 

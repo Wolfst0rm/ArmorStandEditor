@@ -141,6 +141,13 @@
             <version>2.1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Lands -->
+        <dependency>
+            <groupId>com.github.angeschossen</groupId>
+            <artifactId>LandsAPI</artifactId>
+            <version>6.12.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <!--Java 8-->
     <build>
