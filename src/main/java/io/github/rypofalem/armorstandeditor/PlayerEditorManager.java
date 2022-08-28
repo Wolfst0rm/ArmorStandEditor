@@ -57,6 +57,7 @@ public class PlayerEditorManager implements Listener {
     private  TickCounter counter;
     private ArrayList<ArmorStand> as = null;
     private ArrayList<ItemFrame> itemF = null;
+    // Instantiate protections used to determine whether a player may edit an armor stand or item frame
     private final List<Protection> protections = ImmutableList.of(
             new GriefDefenderProtection(), new GriefPreventionProtection(), new LandsProtection(),
             new PlotSquaredProtection(), new SkyblockProtection(), new TownyProtection(), new WorldGuardProtection());
