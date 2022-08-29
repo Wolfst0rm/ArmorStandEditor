@@ -22,8 +22,9 @@ public class LandsProtection implements Protection {
 
     @Override
     public boolean checkPermission(Block block, Player player) {
-        if (!landsEnabled) return true;
+        if (!landsEnabled || player.hasPermission("asedit.ignoreProtection.lands")) return true;
 
+        // Check if the player is trusted in the area or land, in case they're not in an area, they're in.
         Land land = lands.getLand(block.getLocation());
         Area area = land == null ? null : land.getArea(block.getLocation());
         LandPlayer lPlayer = lands.getLandPlayer(player.getUniqueId());

@@ -74,6 +74,9 @@ permissions:
     asedit.ignoreProtection.griefDefender:
       description: Allows user to ignore GriefDefender's Protection Limitations.
       default: false
+    asedit.ignoreProtection.lands:
+      description: Allows user to ignore Lands' Protection Limitations.
+      default: false
 
 
     asedit.ignoreProtection.*:
