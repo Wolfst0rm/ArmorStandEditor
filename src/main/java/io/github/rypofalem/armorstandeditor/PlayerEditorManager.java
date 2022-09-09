@@ -19,6 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import com.google.common.collect.ImmutableList;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
@@ -56,12 +57,10 @@ public class PlayerEditorManager implements Listener {
     private  TickCounter counter;
     private ArrayList<ArmorStand> as = null;
     private ArrayList<ItemFrame> itemF = null;
-    private TownyProtection townyProtection;
-    private PlotSquaredProtection plotSquaredProtection;
-    private WorldGuardProtection worldGuardProtection;
-    private GriefPreventionProtection griefPreventionProtection;
-    private SkyblockProtection skyblockProtection;
-    private GriefDefenderProtection griefDefenderProtection;
+    // Instantiate protections used to determine whether a player may edit an armor stand or item frame
+    private final List<Protection> protections = ImmutableList.of(
+            new GriefDefenderProtection(), new GriefPreventionProtection(), new LandsProtection(),
+            new PlotSquaredProtection(), new SkyblockProtection(), new TownyProtection(), new WorldGuardProtection());
 
     PlayerEditorManager( ArmorStandEditorPlugin plugin) {
         this.plugin = plugin;
@@ -72,14 +71,6 @@ public class PlayerEditorManager implements Listener {
         fineMov = .03125; // 1/32
         counter = new TickCounter();
         Bukkit.getServer().getScheduler().runTaskTimer(plugin, counter, 0, 1);
-
-        //Implementation of Protection Support - PlotSquared, WorldGuard, Towny, GriefPrevention etc.
-        townyProtection 		  = new TownyProtection();
-        plotSquaredProtection 	  = new PlotSquaredProtection();
-        worldGuardProtection 	  = new WorldGuardProtection();
-        griefPreventionProtection = new GriefPreventionProtection();
-        skyblockProtection        = new SkyblockProtection();
-        griefDefenderProtection   = new GriefDefenderProtection();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -290,37 +281,11 @@ public class PlayerEditorManager implements Listener {
     }
 
 
-    boolean canEdit( Player player,  ArmorStand as) {
-
+    boolean canEdit( Player player,  Entity entity) {
         //Get the Entity being checked for editing
-        Block block = as.getLocation().getBlock();
-
-        //Permission checks for Protection
-        boolean protectTActive  							= townyProtection.checkPermission(block, player);
-        boolean protectPSActive 							= plotSquaredProtection.checkPermission(block, player);
-        boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
-        boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
-        boolean protectSkyActive 							= skyblockProtection.checkPermission(player);
-        boolean protectGDActive                             = griefDefenderProtection.checkPermission(block, player);
-
-        return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive && protectGDActive;
-
-    }
-
-    boolean canEdit( Player player,  ItemFrame itemf) {
-
-        //Get the Entity being checked for editing
-        Block block = itemf.getLocation().getBlock();
-
-        //Permission checks for Protection
-        boolean protectTActive  							= townyProtection.checkPermission(block, player);
-        boolean protectPSActive 							= plotSquaredProtection.checkPermission(block, player);
-        boolean protectWGActive 							= worldGuardProtection.checkPermission(block, player);
-        boolean protectGPActive 							= griefPreventionProtection.checkPermission(block, player);
-        boolean protectSkyActive 							= skyblockProtection.checkPermission(player);
-        boolean protectGDActive                             = griefDefenderProtection.checkPermission(block, player);
-
-        return protectTActive && protectPSActive && protectWGActive && protectGPActive && protectSkyActive && protectGDActive;
+        Block block = entity.getLocation().getBlock();
+        // Check if all protections allow this edit, if one fails, don't allow edit
+        return protections.stream().allMatch(protection -> protection.checkPermission(block, player));
     }
 
     void applyLeftTool( Player player,  ArmorStand as) {

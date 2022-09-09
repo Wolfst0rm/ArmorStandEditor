@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.xx.x-37</version>
+    <version>1.19.2-37</version>
     <name>armorstandeditor</name>
     <url>http://maven.apache.org</url>
 
@@ -117,7 +117,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.98.3.4</version>
+            <version>0.98.3.8</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
@@ -139,6 +139,13 @@
             <groupId>com.griefdefender</groupId>
             <artifactId>api</artifactId>
             <version>2.1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Lands -->
+        <dependency>
+            <groupId>com.github.angeschossen</groupId>
+            <artifactId>LandsAPI</artifactId>
+            <version>6.12.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

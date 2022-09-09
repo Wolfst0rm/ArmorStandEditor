@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import static com.griefdefender.api.claim.TrustTypes.BUILDER;
 
 
-public class GriefDefenderProtection {
+public class GriefDefenderProtection implements Protection  {
 
     private final boolean gdEnabled;
 

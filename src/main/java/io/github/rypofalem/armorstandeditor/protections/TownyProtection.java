@@ -10,7 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 //FIX for https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/15
-public class TownyProtection {
+public class TownyProtection implements Protection  {
     private final boolean tEnabled;
 
 

@@ -1,12 +1,12 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.xx.x-37
+version: 1.19.2-37
 api-version: "1.13"
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
-authors: [Wolfstorm, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone]
+authors: [Wolfstorm, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared]
+softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands]
 
 commands:
   ase:
@@ -74,6 +74,9 @@ permissions:
     asedit.ignoreProtection.griefDefender:
       description: Allows user to ignore GriefDefender's Protection Limitations.
       default: false
+    asedit.ignoreProtection.lands:
+      description: Allows user to ignore Lands' Protection Limitations.
+      default: false
 
 
     asedit.ignoreProtection.*:
@@ -86,6 +89,7 @@ permissions:
         asedit.ignoreProtection.worldGuard:  true
         asedit.ignoreProtection.skyblock: true
         asedit.ignoreProtection.griefDefender: true
+        asedit.ignoreProtection.lands: true
 
     asedit.permpack.dontIgnoreProtections:
       default: true
@@ -96,6 +100,7 @@ permissions:
         asedit.ignoreProtection.worldGuard:  false
         asedit.ignoreProtection.skyblock: false
         asedit.ignoreProtection.griefDefender: false
+        asedit.ignoreProtection.lands: false
 
     asedit.permpack.basic:
       default: true
