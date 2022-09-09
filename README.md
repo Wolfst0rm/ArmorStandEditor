@@ -5,7 +5,6 @@
 [![Build Status](https://github.com/Wolfst0rm/ArmorStandEditor/actions/workflows/maven-publish.yml/badge.svg?style=flat)](https://github.com/Wolfst0rm/ArmorStandEditor/actions/workflows/maven-publish.yml)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=wolfieheart_ArmorStandEditor&metric=sqale_rating&style=flat)](https://sonarcloud.io/summary/new_code?id=wolfieheart_ArmorStandEditor)  
 [![CodeFactor](https://www.codefactor.io/repository/github/wolfieheart/armorstandeditor/badge?style=flat)](https://www.codefactor.io/repository/github/wolfieheart/armorstandeditor)
-[![Official Discord](https://img.shields.io/discord/955408323522494464?label=Discord%20for%20ASE)](https://discord.gg/aUf4AWAKmr)
 [![Scanned with Sonarcloud](https://img.shields.io/badge/Scanned%20With-Sonarcloud-orange?style=flat&logo=sonarcloud)](https://sonarcloud.io/summary/new_code?id=Wolfst0rm_ArmorStandEditor)  
 [![wakatime](https://wakatime.com/badge/github/Wolfst0rm/ArmorStandEditor.svg?style=flat)](https://wakatime.com/badge/github/Wolfst0rm/ArmorStandEditor)
 [![Compatibility/GetBukkit](https://img.shields.io/badge/Compatability-Paper%2C%20Spigot%2C%20Bukkit%20etc.%20(GetBukkit.org)-yellowgreen?style=flat)](https://getbukkit.org/)
@@ -66,7 +65,6 @@ subject to change in the future. The minimum enforced API Version is 1.13.
 * Glowing ArmorStand to signify Targeting and Slot Disables through the use of Scoreboards.
 
 You can also follow our [Feature Roadmap](https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/11) to see what we have planned (Updated as required).
-You can also find us on our Discord at: [https://discord.com/invite/aUf4AWAKmr](https://discord.com/invite/aUf4AWAKmr)
 
 ## Support
 Support for ArmorStandEditor is provided:
