@@ -89,6 +89,7 @@ permissions:
         asedit.ignoreProtection.worldGuard:  true
         asedit.ignoreProtection.skyblock: true
         asedit.ignoreProtection.griefDefender: true
+        asedit.ignoreProtection.lands: true
 
     asedit.permpack.dontIgnoreProtections:
       default: true
@@ -99,6 +100,7 @@ permissions:
         asedit.ignoreProtection.worldGuard:  false
         asedit.ignoreProtection.skyblock: false
         asedit.ignoreProtection.griefDefender: false
+        asedit.ignoreProtection.lands: false
 
     asedit.permpack.basic:
       default: true
