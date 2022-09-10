@@ -15,6 +15,7 @@ public class SkyblockProtection implements Protection  {
         //IF YOU WANT YOUR SKYBLOCK ADDED, PLEASE SUBMIT A FEATURE REQUEST!
 
         skyblockEnabled = Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2");
+        if(!skyblockEnabled) return;
     }
 
     public boolean checkPermission(Block block, Player player) {

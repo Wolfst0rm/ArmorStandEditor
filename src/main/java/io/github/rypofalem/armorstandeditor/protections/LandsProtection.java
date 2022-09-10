@@ -18,6 +18,8 @@ public class LandsProtection implements Protection {
 
         if (landsEnabled)
             lands = new LandsIntegration(ArmorStandEditorPlugin.instance());
+        else
+            return;
     }
 
     @Override

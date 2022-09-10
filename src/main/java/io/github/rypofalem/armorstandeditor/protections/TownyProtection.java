@@ -16,6 +16,7 @@ public class TownyProtection implements Protection  {
 
     public TownyProtection(){
         tEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
+        if(!tEnabled) return;
     }
 
     public boolean checkPermission(Block block, Player player){

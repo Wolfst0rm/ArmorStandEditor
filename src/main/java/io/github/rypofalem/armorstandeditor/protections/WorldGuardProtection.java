@@ -38,6 +38,7 @@ public class WorldGuardProtection implements Protection {
 
     public WorldGuardProtection(){
         wgEnabled = Bukkit.getPluginManager().isPluginEnabled("WorldGuard");
+        if(!wgEnabled) return;
 
         RegionContainer regionContainer = WorldGuard.getInstance().getPlatform().getRegionContainer();
         regionQry = regionContainer.createQuery();
