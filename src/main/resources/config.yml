@@ -3,7 +3,7 @@
 #-----------------------------#
 
 #DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
-version: "1.19.2-37.3"
+version: "1.19.2-38"
 
 #----------- LANGUAGE
 #Name of the language file you wish to use
@@ -25,7 +25,8 @@ tool: FLINT
 requireToolData: false
 toolData: 0
 
-#(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
+#(Optional) data that the plugin looks for to identify the name of the Edit Tool. Useful for Public Servers that do not want
+#normal use of Flint to be impacted.
 requireToolName: false
 toolName: Example Name here
 

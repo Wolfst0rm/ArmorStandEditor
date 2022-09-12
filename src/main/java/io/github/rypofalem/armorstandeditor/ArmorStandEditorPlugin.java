@@ -485,6 +485,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //ArmorStandInvis Config
         metrics.addCustomChart(new SimplePie("itemframe_invisibility_used", () -> getConfig().getString("invisibleItemFrames")));
 
+        //TODO: Add tracking to see who is using Custom Naming in BStats - AKA Remove this soon TM
+        //metrics.addCustomChart(new SimplePie("custom_toolname_enabled", () -> getConfig().getString("requireToolName")));
+
+
     }
 
     public NamespacedKey getIconKey() {
