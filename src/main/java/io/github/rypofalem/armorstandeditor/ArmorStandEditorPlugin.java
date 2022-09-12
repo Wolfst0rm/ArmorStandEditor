@@ -383,7 +383,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
             //Get the name of the Edit Tool - If Null, return false
             String itemName = Objects.requireNonNull(itemStk.getItemMeta()).getDisplayName();
-            if (itemName == null) { return false; }
 
             //If the name of the Edit Tool is not the Name specified in Config then Return false
             if(itemName != editToolName) { return false; }
@@ -396,8 +395,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(!itemStk.hasItemMeta()) { return false; }
 
             //Get the lore of the Item and if it is null - Return False
-            List<String> itemLore = Objects.requireNonNull(itemStk.getItemMeta()).getLore(); //Ignore warnings this gives. Will be fixed in the future
-            if (itemLore == null){ return false; }
+            List<String> itemLore = Objects.requireNonNull(itemStk.getItemMeta()).getLore(); 
 
             //If the Item does not have Lore - Return False
             boolean hasTheItemLore = itemStk.getItemMeta().hasLore();
