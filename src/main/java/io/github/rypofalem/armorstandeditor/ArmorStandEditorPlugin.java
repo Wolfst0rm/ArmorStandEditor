@@ -385,7 +385,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             String itemName = Objects.requireNonNull(itemStk.getItemMeta()).getDisplayName();
 
             //If the name of the Edit Tool is not the Name specified in Config then Return false
-            if(itemName != editToolName) { return false; }
+            if(!itemname.equals(editToolName)) { return false; }
 
         }
 
