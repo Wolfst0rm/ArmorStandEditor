@@ -20,9 +20,7 @@
 package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.language.Language;
-
 import com.jeff_media.updatechecker.*;
-
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 
 import org.bukkit.Bukkit;
@@ -71,10 +69,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     int editToolData = Integer.MIN_VALUE;
     boolean requireSneaking = false;
+    boolean requireToolName = false;
+    String editToolName = null;
     boolean requireToolLore = false;
     String editToolLore = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
+
 
     boolean debug = false; //weather or not to broadcast messages via print(String message)
     double coarseRot;
@@ -191,6 +192,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //ArmorStandVisibility Node
         armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+
+        //Do we require a custom tool name?
+        requireToolName = getConfig().getBoolean("requireToolName", false);
+        if(requireToolName){
+            editToolName = getConfig().getString("toolName", null);
+            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+        }
 
         //Is there NBT Required for the tool
         requireToolData = getConfig().getBoolean("requireToolData", false);
@@ -370,14 +378,24 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             }
         }
 
+        if(requireToolName && editToolName != null){
+            if(!itemStk.hasItemMeta()) { return false; }
+
+            //Get the name of the Edit Tool - If Null, return false
+            String itemName = Objects.requireNonNull(itemStk.getItemMeta()).getDisplayName();
+
+            //If the name of the Edit Tool is not the Name specified in Config then Return false
+            if(!itemName.equals(editToolName)) { return false; }
+
+        }
+
         if(requireToolLore && editToolLore != null){
 
             //If the ItemStack does not have Metadata then we return false
             if(!itemStk.hasItemMeta()) { return false; }
 
             //Get the lore of the Item and if it is null - Return False
-            List<String> itemLore = Objects.requireNonNull(itemStk.getItemMeta()).getLore(); //Ignore warnings this gives. Will be fixed in the future
-            if (itemLore == null){ return false; }
+            List<String> itemLore = Objects.requireNonNull(itemStk.getItemMeta()).getLore(); 
 
             //If the Item does not have Lore - Return False
             boolean hasTheItemLore = itemStk.getItemMeta().hasLore();

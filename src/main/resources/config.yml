@@ -3,7 +3,7 @@
 #-----------------------------#
 
 #DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
-version: "1.19.2-37.2"
+version: "1.19.2-37.3"
 
 #----------- LANGUAGE
 #Name of the language file you wish to use
@@ -25,12 +25,17 @@ tool: FLINT
 requireToolData: false
 toolData: 0
 
+#(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
+requireToolName: false
+toolName: Example Name here
+
 #(Optional) The first "Lore" entry that the plugin looks for to identify the edit tool.
 requireToolLore: false
 toolLore: Let's get dangerous
 
 #(Optional) Allow the use of CustomModelData - NOTE: This looks at the editTool set by Config
 #and at the Int set here to know what to set.
+
 #Also please if you are using this, ensure that you also give people the ability asedit.give in
 #order to allow them to change their edit
 #tool for the right Custom Model Data
