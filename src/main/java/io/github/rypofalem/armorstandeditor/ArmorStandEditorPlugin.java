@@ -71,10 +71,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     int editToolData = Integer.MIN_VALUE;
     boolean requireSneaking = false;
+    boolean requireToolName = false;
+    String editToolName = null;
     boolean requireToolLore = false;
     String editToolLore = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
+
 
     boolean debug = false; //weather or not to broadcast messages via print(String message)
     double coarseRot;
@@ -191,6 +194,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //ArmorStandVisibility Node
         armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+
+        //Do we require a custom tool name?
+        requireToolName = getConfig().getBoolean("requireToolName", false);
+        if(requireToolName){
+            editToolName = getConfig().getString("toolName", null);
+            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+        }
 
         //Is there NBT Required for the tool
         requireToolData = getConfig().getBoolean("requireToolData", false);
@@ -368,6 +378,18 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if (d1 != null) { //We do this to prevent NullPointers
                 if (d1.getDamage() != (short) editToolData) { return false; }
             }
+        }
+
+        if(requireToolName && editToolName != null){
+            if(!itemStk.hasItemMeta()) { return false; }
+
+            //Get the name of the Edit Tool - If Null, return false
+            String itemName = Objects.requireNonNull(itemStk.getItemMeta()).getDisplayName();
+            if (itemName == null) { return false; }
+
+            //If the name of the Edit Tool is not the Name specified in Config then Return false
+            if(itemName != editToolName) { return false; }
+
         }
 
         if(requireToolLore && editToolLore != null){
