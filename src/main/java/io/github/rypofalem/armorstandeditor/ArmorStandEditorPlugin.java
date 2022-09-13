@@ -202,7 +202,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //ArmorStandVisibility Node
         armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
 
-
         //Is there NBT Required for the tool
         requireToolData = getConfig().getBoolean("requireToolData", false);
 
