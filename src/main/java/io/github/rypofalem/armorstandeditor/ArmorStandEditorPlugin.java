@@ -99,7 +99,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
 
         scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
@@ -109,21 +109,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Load Messages in Console - TODO: Rework all of this
         getLogger().info("======= ArmorStandEditor =======");
         getLogger().info("Plugin Version: " + pdfFile.getVersion());
-
-        //Spigot Check
-        hasSpigot = getHasSpigot();
-        getLogger().info("SpigotMC: " + hasSpigot);
-
-        //Paper Check
-        hasPaper = getHasPaper();
-        getLogger().info("PaperMC: " + hasPaper);
-
-        //If Paper and Spigot are both FALSE - Disable the plugin
-        if (!hasPaper && !hasSpigot){
-            getLogger().severe("This plugin requires either Paper, Spigot or one of its forks to run");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
 
         //Minimum Version Check - No Lower than 1.13-API. Will be tuned out in the future
         if (    nmsVersion.startsWith("v1_8")  ||
@@ -149,6 +134,23 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         } else {
             getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
         }
+        //Spigot Check
+        hasSpigot = getHasSpigot();
+        hasPaper = getHasPaper();
+
+        //If Paper and Spigot are both FALSE - Disable the plugin
+        if (!hasPaper && !hasSpigot){
+            getLogger().severe("This plugin requires either Paper, Spigot or one of its forks to run");
+            getServer().getPluginManager().disablePlugin(this);
+            getLogger().info(SEPARATOR_FIELD);
+            return;
+        } else {
+            if (hasSpigot) {
+                getLogger().info("SpigotMC: " + hasSpigot);
+            } else {
+                getLogger().info("PaperMC: " + hasPaper);
+            }
+        }
 
         getServer().getPluginManager().enablePlugin(this);
         registerScoreboards(scoreboard);
@@ -166,6 +168,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         updateConfig("lang/", "de_DE.yml");
         updateConfig("lang/", "es_ES.yml");
         updateConfig("lang/", "pt_BR.yml");
+
         //English is the default language and needs to be unaltered to so that there is always a backup message string
         saveResource("lang/en_US.yml", true);
         lang = new Language(getConfig().getString("lang"), this);
@@ -224,7 +227,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //All ItemFrame Stuff
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-
         invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
@@ -251,7 +253,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     private void runUpdateCheckerConsoleUpdateCheck() {
         if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
             //noinspection UnnecessaryReturnStatement
-            return; //TODO: Server Only Message about Dev Build being Enabled
+            getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
+            getLogger().warning("This version can be unstable and is not recommended for Production Environments.");
+            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor");
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
                     .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
@@ -265,8 +269,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { 
         if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
-            //noinspection UnnecessaryReturnStatement
-            return; //TODO: Log to console that this is a Development Build and is only intended for Testing
+            getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
+            getLogger().warning("This version can be unstable and is not recommended for Production Environments.");
+            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor");
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
                     .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
@@ -404,19 +409,16 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if (!hasTheItemLore)  { return false; }
 
             //Item the first thing in the ItemLore List does not Equal the Config Value "editToolLore" - return false
-            if (!itemLore.get(0).equals(editToolLore))  { return false; } //Does not need simplified - IntelliJ likes to complain here
+            if (!itemLore.equals(editToolLore))  { return false; } //Does not need simplified - IntelliJ likes to complain here
 
         }
 
         if (allowCustomModelData && customModelDataInt != null) {
             //If the ItemStack does not have Metadata then we return false
             if(!itemStk.hasItemMeta()) { return false; }
-
             Integer itemCustomModel = Objects.requireNonNull(itemStk.getItemMeta()).getCustomModelData();
-
             return itemCustomModel.equals(customModelDataInt);
         }
-
         return true;
     }
 
