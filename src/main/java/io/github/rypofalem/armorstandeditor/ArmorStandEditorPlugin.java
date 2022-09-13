@@ -106,7 +106,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Get NMS Version
         nmsVersion = getNmsVersion();
 
-        //Load Messages in Console - TODO: Rework all of this
+        //Load Messages in Console
         getLogger().info("======= ArmorStandEditor =======");
         getLogger().info("Plugin Version: " + pdfFile.getVersion());
 
@@ -402,7 +402,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(!itemStk.hasItemMeta()) { return false; }
 
             //Get the lore of the Item and if it is null - Return False
-            List<String> itemLore = Objects.requireNonNull(itemStk.getItemMeta()).getLore(); 
+            String itemLore = String.valueOf(Objects.requireNonNull(itemStk.getItemMeta()).getLore());
 
             //If the Item does not have Lore - Return False
             boolean hasTheItemLore = itemStk.getItemMeta().hasLore();
