@@ -444,6 +444,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Language is used
         metrics.addCustomChart(new DrilldownPie("language_used", () -> {
             Map<String, Map<String, Integer>> map = new HashMap<>();
+            Map<String, Integer> entry = new HashMap<>();
 
             String languageUsed = getConfig().getString("lang");
             assert languageUsed != null;
