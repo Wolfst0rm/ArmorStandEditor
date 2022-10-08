@@ -43,15 +43,14 @@ import java.util.Objects;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
-    public static final int SPIGOT_RESOURCE_ID = 94503; //Used for Update Checker
+    //!!! DO NOT REMOVE THESE UNDER ANY CIRCUMSTANCES !!!
+    public static final int SPIGOT_RESOURCE_ID = 94503;  //Used for Update Checker
     private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
 
     private NamespacedKey iconKey;
     private static ArmorStandEditorPlugin instance;
     private Language lang;
-
-
-    boolean opUpdateNotification = false;
+    
     //Server Version Detection: Paper or Spigot and Invalid NMS Version
     String nmsVersion;
     public boolean hasSpigot = false;
@@ -61,23 +60,27 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     static final String SEPARATOR_FIELD = "================================";
 
     public PlayerEditorManager editorManager;
-
+    
+    //Output for Updates
+    boolean opUpdateNotification = false;
+    
+    //Edit Tool Information
     Material editTool;
     String toolType;
-    boolean requireToolData = false;
-    boolean sendToActionBar = true;
-
     int editToolData = Integer.MIN_VALUE;
-    boolean requireSneaking = false;
+    boolean requireToolData = false;
     boolean requireToolName = false;
     String editToolName = null;
     boolean requireToolLore = false;
     String editToolLore = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
-
-
-    boolean debug = false; //weather or not to broadcast messages via print(String message)
+    
+    //GUI Settings
+    boolean requireSneaking = false;
+    boolean sendToActionBar = true;
+    
+    //Armor Stand Specific Settings
     double coarseRot;
     double fineRot;
     boolean glowItemFrames = false;
@@ -89,7 +92,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     public Team team;
     String lockedTeam = "ASLocked";
 
-    //Better Debug Output
    private static ArmorStandEditorPlugin plugin;
 
     public ArmorStandEditorPlugin(){
@@ -97,7 +99,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
 
         scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
@@ -107,21 +109,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Load Messages in Console
         getLogger().info("======= ArmorStandEditor =======");
         getLogger().info("Plugin Version: " + pdfFile.getVersion());
-
-        //Spigot Check
-        hasSpigot = getHasSpigot();
-        getLogger().info("SpigotMC: " + hasSpigot);
-
-        //Paper Check
-        hasPaper = getHasPaper();
-        getLogger().info("PaperMC: " + hasPaper);
-
-        //If Paper and Spigot are both FALSE - Disable the plugin
-        if (!hasPaper && !hasSpigot){
-            getLogger().severe("This plugin requires either Paper, Spigot or one of its forks to run");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
 
         //Minimum Version Check - No Lower than 1.13-API. Will be tuned out in the future
         if (    nmsVersion.startsWith("v1_8")  ||
@@ -147,6 +134,23 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         } else {
             getLogger().info("Minecraft Version: " + nmsVersion + " is supported. Loading continuing.");
         }
+        //Spigot Check
+        hasSpigot = getHasSpigot();
+        hasPaper = getHasPaper();
+
+        //If Paper and Spigot are both FALSE - Disable the plugin
+        if (!hasPaper && !hasSpigot){
+            getLogger().severe("This plugin requires either Paper, Spigot or one of its forks to run");
+            getServer().getPluginManager().disablePlugin(this);
+            getLogger().info(SEPARATOR_FIELD);
+            return;
+        } else {
+            if (hasSpigot) {
+                getLogger().info("SpigotMC: " + hasSpigot);
+            } else {
+                getLogger().info("PaperMC: " + hasPaper);
+            }
+        }
 
         getServer().getPluginManager().enablePlugin(this);
         registerScoreboards(scoreboard);
@@ -164,6 +168,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         updateConfig("lang/", "de_DE.yml");
         updateConfig("lang/", "es_ES.yml");
         updateConfig("lang/", "pt_BR.yml");
+
         //English is the default language and needs to be unaltered to so that there is always a backup message string
         saveResource("lang/en_US.yml", true);
         lang = new Language(getConfig().getString("lang"), this);
@@ -182,6 +187,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        
+        //Do we require a custom tool name?
+        requireToolName = getConfig().getBoolean("requireToolName", false);
+        if(requireToolName){
+            editToolName = getConfig().getString("toolName", null);
+            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+        }
 
         //Custom Model Data
         allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
@@ -192,13 +204,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //ArmorStandVisibility Node
         armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
-
-        //Do we require a custom tool name?
-        requireToolName = getConfig().getBoolean("requireToolName", false);
-        if(requireToolName){
-            editToolName = getConfig().getString("toolName", null);
-            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
-        }
 
         //Is there NBT Required for the tool
         requireToolData = getConfig().getBoolean("requireToolData", false);
@@ -222,7 +227,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //All ItemFrame Stuff
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-
         invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
@@ -249,7 +253,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     private void runUpdateCheckerConsoleUpdateCheck() {
         if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
             //noinspection UnnecessaryReturnStatement
-            return;
+            getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
+            getLogger().warning("This version can be unstable and is not recommended for Production Environments.");
+            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor");
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
                     .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
@@ -261,10 +267,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
     }
 
-    private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { //We Can Not Dynamically change the setting for NotifyOpsOnJoin :(
+    private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { 
         if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
-            //noinspection UnnecessaryReturnStatement
-            return;
+            getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
+            getLogger().warning("This version can be unstable and is not recommended for Production Environments.");
+            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor");
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
                     .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
@@ -395,26 +402,23 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(!itemStk.hasItemMeta()) { return false; }
 
             //Get the lore of the Item and if it is null - Return False
-            List<String> itemLore = Objects.requireNonNull(itemStk.getItemMeta()).getLore(); 
+            String itemLore = String.valueOf(Objects.requireNonNull(itemStk.getItemMeta()).getLore());
 
             //If the Item does not have Lore - Return False
             boolean hasTheItemLore = itemStk.getItemMeta().hasLore();
             if (!hasTheItemLore)  { return false; }
 
             //Item the first thing in the ItemLore List does not Equal the Config Value "editToolLore" - return false
-            if (!itemLore.get(0).equals(editToolLore))  { return false; } //Does not need simplified - IntelliJ likes to complain here
+            if (!itemLore.equals(editToolLore))  { return false; } //Does not need simplified - IntelliJ likes to complain here
 
         }
 
         if (allowCustomModelData && customModelDataInt != null) {
             //If the ItemStack does not have Metadata then we return false
             if(!itemStk.hasItemMeta()) { return false; }
-
             Integer itemCustomModel = Objects.requireNonNull(itemStk.getItemMeta()).getCustomModelData();
-
             return itemCustomModel.equals(customModelDataInt);
         }
-
         return true;
     }
 
@@ -445,8 +449,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             Map<String, Integer> entry = new HashMap<>();
 
             String languageUsed = getConfig().getString("lang");
-            entry.put(languageUsed, 1);
-
             assert languageUsed != null;
 
             if (languageUsed.startsWith("nl")) {
@@ -485,8 +487,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //ArmorStandInvis Config
         metrics.addCustomChart(new SimplePie("itemframe_invisibility_used", () -> getConfig().getString("invisibleItemFrames")));
 
-        //TODO: Add tracking to see who is using Custom Naming in BStats - AKA Remove this soon TM
-        //metrics.addCustomChart(new SimplePie("custom_toolname_enabled", () -> getConfig().getString("requireToolName")));
+        //Add tracking to see who is using Custom Naming in BStats
+        metrics.addCustomChart(new SimplePie("custom_toolname_enabled", () -> getConfig().getString("requireToolName")));
 
 
     }
