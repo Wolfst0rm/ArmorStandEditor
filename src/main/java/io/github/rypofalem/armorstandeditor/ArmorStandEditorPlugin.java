@@ -252,10 +252,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     private void runUpdateCheckerConsoleUpdateCheck() {
         if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
-            //noinspection UnnecessaryReturnStatement
             getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
             getLogger().warning("This version can be unstable and is not recommended for Production Environments.");
-            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor");
+            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor . This warning");
+            getLogger().warning("is intended to be displayed when using a Dev build and is NOT A BUG!");
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
                     .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
@@ -271,7 +271,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         if (Objects.requireNonNull(getConfig().getString("version")).contains(".x")) {
             getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
             getLogger().warning("This version can be unstable and is not recommended for Production Environments.");
-            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor");
+            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor . This warning");
+            getLogger().warning("is intended to be displayed when using a Dev build and is NOT A BUG!");
         } else {
             new UpdateChecker(this, UpdateCheckSource.SPIGET, "" + SPIGOT_RESOURCE_ID + "")
                     .setDownloadLink("https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/")
