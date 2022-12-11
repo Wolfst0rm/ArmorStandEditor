@@ -13,6 +13,9 @@ version: "1.19.3-39"
 lang: en_US.yml
 
 #----------- UPDATE NOTIFICATIONS
+#Enable or Disable the Update Checker
+runTheUpdateChecker: true
+
 #Set this to allow your operators to get messages w.r.t Plugin updates
 opUpdateNotification: false
 

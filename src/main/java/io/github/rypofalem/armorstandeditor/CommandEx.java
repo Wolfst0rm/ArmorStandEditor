@@ -207,8 +207,13 @@ public class CommandEx implements CommandExecutor {
 
     private void commandUpdate(Player player) {
         if (!(checkPermission(player, "update", true))) return;
-        new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID + "").checkNow(player); //Runs Update Check
 
+        //Only Run if the Update Command Works
+        if(plugin.getRunTheUpdateChecker()) {
+            new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID + "").checkNow(player); //Runs Update Check
+        } else{
+            player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker is not enabled on this server");
+        }
     }
 
     private void commandVersion(Player player) {

@@ -62,6 +62,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     
     //Output for Updates
     boolean opUpdateNotification = false;
+    boolean runTheUpdateChecker = false;
     
     //Edit Tool Information
     Material editTool;
@@ -230,14 +231,19 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
         invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
 
+        //Add ability to enable ot Disable the running of the Updater
+        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
+
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
         opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
-        if(opUpdateNotification){
-            runUpdateCheckerWithOPNotifyOnJoinEnabled();
-        } else {
-            runUpdateCheckerConsoleUpdateCheck();
+        if(runTheUpdateChecker) {
+            if (opUpdateNotification) {
+                runUpdateCheckerWithOPNotifyOnJoinEnabled();
+            } else {
+                runUpdateCheckerConsoleUpdateCheck();
+            }
         }
 
         //Get Metrics from bStats
@@ -372,6 +378,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         return this.editTool;
     }
 
+    public boolean getRunTheUpdateChecker() {
+        return this.getConfig().getBoolean("runTheUpdateChecker");
+    }
+
     public Integer getCustomModelDataInt() { return this.getConfig().getInt("customModelDataInt"); }
 
     public boolean isEditTool(ItemStack itemStk){
@@ -499,4 +509,5 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         if(iconKey == null) iconKey = new NamespacedKey(this, "command_icon");
         return iconKey;
     }
+
 }
