@@ -34,6 +34,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
+
 public class CommandEx implements CommandExecutor {
     ArmorStandEditorPlugin plugin;
     final String LISTMODE = ChatColor.YELLOW + "/ase mode <" + Util.getEnumList(EditMode.class) + ">";
@@ -109,7 +111,7 @@ public class CommandEx implements CommandExecutor {
         if (plugin.getAllowCustomModelData() && checkPermission(player, "give", true)) {
             ItemStack stack = new ItemStack(plugin.getEditTool()); //Only Support EditTool at the MOMENT
             ItemMeta meta = stack.getItemMeta();
-            meta.setCustomModelData(plugin.getCustomModelDataInt());
+            Objects.requireNonNull(meta).setCustomModelData(plugin.getCustomModelDataInt());
             meta.setUnbreakable(true);
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             stack.setItemMeta(meta);
