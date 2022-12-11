@@ -19,24 +19,34 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+//UpdateChecker
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
+
+//Plugin Self
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
+
+//Bukkit
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+//Java
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-public class CommandEx implements CommandExecutor {
+public class CommandEx implements CommandExecutor, TabCompleter {
     ArmorStandEditorPlugin plugin;
     final String LISTMODE = ChatColor.YELLOW + "/ase mode <" + Util.getEnumList(EditMode.class) + ">";
     final String LISTAXIS = ChatColor.YELLOW + "/ase axis <" + Util.getEnumList(Axis.class) + ">";
@@ -46,7 +56,6 @@ public class CommandEx implements CommandExecutor {
     final String VERSION = ChatColor.YELLOW + "/ase version";
     final String UPDATE = ChatColor.YELLOW + "/ase update";
     final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
-    String debugPlayerDisplayName;
 
     public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
         this.plugin = armorStandEditorPlugin;
@@ -61,7 +70,6 @@ public class CommandEx implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        debugPlayerDisplayName = player.getDisplayName();
         if (args.length == 0) {
             player.sendMessage(LISTMODE);
             player.sendMessage(LISTAXIS);
@@ -235,5 +243,98 @@ public class CommandEx implements CommandExecutor {
             }
             return false;
         }
+    }
+
+    //TODO: REFACTOR TABCOMPLETION
+    @Override
+    @SuppressWarnings({"deprecated"})
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if (command.getName().equalsIgnoreCase("ase") || command.getName().equalsIgnoreCase("armorstandeditor") || command.getName().equalsIgnoreCase("asedit")) {
+            List<String> argList = new ArrayList<>();
+
+            if (args.length == 1 && checkPermission((Player) sender, "basic", true)) {
+                Player player = (Player) sender;
+
+                //Basic Permission Check
+                if (checkPermission(player, "basic", true)) {
+                    argList.add("mode");
+                    argList.add("axis");
+                    argList.add("adj");
+                    argList.add("slot");
+                    argList.add("help");
+                }
+
+                //Update Permission Check
+                if (checkPermission(player, "update", true)) {
+                    argList.add("update");
+                    argList.add("version");
+                }
+
+                //Give Permission Check
+                if (checkPermission(player, "give", true)) {
+                    argList.add("give");
+                }
+
+                return argList.stream().filter(a -> a.startsWith(args[0])).collect(Collectors.toList());
+            }
+
+            //Options for Mode
+            if (args.length == 2 && args[0].equalsIgnoreCase("mode")){
+                argList.add("None");
+                argList.add("Invisible");
+                argList.add("ShowArms");
+                argList.add("Gravity");
+                argList.add("BasePlate");
+                argList.add("Size");
+                argList.add("Copy");
+                argList.add("Paste");
+                argList.add("Head");
+                argList.add("Body");
+                argList.add("LeftArm");
+                argList.add("RightArm");
+                argList.add("LeftLeg");
+                argList.add("RightLeg");
+                argList.add("Placement");
+                argList.add("DisableSlots");
+                argList.add("Rotate");
+                argList.add("Equipment");
+                argList.add("Reset");
+                argList.add("ItemFrame");
+                argList.add("ItemFrameGlow");
+
+                return argList; //New List
+            }
+
+            if(args.length == 2 && args[0].equalsIgnoreCase("axis")){
+                argList.add("X");
+                argList.add("Y");
+                argList.add("Z");
+                return argList; //New List
+            }
+
+            if(args.length == 2 && args[0].equalsIgnoreCase("slot")) {
+                argList.add("0");
+                argList.add("1");
+                argList.add("2");
+                argList.add("3");
+                argList.add("4");
+                argList.add("5");
+                argList.add("6");
+                argList.add("7");
+                argList.add("8");
+                argList.add("9");
+                return argList; //New List
+            }
+
+            if(args.length == 2 && args[0].equalsIgnoreCase("adj")) {
+                argList.add("Coarse");
+                argList.add("Fine");
+                return argList; //New List
+            }
+
+            return argList; //Empty List
+        }
+
+        return null; //Default
     }
 }

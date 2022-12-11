@@ -251,9 +251,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         editorManager = new PlayerEditorManager(this);
         CommandEx execute = new CommandEx(this);
-        Objects.requireNonNull(getCommand("ase")).setExecutor(execute); //Ignore the warning with this. GetCommand is Nullable. Will be fixed in the future
-        getServer().getPluginManager().registerEvents(editorManager, this);
 
+        //CommandExecution and TabCompletion
+        Objects.requireNonNull(getCommand("ase")).setExecutor(execute);
+        Objects.requireNonNull(getCommand("ase")).setTabCompleter(execute);
+
+        getServer().getPluginManager().registerEvents(editorManager, this);
 
     }
 
