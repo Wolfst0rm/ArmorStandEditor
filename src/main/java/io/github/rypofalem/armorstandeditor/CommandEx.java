@@ -64,7 +64,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player
-                && getPermissionBasic(sender))) {
+                && getPermissionBasic( (Player) sender))) {
             sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
             return true;
         }
@@ -110,10 +110,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 sender.sendMessage(GIVECUSTOMMODEL);
         }
         return true;
-    }
-
-    private boolean getPermissionBasic(CommandSender sender) {
-        return checkPermission((Player) sender, "basic", true);
     }
 
     // Implemented to fix:
@@ -229,7 +225,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandVersion(Player player) {
-        if (!(checkPermission(player, "update", true))) return;
+        if (!(getPermissionUpdate(player))) return;
         String verString = plugin.pdfFile.getVersion();
         player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
     }
@@ -249,6 +245,18 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
     }
 
+    private boolean getPermissionBasic(Player player) {
+        return checkPermission(player, "basic", true);
+    }
+
+    private boolean getPermissionUpdate(Player player){
+        return checkPermission(player, "update", true);
+    }
+
+    private boolean getPermissionGive(Player player){
+        return checkPermission(player, "give", true);
+    }
+
     //REFACTOR COMPLETION
     @Override
     @SuppressWarnings({"deprecated"})
@@ -256,13 +264,15 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         if (command.getName().equalsIgnoreCase("ase") || command.getName().equalsIgnoreCase("armorstandeditor") || command.getName().equalsIgnoreCase("asedit")) {
             List<String> argList = new ArrayList<>();
 
-            if (args.length == 1 && getPermissionBasic(sender)) {
+            //Needed for Permission Checks
+            Player player = (Player) sender;
 
-                //Needed for Permission Checks
-                Player player = (Player) sender;
+            if (args.length == 1 && getPermissionBasic(player)) {
+
+
 
                 //Basic Permission Check
-                if (getPermissionBasic(sender)) {
+                if (getPermissionBasic(player)) {
                     argList.add("mode");
                     argList.add("axis");
                     argList.add("adj");
@@ -271,13 +281,13 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 }
 
                 //Update Permission Check
-                if (checkPermission(player, "update", true)) {
+                if (getPermissionUpdate(player)) {
                     argList.add("update");
                     argList.add("version");
                 }
 
                 //Give Permission Check
-                if (checkPermission(player, "give", true)) {
+                if (getPermissionGive(player)) {
                     argList.add("give");
                 }
 
