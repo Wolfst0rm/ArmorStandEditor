@@ -64,7 +64,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player
-                && checkPermission((Player) sender, "basic", true))) {
+                && getPermissionBasic(sender))) {
             sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
             return true;
         }
@@ -110,6 +110,10 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 sender.sendMessage(GIVECUSTOMMODEL);
         }
         return true;
+    }
+
+    private boolean getPermissionBasic(CommandSender sender) {
+        return checkPermission((Player) sender, "basic", true);
     }
 
     // Implemented to fix:
@@ -231,7 +235,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
 
-    private boolean checkPermission( Player player, String permName,  boolean sendMessageOnInvalidation) {
+    private boolean checkPermission(Player player, String permName,  boolean sendMessageOnInvalidation) {
         if (permName.equalsIgnoreCase("paste")) {
             permName = "copy";
         }
@@ -245,18 +249,20 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
     }
 
-    //TODO: REFACTOR TABCOMPLETION
+    //REFACTOR COMPLETION
     @Override
     @SuppressWarnings({"deprecated"})
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("ase") || command.getName().equalsIgnoreCase("armorstandeditor") || command.getName().equalsIgnoreCase("asedit")) {
             List<String> argList = new ArrayList<>();
 
-            if (args.length == 1 && checkPermission((Player) sender, "basic", true)) {
+            if (args.length == 1 && getPermissionBasic(sender)) {
+
+                //Needed for Permission Checks
                 Player player = (Player) sender;
 
                 //Basic Permission Check
-                if (checkPermission(player, "basic", true)) {
+                if (getPermissionBasic(sender)) {
                     argList.add("mode");
                     argList.add("axis");
                     argList.add("adj");
