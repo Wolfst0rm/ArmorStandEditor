@@ -258,7 +258,7 @@ public class PlayerEditor {
                 loc.add(0, 0, movChange);
                 break;
         }
-        armorStand.teleport(loc);
+        Scheduler.teleport(armorStand, loc);
     }
 
     private void reverseMove(ArmorStand armorStand) {
@@ -275,21 +275,21 @@ public class PlayerEditor {
                 loc.subtract(0, 0, movChange);
                 break;
         }
-        armorStand.teleport(loc);
+        Scheduler.teleport(armorStand, loc);
     }
 
     private void rotate(ArmorStand armorStand) {
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 + (float) degreeAngleChange) % 360 - 180);
-        armorStand.teleport(loc);
+        Scheduler.teleport(armorStand, loc);
     }
 
     private void reverseRotate(ArmorStand armorStand) {
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 - (float) degreeAngleChange) % 360 - 180);
-        armorStand.teleport(loc);
+        Scheduler.teleport(armorStand, loc);
     }
 
     private void copy(ArmorStand armorStand) {

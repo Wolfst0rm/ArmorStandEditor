@@ -1,6 +1,8 @@
 package io.github.rypofalem.armorstandeditor;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 
 import java.util.function.Consumer;
@@ -73,5 +75,10 @@ public class Scheduler {
             return;
         }
         Bukkit.getScheduler().runTaskLater(plugin, runnable, delayedTicks);
+    }
+
+    public static void teleport(Entity entity, Location location) {
+        if (IS_FOLIA) callMethod(Entity.class, entity, "teleportAsync", new Class[]{Location.class}, location);
+        else entity.teleport(location);
     }
 }
