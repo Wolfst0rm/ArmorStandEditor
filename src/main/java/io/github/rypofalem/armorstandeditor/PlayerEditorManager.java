@@ -79,7 +79,7 @@ public class PlayerEditorManager implements Listener {
         coarseMov = 1;
         fineMov = .03125; // 1/32
         counter = new TickCounter();
-        Bukkit.getServer().getScheduler().runTaskTimer(plugin, counter, 0, 1);
+        Scheduler.runTaskTimer(plugin, counter, 1, 1);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -153,7 +153,7 @@ public class PlayerEditorManager implements Listener {
 
                     //minecraft will set the name after this event even if the event is cancelled.
                     //change it 1 tick later to apply formatting without it being overwritten
-                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    Scheduler.runTaskLater(plugin, () -> {
                         as.setCustomName(name);
                         as.setCustomNameVisible(true);
                     }, 1);

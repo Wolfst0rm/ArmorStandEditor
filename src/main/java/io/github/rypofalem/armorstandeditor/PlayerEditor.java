@@ -326,7 +326,7 @@ public class PlayerEditor {
     private void toggleDisableSlots(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.disableSlots")) return;
         if (armorStand.hasEquipmentLock(EquipmentSlot.HAND, ArmorStand.LockType.REMOVING_OR_CHANGING)) { //Adds a lock to every slot or removes it
-            team = plugin.scoreboard.getTeam(plugin.lockedTeam);
+            team = Scheduler.isFolia() ? null : plugin.scoreboard.getTeam(plugin.lockedTeam);
             armorStandID = armorStand.getUniqueId();
 
             for (final EquipmentSlot slot : EquipmentSlot.values()) { // UNLOCKED
@@ -542,7 +542,7 @@ public class PlayerEditor {
 
     public void openMenu() {
         if (!isMenuCancelled()) {
-            plugin.getServer().getScheduler().runTaskLater(plugin, new OpenMenuTask(), 1).getTaskId();
+            Scheduler.runTaskLater(plugin, new OpenMenuTask(), 1);
         }
     }
 

@@ -106,7 +106,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     @Override
     public void onEnable() {
 
-        scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
+        if (!Scheduler.isFolia())
+            scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
         //Get NMS Version
         nmsVersion = getNmsVersion();
@@ -158,7 +159,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
 
         getServer().getPluginManager().enablePlugin(this);
-        registerScoreboards(scoreboard);
+        if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
         getLogger().info(SEPARATOR_FIELD);
 
         //saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
@@ -244,7 +245,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
-        if(runTheUpdateChecker) {
+        if(!Scheduler.isFolia() && runTheUpdateChecker) {
 
             if(opUpdateNotification){
                 runUpdateCheckerWithOPNotifyOnJoinEnabled();
@@ -343,8 +344,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
         }
 
-        scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
-        unregisterScoreboards(scoreboard);
+        if (!Scheduler.isFolia()) {
+            scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
+            unregisterScoreboards(scoreboard);
+        }
     }
 
     public String getNmsVersion(){
