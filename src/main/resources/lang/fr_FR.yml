@@ -17,18 +17,19 @@ setmode:
   rightleg: Position de la jambe droite
   leftarm: Position du bras gauche
   rightarm: Position du bras droit
-  equipment: Équipment
+  equipment: Équipement
   showarms: Afficher ou masquer les bras
-  invisible: Inversion de la visibilité
-  size: Inversion de la taille
+  invisible: Modifier la visibilité
+  size: Modifier la taille
   disableslots: Activation ou désactivation des slots
-  gravity: Inversion de la gravité
+  gravity: Modifier la gravité
   baseplate: Affichage ou retrait de la plaque de base
   placement: Position
   rotate: Rotation
   copy: Copie
   paste: Collage
   reset: Réinitialisation de la pose
+  itemframe: Modifier la visibilité d'un item frame
 setaxis: 
   msg: Axe <x> sélectionné.
   x: X
@@ -45,25 +46,25 @@ setgravity:
   true: activée
   false: désactivée
 nomode: 
-  msg: Cliquez d'abord avec cet outil hors d'un valet pour sélectionner un mode d'édition.
+  msg: Cliquez d'abord avec cet outil hors d'un armor stand pour sélectionner un mode d'édition.
 nomodeif:
-  msg: Click with the Edit Tool away from the ItemFrame to select a mode firs
+  msg: Cliquez d'abord avec cet outil hors d'un item frame pour séléctionner un mode d'édition.
 copied: 
-  msg: État du valet copié dans l'emplacement <x>.
+  msg: État de l'armor stand copié dans l'emplacement <x>.
 pasted: 
-  msg: État du valet collé depuis l'emplacement <x>.
+  msg: État de l'armor stand collé depuis l'emplacement <x>.
 target:
-  msg: Valet cible verrouillé.
+  msg: Armor stand sélectionné.
 notarget:
-  msg: Valet cible déverrouillé.
+  msg: Armor stand désélectionné.
 frametarget:
-  msg: Itemframe target locked
+  msg: Itemframe sélectionné.
 noframetarget:
-  msg: Itemframe target unlocked.
+  msg: Itemframe désélectionné.
 doubletarget:
-  msg: Please look at either an ArmorStand or an ItemFrame, not both!
+  msg: Regardez un armor stand ou un item frame, pas les deux!
 nodoubletarget:
-  msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+  msg: Regardez un armor stand ou un item frame avant de changer de main!
 help:
   msg: "1. Tenez l'outil d'édition (<x>) dans votre main principale.
   
@@ -79,17 +80,17 @@ helptips:
   
   1. Appuyez sur le bouton « changer un objet de main » (par défaut F) tout en tenant l'outil d'édition pour cibler un support d'armure spécifique, si d'autres armure sont sur le chemin.
   
-  2. Vous pouvez mettre des étiquettes aux valets. Vous pouvez utiliser le symbole & pour créer des noms colorés.
+  2. Vous pouvez mettre des étiquettes aux armor stands. Vous pouvez utiliser le symbole & pour créer des noms colorés.
   
   3. Vous pouvez vous accroupir puis utiliser la molette de la souris tout en maintenant l'outil d'édition pour changer d'axe de modification sans ouvrir le menu."
 helpurl:
   msg: "Plus d'infos : https://github.com/RypoFalem/ArmorStandEditor/wiki"
 give:
-  msg: Player given Item with CustomModelData
+  msg: CustomModelData donné au joueur.
 
 #warn
 cantedit:
-  msg: Désolé, vous ne pouvez modifier des valets ici !
+  msg: Désolé, vous ne pouvez pas modifier des armor stands ici !
 noperm: 
   msg: Vous n'avez pas la permission d'utiliser ceci !
 noslotnumcom: 
@@ -101,14 +102,14 @@ noaxiscom:
 nomodecom:
   msg: Vous devez préciser un mode !
 nogive:
-  msg: You have no permission to use the give command !
+  msg: Vous n'avez pas le droit d'utiliser cette commande!
 
 
 #menutitle
 mainmenutitle:
   msg: Menu d'Armor Stand Editor
 equiptitle:
-  msg: Équipement du valet
+  msg: Équipement de l'armor stand
 
 #icons
 xaxis:
@@ -186,19 +187,19 @@ baseplate:
 placement: 
   msg: Position
   description: 
-    msg: Déplace le valet dans son ensemble
+    msg: Déplace l'armor stand dans son ensemble
 rotate: 
   msg: Rotation
   description:
-    msg: Fait tourner l'ensemble du valet sur lui-même
+    msg: Fait tourner l'ensemble de l'armor stand sur lui-même
 copy: 
   msg: Copie
   description:
-    msg: Copie les propriétés du valet
+    msg: Copie les propriétés de l'armor stand
 paste: 
   msg: Collage
   description:  
-    msg: Applique les propriétés préalablement copiées sur un valet
+    msg: Applique les propriétés copiées sur un armor stand
 copyslot: 
   msg: Emplacement de copie <x>
   description:
@@ -211,6 +212,10 @@ helpgui:
   msg: À l'aide !
   description:
     msg: Cliquez ici pour obtenir de l'aide !
+itemframevisible:
+  msg: Visibilité (Item Frame)
+  description:
+    msg: Rend visible ou invisible un Item Frame
 
 #icons (equipment menu)
 disabled: 
@@ -222,7 +227,7 @@ equipslot:
     helm: casque
     chest: plastron
     pants: pantalon
-    boots: paire de bottes
+    boots: bottes
     rhand: élément dans la main droite
     lhand: élément dans la main gauche
   helm: casques
