@@ -223,6 +223,9 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         } else {
             if (!Scheduler.isFolia() && plugin.getRunTheUpdateChecker()) {
                 new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID + "").checkNow(player); //Runs Update Check
+            } else if (Scheduler.isFolia()) {
+                player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker does not currently work on Folia.");
+                player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
             } else {
                 player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker is not enabled on this server");
             }
