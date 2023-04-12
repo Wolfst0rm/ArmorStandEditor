@@ -86,6 +86,8 @@ helptips:
   3. Vous pouvez vous accroupir puis utiliser la molette de la souris tout en maintenant l'outil d'édition pour changer d'axe de modification sans ouvrir le menu."
 helpurl:
   msg: "Plus d'infos : https://github.com/RypoFalem/ArmorStandEditor/wiki"
+helpdiscord:
+  msg: "ou rejoignez notre Discord: https://discord.gg/3BbJKWpTCj"
 give:
   msg: CustomModelData donné au joueur.
 

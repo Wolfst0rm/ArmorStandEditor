@@ -88,8 +88,9 @@ helptips:
 
   3. You can use crouch + scroll wheel while holding the edit tool to change Axis without opening the menu"
 helpurl:
-  msg: ""
-
+  msg: "More info: https://github.com/RypoFalem/ArmorStandEditor/wiki"
+helpdiscord:
+  msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
 #warn
 cantedit:
   msg: Sorry, you cannot edit armor stands here!

@@ -85,6 +85,8 @@ helptips:
   3. Du kannst sneaken und das Scrollrad drehen während du das Bearbeitungswerkzeug hältst um die Achsen zu wechseln ohne das Menü zu öffnen."
 helpurl:
   msg: "Weitere Infos: https://github.com/RypoFalem/ArmorStandEditor/wiki"
+helpdiscord:
+  msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
 give:
   msg: Player given Item with CustomModelData
 

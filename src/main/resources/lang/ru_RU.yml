@@ -85,7 +85,9 @@ helptips:
 
   3. Используйте Shift + Колёсико мыши, чтобы переключать ось (X, Y, Z) не открывая меню."
 helpurl:
-  msg: "Больше информации: https://github.com/Wolfieheart/ArmorStandEditor"
+  msg: "Больше информации: https://github.com/RypoFalem/ArmorStandEditor/wiki"
+helpdiscord:
+  msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
 give:
   msg: Player given Item with CustomModelData
 

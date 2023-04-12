@@ -82,6 +82,8 @@ helptips:
   3. Puedes usar Shift + rueda del raton mientras usas la herramienta de edición para cambiar el eje sin abrir el menu. "
 helpurl:
   msg: " More info: https://github.com/RypoFalem/ArmorStandEditor/wiki "
+helpdiscord:
+  msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
 give:
   msg: Player given Item with CustomModelData
 

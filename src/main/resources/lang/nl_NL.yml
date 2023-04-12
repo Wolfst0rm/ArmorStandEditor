@@ -66,6 +66,30 @@ nodoubletarget:
 give:
   msg: Speler heeft een item met CustomModelData ontvangen
 
+#Help
+help:
+  msg: "1. Houd het wijzigingsgereedschap (<x>) in uw hoofdhand.
+
+      2. Links of rechts klikken vanaf een armor stand om het menu te openen.
+
+      3. Selecteer een gelabelde menu-optie..
+
+      4. Linksklik op de armor stand met het wijzigingsgereedschap in de hand om die optie toe te passen.
+
+      5. Rechtsklik in plaats daarvan om achteruit te bewerken!"
+helptips:
+  msg: "Tips:
+
+  1. Druk op de toets \"Verwissel item in handen\" (standaard F) terwijl je het wijzigingsgereedschap vasthoudt om een specifieke armor stand te richten, als er andere armor stands in de weg staan.
+
+  2. Je kunt NameTags toepassen op armor stands. Je kunt het & symbool gebruiken om gekleurde namen te maken.
+
+  3. Je kunt crouch + scrollwiel gebruiken terwijl je het bewerkingsgereedschap vasthoudt om de as te veranderen zonder het menu te openen."
+helpurl:
+  msg: "Meer info: https://github.com/RypoFalem/ArmorStandEditor/wiki"
+helpdiscord:
+  msg: "or kom naar onze Discord: https://discord.gg/3BbJKWpTCj"
+
 #warn
 cantedit:
   msg: Sorry, je kunt hier geen armorstands aanpassen!

@@ -87,6 +87,8 @@ helptips:
   3. 你可以在手持编辑工具时使用“潜行(Shift) + 鼠标滚轮”来快速更改要修改的轴而不需要打开菜单。"
 helpurl:
   msg: "更多信息: https://github.com/RypoFalem/ArmorStandEditor/wiki"
+helpdiscord:
+  msg: "或加入我们的讨论区: https://discord.gg/3BbJKWpTCj"
 give:
   msg: Player given Item with CustomModelData
 
