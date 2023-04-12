@@ -35,6 +35,10 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>paper-repo</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
         <!-- Worldguard -->
         <repository>
             <id>sk89q-repo</id>
@@ -77,10 +81,16 @@
     </repositories>
 
     <dependencies>
-        <!--Spigot API-->
+        <!--Spigot + Folia API-->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
+            <version>1.19.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.folia</groupId>
+            <artifactId>folia-api</artifactId>
             <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
@@ -122,7 +132,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.99.0.0</version>
+            <version>0.99.0.1</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->

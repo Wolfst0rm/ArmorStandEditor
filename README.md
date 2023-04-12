@@ -8,18 +8,18 @@
 [![Scanned with Sonarcloud](https://img.shields.io/badge/Scanned%20With-Sonarcloud-orange?style=flat&logo=sonarcloud)](https://sonarcloud.io/summary/new_code?id=Wolfst0rm_ArmorStandEditor)  
 [![wakatime](https://wakatime.com/badge/github/Wolfst0rm/ArmorStandEditor.svg?style=flat)](https://wakatime.com/badge/github/Wolfst0rm/ArmorStandEditor)
 [![Compatibility/GetBukkit](https://img.shields.io/badge/Compatability-Paper%2C%20Spigot%2C%20Bukkit%20etc.%20(GetBukkit.org)-yellowgreen?style=flat)](https://getbukkit.org/)
-[![License](https://img.shields.io/badge/Licence-GNU%20Public%20V2%20-red?style=flat)](https://github.com/Wolfst0rm/ArmorStandEditor/LICENSE.md)
-[![Roadmap](https://img.shields.io/badge/Roadmap-ArmorStandEditor--Issues%2311-orange?style=flat)](https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/11)
+[![License](https://img.shields.io/badge/Licence-GNU%20Public%20V3%20-red?style=flat)](https://github.com/Wolfst0rm/ArmorStandEditor/LICENSE.md)
+[![Support Discord](https://dcbadge.vercel.app/api/server/3BbJKWpTCj?style=flat)](https://discord.gg/3BbJKWpTCj)
 
-ArmorStandEditor is a plugin for [Spigot and related forks](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) to allow players in survival to easily edit armor stand pose and attributes.
+ArmorStandEditor is a plugin for [Spigot](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) / [Paper, All related forks](https://papermc.io/downloads/paper) / [Folia etc.](https://github.com/PaperMC/Folia)  to allow players in survival to easily edit armor stand pose and attributes.
 
 </div>
 
 ## Credits
 
-* RypoFalem for the original version of this plugin. Thank you for all your hard work (Archived in branch [Original-Version](https://github.com/Wolfst0rm/ArmorStandEditor/tree/Original-Version) )
+* RypoFalem for the original version of this plugin. Thank you for all your hard work (Archived on this repository on the branch [Original-Version](https://github.com/Wolfst0rm/ArmorStandEditor/tree/Original-Version) )
 * Anyone who has contributed to this project with tests, issues, code reviews etc. Thank you!
-* Shamblecraft for allowing me to test on the server as required before publishing to production.
+* Shamblecraft for using the plugin originally and giving me the idea to maintain it.
 
 ## Downloads
 Downloads for Version 1.17 and higher can be obtained from the [download page](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) or our [release tracker](https://github.com/Wolfst0rm/ArmorStandEditor/releases) here on GitHub.
@@ -29,8 +29,8 @@ The Latest Downloads Shortcut Links:
 * [ArmorStandEditor-Last (Unstable)](https://github.com/Wolfst0rm/ArmorStandEditor/actions) 
   - **Use these at your own risk. Limited Support is provided for testing purposes**
 * 1.20 - Not yet available
-   * [Spigot Redirect to latest release](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) 
-   * [Modrinth Redirect to Latest Release](https://modrinth.com/plugin/armorstandeditor-reborn)
+   * [Spigot Redirect to the latest release](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) 
+   * [Modrinth Redirect to the latest Release](https://modrinth.com/plugin/armorstandeditor-reborn)
 * 1.19 to 1.19.4 
    * [Spigot/Github](https://github.com/Wolfieheart/ArmorStandEditor/releases/tag/1.19.4-41)  
    * [Modrinth](https://modrinth.com/plugin/armorstandeditor-reborn/version/1.19.4-41)
@@ -69,8 +69,7 @@ subject to change in the future. The minimum enforced API Version is 1.13.
 * Respects multiple protection plugins: WorldGuard, Towny, GriefPrevention, Residence etc.
 * Targeting of an ArmorStand by pressing F with the tool in your hand
 * Glowing ArmorStand to signify Targeting and Slot Disables through the use of Scoreboards.
-
-You can also follow our [Feature Roadmap](https://github.com/Wolfst0rm/ArmorStandEditor-Issues/issues/11) to see what we have planned (Updated as required).
+* Folia Support (as of 1.19.4)
 
 ## Support
 Support for ArmorStandEditor is provided:
@@ -78,7 +77,6 @@ Support for ArmorStandEditor is provided:
 * For Latest Release and Unstable versions of the Plugin
 
 If there are issues with the plugin on the latest release, you can report them [here](https://github.com/Wolfst0rm/ArmorStandEditor/issues/new?assignees=&labels=P1%3A+To+Be+Tested&template=behaviour-bug.yml).
-
 If there are new feature requests, you can ask them to be implemented [here](https://github.com/Wolfst0rm/ArmorStandEditor/issues/new?assignees=&labels=&template=feature-request.yml).
 
 **NOTE:** Bugs are also first tested to ensure that they can be reproduced according to the reported steps. If they can not, we will ask for more info.

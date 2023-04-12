@@ -52,7 +52,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     final String LISTAXIS = ChatColor.YELLOW + "/ase axis <" + Util.getEnumList(Axis.class) + ">";
     final String LISTADJUSTMENT = ChatColor.YELLOW + "/ase adj <" + Util.getEnumList(AdjustmentMode.class) + ">";
     final String LISTSLOT = ChatColor.YELLOW + "/ase slot <1-9>";
-    final String HELP = ChatColor.YELLOW + "/ase help";
+    final String HELP = ChatColor.YELLOW + "/ase help or /ase ?";
     final String VERSION = ChatColor.YELLOW + "/ase version";
     final String UPDATE = ChatColor.YELLOW + "/ase update";
     final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
@@ -90,8 +90,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 break;
             case "slot": commandSlot(player, args);
                 break;
-            case "help":
-            case "?": commandHelp(player);
+            case "help","?": commandHelp(player);
                 break;
             case "version": commandVersion(player);
                 break;
@@ -277,8 +276,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
             if (args.length == 1 && getPermissionBasic(player)) {
 
-
-
                 //Basic Permission Check
                 if (getPermissionBasic(player)) {
                     argList.add("mode");
@@ -286,6 +283,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     argList.add("adj");
                     argList.add("slot");
                     argList.add("help");
+                    argList.add("?");
                 }
 
                 //Update Permission Check
@@ -299,7 +297,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     argList.add("give");
                 }
 
-                return argList.stream().filter(a -> a.startsWith(args[0])).collect(Collectors.toList());
+                return argList.stream().filter(a -> a.startsWith(args[0])).toList();
             }
 
             //Options for Mode
