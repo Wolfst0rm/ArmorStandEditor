@@ -5,7 +5,7 @@ api-version: "1.13"
 folia-supported: true
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
-authors: [Wolfstorm, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
+authors: [Wolfstorm, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
 softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox]
 
