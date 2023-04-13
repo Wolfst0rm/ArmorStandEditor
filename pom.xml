@@ -35,6 +35,7 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <!-- Paper MC -->
         <repository>
             <id>paper-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
@@ -81,7 +82,7 @@
     </repositories>
 
     <dependencies>
-        <!--Spigot + Folia API-->
+        <!-- Spigot + Folia API -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -94,14 +95,14 @@
             <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <!--- WorldGuard -->
+        <!-- WorldGuard -->
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
             <version>7.0.7</version>
             <scope>provided</scope>
         </dependency>
-        <!--- PlotSquared -->
+        <!-- PlotSquared -->
             <dependency>
                 <groupId>com.plotsquared</groupId>
                 <artifactId>PlotSquared-Core</artifactId>
@@ -121,21 +122,21 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-        <!--- GriefPrevention -->
+        <!-- GriefPrevention -->
         <dependency>
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
             <version>16.18.1</version>
             <scope>provided</scope>
         </dependency>
-        <!--- Towny -->
+        <!-- Towny -->
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
             <version>0.99.0.1</version>
             <scope>provided</scope>
         </dependency>
-        <!--- UpdateChecker -->
+        <!-- UpdateChecker -->
         <dependency>
             <groupId>com.jeff_media</groupId>
             <artifactId>SpigotUpdateChecker</artifactId>
@@ -149,7 +150,7 @@
             <version>2023.1</version>
             <scope>provided</scope>
         </dependency>
-        <!--- GriefDefender -->
+        <!-- GriefDefender -->
         <dependency>
             <groupId>com.griefdefender</groupId>
             <artifactId>api</artifactId>
@@ -179,7 +180,7 @@
             <systemPath>${pom.basedir}/src/main/resources/Residence5.1.1.1.jar</systemPath>
         </dependency>
     </dependencies>
-    <!--Java 8-->
+    <!-- Java 8 -->
     <build>
         <plugins>
             <plugin>
