@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.19.4-42</version>
+    <version>1.19.4-4x.SNAPSHOT</version>
     <name>armorstandeditor</name>
     <url>http://maven.apache.org</url>
 
@@ -177,6 +177,13 @@
             <version>5.1.1.1</version>
             <scope>system</scope>
             <systemPath>${pom.basedir}/src/main/resources/Residence5.1.1.1.jar</systemPath>
+        </dependency>
+        <!-- Lombok Support -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <!--Java 8-->
