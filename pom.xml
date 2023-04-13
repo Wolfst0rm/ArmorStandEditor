@@ -82,13 +82,7 @@
     </repositories>
 
     <dependencies>
-        <!-- Spigot + Folia API -->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+        <!-- Folia API > Paper API > Spigot API -->
         <dependency>
             <groupId>dev.folia</groupId>
             <artifactId>folia-api</artifactId>
