@@ -44,7 +44,7 @@ import java.util.logging.Level;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
-    //!!! DO NOT REMOVE THESE UNDER ANY CIRCUMSTANCES - Required for BStats and !!!
+    //!!! DO NOT REMOVE THESE UNDER ANY CIRCUMSTANCES - Required for BStats and UpdateChecker !!!
     public static final int SPIGOT_RESOURCE_ID = 94503;  //Used for Update Checker
     private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
 
