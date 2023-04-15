@@ -18,6 +18,7 @@
  */
 package io.github.rypofalem.armorstandeditor;
 
+import io.github.rypofalem.armorstandeditor.api.ArmorStandManipulatedEvent;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -109,6 +110,11 @@ public class PlayerEditor {
 
     public void editArmorStand(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.basic")) return;
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out
+        if (event.isCancelled()) return; //do nothing if cancelled
 
         armorStand = attemptTarget(armorStand);
         switch (eMode) {
@@ -211,6 +217,11 @@ public class PlayerEditor {
 
     public void reverseEditArmorStand(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.basic")) return;
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out
+        if (event.isCancelled()) return; //do nothing if cancelled
 
         armorStand = attemptTarget(armorStand);
         switch (eMode) {
