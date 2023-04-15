@@ -470,13 +470,13 @@ public class PlayerEditor {
                     sendMessage("target", null);
                 }
             }
-            target = targetList.get(targetIndex);
 
             //API: ArmorStandTargetedEvent
             ArmorStandTargetedEvent e = new ArmorStandTargetedEvent(targetList.get(targetIndex), getPlayer());
             Bukkit.getPluginManager().callEvent(e); //TODO: Folia Refactor
             if (e.isCancelled()) return;
 
+            target = targetList.get(targetIndex);
             highlight(target); //NOTE: If Targeted and Locked, it displays the TEAM Color Glow: RED
             //      Otherwise, its unlocked and will display WHITE as its not in a team by default
 
@@ -509,12 +509,13 @@ public class PlayerEditor {
                     frameTargetIndex = 0;
                     sendMessage("frametarget", null);
                 }
-                frameTarget = frameTargetList.get(frameTargetIndex);
 
                 //API: ItemFrameTargetedEvent
                 ItemFrameTargetedEvent e = new ItemFrameTargetedEvent(frameTargetList.get(frameTargetIndex), getPlayer());
                 Bukkit.getPluginManager().callEvent(e); //TODO: Folia Refactor
                 if (e.isCancelled()) return;
+
+                frameTarget = frameTargetList.get(frameTargetIndex);
             }
         }
     }
