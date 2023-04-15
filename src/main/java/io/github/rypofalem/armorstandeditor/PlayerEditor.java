@@ -587,6 +587,7 @@ public class PlayerEditor {
         public void run() {
             if (isMenuCancelled()) return;
 
+            //API: PlayerOpenMenuEvent
             PlayerOpenMenuEvent event = new PlayerOpenMenuEvent(getPlayer());
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) return;
