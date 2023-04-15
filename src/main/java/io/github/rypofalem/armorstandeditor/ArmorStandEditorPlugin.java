@@ -327,6 +327,109 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
     }
 
+
+    public void performReload() {
+
+        //Unregister Scoreboard before before performing the reload
+        if (!Scheduler.isFolia()) {
+            scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
+            unregisterScoreboards(scoreboard);
+        }
+
+        //Perform Reload
+        reloadConfig();
+
+        //Register Scoreboards
+        if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
+
+        //saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
+        updateConfig("", "config.yml");
+        updateConfig(languageFolderLocation, "de_DE.yml");
+        updateConfig(languageFolderLocation, "es_ES.yml");
+        updateConfig(languageFolderLocation, "fr_FR.yml");
+        updateConfig(languageFolderLocation, "ja_JP.yml");
+        updateConfig(languageFolderLocation, "nl_NL.yml");
+        updateConfig(languageFolderLocation, "pl_PL.yml");
+        updateConfig(languageFolderLocation, "pt_BR.yml");
+        updateConfig(languageFolderLocation, "ro_RO.yml");
+        updateConfig(languageFolderLocation, "ru_RU.yml");
+        updateConfig(languageFolderLocation, "test_NA.yml");
+        updateConfig(languageFolderLocation, "uk_UA.yml");
+        updateConfig(languageFolderLocation, "zh_CN.yml");
+        saveResource("lang/en_US.yml", true);
+        lang = new Language(getConfig().getString("lang"), this);
+
+        //Rotation
+        coarseRot = getConfig().getDouble("coarse");
+        fineRot = getConfig().getDouble("fine");
+
+        //Set Tool to be used in game
+        toolType = getConfig().getString("tool");
+        if (toolType != null) {
+            editTool = Material.getMaterial(toolType); //Ignore Warning
+        }
+
+        //Do we require a custom tool name?
+        requireToolName = getConfig().getBoolean("requireToolName", false);
+        if(requireToolName){
+            editToolName = getConfig().getString("toolName", null);
+            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+        }
+
+        //Custom Model Data
+        allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
+
+        if(allowCustomModelData){
+            customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
+        }
+
+        //ArmorStandVisibility Node
+        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+
+        //Is there NBT Required for the tool
+        requireToolData = getConfig().getBoolean("requireToolData", false);
+
+        if(requireToolData) {
+            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+        }
+
+        requireToolLore = getConfig().getBoolean("requireToolLore", false);
+
+        if(requireToolLore) {
+            editToolLore = getConfig().getString("toolLore", null);
+            if(editToolLore != null) editToolLore = ChatColor.translateAlternateColorCodes('&', editToolLore);
+        }
+
+        //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
+        requireSneaking = getConfig().getBoolean("requireSneaking", false);
+
+        //Send Messages to Action Bar
+        sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+
+        //All ItemFrame Stuff
+        glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
+        invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
+
+        //Add ability to enable ot Disable the running of the Updater
+        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
+
+        //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
+        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
+        updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+
+        //Run UpdateChecker - Reports out to Console on Startup ONLY!
+        if(!Scheduler.isFolia() && runTheUpdateChecker) {
+
+            if(opUpdateNotification){
+                runUpdateCheckerWithOPNotifyOnJoinEnabled();
+            } else {
+                runUpdateCheckerConsoleUpdateCheck();
+            }
+
+        }
+
+    }
+
     private void updateConfig(String folder, String config) {
         if(!new File(getDataFolder() + File.separator + folder + config).exists()){
             saveResource(folder  + config, false);
@@ -529,5 +632,4 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         if(iconKey == null) iconKey = new NamespacedKey(this, "command_icon");
         return iconKey;
     }
-
 }

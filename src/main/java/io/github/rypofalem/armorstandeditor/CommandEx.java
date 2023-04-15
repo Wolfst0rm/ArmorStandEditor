@@ -50,6 +50,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     final String HELP = ChatColor.YELLOW + "/ase help or /ase ?";
     final String VERSION = ChatColor.YELLOW + "/ase version";
     final String UPDATE = ChatColor.YELLOW + "/ase update";
+    final String RELOAD = ChatColor.YELLOW + "/ase reload";
     final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
 
     public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
@@ -73,6 +74,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             player.sendMessage(VERSION);
             player.sendMessage(UPDATE);
             player.sendMessage(HELP);
+            player.sendMessage(RELOAD);
             player.sendMessage(GIVECUSTOMMODEL);
             return true;
         }
@@ -93,6 +95,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 break;
             case "give": commandGive(player);
                 break;
+            case "reload": commandReload(player);
+                break;
             default:
                 sender.sendMessage(LISTMODE);
                 sender.sendMessage(LISTAXIS);
@@ -101,6 +105,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 sender.sendMessage(VERSION);
                 sender.sendMessage(UPDATE);
                 sender.sendMessage(HELP);
+                player.sendMessage(RELOAD);
                 sender.sendMessage(GIVECUSTOMMODEL);
         }
         return true;
@@ -233,6 +238,11 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
     }
 
+    private void commandReload(Player player){
+        if(!(getPermissionReload(player))) return;
+        plugin.performReload();
+        player.sendMessage(plugin.getLang().getMessage("reloaded", ""));
+    }
 
     private boolean checkPermission(Player player, String permName,  boolean sendMessageOnInvalidation) {
         if (permName.equalsIgnoreCase("paste")) {
@@ -248,6 +258,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
     }
 
+
     private boolean getPermissionBasic(Player player) {
         return checkPermission(player, "basic", true);
     }
@@ -258,6 +269,9 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     private boolean getPermissionGive(Player player){
         return checkPermission(player, "give", true);
+    }
+    private boolean getPermissionReload(Player player) {
+        return checkPermission(player, "reload", true);
     }
 
     //REFACTOR COMPLETION
