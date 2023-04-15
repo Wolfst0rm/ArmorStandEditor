@@ -18,10 +18,7 @@
  */
 package io.github.rypofalem.armorstandeditor;
 
-import io.github.rypofalem.armorstandeditor.api.ArmorStandManipulatedEvent;
-import io.github.rypofalem.armorstandeditor.api.ArmorStandTargetedEvent;
-import io.github.rypofalem.armorstandeditor.api.ItemFrameManipulatedEvent;
-import io.github.rypofalem.armorstandeditor.api.ItemFrameTargetedEvent;
+import io.github.rypofalem.armorstandeditor.api.*;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -589,6 +586,11 @@ public class PlayerEditor {
         @Override
         public void run() {
             if (isMenuCancelled()) return;
+
+            PlayerOpenMenuEvent event = new PlayerOpenMenuEvent(getPlayer());
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) return;
+
             chestMenu.openMenu();
         }
     }
