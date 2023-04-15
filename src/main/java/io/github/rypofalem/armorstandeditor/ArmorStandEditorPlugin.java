@@ -336,16 +336,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             unregisterScoreboards(scoreboard);
         }
 
-        //Perform Reload
-        reloadConfig();
-
-        //Register Scoreboards
+        //Re-Register Scoreboards
         if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
 
-        //saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
-        //updateConfig("", "config.yml");
+        //Reload Config File
+        reloadConfig();
 
-        //TODO: Find a way to change config without overwriting with the default constantly
+        //Set Language
         lang = new Language(getConfig().getString("lang"), this);
 
         //Rotation

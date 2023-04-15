@@ -234,7 +234,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     private void commandVersion(Player player) {
         if (!(getPermissionUpdate(player))) return;
-        String verString = plugin.pdfFile.getVersion();
+        String verString = plugin.getArmorStandEditorVersion();
         player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
     }
 
