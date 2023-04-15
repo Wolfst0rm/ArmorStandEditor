@@ -360,10 +360,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolName = getConfig().getBoolean("requireToolName", false);
         if(requireToolName){
             editToolName = getConfig().getString("toolName", null);
-            if(editToolName != null)
-                for (int i = 1; i < editToolLore.size(); i++) {
-                editToolLore.set(i, ChatColor.translateAlternateColorCodes('&', editToolLore.get(i)));
-            }
+            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
         }
 
         //Custom Model Data
