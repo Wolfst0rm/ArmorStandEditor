@@ -22,7 +22,6 @@ package io.github.rypofalem.armorstandeditor;
 import com.google.common.collect.ImmutableList;
 import io.github.rypofalem.armorstandeditor.api.ArmorStandRenameEvent;
 import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
-import io.github.rypofalem.armorstandeditor.api.ItemFrameManipulatedEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
 
@@ -129,18 +128,18 @@ public class PlayerEditorManager implements Listener {
             //Attempt rename
             if (player.getInventory().getItemInMainHand().getType() == Material.NAME_TAG && player.hasPermission("asedit.rename")) {
                 ItemStack nameTag = player.getInventory().getItemInMainHand();
-                String name;
+                String preName;
                 if (nameTag.getItemMeta() != null && nameTag.getItemMeta().hasDisplayName()) {
-                    name = nameTag.getItemMeta().getDisplayName().replace('&', ChatColor.COLOR_CHAR);
+                    preName = nameTag.getItemMeta().getDisplayName().replace('&', ChatColor.COLOR_CHAR);
                 } else {
-                    name = null;
+                    preName = null;
                 }
 
                 //API: ArmorStandRenameEvent
-                ArmorStandRenameEvent asrEvent = new ArmorStandRenameEvent(as, player, name);
-                Bukkit.getPluginManager().callEvent(asrEvent);
-                if (event.isCancelled()) return;
-                name = asrEvent.getName();
+                ArmorStandRenameEvent e = new ArmorStandRenameEvent(as, player, preName);
+                Bukkit.getPluginManager().callEvent(e);
+                if (e.isCancelled()) return;
+                final String name = e.getName();
 
                 if (name == null) {
                     as.setCustomName(null);
