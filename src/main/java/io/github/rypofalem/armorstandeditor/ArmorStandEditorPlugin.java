@@ -75,7 +75,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     boolean requireToolName = false;
     String editToolName = null;
     boolean requireToolLore = false;
-    List<String> editToolLore = null;
+    List<?> editToolLore = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
     
@@ -216,11 +216,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolLore = getConfig().getBoolean("requireToolLore", false);
 
         if(requireToolLore) {
-            editToolLore = (List<String>) getConfig().getList("toolLore", null);
-             if(editToolLore != null)
-                for (int i = 1; i < editToolLore.size(); i++) {
-                    editToolLore.set(i, ChatColor.translateAlternateColorCodes('&', editToolLore.get(i)));
-                }
+            editToolLore = getConfig().getList("toolLore", null);
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
@@ -383,11 +379,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolLore = getConfig().getBoolean("requireToolLore", false);
 
         if(requireToolLore) {
-            editToolLore = (List<String>) getConfig().getList("toolLore", null);
-            if(editToolLore != null)
-                for (int i = 1; i < editToolLore.size(); i++) {
-                editToolLore.set(i, ChatColor.translateAlternateColorCodes('&', editToolLore.get(i)));
-            }
+            editToolLore = getConfig().getList("toolLore", null);
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
@@ -530,8 +522,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             boolean hasTheItemLore = itemMeta.hasLore();
             if (!hasTheItemLore)  { return false; }
 
-            //Item the first thing in the ItemLore List does not Equal the Config Value "editToolLore" - return false
-            if(itemLore != editToolLore) { return false; }
+            //Get the localised ListString of editToolLore
+            List<String> listStringOfEditToolLore = (List<String>) editToolLore;
+
+            //Return False if itemLore on the item does not match what we expect in the config.
+            if(!itemLore.containsAll(listStringOfEditToolLore)) { return false; }
 
         }
 
