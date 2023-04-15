@@ -343,20 +343,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
 
         //saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
-        updateConfig("", "config.yml");
-        updateConfig(languageFolderLocation, "de_DE.yml");
-        updateConfig(languageFolderLocation, "es_ES.yml");
-        updateConfig(languageFolderLocation, "fr_FR.yml");
-        updateConfig(languageFolderLocation, "ja_JP.yml");
-        updateConfig(languageFolderLocation, "nl_NL.yml");
-        updateConfig(languageFolderLocation, "pl_PL.yml");
-        updateConfig(languageFolderLocation, "pt_BR.yml");
-        updateConfig(languageFolderLocation, "ro_RO.yml");
-        updateConfig(languageFolderLocation, "ru_RU.yml");
-        updateConfig(languageFolderLocation, "test_NA.yml");
-        updateConfig(languageFolderLocation, "uk_UA.yml");
-        updateConfig(languageFolderLocation, "zh_CN.yml");
-        saveResource("lang/en_US.yml", true);
+        //updateConfig("", "config.yml");
+
+        //TODO: Find a way to change config without overwriting with the default constantly
         lang = new Language(getConfig().getString("lang"), this);
 
         //Rotation
