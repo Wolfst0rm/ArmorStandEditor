@@ -184,8 +184,8 @@ public class PlayerEditorManager implements Listener {
                     && plugin.glowItemFrames && player.isSneaking()) {
 
                 ItemFrameGlowEvent e = new ItemFrameGlowEvent(itemFrame, player);
-                Bukkit.getPluginManager().callEvent(event);
-                if (event.isCancelled()) return;
+                Bukkit.getPluginManager().callEvent(e);
+                if (e.isCancelled()) return;
 
                 ItemStack glowSacs = player.getInventory().getItemInMainHand();
                 ItemStack contents = null;
