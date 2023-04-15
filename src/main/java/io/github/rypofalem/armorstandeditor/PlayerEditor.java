@@ -19,7 +19,9 @@
 package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.api.ArmorStandManipulatedEvent;
+import io.github.rypofalem.armorstandeditor.api.ArmorStandTargetedEvent;
 import io.github.rypofalem.armorstandeditor.api.ItemFrameManipulatedEvent;
+import io.github.rypofalem.armorstandeditor.api.ItemFrameTargetedEvent;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -472,6 +474,12 @@ public class PlayerEditor {
                 }
             }
             target = targetList.get(targetIndex);
+
+            //API: ArmorStandTargetedEvent
+            ArmorStandTargetedEvent e = new ArmorStandTargetedEvent(targetList.get(targetIndex), getPlayer());
+            Bukkit.getPluginManager().callEvent(e);
+            if (e.isCancelled()) return;
+
             highlight(target); //NOTE: If Targeted and Locked, it displays the TEAM Color Glow: RED
             //      Otherwise, its unlocked and will display WHITE as its not in a team by default
 
@@ -505,6 +513,11 @@ public class PlayerEditor {
                     sendMessage("frametarget", null);
                 }
                 frameTarget = frameTargetList.get(frameTargetIndex);
+
+                //API: ItemFrameTargetedEvent
+                ItemFrameTargetedEvent e = new ItemFrameTargetedEvent(frameTargetList.get(frameTargetIndex), getPlayer());
+                Bukkit.getPluginManager().callEvent(e);
+                if (e.isCancelled()) return;
             }
         }
     }
