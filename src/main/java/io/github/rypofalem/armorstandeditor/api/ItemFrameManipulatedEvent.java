@@ -1,5 +1,5 @@
 /*
- * ArmorStandEditor: Bukkit plugin to allow editing armor stand attributes
+ * ItemFrameEditor: Bukkit plugin to allow editing armor stand attributes
  * Copyright (C) 2016-2023  RypoFalem
  *
  * This program is free software; you can redistribute it and/or
@@ -20,12 +20,12 @@ package io.github.rypofalem.armorstandeditor.api;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
-public class ArmorStandManipulatedEvent extends ArmorStandEvent implements Cancellable {
+public class ItemFrameManipulatedEvent extends ItemFrameEvent implements Cancellable {
 
     @Getter @Setter
     private boolean cancelled = false;
@@ -33,8 +33,8 @@ public class ArmorStandManipulatedEvent extends ArmorStandEvent implements Cance
     @Getter
     protected final Player player;
 
-    public ArmorStandManipulatedEvent(ArmorStand armorStand, Player player) {
-        super(armorStand);
+    public ItemFrameManipulatedEvent(ItemFrame itemFrame, Player player) {
+        super(itemFrame);
         this.player = player;
     }
 
@@ -43,3 +43,4 @@ public class ArmorStandManipulatedEvent extends ArmorStandEvent implements Cance
     public static HandlerList getHandlerList() { return (handlers); }
     @Override public HandlerList getHandlers() { return (handlers); }
 }
+

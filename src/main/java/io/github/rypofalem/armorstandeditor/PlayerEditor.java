@@ -19,6 +19,7 @@
 package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.api.ArmorStandManipulatedEvent;
+import io.github.rypofalem.armorstandeditor.api.ItemFrameManipulatedEvent;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -184,6 +185,12 @@ public class PlayerEditor {
 
     public void editItemFrame(ItemFrame itemFrame) {
         if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ItemFrameManipulatedEvent event = new ItemFrameManipulatedEvent(itemFrame, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out
+        if (event.isCancelled()) return; //do nothing if cancelled
+
         switch (eMode) {
             case ITEMFRAME:
                 toggleItemFrameVisible(itemFrame);

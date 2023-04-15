@@ -16,30 +16,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 package io.github.rypofalem.armorstandeditor.api;
 
 import lombok.Getter;
-import lombok.Setter;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.HandlerList;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.event.Event;
 
-public class ArmorStandManipulatedEvent extends ArmorStandEvent implements Cancellable {
-
-    @Getter @Setter
-    private boolean cancelled = false;
+public abstract class ItemFrameEvent extends Event{
 
     @Getter
-    protected final Player player;
+    protected final ItemFrame itemFrame;
 
-    public ArmorStandManipulatedEvent(ArmorStand armorStand, Player player) {
-        super(armorStand);
-        this.player = player;
+    public ItemFrameEvent(ItemFrame itemFrame) {
+        this.itemFrame = itemFrame;
     }
 
-    /* Generated for Bukkit */
-    private static final HandlerList handlers = new HandlerList();
-    public static HandlerList getHandlerList() { return (handlers); }
-    @Override public HandlerList getHandlers() { return (handlers); }
 }
