@@ -10,6 +10,8 @@
 [![Compatibility/GetBukkit](https://img.shields.io/badge/Compatability-Paper%2C%20Spigot%2C%20Bukkit%20etc.%20(GetBukkit.org)-yellowgreen?style=flat)](https://getbukkit.org/)
 [![License](https://img.shields.io/badge/Licence-GNU%20Public%20V3%20-red?style=flat)](https://github.com/Wolfst0rm/ArmorStandEditor/LICENSE.md)
 [![Support Discord](https://dcbadge.vercel.app/api/server/3BbJKWpTCj?style=flat)](https://discord.gg/3BbJKWpTCj)
+[![Jitpack API](https://jitpack.io/v/Wolfieheart/ArmorStandEditor.svg)](https://jitpack.io/#Wolfieheart/ArmorStandEditor)
+
 
 ArmorStandEditor is a plugin for [Spigot](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) / [Paper, All related forks](https://papermc.io/downloads/paper) / [Folia etc.](https://github.com/PaperMC/Folia)  to allow players in survival to easily edit armor stand pose and attributes.
 
@@ -80,3 +82,24 @@ If there are issues with the plugin on the latest release, you can report them [
 If there are new feature requests, you can ask them to be implemented [here](https://github.com/Wolfst0rm/ArmorStandEditor/issues/new?assignees=&labels=&template=feature-request.yml).
 
 **NOTE:** Bugs are also first tested to ensure that they can be reproduced according to the reported steps. If they can not, we will ask for more info.
+
+## Adding ArmorStandEditor as a Dependency
+ArmorStandEditor has an API and is supported through [Jitpack](https://jitpack.io/#Wolfieheart/ArmorStandEditor). The Source Code for that API can be found [here](https://github.com/Wolfieheart/ArmorStandEditor/src/main/java/io/github/rypofalem/armorstandeditor/api).
+
+For Maven Users you need to add the following to your pom.xml file:
+```XML
+     <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+     </repository>
+```
+```XML
+    <dependency>
+      <groupId>com.github.Wolfieheart</groupId>
+      <artifactId>ArmorStandEditor</artifactId>
+      <version>latest</version>
+    </dependency>
+```
+
+
+
