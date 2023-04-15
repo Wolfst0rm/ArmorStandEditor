@@ -20,6 +20,9 @@
 package io.github.rypofalem.armorstandeditor;
 
 import com.google.common.collect.ImmutableList;
+import io.github.rypofalem.armorstandeditor.api.ArmorStandRenameEvent;
+import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
+import io.github.rypofalem.armorstandeditor.api.ItemFrameManipulatedEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
 
@@ -123,8 +126,6 @@ public class PlayerEditorManager implements Listener {
                 applyRightTool(player, as);
                 return;
             }
-
-
             //Attempt rename
             if (player.getInventory().getItemInMainHand().getType() == Material.NAME_TAG && player.hasPermission("asedit.rename")) {
                 ItemStack nameTag = player.getInventory().getItemInMainHand();
@@ -134,6 +135,12 @@ public class PlayerEditorManager implements Listener {
                 } else {
                     name = null;
                 }
+
+                //API: ArmorStandRenameEvent
+                ArmorStandRenameEvent asrEvent = new ArmorStandRenameEvent(as, player, name);
+                Bukkit.getPluginManager().callEvent(asrEvent);
+                if (event.isCancelled()) return;
+                name = asrEvent.getName();
 
                 if (name == null) {
                     as.setCustomName(null);
@@ -172,9 +179,15 @@ public class PlayerEditorManager implements Listener {
                 return;
             }
 
+
             if (player.getInventory().getItemInMainHand().getType().equals(Material.GLOW_INK_SAC) //attempt glowing
                     && player.hasPermission("asedit.basic")
                     && plugin.glowItemFrames && player.isSneaking()) {
+
+                ItemFrameGlowEvent e = new ItemFrameGlowEvent(itemFrame, player);
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.isCancelled()) return;
+
                 ItemStack glowSacs = player.getInventory().getItemInMainHand();
                 ItemStack contents = null;
                 Rotation rotation = null;
