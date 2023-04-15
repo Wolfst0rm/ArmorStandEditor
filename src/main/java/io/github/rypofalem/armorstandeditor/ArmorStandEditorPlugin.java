@@ -37,9 +37,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
@@ -77,7 +75,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     boolean requireToolName = false;
     String editToolName = null;
     boolean requireToolLore = false;
-    String editToolLore = null;
+    List<String> editToolLore = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
     
@@ -218,8 +216,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolLore = getConfig().getBoolean("requireToolLore", false);
 
         if(requireToolLore) {
-            editToolLore = getConfig().getString("toolLore", null);
-            if(editToolLore != null) editToolLore = ChatColor.translateAlternateColorCodes('&', editToolLore);
+            editToolLore = Collections.singletonList(getConfig().getString("toolLore", null));
+            if(editToolLore != null)
+                for (int i = 1; i < editToolLore.size(); i++) {
+                    editToolLore.set(i, ChatColor.translateAlternateColorCodes('&', editToolLore.get(i)));
+                }
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
@@ -359,7 +360,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolName = getConfig().getBoolean("requireToolName", false);
         if(requireToolName){
             editToolName = getConfig().getString("toolName", null);
-            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+            if(editToolName != null)
+                for (int i = 1; i < editToolLore.size(); i++) {
+                editToolLore.set(i, ChatColor.translateAlternateColorCodes('&', editToolLore.get(i)));
+            }
         }
 
         //Custom Model Data
@@ -383,7 +387,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         if(requireToolLore) {
             editToolLore = getConfig().getString("toolLore", null);
-            if(editToolLore != null) editToolLore = ChatColor.translateAlternateColorCodes('&', editToolLore);
+            if(editToolLore != null)
+                for (int i = 1; i < editToolLore.size(); i++) {
+                editToolLore.set(i, ChatColor.translateAlternateColorCodes('&', editToolLore.get(i)));
+            }
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
