@@ -113,7 +113,7 @@ public class PlayerEditor {
 
         //Generate a new ArmorStandManipulationEvent and call it out.
         ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
-        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out //TODO: Folia Refactor
         if (event.isCancelled()) return; //do nothing if cancelled
 
         armorStand = attemptTarget(armorStand);
@@ -187,7 +187,7 @@ public class PlayerEditor {
 
         //Generate a new ArmorStandManipulationEvent and call it out.
         ItemFrameManipulatedEvent event = new ItemFrameManipulatedEvent(itemFrame, getPlayer());
-        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out //TODO: Folia Refactor
         if (event.isCancelled()) return; //do nothing if cancelled
 
         switch (eMode) {
@@ -226,7 +226,7 @@ public class PlayerEditor {
 
         //Generate a new ArmorStandManipulationEvent and call it out.
         ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
-        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out //TODO: Folia Refactor
         if (event.isCancelled()) return; //do nothing if cancelled
 
         armorStand = attemptTarget(armorStand);
@@ -474,7 +474,7 @@ public class PlayerEditor {
 
             //API: ArmorStandTargetedEvent
             ArmorStandTargetedEvent e = new ArmorStandTargetedEvent(targetList.get(targetIndex), getPlayer());
-            Bukkit.getPluginManager().callEvent(e);
+            Bukkit.getPluginManager().callEvent(e); //TODO: Folia Refactor
             if (e.isCancelled()) return;
 
             highlight(target); //NOTE: If Targeted and Locked, it displays the TEAM Color Glow: RED
@@ -513,7 +513,7 @@ public class PlayerEditor {
 
                 //API: ItemFrameTargetedEvent
                 ItemFrameTargetedEvent e = new ItemFrameTargetedEvent(frameTargetList.get(frameTargetIndex), getPlayer());
-                Bukkit.getPluginManager().callEvent(e);
+                Bukkit.getPluginManager().callEvent(e); //TODO: Folia Refactor
                 if (e.isCancelled()) return;
             }
         }
@@ -589,7 +589,7 @@ public class PlayerEditor {
 
             //API: PlayerOpenMenuEvent
             PlayerOpenMenuEvent event = new PlayerOpenMenuEvent(getPlayer());
-            Bukkit.getPluginManager().callEvent(event);
+            Bukkit.getPluginManager().callEvent(event); //TODO: Folia Refactor
             if (event.isCancelled()) return;
 
             chestMenu.openMenu();
