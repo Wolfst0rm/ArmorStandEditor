@@ -526,7 +526,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             List<String> listStringOfEditToolLore = (List<String>) editToolLore;
 
             //Return False if itemLore on the item does not match what we expect in the config.
-            if(!itemLore.containsAll(listStringOfEditToolLore)) { return false; }
+            if(!itemLore.equals(listStringOfEditToolLore)) { return false; }
 
         }
 
