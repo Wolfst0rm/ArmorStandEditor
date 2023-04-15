@@ -216,8 +216,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolLore = getConfig().getBoolean("requireToolLore", false);
 
         if(requireToolLore) {
-            editToolLore = getConfig().getString("toolLore", null); //TODO: FIX: Incompatible types. Found: 'java.lang.String', required: 'java.util.List<java.lang.String>'
-            if(editToolLore != null)
+            editToolLore = (List<String>) getConfig().getList("toolLore", null);
+             if(editToolLore != null)
                 for (int i = 1; i < editToolLore.size(); i++) {
                     editToolLore.set(i, ChatColor.translateAlternateColorCodes('&', editToolLore.get(i)));
                 }
@@ -386,7 +386,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolLore = getConfig().getBoolean("requireToolLore", false);
 
         if(requireToolLore) {
-            editToolLore = getConfig().getString("toolLore", null); //TODO: FIX: Incompatible types. Found: 'java.lang.String', required: 'java.util.List<java.lang.String>'
+            editToolLore = (List<String>) getConfig().getList("toolLore", null);
             if(editToolLore != null)
                 for (int i = 1; i < editToolLore.size(); i++) {
                 editToolLore.set(i, ChatColor.translateAlternateColorCodes('&', editToolLore.get(i)));
@@ -527,15 +527,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(!itemStk.hasItemMeta()) { return false; }
 
             //Get the lore of the Item and if it is null - Return False
-            String itemLore = String.valueOf(itemMeta.getLore().get(0));
+            List<String> itemLore = itemMeta.getLore();
 
             //If the Item does not have Lore - Return False
             boolean hasTheItemLore = itemMeta.hasLore();
             if (!hasTheItemLore)  { return false; }
 
             //Item the first thing in the ItemLore List does not Equal the Config Value "editToolLore" - return false
-            if (!itemLore.equalsIgnoreCase(editToolLore))  { return false; } //Does not need simplified - IntelliJ likes to complain here
-            //TODO: FIX: 'equalsIgnoreCase(java.lang.String)' in 'java.lang.String' cannot be applied to '(java.util.List<java.lang.String>)'
+            if(itemLore != editToolLore) { return false; }
+
         }
 
         if (allowCustomModelData && customModelDataInt != null) {
