@@ -55,6 +55,9 @@ permissions:
     asedit.update:
       description: Allows the checking for updates.
       default: false
+    asedit.reload:
+      description: Allows Reloading of the ASE Config.
+      default: false
 
     asedit.ignoreProtection.towny:
       description: Allows user to ignore Towny's Protection Limitations.
@@ -122,6 +125,7 @@ permissions:
         asedit.rename: true
         asedit.update: false
         asedit.give: false
+        asedit.reload: false
 
     asedit.permpack.admin:
       default: op
@@ -136,3 +140,4 @@ permissions:
         asedit.rename: true
         asedit.update: true
         asedit.ignorePermissions.*: true
+        asedit.reload: true

@@ -97,7 +97,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 break;
             case "give": commandGive(player);
                 break;
-            case "RELOADCONFIG": commandRELOADCONFIG(player);
+            case "reload": commandReload(player);
                 break;
             default:
                 sender.sendMessage(LISTMODE);
@@ -240,7 +240,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         player.sendMessage(commandColor + "[ArmorStandEditor] Version: " + verString);
     }
 
-    private void commandRELOADCONFIG(Player player){
+    private void commandReload(Player player){
         if(!(getPermissionReload(player))) return;
         plugin.performReload();
         player.sendMessage(plugin.getLang().getMessage("reloaded", ""));
@@ -307,6 +307,11 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 //Give Permission Check
                 if (getPermissionGive(player)) {
                     argList.add("give");
+                }
+
+                //Reload Permission Check
+                if (getPermissionReload(player)){
+                    argList.add("reload");
                 }
 
                 return argList.stream().filter(a -> a.startsWith(args[0])).toList();
