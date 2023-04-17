@@ -19,11 +19,14 @@
 
 package io.github.rypofalem.armorstandeditor;
 
-import io.github.rypofalem.armorstandeditor.language.Language;
 import com.jeff_media.updatechecker.*;
+
+import io.github.rypofalem.armorstandeditor.language.Language;
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 
+
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,7 +35,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -41,24 +43,23 @@ import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
 
+
 public class ArmorStandEditorPlugin extends JavaPlugin{
 
     //!!! DO NOT REMOVE THESE UNDER ANY CIRCUMSTANCES - Required for BStats and UpdateChecker !!!
     public static final int SPIGOT_RESOURCE_ID = 94503;  //Used for Update Checker
     private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
+    private static ArmorStandEditorPlugin instance;
 
     private NamespacedKey iconKey;
-    private static ArmorStandEditorPlugin instance;
     private Language lang;
     
     //Server Version Detection: Paper or Spigot and Invalid NMS Version
     String nmsVersion;
     String languageFolderLocation = "lang/";
-    String warningMCVer = "Minecraft Version: ";
     public boolean hasSpigot = false;
     public boolean hasPaper = false;
     String nmsVersionNotLatest = null;
-    PluginDescriptionFile pdfFile = this.getDescription();
     static final String SEPARATOR_FIELD = "================================";
 
     public PlayerEditorManager editorManager;
@@ -113,7 +114,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //Load Messages in Console
         getLogger().info("======= ArmorStandEditor =======");
-        getLogger().info("Plugin Version: " + pdfFile.getVersion());
+        getLogger().info("Plugin Version: " + getArmorStandEditorVersion());
 
         // Check if the Minecraft version is supported
         if (nmsVersion.compareTo("v1_13") < 0) {
@@ -173,14 +174,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //English is the default language and needs to be unaltered to so that there is always a backup message string
         saveResource("lang/en_US.yml", true);
-        lang = new Language(getConfig().getString("lang"), this);
+        lang = new Language(getLanguageFileName(), this);
 
         //Rotation
-        coarseRot = getConfig().getDouble("coarse");
-        fineRot = getConfig().getDouble("fine");
+        coarseRot = getCoarseRot();
+        fineRot = getFineRot();
 
         //Set Tool to be used in game
-        toolType = getConfig().getString("tool");
+        toolType = getToolType();
         if (toolType != null) {
             editTool = Material.getMaterial(toolType); //Ignore Warning
         } else {
@@ -191,53 +192,53 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
         
         //Do we require a custom tool name?
-        requireToolName = getConfig().getBoolean("requireToolName", false);
+        requireToolName = getToolNameRequirement();
         if(requireToolName){
-            editToolName = getConfig().getString("toolName", null);
+            editToolName = getEditToolName();
             if(editToolName != null)
                 //editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
                 editToolName = String.valueOf(LegacyComponentSerializer.legacy('&').deserialize(editToolName));
         }
 
         //Custom Model Data
-        allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
+        allowCustomModelData = getAllowCustomModelData();
 
         if(allowCustomModelData){
-            customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
+            customModelDataInt = getCustomModelDataInt();
         }
 
         //ArmorStandVisibility Node
-        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+        armorStandVisibility = getArmorStandVisibility();
 
         //Is there NBT Required for the tool
-        requireToolData = getConfig().getBoolean("requireToolData", false);
+        requireToolData = getToolDataRequirement();
 
         if(requireToolData) {
-            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+            editToolData = getEditToolData();
         }
 
-        requireToolLore = getConfig().getBoolean("requireToolLore", false);
+        requireToolLore = getToolLoreRequirement();
 
         if(requireToolLore) {
-            editToolLore = getConfig().getList("toolLore", null);
+            editToolLore = getEditToolLore();
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
-        requireSneaking = getConfig().getBoolean("requireSneaking", false);
+        requireSneaking = getSneakingRequirement();
 
         //Send Messages to Action Bar
-        sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+        sendToActionBar = getMessageSendingLocation();
 
         //All ItemFrame Stuff
-        glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-        invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
+        glowItemFrames = getGlowItemFramesLegacy();
+        invisibleItemFrames = getItemFrameVisibility();
 
         //Add ability to enable ot Disable the running of the Updater
-        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
+        runTheUpdateChecker = getRunTheUpdateChecker();
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
-        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
-        updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+        opUpdateNotification = getOpUpdateNotifications();
+        updateCheckerInterval = getUpdateCheckerInterval();
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if(!Scheduler.isFolia() && runTheUpdateChecker) {
@@ -343,64 +344,64 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         reloadConfig();
 
         //Set Language
-        lang = new Language(getConfig().getString("lang"), this);
+        lang = new Language(getLanguageFileName(), this);
 
         //Rotation
-        coarseRot = getConfig().getDouble("coarse");
-        fineRot = getConfig().getDouble("fine");
+        coarseRot = getCoarseRot();
+        fineRot = getFineRot();
 
         //Set Tool to be used in game
-        toolType = getConfig().getString("tool");
+        toolType = getToolType();
         if (toolType != null) {
             editTool = Material.getMaterial(toolType); //Ignore Warning
         }
 
         //Do we require a custom tool name?
-        requireToolName = getConfig().getBoolean("requireToolName", false);
+        requireToolName = getToolNameRequirement();
         if(requireToolName){
-            editToolName = getConfig().getString("toolName", null);
+            editToolName = getEditToolName();
             if(editToolName != null) editToolName = String.valueOf(LegacyComponentSerializer.legacy('&').deserialize(editToolName));
         }
 
         //Custom Model Data
-        allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
+        allowCustomModelData = getAllowCustomModelData();
 
         if(allowCustomModelData){
-            customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
+            customModelDataInt = getCustomModelDataInt();
         }
 
         //ArmorStandVisibility Node
-        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+        armorStandVisibility = getArmorStandVisibility();
 
         //Is there NBT Required for the tool
-        requireToolData = getConfig().getBoolean("requireToolData", false);
+        requireToolData = getToolDataRequirement();
 
         if(requireToolData) {
-            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+            editToolData = getEditToolData();
         }
 
-        requireToolLore = getConfig().getBoolean("requireToolLore", false);
+        requireToolLore = getToolLoreRequirement();
 
         if(requireToolLore) {
-            editToolLore = getConfig().getList("toolLore", null);
+            editToolLore = getEditToolLore();
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
-        requireSneaking = getConfig().getBoolean("requireSneaking", false);
+        requireSneaking = getSneakingRequirement();
 
         //Send Messages to Action Bar
-        sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+        sendToActionBar = getMessageSendingLocation();
 
         //All ItemFrame Stuff
-        glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-        invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
+        glowItemFrames = getGlowItemFramesLegacy();
+        invisibleItemFrames = getItemFrameVisibility();
 
         //Add ability to enable ot Disable the running of the Updater
-        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
+        runTheUpdateChecker = getRunTheUpdateChecker();
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
-        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
-        updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+        opUpdateNotification = getOpUpdateNotifications();
+        updateCheckerInterval = getUpdateCheckerInterval();
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if(!Scheduler.isFolia() && runTheUpdateChecker) {
@@ -459,33 +460,42 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
     }
 
+    public Language getLang(){ return lang; }
+
+    //Config Options as get - Ordered
     public String getArmorStandEditorVersion(){ return getConfig().getString("version"); }
+    public String getLanguageFileName() { return getConfig().getString("lang"); }
 
-    public boolean getArmorStandVisibility(){
-        return getConfig().getBoolean("armorStandVisibility");
-    }
+    public boolean getRunTheUpdateChecker() { return getConfig().getBoolean("runTheUpdateChecker"); }
+    private double getUpdateCheckerInterval() { return getConfig().getDouble("check-interval"); }
+    private boolean getOpUpdateNotifications() { return getConfig().getBoolean("opUpdateNotification"); }
 
-    public boolean getItemFrameVisibility(){
-        return getConfig().getBoolean("invisibleItemFrames");
-    }
+    private String getToolType() { return getConfig().getString("tool"); }
+    public Material getEditTool() { return this.editTool; }
 
-    public Language getLang(){
-        return lang;
-    }
+    private boolean getToolDataRequirement() { return getConfig().getBoolean("requireToolData", false); }
+    private Integer getEditToolData() { return getConfig().getInt("toolData", Integer.MIN_VALUE); }
 
-    public boolean getAllowCustomModelData() {
-        return this.getConfig().getBoolean("allowCustomModelData");
-    }
+    private boolean getToolNameRequirement() {  return getConfig().getBoolean("requireToolName", false);   }
+    private String getEditToolName() {  return getConfig().getString("toolName", null);   }
 
-    public Material getEditTool() {
-        return this.editTool;
-    }
+    private boolean getToolLoreRequirement() { return getConfig().getBoolean("requireToolLore", false); }
+    private List<?> getEditToolLore() { return getConfig().getList("toolLore", null); }
 
-    public boolean getRunTheUpdateChecker() {
-        return this.getConfig().getBoolean("runTheUpdateChecker");
-    }
+    public boolean getAllowCustomModelData() { return getConfig().getBoolean("allowCustomModelData"); }
+    public Integer getCustomModelDataInt() { return getConfig().getInt("customModelDataInt"); }
 
-    public Integer getCustomModelDataInt() { return this.getConfig().getInt("customModelDataInt"); }
+    public double getCoarseRot(){ return getConfig().getDouble("coarse"); }
+    private double getFineRot() { return getConfig().getDouble("fine"); }
+
+    public boolean getArmorStandVisibility(){ return getConfig().getBoolean("armorStandVisibility"); }
+    public boolean getItemFrameVisibility(){ return getConfig().getBoolean("invisibleItemFrames"); }
+
+    public boolean getSneakingRequirement(){ return getConfig().getBoolean("requireSneaking", false); }
+    public boolean getMessageSendingLocation(){ return getConfig().getBoolean("sendMessagesToActionBar", true); }
+
+    private boolean getGlowItemFramesLegacy() { return getConfig().getBoolean("glowingItemFrame", true); }
+
 
     public boolean isEditTool(ItemStack itemStk){
         if (itemStk == null) { return false; }

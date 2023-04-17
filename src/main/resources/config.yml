@@ -72,6 +72,9 @@ invisibleItemFrames: true
 #If true, the GUI will only open if the player is sneaking
 requireSneaking: false
 
+#Sends messages to the ActionBar
+sendMessagesToActionBar: true
+
 #------ Misc Options
 
 #(Optional) Glowing Item Frames Support for Item Frames in 1.17 - WILL NOT WORK IN 1.16 OR LOWER AND 1.17.1 OR HIGHER
