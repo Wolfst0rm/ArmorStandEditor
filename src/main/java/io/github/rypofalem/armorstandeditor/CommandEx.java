@@ -22,11 +22,11 @@ package io.github.rypofalem.armorstandeditor;
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
 
+import com.sk89q.worldedit.util.formatting.text.format.TextColor;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -43,15 +43,17 @@ import java.util.Objects;
 
 public class CommandEx implements CommandExecutor, TabCompleter {
     ArmorStandEditorPlugin plugin;
-    final String LISTMODE = ChatColor.YELLOW + "/ase mode <" + Util.getEnumList(EditMode.class) + ">";
-    final String LISTAXIS = ChatColor.YELLOW + "/ase axis <" + Util.getEnumList(Axis.class) + ">";
-    final String LISTADJUSTMENT = ChatColor.YELLOW + "/ase adj <" + Util.getEnumList(AdjustmentMode.class) + ">";
-    final String LISTSLOT = ChatColor.YELLOW + "/ase slot <1-9>";
-    final String HELP = ChatColor.YELLOW + "/ase help or /ase ?";
-    final String VERSION = ChatColor.YELLOW + "/ase version";
-    final String UPDATE = ChatColor.YELLOW + "/ase update";
-    final String RELOAD = ChatColor.YELLOW + "/ase reload";
-    final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
+    TextColor commandColor = TextColor.YELLOW; //Set that Static for LATER
+
+    final String LISTMODE = commandColor + "/ase mode <" + Util.getEnumList(EditMode.class) + ">";
+    final String LISTAXIS = commandColor + "/ase axis <" + Util.getEnumList(Axis.class) + ">";
+    final String LISTADJUSTMENT = commandColor + "/ase adj <" + Util.getEnumList(AdjustmentMode.class) + ">";
+    final String LISTSLOT = commandColor + "/ase slot <1-9>";
+    final String HELP = commandColor + "/ase help or /ase ?";
+    final String VERSION = commandColor + "/ase version";
+    final String UPDATE = commandColor + "/ase update";
+    final String RELOADCONFIG = commandColor + "/ase reload";
+    final String GIVECUSTOMMODEL = commandColor + "/ase give";
 
     public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
         this.plugin = armorStandEditorPlugin;
@@ -74,7 +76,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             player.sendMessage(VERSION);
             player.sendMessage(UPDATE);
             player.sendMessage(HELP);
-            player.sendMessage(RELOAD);
+            player.sendMessage(RELOADCONFIG);
             player.sendMessage(GIVECUSTOMMODEL);
             return true;
         }
@@ -95,7 +97,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 break;
             case "give": commandGive(player);
                 break;
-            case "reload": commandReload(player);
+            case "RELOADCONFIG": commandRELOADCONFIG(player);
                 break;
             default:
                 sender.sendMessage(LISTMODE);
@@ -105,7 +107,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 sender.sendMessage(VERSION);
                 sender.sendMessage(UPDATE);
                 sender.sendMessage(HELP);
-                player.sendMessage(RELOAD);
+                player.sendMessage(RELOADCONFIG);
                 sender.sendMessage(GIVECUSTOMMODEL);
         }
         return true;
@@ -218,16 +220,16 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
         //Only Run if the Update Command Works
         if (plugin.getArmorStandEditorVersion().contains(".x")) {
-            player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker will not work on Development Versions.");
-            player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
+            player.sendMessage(commandColor + "[ArmorStandEditor] Update Checker will not work on Development Versions.");
+            player.sendMessage(commandColor + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
         } else {
             if (!Scheduler.isFolia() && plugin.getRunTheUpdateChecker()) {
                 new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID + "").checkNow(player); //Runs Update Check
             } else if (Scheduler.isFolia()) {
-                player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker does not currently work on Folia.");
-                player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
+                player.sendMessage(commandColor + "[ArmorStandEditor] Update Checker does not currently work on Folia.");
+                player.sendMessage(commandColor + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
             } else {
-                player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker is not enabled on this server");
+                player.sendMessage(commandColor + "[ArmorStandEditor] Update Checker is not enabled on this server");
             }
         }
     }
@@ -235,10 +237,10 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private void commandVersion(Player player) {
         if (!(getPermissionUpdate(player))) return;
         String verString = plugin.getArmorStandEditorVersion();
-        player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
+        player.sendMessage(commandColor + "[ArmorStandEditor] Version: " + verString);
     }
 
-    private void commandReload(Player player){
+    private void commandRELOADCONFIG(Player player){
         if(!(getPermissionReload(player))) return;
         plugin.performReload();
         player.sendMessage(plugin.getLang().getMessage("reloaded", ""));
