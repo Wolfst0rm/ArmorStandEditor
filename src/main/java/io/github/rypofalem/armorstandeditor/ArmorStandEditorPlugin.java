@@ -23,6 +23,7 @@ import io.github.rypofalem.armorstandeditor.language.Language;
 import com.jeff_media.updatechecker.*;
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -193,7 +194,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolName = getConfig().getBoolean("requireToolName", false);
         if(requireToolName){
             editToolName = getConfig().getString("toolName", null);
-            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+            if(editToolName != null)
+                //editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+                editToolName = String.valueOf(LegacyComponentSerializer.legacy('&').deserialize(editToolName));
         }
 
         //Custom Model Data
@@ -356,7 +359,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolName = getConfig().getBoolean("requireToolName", false);
         if(requireToolName){
             editToolName = getConfig().getString("toolName", null);
-            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+            if(editToolName != null) editToolName = String.valueOf(LegacyComponentSerializer.legacy('&').deserialize(editToolName));
         }
 
         //Custom Model Data

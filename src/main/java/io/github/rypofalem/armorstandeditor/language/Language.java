@@ -16,10 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
-
 package io.github.rypofalem.armorstandeditor.language;
 
+import com.griefdefender.lib.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import com.griefdefender.lib.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -110,7 +110,8 @@ public class Language {
     }
 
     public String getRawMessage(String path, String format, String option){
-        String message = ChatColor.stripColor(getMessage(path, format, option)); //Strip the color from the message
+        //String message = ChatColor.stripColor(getMessage(path, format, option)); //Strip the color from the message
+        String message = PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(getMessage(path, format, option)));
         format = getFormat(format); //Get the Format
         ChatColor color = ChatColor.WHITE; //Create a default white color
         String bold = "" , italic = "" , underlined = "" , obfuscated = "" , strikethrough = ""; //Strings for Bold, Underline, Italic, Strikethrough (Traditional things in Word/daily use) and Obfuscated (cause Mojang)
