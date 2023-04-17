@@ -31,6 +31,7 @@ import io.github.rypofalem.armorstandeditor.modes.EditMode;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -536,7 +537,9 @@ public class PlayerEditor {
         String message = plugin.getLang().getMessage(path, format, option);
         if (plugin.sendToActionBar) {
             if (ArmorStandEditorPlugin.instance().getHasPaper() || ArmorStandEditorPlugin.instance().getHasSpigot()) { //Paper and Spigot having the same Interaction for sendToActionBar
-                plugin.getServer().getPlayer(getUUID()).spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
+               Player player = plugin.getServer().getPlayer(getUUID());
+               player.sendActionBar(Component.text(message));
+
             } else {
                 String rawText = plugin.getLang().getRawMessage(path, format, option);
                 String command = String.format("title %s actionbar %s", plugin.getServer().getPlayer(getUUID()).getName(), rawText);
