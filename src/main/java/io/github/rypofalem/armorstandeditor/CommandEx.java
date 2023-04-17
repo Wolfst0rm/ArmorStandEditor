@@ -22,11 +22,12 @@ package io.github.rypofalem.armorstandeditor;
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
 
-import com.sk89q.worldedit.util.formatting.text.format.TextColor;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -43,17 +44,17 @@ import java.util.Objects;
 
 public class CommandEx implements CommandExecutor, TabCompleter {
     ArmorStandEditorPlugin plugin;
-    TextColor commandColor = TextColor.YELLOW; //Set that Static for LATER
+    TextColor commandColor = TextColor.fromHexString("#FFFF33");
 
-    final String LISTMODE = commandColor + "/ase mode <" + Util.getEnumList(EditMode.class) + ">";
-    final String LISTAXIS = commandColor + "/ase axis <" + Util.getEnumList(Axis.class) + ">";
-    final String LISTADJUSTMENT = commandColor + "/ase adj <" + Util.getEnumList(AdjustmentMode.class) + ">";
-    final String LISTSLOT = commandColor + "/ase slot <1-9>";
-    final String HELP = commandColor + "/ase help or /ase ?";
-    final String VERSION = commandColor + "/ase version";
-    final String UPDATE = commandColor + "/ase update";
-    final String RELOADCONFIG = commandColor + "/ase reload";
-    final String GIVECUSTOMMODEL = commandColor + "/ase give";
+    final String LISTMODE =       "/ase mode <" + Util.getEnumList(EditMode.class) + ">";
+    final String LISTAXIS =       "/ase axis <" + Util.getEnumList(Axis.class) + ">";
+    final String LISTADJUSTMENT = "/ase adj <" + Util.getEnumList(AdjustmentMode.class) + ">";
+    final String LISTSLOT =       "/ase slot <1-9>";
+    final String HELP =           "/ase help or /ase ?";
+    final String VERSION =        "/ase version";
+    final String UPDATE =         "/ase update";
+    final String RELOADCONFIG =   "/ase reload";
+    final String GIVECUSTOMMODEL ="/ase give";
 
     public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
         this.plugin = armorStandEditorPlugin;
@@ -69,15 +70,17 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
         Player player = (Player) sender;
         if (args.length == 0) {
-            player.sendMessage(LISTMODE);
-            player.sendMessage(LISTAXIS);
-            player.sendMessage(LISTSLOT);
-            player.sendMessage(LISTADJUSTMENT);
-            player.sendMessage(VERSION);
-            player.sendMessage(UPDATE);
-            player.sendMessage(HELP);
-            player.sendMessage(RELOADCONFIG);
-            player.sendMessage(GIVECUSTOMMODEL);
+
+            player.sendMessage(Component.text(LISTMODE).color(commandColor));
+            player.sendMessage(Component.text(LISTAXIS).color(commandColor));
+            player.sendMessage(Component.text(LISTSLOT).color(commandColor));
+            player.sendMessage(Component.text(LISTADJUSTMENT).color(commandColor));
+            player.sendMessage(Component.text(GIVECUSTOMMODEL).color(commandColor));
+            player.sendMessage(Component.text(RELOADCONFIG).color(commandColor));
+            player.sendMessage(Component.text(VERSION).color(commandColor));
+            player.sendMessage(Component.text(UPDATE).color(commandColor));
+            player.sendMessage(Component.text(HELP).color(commandColor));
+
             return true;
         }
         switch (args[0].toLowerCase()) {
@@ -100,15 +103,15 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             case "reload": commandReload(player);
                 break;
             default:
-                sender.sendMessage(LISTMODE);
-                sender.sendMessage(LISTAXIS);
-                sender.sendMessage(LISTSLOT);
-                sender.sendMessage(LISTADJUSTMENT);
-                sender.sendMessage(VERSION);
-                sender.sendMessage(UPDATE);
-                sender.sendMessage(HELP);
-                player.sendMessage(RELOADCONFIG);
-                sender.sendMessage(GIVECUSTOMMODEL);
+                player.sendMessage(Component.text(LISTMODE).color(commandColor));
+                player.sendMessage(Component.text(LISTAXIS).color(commandColor));
+                player.sendMessage(Component.text(LISTSLOT).color(commandColor));
+                player.sendMessage(Component.text(LISTADJUSTMENT).color(commandColor));
+                player.sendMessage(Component.text(GIVECUSTOMMODEL).color(commandColor));
+                player.sendMessage(Component.text(RELOADCONFIG).color(commandColor));
+                player.sendMessage(Component.text(VERSION).color(commandColor));
+                player.sendMessage(Component.text(UPDATE).color(commandColor));
+                player.sendMessage(Component.text(HELP).color(commandColor));
         }
         return true;
     }
