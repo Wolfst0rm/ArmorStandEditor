@@ -25,6 +25,7 @@ import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
 
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -130,7 +131,7 @@ public class PlayerEditorManager implements Listener {
                 ItemStack nameTag = player.getInventory().getItemInMainHand();
                 String preName;
                 if (nameTag.getItemMeta() != null && nameTag.getItemMeta().hasDisplayName()) {
-                    preName = nameTag.getItemMeta().getDisplayName().replace('&', ChatColor.COLOR_CHAR);
+                    preName = nameTag.getItemMeta().getDisplayName().replace('&', ChatColor.COLOR_CHAR); //TODO: Move to support Adventure
                 } else {
                     preName = null;
                 }
@@ -142,7 +143,7 @@ public class PlayerEditorManager implements Listener {
                 final String name = e.getName();
 
                 if (name == null) {
-                    as.setCustomName(null);
+                    as.customName(null);
                     as.setCustomNameVisible(false);
                     event.setCancelled(true);
                 } else if (!name.equals("")) { // nametag is not blank
@@ -160,7 +161,7 @@ public class PlayerEditorManager implements Listener {
                     //minecraft will set the name after this event even if the event is cancelled.
                     //change it 1 tick later to apply formatting without it being overwritten
                     Scheduler.runTaskLater(plugin, () -> {
-                        as.setCustomName(name);
+                        as.setCustomName(name); //TODO: Move to Adventure
                         as.setCustomNameVisible(true);
                     }, 1);
                 }
