@@ -25,6 +25,7 @@ import io.github.rypofalem.armorstandeditor.language.Language;
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 
 
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import org.bukkit.Bukkit;
@@ -57,13 +58,16 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     //Server Version Detection: Paper or Spigot and Invalid NMS Version
     String nmsVersion;
     String languageFolderLocation = "lang/";
+
     public boolean hasSpigot = false;
     public boolean hasPaper = false;
+    boolean isFolia = Scheduler.isFolia();
+
     String nmsVersionNotLatest = null;
     static final String SEPARATOR_FIELD = "================================";
 
     public PlayerEditorManager editorManager;
-    
+
     //Output for Updates
     boolean opUpdateNotification = false;
     boolean runTheUpdateChecker = false;
@@ -106,7 +110,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     @Override
     public void onEnable() {
 
-        if (!Scheduler.isFolia())
+        if (!isFolia)
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
         //Get NMS Version
@@ -154,7 +158,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
 
         getServer().getPluginManager().enablePlugin(this);
-        if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
+        if (!isFolia) registerScoreboards(scoreboard);
         getLogger().info(SEPARATOR_FIELD);
 
         //saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
@@ -241,7 +245,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         updateCheckerInterval = getUpdateCheckerInterval();
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
-        if(!Scheduler.isFolia() && runTheUpdateChecker) {
+        if(!isFolia && runTheUpdateChecker) {
 
             if(opUpdateNotification){
                 runUpdateCheckerWithOPNotifyOnJoinEnabled();
@@ -311,7 +315,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
         if (scoreboard.getTeam(lockedTeam) == null) {
             scoreboard.registerNewTeam(lockedTeam);
-            Objects.requireNonNull(scoreboard.getTeam(lockedTeam)).setColor(ChatColor.RED);
+            Objects.requireNonNull(scoreboard.getTeam(lockedTeam)).color(NamedTextColor.RED);
         } else {
             getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
         }
@@ -332,13 +336,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     public void performReload() {
 
         //Unregister Scoreboard before before performing the reload
-        if (!Scheduler.isFolia()) {
+        if (!isFolia) {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
             unregisterScoreboards(scoreboard);
         }
 
         //Re-Register Scoreboards
-        if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
+        if (!isFolia) registerScoreboards(scoreboard);
 
         //Reload Config File
         reloadConfig();
@@ -404,7 +408,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         updateCheckerInterval = getUpdateCheckerInterval();
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
-        if(!Scheduler.isFolia() && runTheUpdateChecker) {
+        if(!isFolia && runTheUpdateChecker) {
 
             if(opUpdateNotification){
                 runUpdateCheckerWithOPNotifyOnJoinEnabled();
@@ -428,7 +432,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
         }
 
-        if (!Scheduler.isFolia()) {
+        if (!isFolia) {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
             unregisterScoreboards(scoreboard);
         }
@@ -516,7 +520,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(!itemStk.hasItemMeta()) { return false; }
 
             //Get the name of the Edit Tool - If Null, return false
-            String itemName = itemMeta.getDisplayName();
+            String itemName = String.valueOf(itemMeta.displayName());
 
             //If the name of the Edit Tool is not the Name specified in Config then Return false
             if(!itemName.equals(editToolName)) { return false; }
@@ -529,17 +533,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(!itemStk.hasItemMeta()) { return false; }
 
             //Get the lore of the Item and if it is null - Return False
-            List<String> itemLore = itemMeta.getLore();
+            List<?> itemLore = itemMeta.lore();
 
             //If the Item does not have Lore - Return False
             boolean hasTheItemLore = itemMeta.hasLore();
             if (!hasTheItemLore)  { return false; }
 
-            //Get the localised ListString of editToolLore
-            List<String> listStringOfEditToolLore = (List<String>) editToolLore;
-
             //Return False if itemLore on the item does not match what we expect in the config.
-            if(!itemLore.equals(listStringOfEditToolLore)) { return false; }
+            if(!itemLore.equals(editToolLore)) { return false; }
 
         }
 
