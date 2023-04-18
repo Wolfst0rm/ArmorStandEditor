@@ -128,16 +128,16 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             stack.setItemMeta(meta);
             player.getInventory().addItem(stack);
-            player.sendMessage(plugin.getLang().getMessage("give", "info"));
+            player.sendMessage(Component.text(plugin.getLang().getMessage("give", "info")));
         } else{
-            player.sendMessage(plugin.getLang().getMessage("nogive", "warn"));
+            player.sendMessage(Component.text(plugin.getLang().getMessage("nogive", "warn")));
         }
     }
     private void commandSlot(Player player, String[] args) {
 
         if (args.length <= 1) {
-            player.sendMessage(plugin.getLang().getMessage("noslotnumcom", "warn"));
-            player.sendMessage(LISTSLOT);
+            player.sendMessage(Component.text(plugin.getLang().getMessage("noslotnumcom", "warn")));
+            player.sendMessage(Component.text(LISTSLOT).color(commandColor));
         }
 
         if (args.length > 1) {
@@ -146,11 +146,11 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 if (slot >= 0 && slot < 9) {
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setCopySlot(slot);
                 } else {
-                    player.sendMessage(LISTSLOT);
+                    player.sendMessage(Component.text(LISTSLOT).color(commandColor));
                 }
 
             } catch ( NumberFormatException nfe) {
-                player.sendMessage(LISTSLOT);
+                player.sendMessage(Component.text(LISTSLOT).color(commandColor));
             }
         }
     }
@@ -158,7 +158,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private void commandAdj(Player player, String[] args) {
         if (args.length <= 1) {
             player.sendMessage(plugin.getLang().getMessage("noadjcom", "warn"));
-            player.sendMessage(LISTADJUSTMENT);
+            player.sendMessage(Component.text(LISTSLOT).color(commandColor));
         }
 
         if (args.length > 1) {
@@ -168,14 +168,14 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     return;
                 }
             }
-            player.sendMessage(LISTADJUSTMENT);
+            player.sendMessage(Component.text(LISTSLOT).color(commandColor));
         }
     }
 
     private void commandAxis( Player player,  String[] args) {
         if (args.length <= 1) {
-            player.sendMessage(plugin.getLang().getMessage("noaxiscom", "warn"));
-            player.sendMessage(LISTAXIS);
+            player.sendMessage(Component.text(plugin.getLang().getMessage("noaxiscom", "warn")));
+            player.sendMessage(Component.text(LISTAXIS).color(commandColor));
         }
 
         if (args.length > 1) {
@@ -185,14 +185,14 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     return;
                 }
             }
-            player.sendMessage(LISTAXIS);
+            player.sendMessage(Component.text(LISTAXIS).color(commandColor));
         }
     }
 
     private void commandMode( Player player,  String[] args) {
         if (args.length <= 1) {
-            player.sendMessage(plugin.getLang().getMessage("nomodecom", "warn"));
-            player.sendMessage(LISTMODE);
+            player.sendMessage(Component.text(plugin.getLang().getMessage("nomodecom", "warn")));
+            player.sendMessage(Component.text(LISTMODE).color(commandColor));
         }
 
         if (args.length > 1) {
@@ -210,12 +210,15 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private void commandHelp(Player player) {
         player.closeInventory();
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
-        player.sendMessage(plugin.getLang().getMessage("help", "info", plugin.editTool.name()));
+        player.sendMessage(Component.text(plugin.getLang().getMessage("help", "info", plugin.editTool.name())));
         player.sendMessage("");
-        player.sendMessage(plugin.getLang().getMessage("helptips", "info"));
+        player.sendMessage(Component.text(plugin.getLang().getMessage("helptips", "info")));
+        //player.sendMessage(plugin.getLang().getMessage("helptips", "info"));
         player.sendMessage("");
-        player.sendRawMessage(plugin.getLang().getMessage("helpurl", ""));
-        player.sendRawMessage(plugin.getLang().getMessage("helpdiscord", ""));
+        player.sendMessage(Component.text(plugin.getLang().getMessage("helpurl", "")));
+        player.sendMessage(Component.text(plugin.getLang().getMessage("helpdiscord", "")));
+        //player.sendRawMessage(plugin.getLang().getMessage("helpurl", ""));
+        //player.sendRawMessage(plugin.getLang().getMessage("helpdiscord", ""));
     }
 
     private void commandUpdate(Player player) {
@@ -223,16 +226,16 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
         //Only Run if the Update Command Works
         if (plugin.getArmorStandEditorVersion().contains(".x")) {
-            player.sendMessage(commandColor + "[ArmorStandEditor] Update Checker will not work on Development Versions.");
-            player.sendMessage(commandColor + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
+            player.sendMessage(Component.text("[ArmorStandEditor] Update Checker will not work on Development Versions.").color(commandColor));
+            player.sendMessage(Component.text("[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues").color(commandColor));
         } else {
             if (!Scheduler.isFolia() && plugin.getRunTheUpdateChecker()) {
                 new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID + "").checkNow(player); //Runs Update Check
             } else if (Scheduler.isFolia()) {
-                player.sendMessage(commandColor + "[ArmorStandEditor] Update Checker does not currently work on Folia.");
-                player.sendMessage(commandColor + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
+                player.sendMessage(Component.text("[ArmorStandEditor] Update Checker is currently not work on on Folia.").color(commandColor));
+                player.sendMessage(Component.text("[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues").color(commandColor));
             } else {
-                player.sendMessage(commandColor + "[ArmorStandEditor] Update Checker is not enabled on this server");
+                player.sendMessage(Component.text("[ArmorStandEditor] Update Checker is not enabled on this server").color(commandColor));
             }
         }
     }
@@ -240,13 +243,13 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private void commandVersion(Player player) {
         if (!(getPermissionUpdate(player))) return;
         String verString = plugin.getArmorStandEditorVersion();
-        player.sendMessage(commandColor + "[ArmorStandEditor] Version: " + verString);
+        player.sendMessage(Component.text("[ArmorStandEditor] Version: " + verString).color(commandColor));
     }
 
     private void commandReload(Player player){
         if(!(getPermissionReload(player))) return;
         plugin.performReload();
-        player.sendMessage(plugin.getLang().getMessage("reloaded", ""));
+        player.sendMessage(Component.text(plugin.getLang().getMessage("reloaded", "")));
     }
 
     private boolean checkPermission(Player player, String permName,  boolean sendMessageOnInvalidation) {
@@ -257,7 +260,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             return true;
         } else {
             if (sendMessageOnInvalidation) {
-                player.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
+                player.sendMessage(Component.text(plugin.getLang().getMessage("noperm", "warn")));
             }
             return false;
         }
