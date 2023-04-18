@@ -84,25 +84,16 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             return true;
         }
         switch (args[0].toLowerCase()) {
-            case "mode": commandMode(player, args);
-                break;
-            case "axis": commandAxis(player, args);
-                break;
-            case "adj": commandAdj(player, args);
-                break;
-            case "slot": commandSlot(player, args);
-                break;
-            case "help","?": commandHelp(player);
-                break;
-            case "version": commandVersion(player);
-                break;
-            case "update": commandUpdate(player);
-                break;
-            case "give": commandGive(player);
-                break;
-            case "reload": commandReload(player);
-                break;
-            default:
+            case "mode" -> commandMode(player, args);
+            case "axis" -> commandAxis(player, args);
+            case "adj" -> commandAdj(player, args);
+            case "slot" -> commandSlot(player, args);
+            case "help", "?" -> commandHelp(player);
+            case "version" -> commandVersion(player);
+            case "update" -> commandUpdate(player);
+            case "give" -> commandGive(player);
+            case "reload" -> commandReload(player);
+            default -> {
                 player.sendMessage(Component.text(LISTMODE).color(commandColor));
                 player.sendMessage(Component.text(LISTAXIS).color(commandColor));
                 player.sendMessage(Component.text(LISTSLOT).color(commandColor));
@@ -112,6 +103,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 player.sendMessage(Component.text(VERSION).color(commandColor));
                 player.sendMessage(Component.text(UPDATE).color(commandColor));
                 player.sendMessage(Component.text(HELP).color(commandColor));
+            }
         }
         return true;
     }
@@ -158,7 +150,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private void commandAdj(Player player, String[] args) {
         if (args.length <= 1) {
             player.sendMessage(plugin.getLang().getMessage("noadjcom", "warn"));
-            player.sendMessage(Component.text(LISTSLOT).color(commandColor));
+            player.sendMessage(Component.text(LISTADJUSTMENT).color(commandColor));
         }
 
         if (args.length > 1) {
@@ -168,7 +160,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     return;
                 }
             }
-            player.sendMessage(Component.text(LISTSLOT).color(commandColor));
+            player.sendMessage(Component.text(LISTADJUSTMENT).color(commandColor));
         }
     }
 
@@ -213,12 +205,9 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         player.sendMessage(Component.text(plugin.getLang().getMessage("help", "info", plugin.editTool.name())));
         player.sendMessage("");
         player.sendMessage(Component.text(plugin.getLang().getMessage("helptips", "info")));
-        //player.sendMessage(plugin.getLang().getMessage("helptips", "info"));
         player.sendMessage("");
         player.sendMessage(Component.text(plugin.getLang().getMessage("helpurl", "")));
         player.sendMessage(Component.text(plugin.getLang().getMessage("helpdiscord", "")));
-        //player.sendRawMessage(plugin.getLang().getMessage("helpurl", ""));
-        //player.sendRawMessage(plugin.getLang().getMessage("helpdiscord", ""));
     }
 
     private void commandUpdate(Player player) {
