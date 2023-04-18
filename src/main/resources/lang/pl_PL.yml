@@ -66,6 +66,7 @@ give:
   msg: Player given Item with CustomModelData
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+
 #warn
 cantedit:
   msg: Nie możesz tego zrobić
@@ -81,6 +82,8 @@ nomodecom:
   msg: Musisz wybrać tryb.
 nogive:
   msg: You have no permission to use the give command!
+aslockfail:
+  msg: You can not edit the equipment on a locked armor stand.
 
 #menutitle
 mainmenutitle:

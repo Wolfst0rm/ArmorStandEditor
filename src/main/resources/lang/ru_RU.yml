@@ -108,7 +108,8 @@ noreloadcom:
   msg: У вас нет прав, чтобы использовать эту команду
 nogive:
   msg: You have no permission to use the give command!
-
+aslockfail:
+  msg: You can not edit the equipment on a locked armor stand.
 #menutitle
 mainmenutitle:
   msg: Редактирование стойки

@@ -117,67 +117,26 @@ public class PlayerEditor {
 
         armorStand = attemptTarget(armorStand);
         switch (eMode) {
-            case LEFTARM:
-                armorStand.setLeftArmPose(subEulerAngle(armorStand.getLeftArmPose()));
-                break;
-            case RIGHTARM:
-                armorStand.setRightArmPose(subEulerAngle(armorStand.getRightArmPose()));
-                break;
-            case BODY:
-                armorStand.setBodyPose(subEulerAngle(armorStand.getBodyPose()));
-                break;
-            case HEAD:
-                armorStand.setHeadPose(subEulerAngle(armorStand.getHeadPose()));
-                break;
-            case LEFTLEG:
-                armorStand.setLeftLegPose(subEulerAngle(armorStand.getLeftLegPose()));
-                break;
-            case RIGHTLEG:
-                armorStand.setRightLegPose(subEulerAngle(armorStand.getRightLegPose()));
-                break;
-            case SHOWARMS:
-                toggleArms(armorStand);
-                break;
-            case SIZE:
-                toggleSize(armorStand);
-                break;
-            case INVISIBLE:
-                toggleVisible(armorStand);
-                break;
-            case BASEPLATE:
-                togglePlate(armorStand);
-                break;
-            case GRAVITY:
-                toggleGravity(armorStand);
-                break;
-            case COPY:
-                copy(armorStand);
-                break;
-            case PASTE:
-                paste(armorStand);
-                break;
-            case PLACEMENT:
-                move(armorStand);
-                break;
-            case ROTATE:
-                rotate(armorStand);
-                break;
-            case DISABLESLOTS:
-                toggleDisableSlots(armorStand);
-                break;
-            case EQUIPMENT:
-                openEquipment(armorStand);
-                break;
-            case RESET:
-                resetPosition(armorStand);
-                break;
-            case NONE:
-                sendMessage("nomode", null);
-                break;
-            default:
-                sendMessage("nomode", null);
-                break;
-
+            case LEFTARM -> armorStand.setLeftArmPose(subEulerAngle(armorStand.getLeftArmPose()));
+            case RIGHTARM -> armorStand.setRightArmPose(subEulerAngle(armorStand.getRightArmPose()));
+            case BODY -> armorStand.setBodyPose(subEulerAngle(armorStand.getBodyPose()));
+            case HEAD -> armorStand.setHeadPose(subEulerAngle(armorStand.getHeadPose()));
+            case LEFTLEG -> armorStand.setLeftLegPose(subEulerAngle(armorStand.getLeftLegPose()));
+            case RIGHTLEG -> armorStand.setRightLegPose(subEulerAngle(armorStand.getRightLegPose()));
+            case SHOWARMS -> toggleArms(armorStand);
+            case SIZE -> toggleSize(armorStand);
+            case INVISIBLE -> toggleVisible(armorStand);
+            case BASEPLATE -> togglePlate(armorStand);
+            case GRAVITY -> toggleGravity(armorStand);
+            case COPY -> copy(armorStand);
+            case PASTE -> paste(armorStand);
+            case PLACEMENT -> move(armorStand);
+            case ROTATE -> rotate(armorStand);
+            case DISABLESLOTS -> toggleDisableSlots(armorStand);
+            case EQUIPMENT -> openEquipment(armorStand);
+            case RESET -> resetPosition(armorStand);
+            case NONE -> sendMessage("nomode",null);
+            default -> sendMessage("nomode",null);
         }
     }
 
@@ -190,18 +149,10 @@ public class PlayerEditor {
         if (event.isCancelled()) return; //do nothing if cancelled
 
         switch (eMode) {
-            case ITEMFRAME:
-                toggleItemFrameVisible(itemFrame);
-                break;
-            case RESET:
-                itemFrame.setVisible(true);
-                break;
-            case NONE:
-                sendMessage("nomodeif", null);
-                break;
-            default:
-                sendMessage("nomodeif", null);
-                break;
+            case ITEMFRAME -> toggleItemFrameVisible(itemFrame);
+            case RESET -> itemFrame.setVisible(true);
+            case NONE -> sendMessage("nomodeif", null);
+            default -> sendMessage("nomodeif", null);
         }
     }
 
@@ -216,7 +167,7 @@ public class PlayerEditor {
 
     private void openEquipment(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.equipment")) return;
-        if (team != null && team.hasEntity(armorStand)) return;
+        if (team != null && team.hasEntity(armorStand)) sendMessage("aslockfail", null); //Fix for Editing a LOCKED ArmorStand
         equipMenu = new EquipmentMenu(this, armorStand);
         equipMenu.open();
     }
@@ -231,32 +182,15 @@ public class PlayerEditor {
 
         armorStand = attemptTarget(armorStand);
         switch (eMode) {
-            case LEFTARM:
-                armorStand.setLeftArmPose(addEulerAngle(armorStand.getLeftArmPose()));
-                break;
-            case RIGHTARM:
-                armorStand.setRightArmPose(addEulerAngle(armorStand.getRightArmPose()));
-                break;
-            case BODY:
-                armorStand.setBodyPose(addEulerAngle(armorStand.getBodyPose()));
-                break;
-            case HEAD:
-                armorStand.setHeadPose(addEulerAngle(armorStand.getHeadPose()));
-                break;
-            case LEFTLEG:
-                armorStand.setLeftLegPose(addEulerAngle(armorStand.getLeftLegPose()));
-                break;
-            case RIGHTLEG:
-                armorStand.setRightLegPose(addEulerAngle(armorStand.getRightLegPose()));
-                break;
-            case PLACEMENT:
-                reverseMove(armorStand);
-                break;
-            case ROTATE:
-                reverseRotate(armorStand);
-                break;
-            default:
-                editArmorStand(armorStand);
+            case LEFTARM -> armorStand.setLeftArmPose(addEulerAngle(armorStand.getLeftArmPose()));
+            case RIGHTARM -> armorStand.setRightArmPose(addEulerAngle(armorStand.getRightArmPose()));
+            case BODY -> armorStand.setBodyPose(addEulerAngle(armorStand.getBodyPose()));
+            case HEAD -> armorStand.setHeadPose(addEulerAngle(armorStand.getHeadPose()));
+            case LEFTLEG -> armorStand.setLeftLegPose(addEulerAngle(armorStand.getLeftLegPose()));
+            case RIGHTLEG -> armorStand.setRightLegPose(addEulerAngle(armorStand.getRightLegPose()));
+            case PLACEMENT -> reverseMove(armorStand);
+            case ROTATE -> reverseRotate(armorStand);
+            default -> editArmorStand(armorStand);
         }
     }
 
@@ -264,15 +198,9 @@ public class PlayerEditor {
         if(!getPlayer().hasPermission("asedit.placement")) return;
         Location loc = armorStand.getLocation();
         switch (axis) {
-            case X:
-                loc.add(movChange, 0, 0);
-                break;
-            case Y:
-                loc.add(0, movChange, 0);
-                break;
-            case Z:
-                loc.add(0, 0, movChange);
-                break;
+            case X -> loc.add(movChange, 0, 0);
+            case Y -> loc.add(0, movChange, 0);
+            case Z -> loc.add(0, 0, movChange);
         }
         Scheduler.teleport(armorStand, loc);
     }
@@ -281,15 +209,9 @@ public class PlayerEditor {
         if(!getPlayer().hasPermission("asedit.placement")) return;
         Location loc = armorStand.getLocation();
         switch (axis) {
-            case X:
-                loc.subtract(movChange, 0, 0);
-                break;
-            case Y:
-                loc.subtract(0, movChange, 0);
-                break;
-            case Z:
-                loc.subtract(0, 0, movChange);
-                break;
+            case X -> loc.subtract(movChange, 0, 0);
+            case Y -> loc.subtract(0, movChange, 0);
+            case Z -> loc.subtract(0, 0, movChange);
         }
         Scheduler.teleport(armorStand, loc);
     }

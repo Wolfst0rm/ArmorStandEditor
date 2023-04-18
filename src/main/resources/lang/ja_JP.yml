@@ -103,7 +103,8 @@ nomodecom:
   msg: 目的の設定を指定する必要があります！
 nogive:
   msg: You have no permission to use the give command!
-
+aslockfail:
+  msg: You can not edit the equipment on a locked armor stand.
 
 #menutitle
 mainmenutitle:

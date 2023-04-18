@@ -106,7 +106,8 @@ nomodecom:
   msg: Vous devez préciser un mode !
 nogive:
   msg: Vous n'avez pas le droit d'utiliser cette commande!
-
+aslockfail:
+  msg: You can not edit the equipment on a locked armor stand.
 
 #menutitle
 mainmenutitle:

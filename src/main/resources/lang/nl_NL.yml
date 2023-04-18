@@ -65,6 +65,8 @@ nodoubletarget:
   msg: Kijk naar een ArmorStand of een ItemFrame voor je van hand verandert!
 give:
   msg: Speler heeft een item met CustomModelData ontvangen
+aslockfail:
+  msg: Je kunt de uitrusting op een gesloten armor stand niet bewerken.
 
 #Help
 help:

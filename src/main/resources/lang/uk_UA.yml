@@ -73,7 +73,8 @@ nomodecom:
   msg: Оберіть режим!
 nogive:
   msg: You have no permission to use the give command!
-
+aslockfail:
+  msg: You can not edit the equipment on a locked armor stand.
 #menutitle
 mainmenutitle:
   msg: Меню редагування стенду

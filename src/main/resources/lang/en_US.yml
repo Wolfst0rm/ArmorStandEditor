@@ -114,6 +114,8 @@ noreloadcom:
   msg: You don't have permission to use the reload command!
 nogive:
   msg: You do not have permission to use the give command.
+aslockfail:
+  msg: You can not edit the equipment on a locked armor stand.
 
 #menutitle
 mainmenutitle:
