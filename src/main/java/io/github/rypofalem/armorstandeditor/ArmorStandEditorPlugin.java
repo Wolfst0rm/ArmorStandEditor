@@ -25,6 +25,7 @@ import io.github.rypofalem.armorstandeditor.language.Language;
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 
 
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
@@ -78,6 +79,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     int editToolData = Integer.MIN_VALUE;
     boolean requireToolData = false;
     boolean requireToolName = false;
+    TextComponent editToolNameText = null;
     String editToolName = null;
     boolean requireToolLore = false;
     List<?> editToolLore = null;
@@ -198,9 +200,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolName = getToolNameRequirement();
         if(requireToolName){
             editToolName = getEditToolName();
-            if(editToolName != null)
-                //editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
-                editToolName = String.valueOf(LegacyComponentSerializer.legacy('&').deserialize(editToolName));
+            if(editToolName != null) {
+                editToolNameText = LegacyComponentSerializer.legacy('&').deserialize(editToolName);
+                editToolName = editToolNameText.content();
+            }
         }
 
         //Custom Model Data
@@ -363,7 +366,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolName = getToolNameRequirement();
         if(requireToolName){
             editToolName = getEditToolName();
-            if(editToolName != null) editToolName = String.valueOf(LegacyComponentSerializer.legacy('&').deserialize(editToolName));
+            if(editToolName != null) {
+                editToolNameText = LegacyComponentSerializer.legacy('&').deserialize(editToolName);
+                editToolName = editToolNameText.content();
+            }
         }
 
         //Custom Model Data
