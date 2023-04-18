@@ -461,7 +461,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     public boolean getHasPaper(){
         try {
             Class.forName("com.destroystokyo.paper.PaperConfig");
-            nmsVersionNotLatest = "SpigotMC ASAP.";
+            nmsVersionNotLatest = "PaperMC ASAP.";
             return true;
         } catch (ClassNotFoundException e){
             nmsVersionNotLatest = "";
