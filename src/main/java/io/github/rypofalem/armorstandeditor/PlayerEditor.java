@@ -167,7 +167,13 @@ public class PlayerEditor {
 
     private void openEquipment(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.equipment")) return;
-        if (team != null && team.hasEntity(armorStand)) sendMessage("aslockfail", null); //Fix for Editing a LOCKED ArmorStand
+
+        //If the ArmorStand is DISABLED/LOCKED - DO NOT ALLOW EQUIPMENT EDITS!
+        //This bug has been a long time coming to be FIXED!!! WOOOOOT!
+        if (team != null && team.hasEntity(armorStand)) {
+            sendMessage("aslockfail", null);
+            return;//Fix for Editing a LOCKED ArmorStand
+        }
         equipMenu = new EquipmentMenu(this, armorStand);
         equipMenu.open();
     }
