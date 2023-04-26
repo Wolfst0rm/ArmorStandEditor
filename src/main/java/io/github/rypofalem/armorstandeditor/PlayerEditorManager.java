@@ -59,6 +59,7 @@ public class PlayerEditorManager implements Listener {
     private TickCounter counter;
     private ArrayList<ArmorStand> as = null;
     private ArrayList<ItemFrame> itemF = null;
+    private Integer noSize = 0;
 
     // Instantiate protections used to determine whether a player may edit an armor stand or item frame
     //NOTE: GriefPreventionProtection is Depreciated as of v1.19.3-40
@@ -225,17 +226,18 @@ public class PlayerEditorManager implements Listener {
         itemF = getFrameTargets(player); //Get ItemFrame Closest to Player
 
         //Check
-        if(as != null && itemF != null){
+        if(as.size() != noSize && itemF.size() != noSize ){
             getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
-        } else if(as != null){
+        } else if(as.size() != noSize){
             getPlayerEditor(player.getUniqueId()).setTarget(as);
             getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
-        } else if(itemF != null){
+        } else if(itemF.size() != noSize){
             getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
             getPlayerEditor(player.getUniqueId()).setTarget(null);
         } else {
             getPlayerEditor(player.getUniqueId()).setTarget(null);
             getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
+            getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
         }
     }
 
