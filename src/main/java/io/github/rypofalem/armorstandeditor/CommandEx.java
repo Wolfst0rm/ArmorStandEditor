@@ -120,15 +120,15 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             stack.setItemMeta(meta);
             player.getInventory().addItem(stack);
-            player.sendMessage(Component.text(plugin.getLang().getMessage("give", "info")));
+            player.sendMessage(plugin.getLang().getMessage("give", "info"));
         } else{
-            player.sendMessage(Component.text(plugin.getLang().getMessage("nogive", "warn")));
+            player.sendMessage(plugin.getLang().getMessage("nogive", "warn"));
         }
     }
     private void commandSlot(Player player, String[] args) {
 
         if (args.length <= 1) {
-            player.sendMessage(Component.text(plugin.getLang().getMessage("noslotnumcom", "warn")));
+            player.sendMessage(plugin.getLang().getMessage("noslotnumcom", "warn"));
             player.sendMessage(Component.text(LISTSLOT).color(commandColor));
         }
 
@@ -166,7 +166,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     private void commandAxis( Player player,  String[] args) {
         if (args.length <= 1) {
-            player.sendMessage(Component.text(plugin.getLang().getMessage("noaxiscom", "warn")));
+            player.sendMessage(plugin.getLang().getMessage("noaxiscom", "warn"));
             player.sendMessage(Component.text(LISTAXIS).color(commandColor));
         }
 
@@ -183,7 +183,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     private void commandMode( Player player,  String[] args) {
         if (args.length <= 1) {
-            player.sendMessage(Component.text(plugin.getLang().getMessage("nomodecom", "warn")));
+            player.sendMessage(plugin.getLang().getMessage("nomodecom", "warn"));
             player.sendMessage(Component.text(LISTMODE).color(commandColor));
         }
 
@@ -238,7 +238,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private void commandReload(Player player){
         if(!(getPermissionReload(player))) return;
         plugin.performReload();
-        player.sendMessage(Component.text(plugin.getLang().getMessage("reloaded", "")));
+        player.sendMessage(plugin.getLang().getMessage("reloaded", ""));
     }
 
     private boolean checkPermission(Player player, String permName,  boolean sendMessageOnInvalidation) {
@@ -249,21 +249,18 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             return true;
         } else {
             if (sendMessageOnInvalidation) {
-                player.sendMessage(Component.text(plugin.getLang().getMessage("noperm", "warn")));
+                player.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
             }
             return false;
         }
     }
 
-
     private boolean getPermissionBasic(Player player) {
         return checkPermission(player, "basic", true);
     }
-
     private boolean getPermissionUpdate(Player player){
         return checkPermission(player, "update", true);
     }
-
     private boolean getPermissionGive(Player player){
         return checkPermission(player, "give", true);
     }
