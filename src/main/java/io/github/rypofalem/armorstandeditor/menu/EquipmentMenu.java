@@ -81,9 +81,9 @@ public class EquipmentMenu {
         ItemStack icon = new ItemStack(mat);
         ItemMeta meta = icon.getItemMeta();
         meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon");
-        meta.setDisplayName(pe.plugin.getLang().getMessage("equipslot", "iconname", slot)); //equipslot.msg <option>
+        meta.setDisplayName(pe.plugin.getLang().getMessageLegacy("equipslot", "iconname", slot)); //equipslot.msg <option>
         ArrayList<String> loreList = new ArrayList<>();
-        loreList.add(pe.plugin.getLang().getMessage("equipslot.description", "icondescription", slot)); //equioslot.description.msg <option>
+        loreList.add(pe.plugin.getLang().getMessageLegacy("equipslot.description", "icondescription", slot)); //equioslot.description.msg <option>
         meta.setLore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);

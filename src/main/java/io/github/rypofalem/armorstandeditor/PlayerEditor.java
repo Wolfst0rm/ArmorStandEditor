@@ -461,14 +461,14 @@ public class PlayerEditor {
     }
 
     void sendMessage(String path, String format, String option) {
-        String message = plugin.getLang().getMessage(path, format, option);
+        String message = plugin.getLang().getMessageLegacy(path, format, option);
         if (plugin.sendToActionBar) {
             if (ArmorStandEditorPlugin.instance().getHasPaper() || ArmorStandEditorPlugin.instance().getHasSpigot()) { //Paper and Spigot having the same Interaction for sendToActionBar
                Player player = plugin.getServer().getPlayer(getUUID());
                player.sendActionBar(Component.text(message));
 
             } else {
-                String rawText = plugin.getLang().getRawMessage(path, format, option);
+                String rawText = plugin.getLang().getMessageLegacy(path, format, option);
                 String command = String.format("title %s actionbar %s", plugin.getServer().getPlayer(getUUID()).getName(), rawText);
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
             }
