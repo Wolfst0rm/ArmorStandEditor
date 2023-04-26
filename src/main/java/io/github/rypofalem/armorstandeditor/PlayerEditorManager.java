@@ -225,12 +225,14 @@ public class PlayerEditorManager implements Listener {
         itemF = getFrameTargets(player); //Get ItemFrame Closest to Player
 
         //Check
-        if(!(as.isEmpty()) && itemF.isEmpty()) {
-            getPlayerEditor(player.getUniqueId()).setTarget(as);
-        } else if(!(itemF.isEmpty()) && as.isEmpty()) {
-            getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
-        } else if (!(itemF.isEmpty()) && !(as.isEmpty())) {
+        if(as != null && itemF != null){
             getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
+        } else if(as != null){
+            getPlayerEditor(player.getUniqueId()).setTarget(as);
+            getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
+        } else if(itemF != null){
+            getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
+            getPlayerEditor(player.getUniqueId()).setTarget(null);
         } else {
             getPlayerEditor(player.getUniqueId()).setTarget(null);
             getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
