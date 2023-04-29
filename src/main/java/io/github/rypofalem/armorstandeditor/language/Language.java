@@ -113,59 +113,47 @@ public class Language {
         return getMessageLegacy(path, format, null);
     }
 
-    public Component getMessage(String path, String format, String option) {
+    public Component getMessage(String path, String format, String option){
         String messageContent = getMessageLegacy(path, format, option);
 
-        // Deserialize the message from Legacy to Plain
+        //Deserialize the message from Legacy to Plain
         Component component = LegacyComponentSerializer.legacySection().deserialize(messageContent);
 
         // Apply formatting to the message
-        if (format.startsWith("#")) {
-            try {
-                String hex = format.substring(1);
-                if (hex.length() == 6) {
-                    int r = Integer.parseInt(hex.substring(0, 2), 16);
-                    int g = Integer.parseInt(hex.substring(2, 4), 16);
-                    int b = Integer.parseInt(hex.substring(4, 6), 16);
-                    component = component.color(TextColor.color(r, g, b));
-                }
-            } catch (NumberFormatException e) {
-                // Ignore invalid hex colors
-            }
-        } else {
-            for(int i = 0; i < format.length(); i++){
-                char codeChar = format.charAt(i);
+        format = getFormat(format);
 
-                //Std MC Colors
-                Map<Character, NamedTextColor> colorMap = new HashMap<>();
-                colorMap.put('0', NamedTextColor.BLACK);
-                colorMap.put('1', NamedTextColor.DARK_BLUE);
-                colorMap.put('2', NamedTextColor.DARK_GREEN);
-                colorMap.put('3', NamedTextColor.DARK_AQUA);
-                colorMap.put('4', NamedTextColor.DARK_RED);
-                colorMap.put('5', NamedTextColor.DARK_PURPLE);
-                colorMap.put('6', NamedTextColor.GOLD);
-                colorMap.put('7', NamedTextColor.GRAY);
-                colorMap.put('8', NamedTextColor.DARK_GRAY);
-                colorMap.put('9', NamedTextColor.BLUE);
-                colorMap.put('a', NamedTextColor.GREEN);
-                colorMap.put('b', NamedTextColor.AQUA);
-                colorMap.put('c', NamedTextColor.RED);
-                colorMap.put('d', NamedTextColor.LIGHT_PURPLE);
-                colorMap.put('e', NamedTextColor.YELLOW);
-                colorMap.put('f', NamedTextColor.WHITE);
+        for(int i = 0; i < format.length(); i++){
+            char codeChar = format.charAt(i);
 
-                switch (codeChar) {
-                    case 'k' -> component = component.decorate(TextDecoration.OBFUSCATED);
-                    case 'l' -> component = component.decorate(TextDecoration.BOLD);
-                    case 'm' -> component = component.decorate(TextDecoration.STRIKETHROUGH);
-                    case 'n' -> component = component.decorate(TextDecoration.UNDERLINED);
-                    case 'o' -> component = component.decorate(TextDecoration.ITALIC);
-                    default -> {
-                        NamedTextColor color = colorMap.get(codeChar);
-                        if (color != null) {
-                            component = component.color(color);
-                        }
+            //Std MC Colors
+            Map<Character, NamedTextColor> colorMap = new HashMap<>();
+            colorMap.put('0', NamedTextColor.BLACK);
+            colorMap.put('1', NamedTextColor.DARK_BLUE);
+            colorMap.put('2', NamedTextColor.DARK_GREEN);
+            colorMap.put('3', NamedTextColor.DARK_AQUA);
+            colorMap.put('4', NamedTextColor.DARK_RED);
+            colorMap.put('5', NamedTextColor.DARK_PURPLE);
+            colorMap.put('6', NamedTextColor.GOLD);
+            colorMap.put('7', NamedTextColor.GRAY);
+            colorMap.put('8', NamedTextColor.DARK_GRAY);
+            colorMap.put('9', NamedTextColor.BLUE);
+            colorMap.put('a', NamedTextColor.GREEN);
+            colorMap.put('b', NamedTextColor.AQUA);
+            colorMap.put('c', NamedTextColor.RED);
+            colorMap.put('d', NamedTextColor.LIGHT_PURPLE);
+            colorMap.put('e', NamedTextColor.YELLOW);
+            colorMap.put('f', NamedTextColor.WHITE);
+
+            switch (codeChar) {
+                case 'k' -> component = component.decorate(TextDecoration.OBFUSCATED);
+                case 'l' -> component = component.decorate(TextDecoration.BOLD);
+                case 'm' -> component = component.decorate(TextDecoration.STRIKETHROUGH);
+                case 'n' -> component = component.decorate(TextDecoration.UNDERLINED);
+                case 'o' -> component = component.decorate(TextDecoration.ITALIC);
+                default -> {
+                    NamedTextColor color = colorMap.get(codeChar);
+                    if (color != null) {
+                        component = component.color(color);
                     }
                 }
             }
