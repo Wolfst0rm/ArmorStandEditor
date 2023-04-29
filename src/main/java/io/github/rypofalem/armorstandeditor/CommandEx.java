@@ -202,12 +202,12 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private void commandHelp(Player player) {
         player.closeInventory();
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
-        player.sendMessage(plugin.getLang().getMessage("help", "info", plugin.editTool.name()));
+        player.sendMessage(Component.text(plugin.getLang().getMessage("help", "info", plugin.editTool.name())));
         player.sendMessage("");
-        player.sendMessage(plugin.getLang().getMessage("helptips", "info"));
+        player.sendMessage(Component.text(plugin.getLang().getMessage("helptips", "info")));
         player.sendMessage("");
-        player.sendMessage(plugin.getLang().getMessage("helpurl", ""));
-        player.sendMessage(plugin.getLang().getMessage("helpdiscord", ""));
+        player.sendMessage(Component.text(plugin.getLang().getMessage("helpurl", "")));
+        player.sendMessage(Component.text(plugin.getLang().getMessage("helpdiscord", "")));
     }
 
     private void commandUpdate(Player player) {

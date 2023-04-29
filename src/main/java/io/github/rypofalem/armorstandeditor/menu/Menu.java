@@ -224,12 +224,12 @@ public class Menu {
 
 
     private String getIconName(String path, String option) {
-        return pe.plugin.getLang().getMessageLegacy(path, "iconname", option);
+        return pe.plugin.getLang().getMessage(path, "iconname", option);
     }
 
 
     private String getIconDescription(String path, String option) {
-        return pe.plugin.getLang().getMessageLegacy(path + ".description", "icondescription", option);
+        return pe.plugin.getLang().getMessage(path + ".description", "icondescription", option);
     }
 
     public void openMenu() {

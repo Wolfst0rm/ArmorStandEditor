@@ -20,17 +20,11 @@ package io.github.rypofalem.armorstandeditor.language;
 
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.antlr.runtime.BufferedTokenStream;
+
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,8 +33,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Language {
     final String DEFAULT_LANG = "en_US.yml";
@@ -87,7 +79,7 @@ public class Language {
     //path: yml path to message in language file
     //format: yml path to format in language file
     //option: path-specific variable that may be used
-    public String getMessageLegacy(String path, String format, String option) {
+    public String getMessage(String path, String format, String option) {
         if (langConfig == null) reloadLang(langFile.getName()); //Try to get the Lang File - if not re-perform the reloadLang
         if (path == null) return ""; //Set Blank if Message Path is not in the langauge file
         if (option == null) option = ""; //Set blank if options are not in the langauge file
@@ -110,55 +102,49 @@ public class Language {
     //Examples of this can be seen on: CommandEx.java in the commandXXXXXX(player,String[]) Switch.
     //sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
     public String getMessage(String path, String format) {
-        return getMessageLegacy(path, format, null);
+        return getMessage(path, format, null);
     }
 
-    public Component getMessage(String path, String format, String option){
-        String messageContent = getMessageLegacy(path, format, option);
+    //Gets a message and assumes the format is just Info
+    //Not used anywhere at the moment from what it seems
+    public String getMessage(String path) {
+        return getMessage(path, "info");
+    }
 
-        //Deserialize the message from Legacy to Plain
-        Component component = LegacyComponentSerializer.legacySection().deserialize(messageContent);
-
-        // Apply formatting to the message
-        format = getFormat(format);
-
+    public String getRawMessage(String path, String format, String option){
+        //String message = ChatColor.stripColor(getMessage(path, format, option)); //Strip the color from the message - Replaced by Deserializer from #Adventure
+        String message = PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(getMessage(path, format, option)));
+        format = getFormat(format); //Get the Format
+        ChatColor color = ChatColor.WHITE; //Create a default white color
+        String bold = "" , italic = "" , underlined = "" , obfuscated = "" , strikethrough = ""; //Strings for Bold, Underline, Italic, Strikethrough (Traditional things in Word/daily use) and Obfuscated (cause Mojang)
         for(int i = 0; i < format.length(); i++){
-            char codeChar = format.charAt(i);
+            //Get the Chat Color code at a specific character
+            ChatColor code = ChatColor.getByChar(format.charAt(i));
 
-            //Std MC Colors
-            Map<Character, NamedTextColor> colorMap = new HashMap<>();
-            colorMap.put('0', NamedTextColor.BLACK);
-            colorMap.put('1', NamedTextColor.DARK_BLUE);
-            colorMap.put('2', NamedTextColor.DARK_GREEN);
-            colorMap.put('3', NamedTextColor.DARK_AQUA);
-            colorMap.put('4', NamedTextColor.DARK_RED);
-            colorMap.put('5', NamedTextColor.DARK_PURPLE);
-            colorMap.put('6', NamedTextColor.GOLD);
-            colorMap.put('7', NamedTextColor.GRAY);
-            colorMap.put('8', NamedTextColor.DARK_GRAY);
-            colorMap.put('9', NamedTextColor.BLUE);
-            colorMap.put('a', NamedTextColor.GREEN);
-            colorMap.put('b', NamedTextColor.AQUA);
-            colorMap.put('c', NamedTextColor.RED);
-            colorMap.put('d', NamedTextColor.LIGHT_PURPLE);
-            colorMap.put('e', NamedTextColor.YELLOW);
-            colorMap.put('f', NamedTextColor.WHITE);
-
-            switch (codeChar) {
-                case 'k' -> component = component.decorate(TextDecoration.OBFUSCATED);
-                case 'l' -> component = component.decorate(TextDecoration.BOLD);
-                case 'm' -> component = component.decorate(TextDecoration.STRIKETHROUGH);
-                case 'n' -> component = component.decorate(TextDecoration.UNDERLINED);
-                case 'o' -> component = component.decorate(TextDecoration.ITALIC);
-                default -> {
-                    NamedTextColor color = colorMap.get(codeChar);
-                    if (color != null) {
-                        component = component.color(color);
-                    }
-                }
+            //Switch based on what that character is. Set in ChatColor.class (Bukkit)
+            //Sets the <format>: true if a corresponding type has been found
+            switch(code) {
+                case MAGIC:
+                    obfuscated = ", \"obfuscated\": true";
+                    break;
+                case BOLD:
+                    bold = ", \"bold\": true";
+                    break;
+                case STRIKETHROUGH:
+                    strikethrough = ", \"strikethrough\": true";
+                    break;
+                case UNDERLINE:
+                    underlined = ", \"underlined\": true";
+                    break;
+                case ITALIC:
+                    italic = ", \"italic\": true";
+                    break;
+                default: color = !code.isColor() ? color : code; //Otherwise we update our White to the matching Color Code
             }
         }
-        return component;
+        //Return a formatted JSON String containing the message text and formatting information
+        return String.format("{\"text\":\"%s\", \"color\":\"%s\"%s%s%s%s%s}", message, color.name().toLowerCase(),
+            obfuscated, bold, strikethrough, underlined, italic);
     }
 
     private String getFormat(String format){
