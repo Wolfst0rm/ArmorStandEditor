@@ -20,6 +20,8 @@ package io.github.rypofalem.armorstandeditor.language;
 
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
@@ -33,6 +35,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Language {
     final String DEFAULT_LANG = "en_US.yml";
@@ -40,6 +44,7 @@ public class Language {
     private YamlConfiguration defConfig = null;
     private File langFile = null;
     ArmorStandEditorPlugin plugin;
+    private final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F0-9]{6}");
 
     public Language(String langFileName, ArmorStandEditorPlugin plugin) {
         this.plugin = plugin;
@@ -111,9 +116,23 @@ public class Language {
         return getMessage(path, "info");
     }
 
+    public String getMessageWithHexCode(String path, String format, String option){
+        String message = getMessage(path,format,option);
+        Matcher matcher = HEX_PATTERN.matcher(message);
+
+        while(matcher.find()){
+            String color = message.substring(matcher.start(), matcher.end());
+            message = message.substring(0, matcher.start()) + TextColor.fromHexString(color) + message.substring(matcher.end());
+            matcher = HEX_PATTERN.matcher(message); // update matcher with modified message string
+        }
+        return message;
+
+
+    }
+
+
     public String getRawMessage(String path, String format, String option){
-        //String message = ChatColor.stripColor(getMessage(path, format, option)); //Strip the color from the message - Replaced by Deserializer from #Adventure
-        String message = PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(getMessage(path, format, option)));
+        String message = ChatColor.stripColor(getMessage(path, format, option)); //Strip the color from the message - Replaced by Deserializer from #Adventure
         format = getFormat(format); //Get the Format
         ChatColor color = ChatColor.WHITE; //Create a default white color
         String bold = "" , italic = "" , underlined = "" , obfuscated = "" , strikethrough = ""; //Strings for Bold, Underline, Italic, Strikethrough (Traditional things in Word/daily use) and Obfuscated (cause Mojang)
