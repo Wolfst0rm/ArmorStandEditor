@@ -21,12 +21,12 @@ package io.github.rypofalem.armorstandeditor.language;
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.kyori.adventure.text.TextComponent;
 
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -116,20 +116,32 @@ public class Language {
         return getMessage(path, "info");
     }
 
-    public String getMessageWithHexCode(String path, String format, String option){
-        String message = getMessage(path,format,option);
+
+    public Component getMessageWithHexCode(String path, String format, String option){
+        if(format == null) format = "";
+        if(option == null) option = "";
+        String message = getMessage(path, format, option);
+        TextComponent.@NotNull Builder builder = Component.text();
         Matcher matcher = HEX_PATTERN.matcher(message);
 
+        int index = 0;
         while(matcher.find()){
             String color = message.substring(matcher.start(), matcher.end());
-            message = message.substring(0, matcher.start()) + TextColor.fromHexString(color) + message.substring(matcher.end());
-            matcher = HEX_PATTERN.matcher(message); // update matcher with modified message string
+            String nonColoredText = message.substring(index, matcher.start());
+            if (!nonColoredText.isEmpty()) {
+                builder.append(Component.text(nonColoredText));
+            }
+            builder.color(TextColor.fromHexString(color));
+            index = matcher.end();
         }
-        return message;
 
+        String remainingText = message.substring(index);
+        if (!remainingText.isEmpty()) {
+            builder.append(Component.text(remainingText));
+        }
 
+        return builder.build();
     }
-
 
     public String getRawMessage(String path, String format, String option){
         String message = ChatColor.stripColor(getMessage(path, format, option)); //Strip the color from the message - Replaced by Deserializer from #Adventure
