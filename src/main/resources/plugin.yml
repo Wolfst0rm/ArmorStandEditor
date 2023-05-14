@@ -1,6 +1,6 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.19.4-42
+version: 1.19.4-42-permFix
 api-version: "1.13"
 folia-supported: true
 website: https://www.spigotmc.org/resources/94503/
@@ -27,34 +27,35 @@ permissions:
 
     asedit.basic:
       description: Allow use armorstand edit functions. If set to false it will override all other functions.
-      default: true
+      default: false
     asedit.armorstand.invisible:
       description: Toggles ArmorStand visibility.
-      default: true
+      default: false
     asedit.itemframe.invisible:
       description: Allows setting of ItemFrame Visibility
-      default: true
+      default: false
     asedit.rename:
       description: Rename armorstands - Now Supports Color
-      default: true
+      default: false
     asedit.equipment:
       description: Access armorstand equipment GUI
-      default: true
+      default: false
     asedit.gravity:
       description: Changes whether the armor stand has gravity
-      default: true
+      default: false
     asedit.placement:
       description: Changes whether the armor stand can be moved using the item for editing
-      default: true
+      default: false
     asedit.disableSlots:
       description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
-      default: true
+      default: false
     asedit.give:
       description: Gives player the EditTool with Proper CustomModelData
       default: false
     asedit.update:
       description: Allows the checking for updates.
       default: false
+
 
     asedit.ignoreProtection.towny:
       description: Allows user to ignore Towny's Protection Limitations.
@@ -112,7 +113,7 @@ permissions:
         asedit.ignoreProtection.residence: false
 
     asedit.permpack.basic:
-      default: true
+      default: op
       children:
         asedit.basic: true
         asedit.equipment: true
