@@ -1,5 +1,5 @@
 #Translation by nicuch
-
+#TODO: Needs Updated!
 
 iconname: 2n
 icondescription: 5
@@ -54,11 +54,14 @@ pasted:
 target:
   msg: Tinta ArmorStand-ului blocata.
 notarget:
-  msg: Tinta ArmorStand-ului deblocata.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 give:
   msg: Player given Item with CustomModelData
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+
 #warn
 cantedit:
   msg: Nu poti edita armorstand-ul aici!

@@ -56,11 +56,11 @@ disabledslots:
 target:
   msg: ArmorStand target locked.
 notarget:
-  msg: ArmorStand target unlocked.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
 give:
   msg: Player given Item with CustomModelData
 doubletarget:

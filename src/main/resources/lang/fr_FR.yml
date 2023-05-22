@@ -57,11 +57,11 @@ pasted:
 target:
   msg: Armor stand sélectionné.
 notarget:
-  msg: Armor stand désélectionné.
+  msg: <x> désélectionné.
+  armorstand: Armor stand
+  itemframe: Itemframe
 frametarget:
   msg: Itemframe sélectionné.
-noframetarget:
-  msg: Itemframe désélectionné.
 doubletarget:
   msg: Regardez un armor stand ou un item frame, pas les deux!
 nodoubletarget:

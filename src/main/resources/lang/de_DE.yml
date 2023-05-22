@@ -56,11 +56,11 @@ pasted:
 target:
   msg: Ziel Rüstungsständer wurde gesperrt.
 notarget:
-  msg: Ziel Rüstungsständer wurde entsperrt.
+  msg: <x> wurde entsperrt.
+  armorstand: Ziel Rüstungsständer
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe Ziel gesperrt.
-noframetarget:
-  msg: Itemframe Ziel entsperrt.
 doubletarget:
   msg: Bitte schaue entweder auf einen Rüstungsständer oder einem ItemFrame, nicht beides!
 nodoubletarget:

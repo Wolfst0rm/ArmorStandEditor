@@ -56,11 +56,11 @@ pasted:
 target:
   msg: 目标盔甲架已锁定。
 notarget:
-  msg: 目标盔甲架已解锁。
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: 目标物品展示框已锁定。
-noframetarget:
-  msg: 目标物品展示框已解锁。
 doubletarget:
   msg: 请看向盔甲架或物品展示框，不要两个同时看！
 reloaded:

@@ -56,11 +56,11 @@ pasted:
 target:
   msg: アーマースタンドの編集対象を保持しました。
 notarget:
-  msg: アーマースタンドの編集対象を保持していません。
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
 nodoubletarget:

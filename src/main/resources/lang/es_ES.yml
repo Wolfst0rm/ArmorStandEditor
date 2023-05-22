@@ -53,11 +53,11 @@ pasted:
 target:
   msg: Soporte de armaduras bloqueado.
 notarget:
-  msg: Soporte de armaduras desbloqueado.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
 nodoubletarget:
