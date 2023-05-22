@@ -224,7 +224,6 @@ public class PlayerEditorManager implements Listener {
         } else {
             getPlayerEditor(player.getUniqueId()).setTarget(null);
             getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
-            getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
         }
     }
 
