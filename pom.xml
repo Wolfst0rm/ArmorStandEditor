@@ -132,14 +132,14 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.99.0.1</version>
+            <version>0.99.0.9</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
         <dependency>
             <groupId>com.jeff_media</groupId>
             <artifactId>SpigotUpdateChecker</artifactId>
-            <version>3.0.2</version>
+            <version>3.0.3</version>
             <scope>compile</scope>
         </dependency>
         <!-- SuperiorSkyblock API -->
@@ -167,7 +167,7 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>1.22.0</version>
+            <version>1.23.1</version>
             <scope>provided</scope>
         </dependency>
         <!-- Residence -->
@@ -185,7 +185,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.0</version>
                 <executions>
                     <execution>
                         <id>compile</id>
