@@ -36,9 +36,11 @@ toolData: 0
 requireToolName: false
 toolName: Example Name here
 
-#(Optional) The first "Lore" entry that the plugin looks for to identify the edit tool.
+#(Optional) The first "Lore" entry that the plugin looks for to identify the edit tool. - Now has MultiLine Support
 requireToolLore: false
-toolLore: Let's get dangerous
+toolLore:
+  - "TIME TO GET REALLY"
+  - "REALLY DANGEROUS!"
 
 #(Optional) Allow the use of CustomModelData - NOTE: This looks at the editTool set by Config
 #and at the Int set here to know what to set.
@@ -69,6 +71,9 @@ invisibleItemFrames: true
 
 #If true, the GUI will only open if the player is sneaking
 requireSneaking: false
+
+#Sends messages to the ActionBar
+sendMessagesToActionBar: true
 
 #------ Misc Options
 
