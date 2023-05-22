@@ -221,7 +221,7 @@ public class PlayerEditorManager implements Listener {
             getPlayerEditor(player.getUniqueId()).setTarget(as);
         } else if (itemF != null && !itemF.isEmpty()) {
             getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
-        } else {
+        } else { //TODO: Fix the sending of the message Twice in this Statement
             getPlayerEditor(player.getUniqueId()).setTarget(null);
             getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
         }
