@@ -217,7 +217,7 @@ public class PlayerEditorManager implements Listener {
             getPlayerEditor(player.getUniqueId()).setTarget(as);
         } else if(!(itemF.isEmpty()) && as.isEmpty()) {
             getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
-        } else if (!itemF.isEmpty() && !as.isEmpty()) {
+        } else if (!(itemF.isEmpty()) && !(as.isEmpty())) {
             getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
         } else {
             getPlayerEditor(player.getUniqueId()).setTarget(null);
