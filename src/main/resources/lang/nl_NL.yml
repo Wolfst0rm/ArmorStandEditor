@@ -54,11 +54,11 @@ copied:
 pasted:
   msg: Armorstand status geplakt vanuit slot <x>.
 notarget:
-  msg: ArmorStand target unlocked.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
 doubletarget:
   msg: Kijk aub naar een ArmorStand of een ItemFrame, niet allebei!
 nodoubletarget:

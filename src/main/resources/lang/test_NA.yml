@@ -65,10 +65,13 @@ noaxiscom:
   msg: You must specify an Axis!
 nomodecom:
   msg: You must specify a Mode!
-nodoubletarget:
-  msg: Please look at an ArmorStand or an ItemFrame before switching hands!
 aslockfail:
   msg: You can not edit the equipment on a locked armor stand.
+notarget:
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
+  
 #menutitle
 mainmenutitle:
   msg: Armor Stand Editor Menu

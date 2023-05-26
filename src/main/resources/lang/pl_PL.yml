@@ -55,11 +55,11 @@ pasted:
 target:
   msg: Zablokowano cel.
 notarget:
-  msg: Odblokowano cel.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
 give:

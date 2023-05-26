@@ -377,7 +377,7 @@ public class PlayerEditor {
         if (armorStands == null || armorStands.isEmpty()) {
             target = null;
             targetList = null;
-            sendMessage("notarget", null);
+            sendMessage("notarget", "armorstand");
         } else {
             if (targetList == null) {
                 targetList = armorStands;
@@ -416,7 +416,7 @@ public class PlayerEditor {
         if (itemFrames == null || itemFrames.isEmpty()) {
             frameTarget = null;
             frameTargetList = null;
-            sendMessage("noframetarget", null);
+            sendMessage("notarget", "itemframe");
         } else {
 
             if (frameTargetList == null) {

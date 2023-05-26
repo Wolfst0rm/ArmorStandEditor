@@ -59,8 +59,6 @@ notarget:
   msg: Цель стойки разблокирована
 frametarget:
   msg: Цель рамки заблокирована
-noframetarget:
-  msg: Цель рамки разблокирована
 doubletarget:
   msg: Наведитесь на стойку или на рамку, а не на то и другое одновременно.
 nodoubletarget:

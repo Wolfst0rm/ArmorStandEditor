@@ -52,7 +52,9 @@ pasted:
 target:
   msg: Ціль стенду заблоковано.
 notarget:
-  msg: Ціль стенду розблоковано.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 give:
   msg: Player given Item with CustomModelData
 nodoubletarget:

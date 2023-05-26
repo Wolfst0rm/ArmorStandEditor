@@ -269,6 +269,10 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         return checkPermission(player, "reload", true);
     }
 
+    private boolean getPermissionReload(Player player) {
+        return checkPermission(player, "reload", true);
+    }
+
     //REFACTOR COMPLETION
     @Override
     @SuppressWarnings({"deprecated"})

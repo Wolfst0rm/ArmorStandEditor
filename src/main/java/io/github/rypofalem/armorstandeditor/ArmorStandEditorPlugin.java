@@ -229,6 +229,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             editToolLore = getEditToolLore();
         }
 
+
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
         requireSneaking = getSneakingRequirement();
 
@@ -544,8 +545,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             boolean hasTheItemLore = itemMeta.hasLore();
             if (!hasTheItemLore)  { return false; }
 
+            //Get the localised ListString of editToolLore
+            List<String> listStringOfEditToolLore = (List<String>) editToolLore;
+
             //Return False if itemLore on the item does not match what we expect in the config.
-            if(!itemLore.equals(editToolLore)) { return false; }
+            if(!itemLore.equals(listStringOfEditToolLore)) { return false; }
 
         }
 
@@ -556,6 +560,98 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             return itemCustomModel.equals(customModelDataInt);
         }
         return true;
+    }
+
+
+    public void performReload() {
+
+        //Unregister Scoreboard before before performing the reload
+        if (!Scheduler.isFolia()) {
+            scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
+            unregisterScoreboards(scoreboard);
+        }
+
+        //Perform Reload
+        reloadConfig();
+
+        //Re-Register Scoreboards
+        if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
+
+        //Reload Config File
+        reloadConfig();
+
+        //Set Language
+        lang = new Language(getConfig().getString("lang"), this);
+
+
+        //Rotation
+        coarseRot = getConfig().getDouble("coarse");
+        fineRot = getConfig().getDouble("fine");
+
+        //Set Tool to be used in game
+        toolType = getConfig().getString("tool");
+        if (toolType != null) {
+            editTool = Material.getMaterial(toolType); //Ignore Warning
+        }
+
+        //Do we require a custom tool name?
+        requireToolName = getConfig().getBoolean("requireToolName", false);
+        if(requireToolName){
+            editToolName = getConfig().getString("toolName", null);
+            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+        }
+
+        //Custom Model Data
+        allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
+
+        if(allowCustomModelData){
+            customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
+        }
+
+        //ArmorStandVisibility Node
+        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+
+        //Is there NBT Required for the tool
+        requireToolData = getConfig().getBoolean("requireToolData", false);
+
+        if(requireToolData) {
+            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+        }
+
+        requireToolLore = getConfig().getBoolean("requireToolLore", false);
+
+        if(requireToolLore) {
+            editToolLore = getConfig().getList("toolLore", null);
+        }
+
+        //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
+        requireSneaking = getConfig().getBoolean("requireSneaking", false);
+
+        //Send Messages to Action Bar
+        sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+
+        //All ItemFrame Stuff
+        glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
+        invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
+
+        //Add ability to enable ot Disable the running of the Updater
+        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
+
+        //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
+        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
+        updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+
+        //Run UpdateChecker - Reports out to Console on Startup ONLY!
+        if(!Scheduler.isFolia() && runTheUpdateChecker) {
+
+            if(opUpdateNotification){
+                runUpdateCheckerWithOPNotifyOnJoinEnabled();
+            } else {
+                runUpdateCheckerConsoleUpdateCheck();
+            }
+
+        }
+
     }
 
     public static ArmorStandEditorPlugin instance(){

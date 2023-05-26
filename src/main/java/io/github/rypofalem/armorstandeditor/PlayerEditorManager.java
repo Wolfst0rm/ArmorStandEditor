@@ -225,19 +225,16 @@ public class PlayerEditorManager implements Listener {
         as = getTargets(player); //Get All ArmorStand closest to player
         itemF = getFrameTargets(player); //Get ItemFrame Closest to Player
 
-        //Check
-        if(as.size() != noSize && (itemF != null ? itemF.size() : 0) != noSize ){
+        // Check for null and empty lists
+        if (as != null && itemF != null && !as.isEmpty() && !itemF.isEmpty()) {
             getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
-        } else if(as.size() != noSize){
+        } else if (as != null && !as.isEmpty()) {
             getPlayerEditor(player.getUniqueId()).setTarget(as);
-            getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
-        } else if((itemF != null ? itemF.size() : 0) != noSize){
+        } else if (itemF != null && !itemF.isEmpty()) {
             getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
-            getPlayerEditor(player.getUniqueId()).setTarget(null);
-        } else {
+        } else { //TODO: Fix the sending of the message Twice in this Statement
             getPlayerEditor(player.getUniqueId()).setTarget(null);
             getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
-            getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
         }
     }
 
