@@ -58,6 +58,10 @@ permissions:
   asedit.reload:
     description: Allows Reloading of the ASE Config.
     default: false
+  asedit.toggleInvulnerability:
+    description: Allows players to toggle the vulnerability state of an ArmorStand.
+    default: true
+
 
   asedit.ignoreProtection.towny:
     description: Allows user to ignore Towny's Protection Limitations.

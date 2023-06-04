@@ -79,6 +79,7 @@ public class Menu {
         ItemStack slot4;
         ItemStack help;
         ItemStack itemFrameVisible;
+        ItemStack toggleVulnerabilty = null;
 
         xAxis = createIcon(new ItemStack(Material.RED_WOOL, 1),
                 "xaxis", "axis x");
@@ -145,6 +146,10 @@ public class Menu {
 
         //Praise end
 
+        if (pe.getPlayer().hasPermission("asedit.toggleInvulnerability")) {
+            toggleVulnerabilty = createIcon(new ItemStack(Material.BEDROCK), "vulnerability", "mode vulnerability");
+        }
+
         size = createIcon(new ItemStack(Material.PUFFERFISH, 1),
                 "size", "mode size");
 
@@ -197,7 +202,7 @@ public class Menu {
                         xAxis, yAxis, zAxis, null, coarseAdj, fineAdj, null, rotate, place,
                         null, headPos, null, null, null, null, null, null, null,
                         rightArmPos, bodyPos, leftArmPos, reset, null, null, showArms, visibility, size,
-                        rightLegPos, equipment, leftLegPos, null, null, null, disableSlots, gravity, plate,
+                        rightLegPos, equipment, leftLegPos, null, null, toggleVulnerabilty, disableSlots, gravity, plate,
                         null, copy, paste, null, null, null, null, itemFrameVisible, null,
                         slot1, slot2, slot3, slot4, null, null, null, null, help
                 };

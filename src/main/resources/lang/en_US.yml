@@ -58,6 +58,8 @@ pasted:
   msg: ArmorStand state pasted from slot <x>.
 disabledslots:
   msg: Toggled Equipment locks
+toggleinvulnerability:
+  msg: Toggled ArmorStand Vulnerability.
 target:
   msg: ArmorStand target locked.
 notarget:

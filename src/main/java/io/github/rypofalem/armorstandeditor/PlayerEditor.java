@@ -160,6 +160,9 @@ public class PlayerEditor {
             case DISABLESLOTS:
                 toggleDisableSlots(armorStand);
                 break;
+            case INVULNERABLE:
+                toggleInvulnerability(armorStand);
+                break;
             case EQUIPMENT:
                 openEquipment(armorStand);
                 break;
@@ -356,10 +359,18 @@ public class PlayerEditor {
 
     }
 
-    private void toggleGravity(ArmorStand armorStand) { //Fix for Wolfst0rm/ArmorStandEditor-Issues#6: Translation of On/Off Keys are broken
+    private void toggleInvulnerability(ArmorStand armorStand) { //See NewFeature-Request #256 for more info
+        if(!getPlayer().hasPermission("asedit.toggleInvulnerability")) return;
+        armorStand.setInvulnerable(!armorStand.isInvulnerable());
+        sendMessage("toggleinvulnerability", null);
+    }
+
+
+
+    private void toggleGravity(ArmorStand armorStand) {
+        //Fix for Wolfst0rm/ArmorStandEditor-Issues#6: Translation of On/Off Keys are broken
         armorStand.setGravity(!armorStand.hasGravity());
         sendMessage("setgravity", String.valueOf(armorStand.hasGravity()));
-
     }
 
     void togglePlate(ArmorStand armorStand) {
