@@ -147,7 +147,8 @@ public class Menu {
         //Praise end
 
         if (pe.getPlayer().hasPermission("asedit.toggleInvulnerability")) {
-            toggleVulnerabilty = createIcon(new ItemStack(Material.BEDROCK), "vulnerability", "mode vulnerability");
+            toggleVulnerabilty = createIcon(new ItemStack(Material.BEDROCK,  1),
+                    "vulnerability", "mode vulnerability");
         }
 
         size = createIcon(new ItemStack(Material.PUFFERFISH, 1),

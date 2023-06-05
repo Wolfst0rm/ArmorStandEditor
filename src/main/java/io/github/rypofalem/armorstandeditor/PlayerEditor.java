@@ -160,7 +160,7 @@ public class PlayerEditor {
             case DISABLESLOTS:
                 toggleDisableSlots(armorStand);
                 break;
-            case INVULNERABLE:
+            case VULNERABILITY:
                 toggleInvulnerability(armorStand);
                 break;
             case EQUIPMENT:
@@ -170,8 +170,6 @@ public class PlayerEditor {
                 resetPosition(armorStand);
                 break;
             case NONE:
-                sendMessage("nomode", null);
-                break;
             default:
                 sendMessage("nomode", null);
                 break;
@@ -189,8 +187,6 @@ public class PlayerEditor {
                 itemFrame.setVisible(true);
                 break;
             case NONE:
-                sendMessage("nomodeif", null);
-                break;
             default:
                 sendMessage("nomodeif", null);
                 break;
@@ -362,7 +358,7 @@ public class PlayerEditor {
     private void toggleInvulnerability(ArmorStand armorStand) { //See NewFeature-Request #256 for more info
         if(!getPlayer().hasPermission("asedit.toggleInvulnerability")) return;
         armorStand.setInvulnerable(!armorStand.isInvulnerable());
-        sendMessage("toggleinvulnerability", null);
+        sendMessage("toggleinvulnerability", String.valueOf(armorStand.isInvulnerable()));
     }
 
 

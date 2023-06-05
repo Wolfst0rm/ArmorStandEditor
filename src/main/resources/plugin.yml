@@ -130,6 +130,7 @@ permissions:
       asedit.update: false
       asedit.give: false
       asedit.reload: false
+      asedit.toggleInvulnerability: true
 
   asedit.permpack.admin:
     default: op
@@ -145,3 +146,4 @@ permissions:
       asedit.update: true
       asedit.ignorePermissions.*: true
       asedit.reload: true
+      asedit.toggleInvulnerability: true
