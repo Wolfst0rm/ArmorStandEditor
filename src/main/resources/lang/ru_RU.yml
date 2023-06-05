@@ -111,6 +111,12 @@ noreloadcom:
   msg: У вас нет прав, чтобы использовать эту команду
 nogive:
   msg: You have no permission to use the give command!
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 
 #menutitle
 mainmenutitle:

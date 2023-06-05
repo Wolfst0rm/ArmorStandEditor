@@ -90,6 +90,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     boolean invisibleItemFrames = true;
     boolean armorStandVisibility = true;
 
+    //Misc Options
+    boolean allowedToRetrievePlayerHead = false;
+
     //Glow Entity Colors
     public Scoreboard scoreboard;
     public Team team;
@@ -235,6 +238,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
         opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
         updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+
+        //Ability to get Player Heads via a command
+        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if(!Scheduler.isFolia() && runTheUpdateChecker) {
@@ -396,6 +402,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     public Integer getCustomModelDataInt() { return this.getConfig().getInt("customModelDataInt"); }
 
+    //New in 1.20-43: Allow the ability to get a player head from a command - ENABLED VIA CONFIG ONLY!
+    public boolean getAllowedToRetrievePlayerHead() { return this.getConfig().getBoolean("allowedToRetrievePlayerHead"); }
+
     public boolean isEditTool(ItemStack itemStk){
         if (itemStk == null) { return false; }
         if (editTool != itemStk.getType()) { return false; }
@@ -525,6 +534,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //Add ability to enable ot Disable the running of the Updater
         runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
+
+        //Ability to get Player Heads via a command
+        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
         opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);

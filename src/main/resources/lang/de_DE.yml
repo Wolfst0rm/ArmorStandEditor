@@ -70,6 +70,12 @@ doubletarget:
   msg: Bitte schaue entweder auf einen Rüstungsständer oder einem ItemFrame, nicht beides!
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 help:
   msg: "1. Halte das Bearbeitungswerkzeug(<x>) in deiner Haupthand.
 

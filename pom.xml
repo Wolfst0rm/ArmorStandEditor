@@ -78,6 +78,11 @@
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
         </repository>
+        <!-- Mojang/AuthLib -->
+        <repository>
+            <id>minecraft-repo</id>
+            <url>https://libraries.minecraft.net/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -177,6 +182,13 @@
             <version>5.1.1.1</version>
             <scope>system</scope>
             <systemPath>${pom.basedir}/src/main/resources/Residence5.1.1.1.jar</systemPath>
+        </dependency>
+        <!-- Mojang/AuthLib -->
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>authlib</artifactId>
+            <version>3.3.39</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <!--Java 8-->

@@ -66,6 +66,10 @@ give:
   msg: Player given Item with CustomModelData
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
 
 #warn
 cantedit:
@@ -82,6 +86,8 @@ nomodecom:
   msg: Trebuie sa specifici un mod!
 nogive:
   msg: You have no permission to use the give command!
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 
 #menutitle
 mainmenutitle:

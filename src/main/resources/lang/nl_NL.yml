@@ -94,7 +94,10 @@ helpurl:
   msg: "Meer info: https://github.com/RypoFalem/ArmorStandEditor/wiki"
 helpdiscord:
   msg: "or kom naar onze Discord: https://discord.gg/3BbJKWpTCj"
-
+playerhead:
+  msg: Player Head opgehaald.
+playerheaderror:
+  msg: Probleem om Player Head af te halen.
 #warn
 cantedit:
   msg: Sorry, je kunt hier geen armorstands aanpassen!
@@ -110,6 +113,8 @@ nomodecom:
   msg: Je moet een modus opgeven!
 nogive:
   msg: Sorry, je hebt geen tostemming om dit command te gebruiken!
+noplayerhead:
+  msg: Schakel de mogelijkheid in om een player head op te halen in het configuratiebestand.
 
 #menutitle
 mainmenutitle:

@@ -95,6 +95,10 @@ helpdiscord:
   msg: "ou rejoignez notre Discord: https://discord.gg/3BbJKWpTCj"
 give:
   msg: CustomModelData donné au joueur.
+playerhead:
+  msg: Player Head retrieved.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 
 #warn
 cantedit:
@@ -111,7 +115,8 @@ nomodecom:
   msg: Vous devez préciser un mode !
 nogive:
   msg: Vous n'avez pas le droit d'utiliser cette commande!
-
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
 
 #menutitle
 mainmenutitle:

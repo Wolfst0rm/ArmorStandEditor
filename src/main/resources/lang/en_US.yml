@@ -79,6 +79,12 @@ nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
 reloaded:
   msg: Configuration File has been reloaded.
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 help:
   msg: "1. Hold the editing tool(<x>) in your main hand
 

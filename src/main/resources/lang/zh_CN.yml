@@ -96,6 +96,12 @@ helpdiscord:
   msg: "或加入我们的讨论区: https://discord.gg/3BbJKWpTCj"
 give:
   msg: Player given Item with CustomModelData
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 
 #警告
 cantedit:

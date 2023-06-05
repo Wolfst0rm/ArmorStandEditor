@@ -19,14 +19,18 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
-
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
-
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,10 +40,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class CommandEx implements CommandExecutor, TabCompleter {
     ArmorStandEditorPlugin plugin;
@@ -52,6 +62,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     final String UPDATE = ChatColor.YELLOW + "/ase update";
     final String RELOAD = ChatColor.YELLOW + "/ase reload";
     final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
+    final String GIVEPLAYERHEAD = ChatColor.YELLOW + "/ase playerhead <name>";
 
     public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
         this.plugin = armorStandEditorPlugin;
@@ -76,6 +87,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             player.sendMessage(HELP);
             player.sendMessage(RELOAD);
             player.sendMessage(GIVECUSTOMMODEL);
+            player.sendMessage(GIVEPLAYERHEAD);
             return true;
         }
         switch (args[0].toLowerCase()) {
@@ -95,6 +107,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 break;
             case "give": commandGive(player);
                 break;
+            case "playerhead": commandGivePlayerHead(player, args);
+                break;
             case "reload": commandReload(player);
                 break;
             default:
@@ -107,6 +121,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 sender.sendMessage(HELP);
                 sender.sendMessage(RELOAD);
                 sender.sendMessage(GIVECUSTOMMODEL);
+                sender.sendMessage(GIVEPLAYERHEAD);
         }
         return true;
     }
@@ -128,6 +143,82 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             player.sendMessage(plugin.getLang().getMessage("nogive", "warn"));
         }
     }
+
+    private void commandGivePlayerHead(Player player,String[] args) {
+        if(plugin.getAllowedToRetrievePlayerHead()){
+
+            if(args.length == 2){
+
+                //Get the Player head Texture
+                String skinTexture = getPlayerHeadTexture(args[1]);
+
+                if(skinTexture == null){
+                    player.sendMessage(plugin.getLang().getMessage("playerheaderror", "warn"));
+                }
+
+                //Create the ItemStack for the PlayerHead
+                ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
+
+                // Get the meta therefore
+                SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
+                assert playerHeadMeta != null;
+
+                //Generate a Random UUID
+                GameProfile gameProfile = new GameProfile(UUID.randomUUID(), null);
+                gameProfile.getProperties().put("textures", new Property("textures", skinTexture));
+
+                try{
+                    Field profileField = playerHeadMeta.getClass().getDeclaredField("profile");
+                    profileField.setAccessible(true);
+                    profileField.set(playerHeadMeta, gameProfile);
+                } catch (NoSuchFieldException | IllegalAccessException e ){
+                    e.printStackTrace();
+                }
+
+                //Set the Display Name to be that of the Player Given
+                playerHeadMeta.setDisplayName(args[1]);
+
+                //Set the Item Meta
+                playerHead.setItemMeta(playerHeadMeta);
+
+                //Add the head to the Players Inventory + display PlayerHead Success Message
+                player.getInventory().addItem(playerHead);
+                player.sendMessage(plugin.getLang().getMessage("playerhead","info"));
+
+                //Let Admins know this command has been ran
+                for(Player onlineList : Bukkit.getOnlinePlayers()){
+                    if(onlineList.hasPermission("asedit.permpack.admin")){
+                        onlineList.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] " + player.getName() + "has just used the /ase playerhead command to get the head for" + args[1]);
+                    }
+                }
+            }
+        } else{
+            player.sendMessage(plugin.getLang().getMessage("noplayerhead", "warn"));
+        }
+    }
+
+    private String getPlayerHeadTexture(String playerName) {
+        try{
+            //Get the UUID of the Player in Question
+            URL uuidURL = new URL("https://api.mojang.com/users/profiles/minecraft/" + playerName);
+            InputStreamReader uuidURLReader = new InputStreamReader(uuidURL.openStream());
+            String uuid = new JsonParser().parse(uuidURLReader).getAsJsonObject().get("id").getAsString();
+
+            //Get the Skin from that UUID
+            URL skinURL = new URL(" https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
+            InputStreamReader skinURLReader = new InputStreamReader(skinURL.openStream());
+            JsonObject skinTextureProperty = new JsonParser().parse(skinURLReader).getAsJsonObject().get("properties").getAsJsonArray().get(0).getAsJsonObject();
+            String skinTexture = skinTextureProperty.get("value").getAsString();
+
+            return skinTexture;
+
+        } catch (IOException | IllegalStateException e) {
+            //TODO: Implement an error message here?
+            return null;
+        }
+    }
+
+
     private void commandSlot(Player player, String[] args) {
 
         if (args.length <= 1) {

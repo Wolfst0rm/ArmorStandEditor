@@ -113,7 +113,12 @@ noreloadcom:
   msg: You don't have permission to use the reload command!
 nogive:
   msg: You do not have permission to use the give command.
-
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 #menutitle
 mainmenutitle:
   msg: Editor do suporte de armaduras
