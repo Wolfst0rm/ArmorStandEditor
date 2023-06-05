@@ -71,6 +71,10 @@ notarget:
   msg: <x> target unlocked.
   armorstand: ArmorStand
   itemframe: ItemFrame
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 
 #menutitle
 mainmenutitle:

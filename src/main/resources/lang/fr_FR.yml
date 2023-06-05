@@ -23,6 +23,7 @@ setmode:
   invisible: Modifier la visibilité
   size: Modifier la taille
   disableslots: Activation ou désactivation des slots
+  vulnerability: Toggle Vulnerability
   gravity: Modifier la gravité
   baseplate: Affichage ou retrait de la plaque de base
   placement: Position
@@ -62,6 +63,10 @@ notarget:
   itemframe: Itemframe
 frametarget:
   msg: Itemframe sélectionné.
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 doubletarget:
   msg: Regardez un armor stand ou un item frame, pas les deux!
 nodoubletarget:
@@ -179,6 +184,10 @@ disableslots:
   msg: Désactive les slots
   description: 
     msg: Verrouille ou déverrouille les emplacements de l'inventaire
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 gravity: 
   msg: Gravité
   description: 

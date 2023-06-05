@@ -20,6 +20,7 @@ setmode:
   invisible: Toggle Visibility
   size: Alterar tamanho
   disableslots: Alternar Desativar Slots
+  vulnerability: Toggle Vulnerability
   gravity: Toggle Gravity
   baseplate: Alternar a placa da base
   placement: Placement
@@ -61,6 +62,10 @@ notarget:
   itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 give:
   msg: Player given Item with CustomModelData
 doubletarget:
@@ -220,6 +225,10 @@ itemframevisible:
   msg: Itemframe Visibility
   description:
     msg: Toggles an itemframes visibility
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 
 #icons (equipment menu)
 disabled:

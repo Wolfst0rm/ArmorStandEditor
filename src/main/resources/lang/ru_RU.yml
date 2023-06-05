@@ -20,6 +20,7 @@ setmode:
   invisible: переключения видимости
   size: переключения размера
   disableslots: переключения блокировки снаряжения
+  vulnerability: Toggle Vulnerability
   gravity: переключения гравитации
   baseplate: переключения плиты
   placement: изменения расположения
@@ -57,6 +58,10 @@ target:
   msg: Цель стойки заблокирована
 notarget:
   msg: Цель стойки разблокирована
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 frametarget:
   msg: Цель рамки заблокирована
 doubletarget:
@@ -218,6 +223,11 @@ itemframevisible:
   msg: Видимость рамки
   description:
     msg: Включить или выключить видимость рамки
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
+
 #icons (equipment menu)
 disabled:
   msg: Выключен

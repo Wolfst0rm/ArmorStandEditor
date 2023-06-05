@@ -23,6 +23,7 @@ setmode:
   invisible: 显隐切换
   size: 大小切换
   disableslots: 物品栏切换
+  vulnerability: Toggle Vulnerability.
   gravity: 重力切换
   baseplate: 底座切换
   placement: 位置
@@ -67,6 +68,10 @@ reloaded:
   msg: 配置文件已重新加载。
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 help:
   msg: "1. 手持编辑工具(<x>)
 

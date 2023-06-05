@@ -23,6 +23,7 @@ setmode:
   invisible: Toggle Zichtbaarheid
   size: Toggle Grootte
   disableslots: Toggle Slots Uitschakelen
+  vulnerability: Toggle Kwetsbaarheid.
   gravity: Toggle Zwaartekracht
   baseplate: Toggle Bodemplaat
   placement: Plaatsing
@@ -59,6 +60,10 @@ notarget:
   itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state gezet op <x>.
+  true: onkwetsbaar
+  false: kwetsbaar
 doubletarget:
   msg: Kijk aub naar een ArmorStand of een ItemFrame, niet allebei!
 nodoubletarget:
@@ -209,7 +214,10 @@ copyslot:
   msg: Kopieer Slot <x>
   description:
     msg: Selecteer een slot om instellingen op te slaan
-
+vulnerability:
+  msg: Kwetsbaarheid
+  description:
+    msg: In en uit schakelen van Kwetsbaarheid.
 #icons (equipment menu)
 disabled:
   msg: Uitgeschakeld

@@ -21,6 +21,7 @@ setmode:
   invisible: Schimba Vizibilitatea
   size: Schimba Marimea
   disableslots: Schimba Sloturile Dezactivate
+  vulnerability: Toggle Vulnerability
   gravity: Schimba Gravitatia
   baseplate: Schimba BasePlate-ul
   placement: Plaseaza
@@ -57,6 +58,10 @@ notarget:
   msg: <x> target unlocked.
   armorstand: ArmorStand
   itemframe: ItemFrame
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 give:
   msg: Player given Item with CustomModelData
 nodoubletarget:
@@ -182,6 +187,10 @@ reset:
   msg: Reseteaza Pozitia
   description:
     msg: Reseteaza pozitia partilor de corp la normal
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 
 #icons (equipment)
 disabled: 

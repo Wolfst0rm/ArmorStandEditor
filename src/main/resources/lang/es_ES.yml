@@ -20,6 +20,7 @@ setmode:
   invisible: Alternar visibilidad
   size: Alternar tamaño
   disableslots: Alternar la deshabilitacion de slots
+  vulnerability: Toggle Vulnerability
   gravity: Alternar gravedad
   baseplate: Toggle BasePlate
   placement: Colocacion
@@ -58,6 +59,10 @@ notarget:
   itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
 nodoubletarget:
@@ -210,6 +215,10 @@ helpgui:
   msg: ayuda
   description:
     msg: haz click aqui para obtener ayuda
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 
 #icons (equipment menu)
 disabled: 

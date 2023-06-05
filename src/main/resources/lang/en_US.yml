@@ -25,6 +25,7 @@ setmode:
   invisible: Toggle Visibility
   size: Toggle Size
   disableslots: Toggle Disable Slots
+  vulnerability: Toggle Vulnerability
   gravity: Toggle Gravity
   baseplate: Toggle BasePlate
   placement: Placement
@@ -59,7 +60,9 @@ pasted:
 disabledslots:
   msg: Toggled Equipment locks
 toggleinvulnerability:
-  msg: Toggled ArmorStand Vulnerability.
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 target:
   msg: ArmorStand target locked.
 notarget:
@@ -188,6 +191,10 @@ disableslots:
   msg: Disable Slots
   description:
     msg: Enable and disable equipment lock
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an ArmorStand's vulnerability state
 gravity:
   msg: Gravity
   description:

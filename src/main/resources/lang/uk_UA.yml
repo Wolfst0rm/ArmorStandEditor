@@ -19,6 +19,7 @@ setmode:
   invisible: Перемкнути видимість
   size: Перемкнути розмір
   disableslots: Перемкнути вимкнені слоти
+  vulnerability: Toggle Vulnerability
   gravity: Перемкнути гравітацію
   baseplate: Перемкнути плиту
   placement: Розташування
@@ -41,6 +42,10 @@ setgravity:
   msg: Гравітація <x>.
   true: увімкнена
   false: вимкнена
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 nomode:
   msg: Натисни інструментом редагування поза стендом щоб обрати режим!
 nomodeif:
@@ -175,6 +180,10 @@ copyslot:
   msg: Копіюєм в слот <x>
   description:
     msg: Оберіть слот щоб зберегти налаштування
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 
 #icons (equipment)
 disabled:
