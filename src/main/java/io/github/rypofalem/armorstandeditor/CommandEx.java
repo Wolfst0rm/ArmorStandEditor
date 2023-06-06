@@ -19,15 +19,19 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
+
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -46,10 +50,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class CommandEx implements CommandExecutor, TabCompleter {
     ArmorStandEditorPlugin plugin;
@@ -63,6 +64,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     final String RELOAD = ChatColor.YELLOW + "/ase reload";
     final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
     final String GIVEPLAYERHEAD = ChatColor.YELLOW + "/ase playerhead <name>";
+    Gson gson = new Gson();
+
 
     public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
         this.plugin = armorStandEditorPlugin;
@@ -91,27 +94,17 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             return true;
         }
         switch (args[0].toLowerCase()) {
-            case "mode": commandMode(player, args);
-                break;
-            case "axis": commandAxis(player, args);
-                break;
-            case "adj": commandAdj(player, args);
-                break;
-            case "slot": commandSlot(player, args);
-                break;
-            case "help","?": commandHelp(player);
-                break;
-            case "version": commandVersion(player);
-                break;
-            case "update": commandUpdate(player);
-                break;
-            case "give": commandGive(player);
-                break;
-            case "playerhead": commandGivePlayerHead(player, args);
-                break;
-            case "reload": commandReload(player);
-                break;
-            default:
+            case "mode" -> commandMode(player, args);
+            case "axis" -> commandAxis(player, args);
+            case "adj" -> commandAdj(player, args);
+            case "slot" -> commandSlot(player, args);
+            case "help", "?" -> commandHelp(player);
+            case "version" -> commandVersion(player);
+            case "update" -> commandUpdate(player);
+            case "give" -> commandGive(player);
+            case "playerhead" -> commandGivePlayerHead(player, args);
+            case "reload" -> commandReload(player);
+            default -> {
                 sender.sendMessage(LISTMODE);
                 sender.sendMessage(LISTAXIS);
                 sender.sendMessage(LISTSLOT);
@@ -122,6 +115,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 sender.sendMessage(RELOAD);
                 sender.sendMessage(GIVECUSTOMMODEL);
                 sender.sendMessage(GIVEPLAYERHEAD);
+            }
         }
         return true;
     }
@@ -166,13 +160,17 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 //Generate a Random UUID
                 GameProfile gameProfile = new GameProfile(UUID.randomUUID(), null);
                 gameProfile.getProperties().put("textures", new Property("textures", skinTexture));
-
-                try{
-                    Field profileField = playerHeadMeta.getClass().getDeclaredField("profile");
+                Field profileField = null;
+                try {
+                    profileField = playerHeadMeta.getClass().getDeclaredField("profile");
                     profileField.setAccessible(true);
                     profileField.set(playerHeadMeta, gameProfile);
-                } catch (NoSuchFieldException | IllegalAccessException e ){
-                    e.printStackTrace();
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    player.sendMessage(plugin.getLang().getMessage("playerheaderror", "warn"));
+                } finally {
+                    if (profileField != null) {
+                        profileField.setAccessible(false);
+                    }
                 }
 
                 //Set the Display Name to be that of the Player Given
@@ -198,22 +196,23 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private String getPlayerHeadTexture(String playerName) {
-        try{
-            //Get the UUID of the Player in Question
+        try {
+            // Get the UUID of the Player in Question
             URL uuidURL = new URL("https://api.mojang.com/users/profiles/minecraft/" + playerName);
-            InputStreamReader uuidURLReader = new InputStreamReader(uuidURL.openStream());
-            String uuid = new JsonParser().parse(uuidURLReader).getAsJsonObject().get("id").getAsString();
+            try (InputStreamReader uuidURLReader = new InputStreamReader(uuidURL.openStream())) {
+                JsonObject uuidObject = gson.fromJson(uuidURLReader, JsonObject.class);
+                String uuid = uuidObject.get("id").getAsString();
 
-            //Get the Skin from that UUID
-            URL skinURL = new URL(" https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
-            InputStreamReader skinURLReader = new InputStreamReader(skinURL.openStream());
-            JsonObject skinTextureProperty = new JsonParser().parse(skinURLReader).getAsJsonObject().get("properties").getAsJsonArray().get(0).getAsJsonObject();
-            String skinTexture = skinTextureProperty.get("value").getAsString();
 
-            return skinTexture;
-
+                // Get the Skin from that UUID
+                URL skinURL = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
+                try (InputStreamReader skinURLReader = new InputStreamReader(skinURL.openStream())) {
+                    JsonObject skinObject = gson.fromJson(skinURLReader, JsonObject.class);
+                    JsonObject skinTextureProperty = skinObject.get("properties").getAsJsonArray().get(0).getAsJsonObject();
+                    return skinTextureProperty.get("value").getAsString();
+                }
+            }
         } catch (IOException | IllegalStateException e) {
-            //TODO: Implement an error message here?
             return null;
         }
     }
@@ -351,119 +350,107 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private boolean getPermissionBasic(Player player) {
-        return checkPermission(player, "basic", true);
+        return checkPermission(player, "basic", false);
     }
 
     private boolean getPermissionUpdate(Player player){
-        return checkPermission(player, "update", true);
+        return checkPermission(player, "update", false);
     }
 
     private boolean getPermissionGive(Player player){
-        return checkPermission(player, "give", true);
+        return checkPermission(player, "give", false);
     }
 
     private boolean getPermissionReload(Player player) {
-        return checkPermission(player, "reload", true);
+        return checkPermission(player, "reload", false);
     }
+
+    private boolean getPermissionPlayerHead(Player player) {
+        return checkPermission(player, "head", false);
+    }
+
 
     //REFACTOR COMPLETION
     @Override
-    @SuppressWarnings({"deprecated"})
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("ase") || command.getName().equalsIgnoreCase("armorstandeditor") || command.getName().equalsIgnoreCase("asedit")) {
-            List<String> argList = new ArrayList<>();
+        List<String> argList = new ArrayList<>();
 
-            //Needed for Permission Checks
+        if (isCommandValid(command.getName())) {
             Player player = (Player) sender;
 
             if (args.length == 1 && getPermissionBasic(player)) {
-
-                //Basic Permission Check
-                if (getPermissionBasic(player)) {
-                    argList.add("mode");
-                    argList.add("axis");
-                    argList.add("adj");
-                    argList.add("slot");
-                    argList.add("help");
-                    argList.add("?");
-                }
-
-                //Update Permission Check
-                if (getPermissionUpdate(player)) {
-                    argList.add("update");
-                    argList.add("version");
-                }
-
-                //Give Permission Check
-                if (getPermissionGive(player)) {
-                    argList.add("give");
-                }
-
-                //Reload Permission Check
-                if (getPermissionReload(player)){
-                    argList.add("reload");
-                }
-
-                return argList.stream().filter(a -> a.startsWith(args[0])).toList();
+                argList.add("mode");
+                argList.add("axis");
+                argList.add("adj");
+                argList.add("slot");
+                argList.add("help");
+                argList.add("?");
             }
 
-            //Options for Mode
-            if (args.length == 2 && args[0].equalsIgnoreCase("mode")){
-                argList.add("None");
-                argList.add("Invisible");
-                argList.add("ShowArms");
-                argList.add("Gravity");
-                argList.add("BasePlate");
-                argList.add("Size");
-                argList.add("Copy");
-                argList.add("Paste");
-                argList.add("Head");
-                argList.add("Body");
-                argList.add("LeftArm");
-                argList.add("RightArm");
-                argList.add("LeftLeg");
-                argList.add("RightLeg");
-                argList.add("Placement");
-                argList.add("DisableSlots");
-                argList.add("Rotate");
-                argList.add("Equipment");
-                argList.add("Reset");
-                argList.add("ItemFrame");
-                argList.add("ItemFrameGlow");
-
-                return argList; //New List
+            if (args.length == 1 && getPermissionGive(player)){
+                argList.add("give");
             }
 
-            if(args.length == 2 && args[0].equalsIgnoreCase("axis")){
-                argList.add("X");
-                argList.add("Y");
-                argList.add("Z");
-                return argList; //New List
+            if (args.length == 1 && getPermissionUpdate(player)){
+                argList.add("update");
             }
 
-            if(args.length == 2 && args[0].equalsIgnoreCase("slot")) {
-                argList.add("0");
-                argList.add("1");
-                argList.add("2");
-                argList.add("3");
-                argList.add("4");
-                argList.add("5");
-                argList.add("6");
-                argList.add("7");
-                argList.add("8");
-                argList.add("9");
-                return argList; //New List
+            if (args.length == 1 && getPermissionPlayerHead(player)){
+                argList.add("playerhead");
             }
 
-            if(args.length == 2 && args[0].equalsIgnoreCase("adj")) {
-                argList.add("Coarse");
-                argList.add("Fine");
-                return argList; //New List
+            if (args.length == 1 && getPermissionReload(player)){
+                argList.add("reload");
             }
 
-            return argList; //Empty List
+            if (args.length == 2 && args[0].equalsIgnoreCase("mode")) {
+                argList.addAll(getModeOptions());
+            }
+
+            if (args.length == 2 && args[0].equalsIgnoreCase("axis")) {
+                argList.addAll(getAxisOptions());
+            }
+
+            if (args.length == 2 && args[0].equalsIgnoreCase("slot")) {
+                argList.addAll(getSlotOptions());
+            }
+
+            if (args.length == 2 && args[0].equalsIgnoreCase("adj")) {
+                argList.addAll(getAdjOptions());
+            }
+
+            return argList.stream().filter(a -> a.startsWith(args[0])).toList();
         }
 
-        return null; //Default
+        return Collections.emptyList();
     }
+
+    private boolean isCommandValid(String commandName) {
+        return commandName.equalsIgnoreCase("ase") ||
+                commandName.equalsIgnoreCase("armorstandeditor") ||
+                commandName.equalsIgnoreCase("asedit");
+    }
+
+    private List<String> getModeOptions() {
+        return List.of(
+                "None", "Invisible", "ShowArms", "Gravity", "BasePlate",
+                "Size", "Copy", "Paste", "Head", "Body", "LeftArm",
+                "RightArm", "LeftLeg", "RightLeg", "Placement",
+                "DisableSlots", "Rotate", "Equipment", "Reset",
+                "ItemFrame", "ItemFrameGlow"
+        );
+    }
+
+    private List<String> getAxisOptions() {
+        return List.of("X", "Y", "Z");
+    }
+
+    private List<String> getSlotOptions() {
+        return List.of("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+    }
+
+    private List<String> getAdjOptions() {
+        return List.of("Coarse", "Fine");
+    }
+
 }
