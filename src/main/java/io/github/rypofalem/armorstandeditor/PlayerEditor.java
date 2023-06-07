@@ -18,6 +18,7 @@
  */
 package io.github.rypofalem.armorstandeditor;
 
+import io.github.rypofalem.armorstandeditor.api.*;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -179,6 +180,12 @@ public class PlayerEditor {
 
     public void editItemFrame(ItemFrame itemFrame) {
         if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ItemFrameManipulatedEvent event = new ItemFrameManipulatedEvent(itemFrame, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out
+        if (event.isCancelled()) return; //do nothing if cancelled
+
         switch (eMode) {
             case ITEMFRAME:
                 toggleItemFrameVisible(itemFrame);
@@ -210,6 +217,11 @@ public class PlayerEditor {
 
     public void reverseEditArmorStand(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.basic")) return;
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out //TODO: Folia Refactor
+        if (event.isCancelled()) return; //do nothing if cancelled
 
         armorStand = attemptTarget(armorStand);
         switch (eMode) {
@@ -244,6 +256,12 @@ public class PlayerEditor {
 
     private void move(ArmorStand armorStand) {
         if(!getPlayer().hasPermission("asedit.placement")) return;
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out //TODO: Folia Refactor
+        if (event.isCancelled()) return; //do nothing if cancelled
+
         Location loc = armorStand.getLocation();
         switch (axis) {
             case X:
@@ -277,6 +295,7 @@ public class PlayerEditor {
     }
 
     private void rotate(ArmorStand armorStand) {
+
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 + (float) degreeAngleChange) % 360 - 180);
@@ -284,6 +303,7 @@ public class PlayerEditor {
     }
 
     private void reverseRotate(ArmorStand armorStand) {
+
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 - (float) degreeAngleChange) % 360 - 180);
@@ -460,6 +480,12 @@ public class PlayerEditor {
                     sendMessage("target", null);
                 }
             }
+
+            //API: ArmorStandTargetedEvent
+            ArmorStandTargetedEvent e = new ArmorStandTargetedEvent(targetList.get(targetIndex), getPlayer());
+            Bukkit.getPluginManager().callEvent(e); //TODO: Folia Refactor
+            if (e.isCancelled()) return;
+
             target = targetList.get(targetIndex);
             highlight(target); //NOTE: If Targeted and Locked, it displays the TEAM Color Glow: RED
             //      Otherwise, its unlocked and will display WHITE as its not in a team by default
@@ -493,6 +519,12 @@ public class PlayerEditor {
                     frameTargetIndex = 0;
                     sendMessage("frametarget", null);
                 }
+
+                //API: ItemFrameTargetedEvent
+                ItemFrameTargetedEvent e = new ItemFrameTargetedEvent(frameTargetList.get(frameTargetIndex), getPlayer());
+                Bukkit.getPluginManager().callEvent(e); //TODO: Folia Refactor
+                if (e.isCancelled()) return;
+
                 frameTarget = frameTargetList.get(frameTargetIndex);
             }
         }
@@ -565,6 +597,13 @@ public class PlayerEditor {
         @Override
         public void run() {
             if (isMenuCancelled()) return;
+
+
+            //API: PlayerOpenMenuEvent
+            PlayerOpenMenuEvent event = new PlayerOpenMenuEvent(getPlayer());
+            Bukkit.getPluginManager().callEvent(event); //TODO: Folia Refactor
+            if (event.isCancelled()) return;
+
             chestMenu.openMenu();
         }
     }

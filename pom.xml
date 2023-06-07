@@ -190,6 +190,13 @@
             <version>3.3.39</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Lombok Support -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.28</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <!--Java 8-->
     <build>

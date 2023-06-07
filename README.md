@@ -85,3 +85,21 @@ If there are issues with the plugin on the latest release, you can report them [
 If there are new feature requests, you can ask them to be implemented [here](https://github.com/Wolfst0rm/ArmorStandEditor/issues/new?assignees=&labels=&template=feature-request.yml).
 
 **NOTE:** Bugs are also first tested to ensure that they can be reproduced according to the reported steps. If they can not, we will ask for more info.
+
+## Adding ArmorStandEditor as a Dependency
+ArmorStandEditor has an API and is supported through [Jitpack](https://jitpack.io/#Wolfieheart/ArmorStandEditor). The Source Code for that API can be found [here](https://github.com/Wolfieheart/ArmorStandEditor/src/main/java/io/github/rypofalem/armorstandeditor/api).
+
+For Maven Users you need to add the following to your pom.xml file:
+```XML
+     <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+     </repository>
+```
+```XML
+    <dependency>
+      <groupId>com.github.Wolfieheart</groupId>
+      <artifactId>ArmorStandEditor</artifactId>
+      <version>latest</version>
+    </dependency>
+```
