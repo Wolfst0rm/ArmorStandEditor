@@ -56,7 +56,6 @@ public class Menu {
         ItemStack coarseAdj;
         ItemStack fineAdj;
         ItemStack rotate;
-        ItemStack place = null;
         ItemStack headPos;
         ItemStack rightArmPos;
         ItemStack bodyPos;
@@ -66,10 +65,7 @@ public class Menu {
         ItemStack visibility;
         ItemStack size;
         ItemStack rightLegPos;
-        ItemStack equipment = null;
         ItemStack leftLegPos;
-        ItemStack disableSlots = null;
-        ItemStack gravity = null;
         ItemStack plate;
         ItemStack copy;
         ItemStack paste;
@@ -79,6 +75,13 @@ public class Menu {
         ItemStack slot4;
         ItemStack help;
         ItemStack itemFrameVisible;
+
+        //Variables that need to be Initialized
+        ItemStack place = null;
+        ItemStack equipment = null;
+        ItemStack disableSlots = null;
+        ItemStack gravity = null;
+        ItemStack playerHead = null;
         ItemStack toggleVulnerabilty = null;
 
         xAxis = createIcon(new ItemStack(Material.RED_WOOL, 1),
@@ -196,12 +199,17 @@ public class Menu {
         slot4 = createIcon(new ItemStack(Material.PEONY, 4),
                 "copyslot", "slot 4", "4");
 
+        if(pe.getPlayer().hasPermission("asedit.head") && pe.plugin.getAllowedToRetrievePlayerHead()){
+            playerHead = createIcon(new ItemStack(Material.PLAYER_HEAD, 1),
+                    "playerheadmenu", "infoplayerhead");
+        }
+
         help = createIcon(new ItemStack(Material.NETHER_STAR), "helpgui", "help");
 
         ItemStack[] items =
                 {
                         xAxis, yAxis, zAxis, null, coarseAdj, fineAdj, null, rotate, place,
-                        null, headPos, null, null, null, null, null, null, null,
+                        null, headPos, playerHead, null, null, null, null, null, null,
                         rightArmPos, bodyPos, leftArmPos, reset, null, null, showArms, visibility, size,
                         rightLegPos, equipment, leftLegPos, null, null, toggleVulnerabilty, disableSlots, gravity, plate,
                         null, copy, paste, null, null, null, null, itemFrameVisible, null,
