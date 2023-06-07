@@ -66,7 +66,6 @@ armorStandVisibility: true
 #asedit.itemframe.invisible
 invisibleItemFrames: true
 
-
 #------ GUI Options
 
 #If true, the GUI will only open if the player is sneaking
@@ -82,5 +81,9 @@ sendMessagesToActionBar: true
 glowingItemFrame: true
 
 #(Optional) Allow Players to get Player Heads from a Command. NOTE: If this is False, this will not work.
-#Each time the command is used, the admins will be notified that this has been ran
+#You will also need asedit.head to be set TRUE as well in your Permissions Manager / File
 allowedToRetrievePlayerHead: false
+
+#Each time the command is used, the admins will be notified that this has been ran but only
+#if this setting is made true
+adminOnlyNotifications: false

@@ -161,6 +161,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 GameProfile gameProfile = new GameProfile(UUID.randomUUID(), null);
                 gameProfile.getProperties().put("textures", new Property("textures", skinTexture));
                 Field profileField = null;
+
                 try {
                     profileField = playerHeadMeta.getClass().getDeclaredField("profile");
                     profileField.setAccessible(true);
@@ -185,8 +186,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
                 //Let Admins know this command has been ran
                 for(Player onlineList : Bukkit.getOnlinePlayers()){
-                    if(onlineList.hasPermission("asedit.permpack.admin")){
-                        onlineList.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] " + player.getName() + "has just used the /ase playerhead command to get the head for" + args[1]);
+                    if(onlineList.hasPermission("asedit.permpack.admin") && plugin.getAdminOnlyNotifications()){
+                        onlineList.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] " + player.getName() + "has just used the /ase playerhead command to get the head for " + args[1]);
                     }
                 }
             }

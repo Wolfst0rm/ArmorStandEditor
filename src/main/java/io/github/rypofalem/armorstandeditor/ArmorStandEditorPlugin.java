@@ -92,6 +92,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     //Misc Options
     boolean allowedToRetrievePlayerHead = false;
+    boolean adminOnlyNotifications = false;
 
     //Glow Entity Colors
     public Scoreboard scoreboard;
@@ -242,6 +243,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Ability to get Player Heads via a command
         allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
 
+        adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
+
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if(!Scheduler.isFolia() && runTheUpdateChecker) {
 
@@ -374,6 +377,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
     }
 
+
+
     public String getArmorStandEditorVersion(){ return getConfig().getString("version"); }
 
     public boolean getArmorStandVisibility(){
@@ -404,6 +409,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     //New in 1.20-43: Allow the ability to get a player head from a command - ENABLED VIA CONFIG ONLY!
     public boolean getAllowedToRetrievePlayerHead() { return this.getConfig().getBoolean("allowedToRetrievePlayerHead"); }
+
+    public boolean getAdminOnlyNotifications() { return this.getConfig().getBoolean("adminOnlyNotifications"); }
 
     public boolean isEditTool(ItemStack itemStk){
         if (itemStk == null) { return false; }
@@ -537,6 +544,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //Ability to get Player Heads via a command
         allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
+        adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
         opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
@@ -552,7 +560,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             }
 
         }
-
     }
 
     public static ArmorStandEditorPlugin instance(){

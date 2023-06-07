@@ -60,7 +60,10 @@ permissions:
     default: false
   asedit.toggleInvulnerability:
     description: Allows players to toggle the vulnerability state of an ArmorStand.
-    default: true
+    default: false
+  asedit.head:
+    description: Allows players to trigger a command to retrieve a player head
+    default: false
 
 
   asedit.ignoreProtection.towny:
@@ -131,6 +134,7 @@ permissions:
       asedit.give: false
       asedit.reload: false
       asedit.toggleInvulnerability: true
+      asedit.head: false
 
   asedit.permpack.admin:
     default: op
@@ -147,3 +151,4 @@ permissions:
       asedit.ignorePermissions.*: true
       asedit.reload: true
       asedit.toggleInvulnerability: true
+      asedit.head: true
