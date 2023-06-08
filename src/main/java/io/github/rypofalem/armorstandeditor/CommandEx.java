@@ -358,18 +358,9 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         return checkPermission(player, "update", false);
     }
 
-    private boolean getPermissionGive(Player player){
-        return checkPermission(player, "give", false);
-    }
-
     private boolean getPermissionReload(Player player) {
         return checkPermission(player, "reload", false);
     }
-
-    private boolean getPermissionPlayerHead(Player player) {
-        return checkPermission(player, "head", false);
-    }
-
 
     //REFACTOR COMPLETION
     @Override
@@ -386,21 +377,9 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 argList.add("slot");
                 argList.add("help");
                 argList.add("?");
-            }
-
-            if (args.length == 1 && getPermissionGive(player)){
                 argList.add("give");
-            }
-
-            if (args.length == 1 && getPermissionUpdate(player)){
                 argList.add("update");
-            }
-
-            if (args.length == 1 && getPermissionPlayerHead(player)){
                 argList.add("playerhead");
-            }
-
-            if (args.length == 1 && getPermissionReload(player)){
                 argList.add("reload");
             }
 
