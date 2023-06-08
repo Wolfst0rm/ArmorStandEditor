@@ -11,7 +11,7 @@
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven-release-plugin.version>3.0.0</maven-release-plugin.version>
+        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
         <sonar.organization>wolfieheart</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
@@ -85,6 +85,18 @@
         </repository>
     </repositories>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.intellectualsites.bom</groupId>
+                <artifactId>bom-1.18.x</artifactId>
+                <version>1.28</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!--Spigot + Folia API-->
         <dependency>
@@ -103,29 +115,29 @@
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.7</version>
+            <version>7.0.8</version>
             <scope>provided</scope>
         </dependency>
         <!--- PlotSquared -->
-            <dependency>
-                <groupId>com.plotsquared</groupId>
-                <artifactId>PlotSquared-Core</artifactId>
-                <version>6.11.1</version>
-                <scope>provided</scope>
-            </dependency>
+        <dependency>
+            <groupId>com.plotsquared</groupId>
+            <artifactId>PlotSquared-Core</artifactId>
+            <version>6.11.1</version>
+            <scope>provided</scope>
+        </dependency>
 
-            <dependency>
-                <groupId>com.plotsquared</groupId>
-                <artifactId>PlotSquared-Bukkit</artifactId>
-                <version>6.11.1</version>
-                <scope>provided</scope>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>PlotSquared-Core</artifactId>
-                        <groupId>*</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+        <dependency>
+            <groupId>com.plotsquared</groupId>
+            <artifactId>PlotSquared-Bukkit</artifactId>
+            <version>6.11.1</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>PlotSquared-Core</artifactId>
+                    <groupId>*</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!--- GriefPrevention -->
         <dependency>
             <groupId>com.github.TechFortress</groupId>
@@ -137,7 +149,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.99.0.9</version>
+            <version>0.99.1.1</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
@@ -165,7 +177,7 @@
         <dependency>
             <groupId>com.github.angeschossen</groupId>
             <artifactId>LandsAPI</artifactId>
-            <version>6.28.11</version>
+            <version>6.29.12</version>
             <scope>provided</scope>
         </dependency>
         <!-- Bentobox -->
