@@ -370,7 +370,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         if (isCommandValid(command.getName())) {
             Player player = (Player) sender;
 
-            if (args.length == 1 && getPermissionBasic(player)) {
+            if (args.length == 1) {
                 argList.add("mode");
                 argList.add("axis");
                 argList.add("adj");
