@@ -152,3 +152,4 @@ permissions:
       asedit.reload: true
       asedit.toggleInvulnerability: true
       asedit.head: true
+      asedit.give: true
