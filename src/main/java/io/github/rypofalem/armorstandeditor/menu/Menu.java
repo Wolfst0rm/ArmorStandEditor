@@ -209,7 +209,7 @@ public class Menu {
         if(pe.getPlayer().hasPermission("asedit.head") && pe.plugin.getAllowedToRetrievePlayerHead()){
             playerHead = createIcon(new ItemStack(Material.PLAYER_HEAD, 1),
                     "playerheadmenu",
-                    "playerheadhelp");
+                    "playerhead");
         }
 
         help = createIcon(new ItemStack(Material.NETHER_STAR), "helpgui", "help");

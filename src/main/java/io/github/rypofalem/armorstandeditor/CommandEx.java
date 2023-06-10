@@ -139,7 +139,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandGivePlayerHead(Player player,String[] args) {
-        if(plugin.getAllowedToRetrievePlayerHead()){
+          if(plugin.getAllowedToRetrievePlayerHead() && checkPermission(player, "head", true)){
 
             if(args.length == 2){
 
