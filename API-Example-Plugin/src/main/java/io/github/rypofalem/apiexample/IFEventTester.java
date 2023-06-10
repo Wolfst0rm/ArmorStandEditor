@@ -19,15 +19,11 @@
 
 package main.java.io.github.rypofalem.apiexample;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
-public class ArmorStandEditorAPITest extends JavaPlugin {
+public class IFEventTester implements Listener {
+	Player player;
 
-	@Override
-	public void onEnable(){
-		this.getLogger().info("[ArmorStandEditor] API Testing Plugin v1.x");
-		this.getServer().getPluginManager().registerEvents(new ASEventTester(), this);
-		this.getServer().getPluginManager().registerEvents(new IFEventTester(), this);
-	}
 
 }

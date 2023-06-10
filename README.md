@@ -26,26 +26,18 @@ Downloads for Version 1.17 and higher can be obtained from the [download page](h
 For versions older than 1.17, then please use [the original versions download page](https://www.spigotmc.org/resources/armor-stand-editor-dead.7688/).
 
 The Latest Downloads Shortcut Links:
-* [ArmorStandEditor-Last (Unstable)](https://github.com/Wolfst0rm/ArmorStandEditor/actions) 
+* [ArmorStandEditor-Last (Unstable)](https://github.com/Wolfst0rm/ArmorStandEditor/actions)
   - **Use these at your own risk. Limited Support is provided for testing purposes**
-* 1.2x - Not yet available
-   * [Spigot Redirect to the latest release](https://www.spigotmc.org/resources/armorstandeditor-reborn.94503/) 
-   * [Modrinth Redirect to the latest Release](https://modrinth.com/plugin/armorstandeditor-reborn)
-* 1.20 - Not available yet, currently in progress
-   * [Spigot/Github](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
-   * [Modrinth](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
-* 1.19 to 1.19.4 
-   * [Spigot/Github](https://github.com/Wolfieheart/ArmorStandEditor/releases/tag/1.19.4-41)  
-   * [Modrinth](https://modrinth.com/plugin/armorstandeditor-reborn/version/1.19.4-41)
-* 1.18 to 1.18.2
-   * [Spigot/Github](https://github.com/Wolfieheart/ArmorStandEditor/releases/tag/1.18.2-34.2)
-   * [Modrinth](https://modrinth.com/plugin/armorstandeditor-reborn/version/1.18.2-34.2)
-* 1.17 to 1.17.1
-    * [Spigot/Github](https://github.com/Wolfst0rm/ArmorStandEditor/releases/tag/1.17.1-30)
-    * [Modrinth](https://modrinth.com/plugin/armorstandeditor-reborn/version/1.17-30)
-* 1.16 to 1.16.5
-    * [Spigot/Github](https://www.spigotmc.org/resources/armor-stand-editor-dead.7688/download?version=342891)
-    * [Modrinth](https://modrinth.com/plugin/armorstandeditor-reborn/version/1.16-25)
+* 1.20 - Not available yet, currently in progress.
+  * [Spigot/Github](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
+  * [Hangar](https://hangar.papermc.io/Wolfieheart/ArmorStandEditor-Reborn)
+  * [Modrinth](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
+* 1.19 to 1.19.4
+  * [Spigot/Github](https://github.com/Wolfieheart/ArmorStandEditor/releases/tag/1.19.4-41)
+  * [Modrinth](https://modrinth.com/plugin/armorstandeditor-reborn/version/1.19.4-41)
+* [1.18 to 1.18.2](https://github.com/Wolfieheart/ArmorStandEditor/releases/tag/1.18.2-34.2)
+* [1.17 to 1.17.1](https://github.com/Wolfieheart/ArmorStandEditor/releases/tag/1.17.1-30)
+* [1.16 to 1.16.5](https://www.spigotmc.org/resources/armor-stand-editor-dead.7688/download?version=342891)
 * [1.14 to 1.14.4](https://www.spigotmc.org/resources/armor-stand-editor-dead.7688/download?version=299267)
 * [1.13 to 1.13.2](https://www.spigotmc.org/resources/armor-stand-editor-dead.7688/download?version=235185)
 * [1.11 to 1.11.2](https://www.spigotmc.org/resources/armor-stand-editor-dead.7688/download?version=152723)
@@ -87,9 +79,10 @@ If there are new feature requests, you can ask them to be implemented [here](htt
 **NOTE:** Bugs are also first tested to ensure that they can be reproduced according to the reported steps. If they can not, we will ask for more info.
 
 ## Adding ArmorStandEditor as a Dependency
-ArmorStandEditor has an API and is supported through [Jitpack](https://jitpack.io/#Wolfieheart/ArmorStandEditor). The Source Code for that API can be found [here](https://github.com/Wolfieheart/ArmorStandEditor/src/main/java/io/github/rypofalem/armorstandeditor/api).
+ArmorStandEditor has an API and is supported through [Jitpack](https://jitpack.io/#Wolfieheart/ArmorStandEditor). The Source Code for that API can be found [here](https://github.com/Wolfieheart/ArmorStandEditor/src/main/java/io/github/rypofalem/armorstandeditor/api). 
+You can find an example plugin [here](https://github.com/Wolfieheart/ArmorStandEditor/API-Example-Plugin/src/main/java/io/github/rypofalem/apiexample). It contains very basic tests and examples of what you could do with such an API.
 
-For Maven Users you need to add the following to your pom.xml file:
+For Maven Users, if you want to interact directly, you need to add the following to your pom.xml file:
 ```XML
      <repository>
         <id>jitpack.io</id>

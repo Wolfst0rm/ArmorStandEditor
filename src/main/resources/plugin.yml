@@ -5,7 +5,7 @@ api-version: "1.13"
 folia-supported: true
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
-authors: [Wolfstorm, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
+authors: [Wolfstorm, Pinnkk, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
 softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox]
 
@@ -30,25 +30,25 @@ permissions:
     default: true
   asedit.armorstand.invisible:
     description: Toggles ArmorStand visibility.
-    default: true
+    default: false
   asedit.itemframe.invisible:
     description: Allows setting of ItemFrame Visibility
-    default: true
+    default: false
   asedit.rename:
     description: Rename armorstands - Now Supports Color
-    default: true
+    default: false
   asedit.equipment:
     description: Access armorstand equipment GUI
-    default: true
+    default: false
   asedit.gravity:
     description: Changes whether the armor stand has gravity
-    default: true
+    default: false
   asedit.placement:
     description: Changes whether the armor stand can be moved using the item for editing
-    default: true
+    default: false
   asedit.disableSlots:
     description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
-    default: true
+    default: false
   asedit.give:
     description: Gives player the EditTool with Proper CustomModelData
     default: false
