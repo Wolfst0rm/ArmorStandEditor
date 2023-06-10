@@ -86,8 +86,8 @@ noplayerhead:
   msg: Please turn on the ability to retrieve player heads in the config file and/or check your permissions to confirm that you have asedit.head set to true.
 playerheaderror:
   msg: Unable to Retrieve Player Head.
-infoplayerhead:
-  msg: Please use /ase playerhead <name> to get a players head. Ex of the command - /ase playerhead Wolfieheart_
+playerheadhelp:
+  msg: "Please use /ase playerhead <name> to get a players head. Ex of the command - /ase playerhead Wolfieheart_"
 help:
   msg: "1. Hold the editing tool(<x>) in your main hand
 

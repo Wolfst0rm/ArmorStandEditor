@@ -201,6 +201,7 @@ public class PlayerEditor {
     }
 
     private void resetPosition(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.reset")) return;
         armorStand.setHeadPose(new EulerAngle(0, 0, 0));
         armorStand.setBodyPose(new EulerAngle(0, 0, 0));
         armorStand.setLeftArmPose(new EulerAngle(0, 0, 0));
@@ -404,12 +405,12 @@ public class PlayerEditor {
     }
 
     void toggleVisible(ArmorStand armorStand) {
-        if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisibility) return; //Option to use perms or Config
+        if (!getPlayer().hasPermission("asedit.togglearmorstandvisiblity") || !plugin.armorStandVisibility) return; //Option to use perms or Config
         armorStand.setVisible(!armorStand.isVisible());
     }
 
     void toggleItemFrameVisible(ItemFrame itemFrame) {
-        if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
+        if (!getPlayer().hasPermission("asedit.toggleitemframevisiblity") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
         itemFrame.setVisible(!itemFrame.isVisible());
     }
 

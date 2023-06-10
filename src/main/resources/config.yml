@@ -63,9 +63,9 @@ fine: 120
 
 #Allow the option to toggle invisibility for ItemFrames and ArmorStand
 #YOu can either use this or the below permissions to allow visibility changes
-#asedit.armorstand.invisible
+#asedit.togglearmorstandvisibility
 armorStandVisibility: true
-#asedit.itemframe.invisible
+#asedit.toggleitemframevisibility
 invisibleItemFrames: true
 
 #------ GUI Options

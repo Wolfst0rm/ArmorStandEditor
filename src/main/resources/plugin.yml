@@ -35,7 +35,7 @@ permissions:
     description: Access armorstand equipment GUI
     default: false
   asedit.disableSlots:
-    description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
+    description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipment can not be added or removed without unlocking it first.
     default: false
   asedit.give:
     description: Gives player the EditTool with Proper CustomModelData
@@ -49,9 +49,6 @@ permissions:
   asedit.head:
     description: Allows players to trigger a command to retrieve a player head
     default: false
-  asedit.togglegravity:
-    description: Changes whether the armor stand has gravity
-    default: false
   asedit.movement:
     description: Changes whether the armor stand can be moved using the item for editing
     default: false
@@ -63,6 +60,15 @@ permissions:
     default: false
   asedit.paste:
     description: Allows the players to apply of a copy of their ArmorStand Configuration.
+    default: false
+  asedit.reset:
+    description: Allows the reset of the ArmorStand back to Default values
+    default: false
+  asedit.togglearmorstandvisibility:
+    description: Toggles ArmorStand visibility.
+    default: false
+  asedit.toggleitemframevisiblity:
+    description: Allows setting of ItemFrame Visibility
     default: false
   asedit.toggleInvulnerability:
     description: Allows players to toggle the vulnerability state of an ArmorStand.
@@ -76,12 +82,8 @@ permissions:
   asedit.togglesize:
     description: Allows the toggling of the size of an ArmorStand.
     default: false
-
-  asedit.armorstand.invisible:
-    description: Toggles ArmorStand visibility.
-    default: false
-  asedit.itemframe.invisible:
-    description: Allows setting of ItemFrame Visibility
+  asedit.togglegravity:
+    description: Changes whether the armor stand has gravity
     default: false
 
   asedit.ignoreProtection.towny:
@@ -155,18 +157,19 @@ permissions:
       asedit.rotation: true
       asedit.copy: true
       asedit.paste: true
+      asedit.reset: true
       asedit.toggleInvulnerability: true
       asedit.togglebaseplate: true
       asedit.togglearms: true
       asedit.togglesize: true
+      asedit.togglearmorstandvisibility: true
+      asedit.toggleitemframevisibility: true
 
   asedit.permpack.admin:
     default: op
     children:
       asedit.ignorePermissions.*: true
       asedit.basic: true
-      asedit.itemframe.invisible: true
-      asedit.armorstand.invisible: true
       asedit.equipment: true
       asedit.movement: true
       asedit.disableSlots: true
@@ -178,8 +181,11 @@ permissions:
       asedit.rotation: true
       asedit.copy: true
       asedit.paste: true
+      asedit.reset: true
       asedit.togglebaseplate: true
       asedit.togglearms: true
       asedit.togglesize: true
       asedit.toggleInvulnerability: true
       asedit.togglegravity: true
+      asedit.togglearmorstandvisibility: true
+      asedit.toggleitemframevisibility: true
