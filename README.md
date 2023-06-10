@@ -30,7 +30,7 @@ The Latest Downloads Shortcut Links:
   - **Use these at your own risk. Limited Support is provided for testing purposes**
 * 1.20 - Not available yet, currently in progress.
   * [Spigot/Github](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
-  * [Hangar](https://hangar.papermc.io/Wolfieheart/ArmorStandEditor-Reborn)
+  * [Hangar](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
   * [Modrinth](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
 * 1.19 to 1.19.4
   * [Spigot/Github](https://github.com/Wolfieheart/ArmorStandEditor/releases/tag/1.19.4-41)
