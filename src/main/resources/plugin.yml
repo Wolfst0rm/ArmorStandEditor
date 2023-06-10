@@ -28,23 +28,11 @@ permissions:
   asedit.basic:
     description: Allow use armorstand edit functions. If set to false it will override all other functions.
     default: true
-  asedit.armorstand.invisible:
-    description: Toggles ArmorStand visibility.
-    default: false
-  asedit.itemframe.invisible:
-    description: Allows setting of ItemFrame Visibility
-    default: false
   asedit.rename:
     description: Rename armorstands - Now Supports Color
     default: false
   asedit.equipment:
     description: Access armorstand equipment GUI
-    default: false
-  asedit.gravity:
-    description: Changes whether the armor stand has gravity
-    default: false
-  asedit.placement:
-    description: Changes whether the armor stand can be moved using the item for editing
     default: false
   asedit.disableSlots:
     description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipement can not be added or removed without unlocking it first.
@@ -58,13 +46,46 @@ permissions:
   asedit.reload:
     description: Allows Reloading of the ASE Config.
     default: false
+   asedit.head:
+    description: Allows players to trigger a command to retrieve a player head
+    default: false
+  asedit.size:
+    description: Allows players to toggle the size of an ArmorStand
+    default: false
+  asedit.gravity:
+    description: Changes whether the armor stand has gravity
+    default: false
+  asedit.movement:
+    description: Changes whether the armor stand can be moved using the item for editing
+    default: false
+  asedit.rotation:
+    description: Allows player to rotate the ArmorStand
+    default: false
+  asedit.copy:
+    description: Allows the players to create copies of their ArmorStand Configurations.
+    default: false
+  asedit.paste:
+    description: Allows the players to apply of a copy of their ArmorStand Configuration.
+    default: false
   asedit.toggleInvulnerability:
     description: Allows players to toggle the vulnerability state of an ArmorStand.
     default: false
-  asedit.head:
-    description: Allows players to trigger a command to retrieve a player head
+  asedit.togglebaseplate:
+    description: Allows the toggling of the Baseplate of an ArmorStand.
+    default: false
+  asedit.togglearms:
+    description: Allows the toggling of the Arms of an ArmorStand.
+    default: false
+  asedit.togglesize:
+    description: Allows the toggling of the size of an ArmorStand.
     default: false
 
+  asedit.armorstand.invisible:
+    description: Toggles ArmorStand visibility.
+    default: false
+  asedit.itemframe.invisible:
+    description: Allows setting of ItemFrame Visibility
+    default: false
 
   asedit.ignoreProtection.towny:
     description: Allows user to ignore Towny's Protection Limitations.
@@ -127,7 +148,7 @@ permissions:
       asedit.basic: true
       asedit.equipment: true
       asedit.gravity: true
-      asedit.placement: true
+      asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
       asedit.update: false
@@ -135,6 +156,13 @@ permissions:
       asedit.reload: false
       asedit.toggleInvulnerability: true
       asedit.head: false
+      asedit.size: true
+      asedit.rotation: true
+      asedit.copy: true
+      asedit.paste: true
+      asedit.togglebaseplate: true
+      asedit.togglearms: true
+      asedit.togglesize: true
 
   asedit.permpack.admin:
     default: op
@@ -144,7 +172,7 @@ permissions:
       asedit.armorstand.invisible: true
       asedit.equipment: true
       asedit.gravity: true
-      asedit.placement: true
+      asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
       asedit.update: true
@@ -153,3 +181,10 @@ permissions:
       asedit.toggleInvulnerability: true
       asedit.head: true
       asedit.give: true
+      asedit.size: true
+      asedit.rotation: true
+      asedit.copy: true
+      asedit.paste: true
+      asedit.togglebaseplate: true
+      asedit.togglearms: true
+      asedit.togglesize: true

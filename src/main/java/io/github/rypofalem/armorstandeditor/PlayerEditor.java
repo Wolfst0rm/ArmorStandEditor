@@ -255,7 +255,7 @@ public class PlayerEditor {
     }
 
     private void move(ArmorStand armorStand) {
-        if(!getPlayer().hasPermission("asedit.placement")) return;
+        if(!getPlayer().hasPermission("asedit.movement")) return;
 
         //Generate a new ArmorStandManipulationEvent and call it out.
         ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
@@ -278,7 +278,7 @@ public class PlayerEditor {
     }
 
     private void reverseMove(ArmorStand armorStand) {
-        if(!getPlayer().hasPermission("asedit.placement")) return;
+        if(!getPlayer().hasPermission("asedit.movement")) return;
         Location loc = armorStand.getLocation();
         switch (axis) {
             case X:
@@ -295,7 +295,7 @@ public class PlayerEditor {
     }
 
     private void rotate(ArmorStand armorStand) {
-
+        if(!getPlayer().hasPermission("asedit.rotation")) return;
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 + (float) degreeAngleChange) % 360 - 180);
@@ -303,7 +303,7 @@ public class PlayerEditor {
     }
 
     private void reverseRotate(ArmorStand armorStand) {
-
+        if(!getPlayer().hasPermission("asedit.rotation")) return;
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 - (float) degreeAngleChange) % 360 - 180);
@@ -311,12 +311,14 @@ public class PlayerEditor {
     }
 
     private void copy(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.copy")) return;
         copySlots.copyDataToSlot(armorStand);
         sendMessage("copied", "" + (copySlots.currentSlot + 1));
         setMode(EditMode.PASTE);
     }
 
     private void paste(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.paste")) return;
         ArmorStandData data = copySlots.getDataToPaste();
         if (data == null) return;
         armorStand.setHeadPose(data.headPos);
@@ -384,16 +386,20 @@ public class PlayerEditor {
 
 
     private void toggleGravity(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.gravity")) return;
+
         //Fix for Wolfst0rm/ArmorStandEditor-Issues#6: Translation of On/Off Keys are broken
         armorStand.setGravity(!armorStand.hasGravity());
         sendMessage("setgravity", String.valueOf(armorStand.hasGravity()));
     }
 
     void togglePlate(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.togglebaseplate")) return;
         armorStand.setBasePlate(!armorStand.hasBasePlate());
     }
 
     void toggleArms(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.togglearms")) return;
         armorStand.setArms(!armorStand.hasArms());
     }
 
@@ -408,6 +414,7 @@ public class PlayerEditor {
     }
 
     void toggleSize(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.togglesize")) return;
         armorStand.setSmall(!armorStand.isSmall());
     }
 
