@@ -25,7 +25,7 @@ public class ArmorStandEditorAPITest extends JavaPlugin {
 
 	@Override
 	public void onEnable(){
-		this.getLogger().info("[ArmorStandEditor] API Testing Plugin v1.x");
+		this.getLogger().info("[ArmorStandEditor] API Testing Plugin v1.20.0-43 - Enable");
 		this.getServer().getPluginManager().registerEvents(new ASEventTester(), this);
 		this.getServer().getPluginManager().registerEvents(new IFEventTester(), this);
 	}

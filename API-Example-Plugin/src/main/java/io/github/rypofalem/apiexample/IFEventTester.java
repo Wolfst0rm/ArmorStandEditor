@@ -20,10 +20,58 @@
 package main.java.io.github.rypofalem.apiexample;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 public class IFEventTester implements Listener {
 	Player player;
 
+	//ItemFrameGlowEvent
+	@EventHandler
+	public void manipulateArmorStand(PlayerInteractAtEntityEvent IFGlowEvent){
+		player = IFGlowEvent.getPlayer();
+		IFGlowEvent.setCancelled(true);
+		if(IFGlowEvent.isCancelled()) {
+			player.sendMessage("ItemFrameGlowEvent has been cancelled");
+		} else{
+			player.sendMessage("ItemFrameGlowEvent has not been cancelled. Continuing....");
+		}
+	}
+
+	@EventHandler
+	public void manipulateItemFrame(EntityDamageByEntityEvent IFManipulationLeftClickEvent){
+		player = (Player) IFManipulationLeftClickEvent.getDamager();
+		IFManipulationLeftClickEvent.setCancelled(true);
+		if(IFManipulationLeftClickEvent.isCancelled()) {
+			player.sendMessage("ItemFrameManipulatedEvent has been cancelled");
+		} else{
+			player.sendMessage("ItemFrameManipulatedEvent has not been cancelled. Continuing....");
+		}
+	}
+
+	@EventHandler
+	public void manipulateItemFrameRightClick(PlayerInteractAtEntityEvent IFManipulationRightClickEvent){
+		player = IFManipulationRightClickEvent.getPlayer();
+		IFManipulationRightClickEvent.setCancelled(true);
+		if(IFManipulationRightClickEvent.isCancelled()) {
+			player.sendMessage("ItemFrameManipulatedEvent has been cancelled");
+		} else{
+			player.sendMessage("ItemFrameManipulatedEvent has not been cancelled. Continuing....");
+		}
+	}
+
+	@EventHandler
+	public void targetEvent(PlayerSwapHandItemsEvent targetIFEvent){
+		player = targetIFEvent.getPlayer();
+		targetIFEvent.setCancelled(true);
+		if(targetIFEvent.isCancelled()) {
+			player.sendMessage("ItemFrameTargetedEvent has been cancelled");
+		} else{
+			player.sendMessage("ItemFrameTargetedEvent has not been cancelled. Continuing....");
+		}
+	}
 
 }

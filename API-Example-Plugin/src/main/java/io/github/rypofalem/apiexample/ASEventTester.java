@@ -91,7 +91,4 @@ public class ASEventTester implements Listener {
 			player.sendMessage("PlayerOpenMenuEvent has not been cancelled. Continuing....");
 		}
 	}
-
-	//ItemFrameManipulatedEvent
-
 }
