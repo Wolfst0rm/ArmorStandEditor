@@ -46,11 +46,8 @@ permissions:
   asedit.reload:
     description: Allows Reloading of the ASE Config.
     default: false
-   asedit.head:
+  asedit.head:
     description: Allows players to trigger a command to retrieve a player head
-    default: false
-  asedit.size:
-    description: Allows players to toggle the size of an ArmorStand
     default: false
   asedit.gravity:
     description: Changes whether the armor stand has gravity
@@ -154,12 +151,11 @@ permissions:
       asedit.update: false
       asedit.give: false
       asedit.reload: false
-      asedit.toggleInvulnerability: true
       asedit.head: false
-      asedit.size: true
       asedit.rotation: true
       asedit.copy: true
       asedit.paste: true
+      asedit.toggleInvulnerability: true
       asedit.togglebaseplate: true
       asedit.togglearms: true
       asedit.togglesize: true
@@ -167,6 +163,7 @@ permissions:
   asedit.permpack.admin:
     default: op
     children:
+      asedit.ignorePermissions.*: true
       asedit.basic: true
       asedit.itemframe.invisible: true
       asedit.armorstand.invisible: true
@@ -176,15 +173,13 @@ permissions:
       asedit.disableSlots: true
       asedit.rename: true
       asedit.update: true
-      asedit.ignorePermissions.*: true
       asedit.reload: true
-      asedit.toggleInvulnerability: true
       asedit.head: true
       asedit.give: true
-      asedit.size: true
       asedit.rotation: true
       asedit.copy: true
       asedit.paste: true
       asedit.togglebaseplate: true
       asedit.togglearms: true
       asedit.togglesize: true
+      asedit.toggleInvulnerability: true
