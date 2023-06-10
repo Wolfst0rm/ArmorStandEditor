@@ -49,7 +49,7 @@ permissions:
   asedit.head:
     description: Allows players to trigger a command to retrieve a player head
     default: false
-  asedit.gravity:
+  asedit.togglegravity:
     description: Changes whether the armor stand has gravity
     default: false
   asedit.movement:
@@ -168,7 +168,6 @@ permissions:
       asedit.itemframe.invisible: true
       asedit.armorstand.invisible: true
       asedit.equipment: true
-      asedit.gravity: true
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
@@ -183,3 +182,4 @@ permissions:
       asedit.togglearms: true
       asedit.togglesize: true
       asedit.toggleInvulnerability: true
+      asedit.togglegravity: true

@@ -386,7 +386,7 @@ public class PlayerEditor {
 
 
     private void toggleGravity(ArmorStand armorStand) {
-        if(!getPlayer().hasPermission("asedit.gravity")) return;
+        if(!getPlayer().hasPermission("asedit.togglegravity")) return;
 
         //Fix for Wolfst0rm/ArmorStandEditor-Issues#6: Translation of On/Off Keys are broken
         armorStand.setGravity(!armorStand.hasGravity());
