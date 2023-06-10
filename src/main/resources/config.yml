@@ -37,10 +37,12 @@ requireToolName: false
 toolName: Example Name here
 
 #(Optional) The first "Lore" entry that the plugin looks for to identify the edit tool. - Now has MultiLine Support
+#NOTE: If you wish to make use of single line tool lore, please remove the 2nd item in the list and replace the first
+#      text with what you want your ToolLore to be
 requireToolLore: false
 toolLore:
-  - "TIME TO GET REALLY"
-  - "REALLY DANGEROUS!"
+  - "TIME TO GET REALLY" #Replace if you want SingleLine ToolLore
+  - "REALLY DANGEROUS!"  #Remove if you dont want MultiLine ToolLore
 
 #(Optional) Allow the use of CustomModelData - NOTE: This looks at the editTool set by Config
 #and at the Int set here to know what to set.
