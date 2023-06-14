@@ -89,8 +89,8 @@
         <dependencies>
             <dependency>
                 <groupId>com.intellectualsites.bom</groupId>
-                <artifactId>bom-1.18.x</artifactId>
-                <version>1.28</version>
+                <artifactId>bom-newest</artifactId>
+                <version>1.29</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20-R0.1-SNAPSHOT</version>
+            <version>1.20.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -115,7 +115,7 @@
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.8</version>
+            <version>7.1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!--- PlotSquared -->
@@ -138,7 +138,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--- GriefPrevention -->
+        <!--- GriefPrevention: Depreciated -->
         <dependency>
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
@@ -149,7 +149,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.99.1.2</version>
+            <version>0.99.1.3</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
@@ -184,16 +184,16 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>1.23.1</version>
+            <version>1.23.2</version>
             <scope>provided</scope>
         </dependency>
         <!-- Residence -->
         <dependency>
             <groupId>com.bekvon</groupId>
             <artifactId>Residence</artifactId>
-            <version>5.1.1.1</version>
+            <version>5.1.1.3</version>
             <scope>system</scope>
-            <systemPath>${pom.basedir}/src/main/resources/Residence5.1.1.1.jar</systemPath>
+            <systemPath>${pom.basedir}/src/main/resources/Residence5.1.1.3.jar</systemPath>
         </dependency>
         <!-- Mojang/AuthLib -->
         <dependency>
