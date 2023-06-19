@@ -370,9 +370,6 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         sender.sendMessage(plugin.getLang().getMessage("reloaded", "info"));
     }
 
-
-
-
     private boolean checkPermission(Player player, String permName,  boolean sendMessageOnInvalidation) {
         if (permName.equalsIgnoreCase("paste")) {
             permName = "copy";

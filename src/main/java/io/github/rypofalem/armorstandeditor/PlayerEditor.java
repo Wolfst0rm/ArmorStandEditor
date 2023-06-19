@@ -333,6 +333,8 @@ public class PlayerEditor {
         armorStand.setBasePlate(data.basePlate);
         armorStand.setArms(data.showArms);
         armorStand.setVisible(data.visible);
+
+        //Only Paste the Items on the stand if in Creative Mode - Do not run elsewhere for good fecking reason!
         if (this.getPlayer().getGameMode() == GameMode.CREATIVE) {
             armorStand.getEquipment().setHelmet(data.head);
             armorStand.getEquipment().setChestplate(data.body);
