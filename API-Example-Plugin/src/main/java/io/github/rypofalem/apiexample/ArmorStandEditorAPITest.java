@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package main.java.io.github.rypofalem.apiexample;
+package io.github.rypofalem.apiexample;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
