@@ -27,7 +27,7 @@ permissions:
 
   asedit.basic:
     description: Allow use armorstand edit functions. If set to false it will override all other functions.
-    default: true
+    default: false
   asedit.rename:
     description: Rename armorstands - Now Supports Color
     default: false
@@ -129,7 +129,6 @@ permissions:
       asedit.ignoreProtection.residence: true
 
   asedit.permpack.dontIgnoreProtections:
-    default: true
     children:
       asedit.ignoreProtection.towny: false
       asedit.ignoreProtection.griefProtection: false
@@ -142,7 +141,6 @@ permissions:
       asedit.ignoreProtection.residence: false
 
   asedit.permpack.basic:
-    default: true
     children:
       asedit.basic: true
       asedit.equipment: true

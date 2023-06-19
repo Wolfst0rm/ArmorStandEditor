@@ -595,8 +595,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
                 map.put("Dutch", entry);
             } else if (languageUsed.startsWith("de")) {
                 map.put("German", entry);
-            } else if (languageUsed.startsWith("en")) {
-                map.put("English", entry);
             } else if (languageUsed.startsWith("es")) {
                 map.put("Spanish", entry);
             } else if (languageUsed.startsWith("fr")) {
@@ -616,7 +614,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             } else if(languageUsed.startsWith("pt")) {
                 map.put("Brazilian", entry);
             } else{
-                map.put("Other", entry);
+                map.put("English", entry);
             }
             return map;
         }));
