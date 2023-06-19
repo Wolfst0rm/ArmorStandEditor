@@ -69,28 +69,27 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(sender instanceof ConsoleCommandSender){ //Short Term Fix to Support #
+
+        if(!getPermissionBasic((Player) sender)){
+            sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
+            return true;
+        } else if (sender instanceof ConsoleCommandSender){ //Short Term Fix to Support #
             if(args.length == 0){
                 sender.sendMessage(VERSION);
                 sender.sendMessage(HELP);
                 sender.sendMessage(RELOAD);
-            } else{
-                switch(args[0].toLowerCase()) {
+            } else {
+                switch (args[0].toLowerCase()) {
                     case "reload" -> commandReloadConsole(sender);
                     case "help", "?" -> commandHelpConsole(sender);
                     case "version" -> commandVersionConsole(sender);
                     default -> {
-                        sender.sendMessage(plugin.getLang().getMessage("noconsolecom","warn"));
+                        sender.sendMessage(plugin.getLang().getMessage("noconsolecom", "warn"));
+                        return true;
                     }
+
                 }
-                return true;
             }
-
-        }
-
-        if(sender instanceof Player && !getPermissionBasic( (Player) sender)){
-            sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
-            return true;
         } else {
 
             Player player = (Player) sender;
@@ -129,10 +128,11 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     sender.sendMessage(RELOAD);
                     sender.sendMessage(GIVECUSTOMMODEL);
                     sender.sendMessage(GIVEPLAYERHEAD);
+                    return true;
                 }
             }
-            return true;
         }
+        return true;
     }
 
 
