@@ -69,7 +69,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(sender instanceof ConsoleCommandSender){ //Short Term Fix to Support #
+        if(sender instanceof ConsoleCommandSender){ //Fix to Support #267
             if(args.length == 0){
                 sender.sendMessage(VERSION);
                 sender.sendMessage(HELP);
