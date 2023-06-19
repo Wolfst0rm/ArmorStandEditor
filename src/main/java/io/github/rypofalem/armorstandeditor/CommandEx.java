@@ -36,10 +36,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -66,59 +63,78 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     final String GIVEPLAYERHEAD = ChatColor.YELLOW + "/ase playerhead <name>";
     Gson gson = new Gson();
 
-
     public CommandEx( ArmorStandEditorPlugin armorStandEditorPlugin) {
         this.plugin = armorStandEditorPlugin;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player
-                && getPermissionBasic( (Player) sender))) {
-            sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
-            return true;
-        }
-
-        Player player = (Player) sender;
-        if (args.length == 0) {
-            player.sendMessage(LISTMODE);
-            player.sendMessage(LISTAXIS);
-            player.sendMessage(LISTSLOT);
-            player.sendMessage(LISTADJUSTMENT);
-            player.sendMessage(VERSION);
-            player.sendMessage(UPDATE);
-            player.sendMessage(HELP);
-            player.sendMessage(RELOAD);
-            player.sendMessage(GIVECUSTOMMODEL);
-            player.sendMessage(GIVEPLAYERHEAD);
-            return true;
-        }
-        switch (args[0].toLowerCase()) {
-            case "mode" -> commandMode(player, args);
-            case "axis" -> commandAxis(player, args);
-            case "adj" -> commandAdj(player, args);
-            case "slot" -> commandSlot(player, args);
-            case "help", "?" -> commandHelp(player);
-            case "version" -> commandVersion(player);
-            case "update" -> commandUpdate(player);
-            case "give" -> commandGive(player);
-            case "playerhead" -> commandGivePlayerHead(player, args);
-            case "reload" -> commandReload(player);
-            default -> {
-                sender.sendMessage(LISTMODE);
-                sender.sendMessage(LISTAXIS);
-                sender.sendMessage(LISTSLOT);
-                sender.sendMessage(LISTADJUSTMENT);
+        if(sender instanceof ConsoleCommandSender){ //Short Term Fix to Support #
+            if(args.length == 0){
                 sender.sendMessage(VERSION);
-                sender.sendMessage(UPDATE);
                 sender.sendMessage(HELP);
                 sender.sendMessage(RELOAD);
-                sender.sendMessage(GIVECUSTOMMODEL);
-                sender.sendMessage(GIVEPLAYERHEAD);
+            } else{
+                switch(args[0].toLowerCase()) {
+                    case "reload" -> commandReloadConsole(sender);
+                    case "help", "?" -> commandHelpConsole(sender);
+                    case "version" -> commandVersionConsole(sender);
+                    default -> {
+                        sender.sendMessage(plugin.getLang().getMessage("noconsolecom","warn"));
+                    }
+                }
+                return true;
             }
+
         }
-        return true;
+
+        if(sender instanceof Player && !getPermissionBasic( (Player) sender)){
+            sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
+            return true;
+        } else {
+
+            Player player = (Player) sender;
+            if (args.length == 0) {
+                player.sendMessage(LISTMODE);
+                player.sendMessage(LISTAXIS);
+                player.sendMessage(LISTSLOT);
+                player.sendMessage(LISTADJUSTMENT);
+                player.sendMessage(VERSION);
+                player.sendMessage(UPDATE);
+                player.sendMessage(HELP);
+                player.sendMessage(RELOAD);
+                player.sendMessage(GIVECUSTOMMODEL);
+                player.sendMessage(GIVEPLAYERHEAD);
+                return true;
+            }
+            switch (args[0].toLowerCase()) {
+                case "mode" -> commandMode(player, args);
+                case "axis" -> commandAxis(player, args);
+                case "adj" -> commandAdj(player, args);
+                case "slot" -> commandSlot(player, args);
+                case "help", "?" -> commandHelp(player);
+                case "version" -> commandVersion(player);
+                case "update" -> commandUpdate(player);
+                case "give" -> commandGive(player);
+                case "playerhead" -> commandGivePlayerHead(player, args);
+                case "reload" -> commandReload(player);
+                default -> {
+                    sender.sendMessage(LISTMODE);
+                    sender.sendMessage(LISTAXIS);
+                    sender.sendMessage(LISTSLOT);
+                    sender.sendMessage(LISTADJUSTMENT);
+                    sender.sendMessage(VERSION);
+                    sender.sendMessage(UPDATE);
+                    sender.sendMessage(HELP);
+                    sender.sendMessage(RELOAD);
+                    sender.sendMessage(GIVECUSTOMMODEL);
+                    sender.sendMessage(GIVEPLAYERHEAD);
+                }
+            }
+            return true;
+        }
     }
+
 
     // Implemented to fix:
     // https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/35 &
@@ -304,6 +320,15 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         player.sendRawMessage(plugin.getLang().getMessage("helpdiscord", ""));
     }
 
+    private void commandHelpConsole(CommandSender sender) {
+        sender.sendMessage(plugin.getLang().getMessage("help", "info", plugin.editTool.name()));
+        sender.sendMessage("");
+        sender.sendMessage(plugin.getLang().getMessage("helptips", "info"));
+        sender.sendMessage("");
+        sender.sendMessage(plugin.getLang().getMessage("helpurl", "info"));
+        sender.sendMessage(plugin.getLang().getMessage("helpdiscord", "info"));
+    }
+
     private void commandUpdate(Player player) {
         if (!(checkPermission(player, "update", true))) return;
 
@@ -329,11 +354,23 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
     }
 
+    private void commandVersionConsole(CommandSender sender){
+        String verString = plugin.getArmorStandEditorVersion();
+        sender.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
+    }
+
     private void commandReload(Player player){
         if(!(getPermissionReload(player))) return;
         plugin.performReload();
         player.sendMessage(plugin.getLang().getMessage("reloaded", ""));
     }
+
+    private void commandReloadConsole(CommandSender sender) {
+        plugin.performReload();
+        sender.sendMessage(plugin.getLang().getMessage("reloaded", "info"));
+    }
+
+
 
 
     private boolean checkPermission(Player player, String permName,  boolean sendMessageOnInvalidation) {

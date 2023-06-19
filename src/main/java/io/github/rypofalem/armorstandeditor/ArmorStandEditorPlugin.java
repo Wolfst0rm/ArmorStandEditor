@@ -289,7 +289,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
     }
 
-    private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { 
+    private void runUpdateCheckerWithOPNotifyOnJoinEnabled() {
         if (getArmorStandEditorVersion().contains(".x")) {
             getLogger().warning("Note from the development team: ");
             getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
