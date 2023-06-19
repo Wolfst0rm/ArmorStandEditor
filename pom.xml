@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.20.0-43</version>
+    <version>1.20.1-43</version>
     <name>armorstandeditor</name>
     <url>http://maven.apache.org</url>
 
@@ -153,7 +153,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.99.1.3</version>
+            <version>0.99.2.1</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
@@ -203,7 +203,7 @@
         <dependency>
             <groupId>com.mojang</groupId>
             <artifactId>authlib</artifactId>
-            <version>3.3.39</version>
+            <version>3.11.50</version>
             <scope>provided</scope>
         </dependency>
         <!-- Lombok Support -->
@@ -252,7 +252,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

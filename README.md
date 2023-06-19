@@ -22,7 +22,7 @@ For versions older than 1.17, then please use [the original versions download pa
 The Latest Downloads Shortcut Links:
 * [ArmorStandEditor-Last (Unstable)](https://github.com/Wolfst0rm/ArmorStandEditor/actions)
   - **Use these at your own risk. Limited Support is provided for testing purposes**
-* 1.20 - Not available yet, currently in progress.
+* 1.20(.1) - Not available yet, currently in progress.
   * [Spigot/Github](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
   * [Hangar](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
   * [Modrinth](https://media.giphy.com/media/hNRvZFeBDgLsI/giphy.gif)
