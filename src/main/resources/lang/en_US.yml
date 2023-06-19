@@ -127,7 +127,7 @@ nomodecom:
 noreloadcom:
   msg: You don't have permission to use the reload command!
 nogive:
-  msg: You do not have permission to use the give command.
+  msg: "You either do not have the permission to use the give command or do not allow it in Config.yml"
 
 #menutitle
 mainmenutitle:

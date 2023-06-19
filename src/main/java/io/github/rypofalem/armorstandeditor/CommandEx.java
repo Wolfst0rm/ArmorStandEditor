@@ -77,7 +77,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 && getPermissionBasic( (Player) sender))) {
             sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
             return true;
-        }
+        }*/
 
         Player player = (Player) sender;
         if (args.length == 0) {
@@ -354,6 +354,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         return checkPermission(player, "basic", false);
     }
 
+    private boolean getPermissionGive(Player player) { return checkPermission(player, "give", false); }
+
     private boolean getPermissionUpdate(Player player){
         return checkPermission(player, "update", false);
     }
@@ -362,10 +364,13 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         return checkPermission(player, "reload", false);
     }
 
+    private boolean getPermissionPlayerHead(Player player) { return checkPermission(player,"head",false); }
+
     //REFACTOR COMPLETION
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> argList = new ArrayList<>();
+        Player player = (Player) sender;
 
         if (isCommandValid(command.getName())) {
 
@@ -376,10 +381,20 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 argList.add("slot");
                 argList.add("help");
                 argList.add("?");
-                argList.add("give");
-                argList.add("update");
-                argList.add("playerhead");
-                argList.add("reload");
+
+                //Will Only work with permissions - #
+                if(getPermissionGive(player)){
+                    argList.add("give");
+                }
+                if(getPermissionUpdate(player)){
+                    argList.add("update");
+                }
+                if(getPermissionReload(player)){
+                    argList.add("reload");
+                }
+                if(getPermissionPlayerHead(player) && plugin.getAllowedToRetrievePlayerHead()){
+                    argList.add("playerhead");
+                }
             }
 
             if (args.length == 2 && args[0].equalsIgnoreCase("mode")) {

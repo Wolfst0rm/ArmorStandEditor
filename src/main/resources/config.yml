@@ -24,7 +24,8 @@ opUpdateNotification: false
 
 #----------- TOOL SETTINGS
 
-#Name of the edit tool's item Material. You can find a full list at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+#Name of the edit tool's item Material.
+#You can find a full list at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 tool: FLINT
 
 #(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
@@ -48,8 +49,7 @@ toolLore:
 #and at the Int set here to know what to set.
 
 #Also please if you are using this, ensure that you also give people the ability asedit.give in
-#order to allow them to change their edit
-#tool for the right Custom Model Data
+#order to allow them to change their edit tool for the right Custom Model Data
 allowCustomModelData: false
 customModelDataInt: 0
 
