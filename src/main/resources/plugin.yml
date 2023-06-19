@@ -67,7 +67,7 @@ permissions:
   asedit.togglearmorstandvisibility:
     description: Toggles ArmorStand visibility.
     default: false
-  asedit.toggleitemframevisiblity:
+  asedit.toggleitemframevisibility:
     description: Allows setting of ItemFrame Visibility
     default: false
   asedit.toggleInvulnerability:

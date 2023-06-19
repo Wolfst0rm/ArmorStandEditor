@@ -410,7 +410,7 @@ public class PlayerEditor {
     }
 
     void toggleItemFrameVisible(ItemFrame itemFrame) {
-        if (!getPlayer().hasPermission("asedit.toggleitemframevisiblity") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
+        if (!getPlayer().hasPermission("asedit.toggleitemframevisibility") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
         itemFrame.setVisible(!itemFrame.isVisible());
     }
 
