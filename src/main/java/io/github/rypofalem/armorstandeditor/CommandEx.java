@@ -398,7 +398,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         return checkPermission(player, "reload", false);
     }
 
-    private boolean getPermissionPlayerHead(Player player) { return checkPermission(player,"head",false); }
+    private boolean getPermissionPlayerHead(Player player) { return checkPermission(player, "head", false); }
 
     //REFACTOR COMPLETION
     @Override
@@ -416,7 +416,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 argList.add("help");
                 argList.add("?");
 
-                //Will Only work with permissions - #
+                //Will Only work with permissions
                 if(getPermissionGive(player)){
                     argList.add("give");
                 }
