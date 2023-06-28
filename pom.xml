@@ -94,7 +94,7 @@
             <dependency>
                 <groupId>com.intellectualsites.bom</groupId>
                 <artifactId>bom-1.18.x</artifactId>
-                <version>1.28</version>
+                <version>1.30</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
