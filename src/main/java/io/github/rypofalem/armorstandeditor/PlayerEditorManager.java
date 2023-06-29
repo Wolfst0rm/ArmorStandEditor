@@ -71,8 +71,7 @@ public class PlayerEditorManager implements Listener {
             new SkyblockProtection(),
             new TownyProtection(),
             new WorldGuardProtection(),
-            new BentoBoxProtection(),
-            new ResidenceProtection());
+            new BentoBoxProtection());
 
     PlayerEditorManager( ArmorStandEditorPlugin plugin) {
         this.plugin = plugin;
