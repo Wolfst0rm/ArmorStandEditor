@@ -85,16 +85,10 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 }
                 return true;
             }
-
-        }
-
-        if(sender instanceof Player && !getPermissionBasic( (Player) sender)){
-            sender.sendMessage(plugin.getLang().getMessage("noperm", "warn"));
-            return true;
-        } else {
+        } else if (sender instanceof Player){
 
             Player player = (Player) sender;
-            if (args.length == 0) {
+            if (args.length == 0 || getPermissionBasic(player)) {
                 player.sendMessage(LISTMODE);
                 player.sendMessage(LISTAXIS);
                 player.sendMessage(LISTSLOT);
@@ -133,6 +127,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             }
             return true;
         }
+        return true;
     }
 
 
