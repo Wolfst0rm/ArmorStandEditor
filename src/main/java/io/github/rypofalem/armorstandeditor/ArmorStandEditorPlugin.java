@@ -120,7 +120,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         // Check if the Minecraft version is supported
         if (nmsVersion.compareTo("v1_13") < 0) {
-            getLogger().log(Level.WARNING,"Minecraft Version: {0}",nmsVersion);
+            getLogger().log(Level.WARNING,warningMCVer + "{0}",nmsVersion);
             getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.13. Loading failed.");
             getServer().getPluginManager().disablePlugin(this);
             getLogger().info(SEPARATOR_FIELD);
@@ -129,11 +129,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //Also Warn People to Update if using nmsVersion lower than latest
         if (nmsVersion.compareTo("v1_20") < 0) {
-            getLogger().log(Level.WARNING,"Minecraft Version: {0}",nmsVersion);
+            getLogger().log(Level.WARNING,warningMCVer + "{0}",nmsVersion);
             getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
             getLogger().warning("Loading continuing, but please consider updating to the latest version.");
         } else {
-            getLogger().log(Level.INFO, "Minecraft Version: {0}",nmsVersion);
+            getLogger().log(Level.INFO,warningMCVer + "{0}",nmsVersion);
             getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
         }
         //Spigot Check
@@ -275,7 +275,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             getLogger().warning("Note from the development team: ");
             getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
             getLogger().warning("This version can be unstable and is not recommended for Production Environments.");
-            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor . ");
+            getLogger().warning("Please, report bugs to: https://github.com/Wolfieheart/ArmorStandEditor. ");
             getLogger().warning("This warning is intended to be displayed when using a Dev build and is NOT A BUG!");
             getLogger().info("Update Checker does not work on Development Builds.");
         } else {
