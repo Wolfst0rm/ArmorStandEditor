@@ -1,6 +1,6 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.20.1-43-permFix
+version: 1.20.1-43.1-permFix
 api-version: "1.13"
 folia-supported: true
 website: https://www.spigotmc.org/resources/94503/
