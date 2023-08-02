@@ -23,6 +23,7 @@ setmode:
   invisible: Sichtbarkeit umschalten
   size: Größe umschalten
   disableslots: Deaktivierte Slots umschalten
+  vulnerability: Toggle Vulnerability
   gravity: Erdanziehungskraft umschalten
   baseplate: Bodenplatte umschalten
   placement: Platzierung
@@ -45,6 +46,10 @@ setgravity:
   msg: Erdanziehungskraft <x>.
   true: an
   false: aus
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 nomode:
   msg: Klicke mit dem Bearbeitungswerkzeug weg vom Rüstungsständer um den Bearbeitungsmodus auszuwählen!
 nomodeif:
@@ -56,15 +61,21 @@ pasted:
 target:
   msg: Ziel Rüstungsständer wurde gesperrt.
 notarget:
-  msg: Ziel Rüstungsständer wurde entsperrt.
+  msg: <x> wurde entsperrt.
+  armorstand: Ziel Rüstungsständer
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe Ziel gesperrt.
-noframetarget:
-  msg: Itemframe Ziel entsperrt.
 doubletarget:
   msg: Bitte schaue entweder auf einen Rüstungsständer oder einem ItemFrame, nicht beides!
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 help:
   msg: "1. Halte das Bearbeitungswerkzeug(<x>) in deiner Haupthand.
 
@@ -177,6 +188,10 @@ disableslots:
   msg: Deaktiviere Slots
   description:
     msg: Aktiviere und Deaktiviere die Ausrüstungssperre
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 gravity:
   msg: Erdanziehungskraft
   description:

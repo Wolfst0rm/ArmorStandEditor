@@ -8,8 +8,6 @@ exemptLabels:
   - "NF-4: Rebase Required"
   - "BUG-1: Reproduced"
   - "Work in Progress"
-  - "Blocked"
-  - "question"
 staleLabel: "Stale"
 markComment: >
   This issue has been automatically marked as stale because it has not had

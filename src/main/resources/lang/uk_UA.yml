@@ -19,6 +19,7 @@ setmode:
   invisible: Перемкнути видимість
   size: Перемкнути розмір
   disableslots: Перемкнути вимкнені слоти
+  vulnerability: Toggle Vulnerability
   gravity: Перемкнути гравітацію
   baseplate: Перемкнути плиту
   placement: Розташування
@@ -41,6 +42,10 @@ setgravity:
   msg: Гравітація <x>.
   true: увімкнена
   false: вимкнена
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 nomode:
   msg: Натисни інструментом редагування поза стендом щоб обрати режим!
 nomodeif:
@@ -52,12 +57,20 @@ pasted:
 target:
   msg: Ціль стенду заблоковано.
 notarget:
-  msg: Ціль стенду розблоковано.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 give:
   msg: Player given Item with CustomModelData
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
-  
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
+
 #warn  
 cantedit:
   msg: Ти не можеш змінювати стенди тут!
@@ -173,6 +186,10 @@ copyslot:
   msg: Копіюєм в слот <x>
   description:
     msg: Оберіть слот щоб зберегти налаштування
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 
 #icons (equipment)
 disabled:

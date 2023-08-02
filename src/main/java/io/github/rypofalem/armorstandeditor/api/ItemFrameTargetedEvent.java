@@ -17,21 +17,29 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package io.github.rypofalem.armorstandeditor.modes;
+package io.github.rypofalem.armorstandeditor.api;
 
-public enum EditMode {
-    NONE("None"), INVISIBLE("Invisible"), SHOWARMS("ShowArms"), GRAVITY("Gravity"), BASEPLATE("BasePlate"), SIZE("Size"), COPY("Copy"), PASTE("Paste"),
-    HEAD("Head"), BODY("Body"), LEFTARM("LeftArm"), RIGHTARM("RightArm"), LEFTLEG("LeftLeg"), RIGHTLEG("RightLeg"),
-    PLACEMENT("Placement"), DISABLESLOTS("DisableSlots"), ROTATE("Rotate"), EQUIPMENT("Equipment"), RESET("Reset"), ITEMFRAME("ItemFrame"), ITEMFRAMEGLOW("ItemFrameGlow"),
-    VULNERABILITY("Vulnerability"), PLAYERHEAD("playerheadmenu");
+import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.HandlerList;
 
-    private String name;
+public class ItemFrameTargetedEvent extends ItemFrameEvent implements Cancellable {
+	@Getter @Setter
+	private boolean cancelled = false;
 
-    EditMode(String name){
-        this.name = name;
-    }
+	@Getter
+	protected final Player player;
 
-    public String toString(){
-        return name;
-    }
+	public ItemFrameTargetedEvent(ItemFrame itemFrame, Player player) {
+		super(itemFrame);
+		this.player = player;
+	}
+
+	/* Generated for Bukkit */
+	private static final HandlerList handlers = new HandlerList();
+	public static HandlerList getHandlerList() { return (handlers); }
+	@Override public HandlerList getHandlers() { return (handlers); }
 }

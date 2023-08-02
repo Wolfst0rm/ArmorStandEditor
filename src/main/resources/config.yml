@@ -3,7 +3,7 @@
 #-----------------------------#
 
 #DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
-version: "1.19.4-42"
+version: "1.20.1-43"
 
 #----------- LANGUAGE
 #Name of the language file you wish to use
@@ -24,7 +24,8 @@ opUpdateNotification: false
 
 #----------- TOOL SETTINGS
 
-#Name of the edit tool's item Material. You can find a full list at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+#Name of the edit tool's item Material.
+#You can find a full list at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 tool: FLINT
 
 #(Optional) data that the plugin looks for to identify the edit tool, such as the damage value of a sword or the pattern of sandstone.
@@ -36,16 +37,19 @@ toolData: 0
 requireToolName: false
 toolName: Example Name here
 
-#(Optional) The first "Lore" entry that the plugin looks for to identify the edit tool.
+#(Optional) The first "Lore" entry that the plugin looks for to identify the edit tool. - Now has MultiLine Support
+#NOTE: If you wish to make use of single line tool lore, please remove the 2nd item in the list and replace the first
+#      text with what you want your ToolLore to be
 requireToolLore: false
-toolLore: Let's get dangerous
+toolLore:
+  - "TIME TO GET REALLY" #Replace if you want SingleLine ToolLore
+  - "REALLY DANGEROUS!"  #Remove if you don't want MultiLine ToolLore
 
 #(Optional) Allow the use of CustomModelData - NOTE: This looks at the editTool set by Config
 #and at the Int set here to know what to set.
 
 #Also please if you are using this, ensure that you also give people the ability asedit.give in
-#order to allow them to change their edit
-#tool for the right Custom Model Data
+#order to allow them to change their edit tool for the right Custom Model Data
 allowCustomModelData: false
 customModelDataInt: 0
 
@@ -58,20 +62,30 @@ coarse: 12
 fine: 120
 
 #Allow the option to toggle invisibility for ItemFrames and ArmorStand
-#YOu can either use this or the below permissions to allow visibility changes
-#asedit.armorstand.invisible
-armorStandVisibility: true
-#asedit.itemframe.invisible
-invisibleItemFrames: true
-
+#You can either use this or the below permissions to allow visibility changes
+#asedit.togglearmorstandvisibility
+armorStandVisibility: false
+#asedit.toggleitemframevisibility
+invisibleItemFrames: false
 
 #------ GUI Options
 
 #If true, the GUI will only open if the player is sneaking
 requireSneaking: false
 
+#Sends messages to the ActionBar
+sendMessagesToActionBar: true
+
 #------ Misc Options
 
 #(Optional) Glowing Item Frames Support for Item Frames in 1.17 - WILL NOT WORK IN 1.16 OR LOWER AND 1.17.1 OR HIGHER
 #If true, players can make itemFrames glow by right-clicking with a Glow Ink Sac
 glowingItemFrame: true
+
+#(Optional) Allow Players to get Player Heads from a Command. NOTE: If this is False, this will not work.
+#You will also need asedit.head to be set TRUE as well in your Permissions Manager / File
+allowedToRetrievePlayerHead: false
+
+#Each time the command is used, the admins will be notified that this has been ran but only
+#if this setting is made true
+adminOnlyNotifications: false

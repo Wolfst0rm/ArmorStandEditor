@@ -1,5 +1,5 @@
 #Translation by nicuch
-
+#TODO: Needs Updated!
 
 iconname: 2n
 icondescription: 5
@@ -21,6 +21,7 @@ setmode:
   invisible: Schimba Vizibilitatea
   size: Schimba Marimea
   disableslots: Schimba Sloturile Dezactivate
+  vulnerability: Toggle Vulnerability
   gravity: Schimba Gravitatia
   baseplate: Schimba BasePlate-ul
   placement: Plaseaza
@@ -54,11 +55,22 @@ pasted:
 target:
   msg: Tinta ArmorStand-ului blocata.
 notarget:
-  msg: Tinta ArmorStand-ului deblocata.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 give:
   msg: Player given Item with CustomModelData
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+
 #warn
 cantedit:
   msg: Nu poti edita armorstand-ul aici!
@@ -74,6 +86,8 @@ nomodecom:
   msg: Trebuie sa specifici un mod!
 nogive:
   msg: You have no permission to use the give command!
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 
 #menutitle
 mainmenutitle:
@@ -179,6 +193,10 @@ reset:
   msg: Reseteaza Pozitia
   description:
     msg: Reseteaza pozitia partilor de corp la normal
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 
 #icons (equipment)
 disabled: 

@@ -23,6 +23,7 @@ setmode:
   invisible: Modifier la visibilité
   size: Modifier la taille
   disableslots: Activation ou désactivation des slots
+  vulnerability: Toggle Vulnerability
   gravity: Modifier la gravité
   baseplate: Affichage ou retrait de la plaque de base
   placement: Position
@@ -57,11 +58,15 @@ pasted:
 target:
   msg: Armor stand sélectionné.
 notarget:
-  msg: Armor stand désélectionné.
+  msg: <x> désélectionné.
+  armorstand: Armor stand
+  itemframe: Itemframe
 frametarget:
   msg: Itemframe sélectionné.
-noframetarget:
-  msg: Itemframe désélectionné.
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 doubletarget:
   msg: Regardez un armor stand ou un item frame, pas les deux!
 nodoubletarget:
@@ -90,6 +95,10 @@ helpdiscord:
   msg: "ou rejoignez notre Discord: https://discord.gg/3BbJKWpTCj"
 give:
   msg: CustomModelData donné au joueur.
+playerhead:
+  msg: Player Head retrieved.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 
 #warn
 cantedit:
@@ -106,7 +115,8 @@ nomodecom:
   msg: Vous devez préciser un mode !
 nogive:
   msg: Vous n'avez pas le droit d'utiliser cette commande!
-
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
 
 #menutitle
 mainmenutitle:
@@ -179,6 +189,10 @@ disableslots:
   msg: Désactive les slots
   description: 
     msg: Verrouille ou déverrouille les emplacements de l'inventaire
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 gravity: 
   msg: Gravité
   description: 

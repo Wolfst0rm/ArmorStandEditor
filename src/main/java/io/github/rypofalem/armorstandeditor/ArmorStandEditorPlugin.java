@@ -37,9 +37,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 
 public class ArmorStandEditorPlugin extends JavaPlugin{
@@ -77,7 +75,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     boolean requireToolName = false;
     String editToolName = null;
     boolean requireToolLore = false;
-    String editToolLore = null;
+    List<?> editToolLore = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
     
@@ -91,6 +89,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     boolean glowItemFrames = false;
     boolean invisibleItemFrames = true;
     boolean armorStandVisibility = true;
+
+    //Misc Options
+    boolean allowedToRetrievePlayerHead = false;
+    boolean adminOnlyNotifications = false;
 
     //Glow Entity Colors
     public Scoreboard scoreboard;
@@ -116,29 +118,23 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         getLogger().info("======= ArmorStandEditor =======");
         getLogger().info("Plugin Version: " + pdfFile.getVersion());
 
-        //Minimum Version Check - No Lower than 1.13-API. Will be tuned out in the future
-        if (    nmsVersion.startsWith("v1_8")  ||
-                nmsVersion.startsWith("v1_9")  ||
-                nmsVersion.startsWith("v1_10") ||
-                nmsVersion.startsWith("v1_11") ||
-                nmsVersion.startsWith("v1_12") ||
-                nmsVersion.startsWith("v1_13")){
-            getLogger().log(Level.WARNING,"Minecraft Version: {0} is unsupported. Please Update Immediately. Loading failed.",nmsVersion);
-            getLogger().info(SEPARATOR_FIELD);
+        // Check if the Minecraft version is supported
+        if (nmsVersion.compareTo("v1_13") < 0) {
+            getLogger().log(Level.WARNING,"Minecraft Version: {0}",nmsVersion);
+            getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.13. Loading failed.");
             getServer().getPluginManager().disablePlugin(this);
+            getLogger().info(SEPARATOR_FIELD);
             return;
         }
 
         //Also Warn People to Update if using nmsVersion lower than latest
-        if (    nmsVersion.startsWith("v1_14") ||
-                nmsVersion.startsWith("v1_15") ||
-                nmsVersion.startsWith("v1_16") ||
-                nmsVersion.startsWith("v1_17") ||
-                nmsVersion.startsWith("v1_18") ){
-            getLogger().log(Level.WARNING,"Minecraft Version: {0} is supported, but not latest.",nmsVersion);
-            getLogger().log(Level.WARNING, "ArmorStandEditor will still work on your current version. Loading Continuing.");
+        if (nmsVersion.compareTo("v1_20") < 0) {
+            getLogger().log(Level.WARNING,"Minecraft Version: {0}",nmsVersion);
+            getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
+            getLogger().warning("Loading continuing, but please consider updating to the latest version.");
         } else {
-            getLogger().log(Level.INFO, "Minecraft Version: {0} is supported. Loading Continuing.",nmsVersion);
+            getLogger().log(Level.INFO, "Minecraft Version: {0}",nmsVersion);
+            getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
         }
         //Spigot Check
         hasSpigot = getHasSpigot();
@@ -223,9 +219,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         requireToolLore = getConfig().getBoolean("requireToolLore", false);
 
         if(requireToolLore) {
-            editToolLore = getConfig().getString("toolLore", null);
-            if(editToolLore != null) editToolLore = ChatColor.translateAlternateColorCodes('&', editToolLore);
+            editToolLore = getConfig().getList("toolLore", null);
         }
+
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
         requireSneaking = getConfig().getBoolean("requireSneaking", false);
@@ -243,6 +239,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
         opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
         updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+
+        //Ability to get Player Heads via a command
+        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
+
+        adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if(!Scheduler.isFolia() && runTheUpdateChecker) {
@@ -288,7 +289,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
     }
 
-    private void runUpdateCheckerWithOPNotifyOnJoinEnabled() { 
+    private void runUpdateCheckerWithOPNotifyOnJoinEnabled() {
         if (getArmorStandEditorVersion().contains(".x")) {
             getLogger().warning("Note from the development team: ");
             getLogger().warning("It appears that you are using the development version of ArmorStandEditor");
@@ -376,6 +377,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
     }
 
+
+
     public String getArmorStandEditorVersion(){ return getConfig().getString("version"); }
 
     public boolean getArmorStandVisibility(){
@@ -403,6 +406,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     public Integer getCustomModelDataInt() { return this.getConfig().getInt("customModelDataInt"); }
+
+    //New in 1.20-43: Allow the ability to get a player head from a command - ENABLED VIA CONFIG ONLY!
+    public boolean getAllowedToRetrievePlayerHead() { return this.getConfig().getBoolean("allowedToRetrievePlayerHead"); }
+
+    public boolean getAdminOnlyNotifications() { return this.getConfig().getBoolean("adminOnlyNotifications"); }
 
     public boolean isEditTool(ItemStack itemStk){
         if (itemStk == null) { return false; }
@@ -436,14 +444,17 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             if(!itemStk.hasItemMeta()) { return false; }
 
             //Get the lore of the Item and if it is null - Return False
-            String itemLore = String.valueOf(itemMeta.getLore().get(0));
+            List<String> itemLore = itemMeta.getLore();
 
             //If the Item does not have Lore - Return False
             boolean hasTheItemLore = itemMeta.hasLore();
             if (!hasTheItemLore)  { return false; }
 
-            //Item the first thing in the ItemLore List does not Equal the Config Value "editToolLore" - return false
-            if (!itemLore.equalsIgnoreCase(editToolLore))  { return false; } //Does not need simplified - IntelliJ likes to complain here
+            //Get the localised ListString of editToolLore
+            List<String> listStringOfEditToolLore = (List<String>) editToolLore;
+
+            //Return False if itemLore on the item does not match what we expect in the config.
+            if(!itemLore.equals(listStringOfEditToolLore)) { return false; }
 
         }
 
@@ -454,6 +465,101 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             return itemCustomModel.equals(customModelDataInt);
         }
         return true;
+    }
+
+
+    public void performReload() {
+
+        //Unregister Scoreboard before before performing the reload
+        if (!Scheduler.isFolia()) {
+            scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
+            unregisterScoreboards(scoreboard);
+        }
+
+        //Perform Reload
+        reloadConfig();
+
+        //Re-Register Scoreboards
+        if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
+
+        //Reload Config File
+        reloadConfig();
+
+        //Set Language
+        lang = new Language(getConfig().getString("lang"), this);
+
+
+        //Rotation
+        coarseRot = getConfig().getDouble("coarse");
+        fineRot = getConfig().getDouble("fine");
+
+        //Set Tool to be used in game
+        toolType = getConfig().getString("tool");
+        if (toolType != null) {
+            editTool = Material.getMaterial(toolType); //Ignore Warning
+        }
+
+        //Do we require a custom tool name?
+        requireToolName = getConfig().getBoolean("requireToolName", false);
+        if(requireToolName){
+            editToolName = getConfig().getString("toolName", null);
+            if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+        }
+
+        //Custom Model Data
+        allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
+
+        if(allowCustomModelData){
+            customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
+        }
+
+        //ArmorStandVisibility Node
+        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+
+        //Is there NBT Required for the tool
+        requireToolData = getConfig().getBoolean("requireToolData", false);
+
+        if(requireToolData) {
+            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+        }
+
+        requireToolLore = getConfig().getBoolean("requireToolLore", false);
+
+        if(requireToolLore) {
+            editToolLore = getConfig().getList("toolLore", null);
+        }
+
+        //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
+        requireSneaking = getConfig().getBoolean("requireSneaking", false);
+
+        //Send Messages to Action Bar
+        sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+
+        //All ItemFrame Stuff
+        glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
+        invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
+
+        //Add ability to enable ot Disable the running of the Updater
+        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
+
+        //Ability to get Player Heads via a command
+        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
+        adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
+
+        //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
+        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
+        updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+
+        //Run UpdateChecker - Reports out to Console on Startup ONLY!
+        if(!Scheduler.isFolia() && runTheUpdateChecker) {
+
+            if(opUpdateNotification){
+                runUpdateCheckerWithOPNotifyOnJoinEnabled();
+            } else {
+                runUpdateCheckerConsoleUpdateCheck();
+            }
+
+        }
     }
 
     public static ArmorStandEditorPlugin instance(){
@@ -489,8 +595,6 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
                 map.put("Dutch", entry);
             } else if (languageUsed.startsWith("de")) {
                 map.put("German", entry);
-            } else if (languageUsed.startsWith("en")) {
-                map.put("English", entry);
             } else if (languageUsed.startsWith("es")) {
                 map.put("Spanish", entry);
             } else if (languageUsed.startsWith("fr")) {
@@ -510,7 +614,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             } else if(languageUsed.startsWith("pt")) {
                 map.put("Brazilian", entry);
             } else{
-                map.put("Other", entry);
+                map.put("English", entry);
             }
             return map;
         }));

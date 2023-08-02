@@ -22,6 +22,7 @@ setmode:
   invisible: Zmień widoczność
   size: Zmień rozmiar
   disableslots: Zmień zablokowane sloty
+  vulnerability: Toggle vulnerability
   gravity: Zmień grawitację
   baseplate: Zmień podstawę
   placement: Położenie
@@ -55,17 +56,27 @@ pasted:
 target:
   msg: Zablokowano cel.
 notarget:
-  msg: Odblokowano cel.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
 give:
   msg: Player given Item with CustomModelData
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 #warn
 cantedit:
   msg: Nie możesz tego zrobić
@@ -153,6 +164,10 @@ disableslots:
   msg: Wyłącz sloty
   description: 
     msg: Włącza lub wyłącza możliwość ingeręcji w sloty
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 gravity: 
   msg: Grawitacja
   description: 

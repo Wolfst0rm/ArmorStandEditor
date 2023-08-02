@@ -25,6 +25,7 @@ setmode:
   invisible: Toggle Visibility
   size: Toggle Size
   disableslots: Toggle Disable Slots
+  vulnerability: Toggle Vulnerability
   gravity: Toggle Gravity
   baseplate: Toggle BasePlate
   placement: Placement
@@ -33,6 +34,7 @@ setmode:
   paste: Paste
   reset: Reset Pose
   itemframe: Toggle Itemframe Visibility
+  playerhead: Get a Players Head
 setaxis:
   msg: Setting axis to <x>.
   x: X
@@ -58,14 +60,18 @@ pasted:
   msg: ArmorStand state pasted from slot <x>.
 disabledslots:
   msg: Toggled Equipment locks
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 target:
   msg: ArmorStand target locked.
 notarget:
-  msg: ArmorStand target unlocked.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
-  msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
+  msg: Itemframe target locked.
 give:
   msg: Player given Item with CustomModelData
 doubletarget:
@@ -74,6 +80,14 @@ nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
 reloaded:
   msg: Configuration File has been reloaded.
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file and/or check your permissions to confirm that you have asedit.head set to true.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
+playerheadhelp:
+  msg: "Please use /ase playerhead <name> to get a players head. Ex of the command - /ase playerhead Wolfieheart_"
 help:
   msg: "1. Hold the editing tool(<x>) in your main hand
 
@@ -113,7 +127,9 @@ nomodecom:
 noreloadcom:
   msg: You don't have permission to use the reload command!
 nogive:
-  msg: You do not have permission to use the give command.
+  msg: "You either do not have the permission to use the give command or do not allow it in Config.yml"
+noconsolecom:
+  msg: Sorry but this command only works from in-game and not from Console!
 
 #menutitle
 mainmenutitle:
@@ -186,6 +202,10 @@ disableslots:
   msg: Disable Slots
   description:
     msg: Enable and disable equipment lock
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an ArmorStand's vulnerability state
 gravity:
   msg: Gravity
   description:
@@ -226,6 +246,10 @@ itemframevisible:
   msg: Itemframe Visibility
   description:
     msg: Toggles an itemframes visibility
+playerheadmenu:
+  msg: Player Head
+  description:
+    msg: Please use /ase playerhead <name>
 
 #icons (equipment menu)
 disabled:

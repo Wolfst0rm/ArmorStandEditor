@@ -20,6 +20,8 @@
 package io.github.rypofalem.armorstandeditor;
 
 import com.google.common.collect.ImmutableList;
+import io.github.rypofalem.armorstandeditor.api.ArmorStandRenameEvent;
+import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
 
@@ -57,6 +59,7 @@ public class PlayerEditorManager implements Listener {
     private TickCounter counter;
     private ArrayList<ArmorStand> as = null;
     private ArrayList<ItemFrame> itemF = null;
+    private Integer noSize = 0;
 
     // Instantiate protections used to determine whether a player may edit an armor stand or item frame
     //NOTE: GriefPreventionProtection is Depreciated as of v1.19.3-40
@@ -68,8 +71,7 @@ public class PlayerEditorManager implements Listener {
             new SkyblockProtection(),
             new TownyProtection(),
             new WorldGuardProtection(),
-            new BentoBoxProtection(),
-            new ResidenceProtection());
+            new BentoBoxProtection());
 
     PlayerEditorManager( ArmorStandEditorPlugin plugin) {
         this.plugin = plugin;
@@ -135,6 +137,11 @@ public class PlayerEditorManager implements Listener {
                     name = null;
                 }
 
+                //API: ArmorStandRenameEvent
+                ArmorStandRenameEvent e = new ArmorStandRenameEvent(as, player, name);
+                Bukkit.getPluginManager().callEvent(e);
+                if (e.isCancelled()) return;
+
                 if (name == null) {
                     as.setCustomName(null);
                     as.setCustomNameVisible(false);
@@ -175,6 +182,11 @@ public class PlayerEditorManager implements Listener {
             if (player.getInventory().getItemInMainHand().getType().equals(Material.GLOW_INK_SAC) //attempt glowing
                     && player.hasPermission("asedit.basic")
                     && plugin.glowItemFrames && player.isSneaking()) {
+
+                ItemFrameGlowEvent e = new ItemFrameGlowEvent(itemFrame, player);
+                Bukkit.getPluginManager().callEvent(e);
+                if (e.isCancelled()) return;
+
                 ItemStack glowSacs = player.getInventory().getItemInMainHand();
                 ItemStack contents = null;
                 Rotation rotation = null;
@@ -212,18 +224,17 @@ public class PlayerEditorManager implements Listener {
         as = getTargets(player); //Get All ArmorStand closest to player
         itemF = getFrameTargets(player); //Get ItemFrame Closest to Player
 
-        if(as == null)
-            getPlayerEditor(player.getUniqueId()).sendMessage("nodoubletarget", "warn");
-        else if(itemF == null)
-            getPlayerEditor(player.getUniqueId()).sendMessage("nodoubletarget", "warn");
-        else {
-             if (!as.isEmpty() && itemF.isEmpty()) {
-                getPlayerEditor(player.getUniqueId()).setTarget(as);
-            } else if (!itemF.isEmpty() && as.isEmpty()) {
-                getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
-            } else{
-                getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
-            }
+
+        // Check for null and empty lists
+        if (as != null && itemF != null && !as.isEmpty() && !itemF.isEmpty()) {
+            getPlayerEditor(player.getUniqueId()).sendMessage("doubletarget", "warn");
+        } else if (as != null && !as.isEmpty()) {
+            getPlayerEditor(player.getUniqueId()).setTarget(as);
+        } else if (itemF != null && !itemF.isEmpty()) {
+            getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
+        } else { //TODO: Fix the sending of the message Twice in this Statement
+            getPlayerEditor(player.getUniqueId()).setTarget(null);
+            getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
         }
     }
 

@@ -20,6 +20,7 @@ setmode:
   invisible: Toggle Visibility
   size: Alterar tamanho
   disableslots: Alternar Desativar Slots
+  vulnerability: Toggle Vulnerability
   gravity: Toggle Gravity
   baseplate: Alternar a placa da base
   placement: Placement
@@ -56,11 +57,15 @@ disabledslots:
 target:
   msg: ArmorStand target locked.
 notarget:
-  msg: ArmorStand target unlocked.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 give:
   msg: Player given Item with CustomModelData
 doubletarget:
@@ -108,7 +113,12 @@ noreloadcom:
   msg: You don't have permission to use the reload command!
 nogive:
   msg: You do not have permission to use the give command.
-
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 #menutitle
 mainmenutitle:
   msg: Editor do suporte de armaduras
@@ -220,6 +230,10 @@ itemframevisible:
   msg: Itemframe Visibility
   description:
     msg: Toggles an itemframes visibility
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 
 #icons (equipment menu)
 disabled:

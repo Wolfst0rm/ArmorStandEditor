@@ -23,6 +23,7 @@ setmode:
   invisible: Toggle Zichtbaarheid
   size: Toggle Grootte
   disableslots: Toggle Slots Uitschakelen
+  vulnerability: Toggle Kwetsbaarheid.
   gravity: Toggle Zwaartekracht
   baseplate: Toggle Bodemplaat
   placement: Plaatsing
@@ -54,11 +55,15 @@ copied:
 pasted:
   msg: Armorstand status geplakt vanuit slot <x>.
 notarget:
-  msg: ArmorStand target unlocked.
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state gezet op <x>.
+  true: onkwetsbaar
+  false: kwetsbaar
 doubletarget:
   msg: Kijk aub naar een ArmorStand of een ItemFrame, niet allebei!
 nodoubletarget:
@@ -89,7 +94,10 @@ helpurl:
   msg: "Meer info: https://github.com/RypoFalem/ArmorStandEditor/wiki"
 helpdiscord:
   msg: "or kom naar onze Discord: https://discord.gg/3BbJKWpTCj"
-
+playerhead:
+  msg: Player Head opgehaald.
+playerheaderror:
+  msg: Probleem om Player Head af te halen.
 #warn
 cantedit:
   msg: Sorry, je kunt hier geen armorstands aanpassen!
@@ -105,6 +113,8 @@ nomodecom:
   msg: Je moet een modus opgeven!
 nogive:
   msg: Sorry, je hebt geen tostemming om dit command te gebruiken!
+noplayerhead:
+  msg: Schakel de mogelijkheid in om een player head op te halen in het configuratiebestand.
 
 #menutitle
 mainmenutitle:
@@ -209,7 +219,10 @@ copyslot:
   msg: Kopieer Slot <x>
   description:
     msg: Selecteer een slot om instellingen op te slaan
-
+vulnerability:
+  msg: Kwetsbaarheid
+  description:
+    msg: In en uit schakelen van Kwetsbaarheid.
 #icons (equipment menu)
 disabled:
   msg: Uitgeschakeld

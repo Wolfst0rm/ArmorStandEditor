@@ -18,6 +18,7 @@
  */
 package io.github.rypofalem.armorstandeditor;
 
+import io.github.rypofalem.armorstandeditor.api.*;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
@@ -160,6 +161,9 @@ public class PlayerEditor {
             case DISABLESLOTS:
                 toggleDisableSlots(armorStand);
                 break;
+            case VULNERABILITY:
+                toggleInvulnerability(armorStand);
+                break;
             case EQUIPMENT:
                 openEquipment(armorStand);
                 break;
@@ -167,8 +171,6 @@ public class PlayerEditor {
                 resetPosition(armorStand);
                 break;
             case NONE:
-                sendMessage("nomode", null);
-                break;
             default:
                 sendMessage("nomode", null);
                 break;
@@ -178,6 +180,12 @@ public class PlayerEditor {
 
     public void editItemFrame(ItemFrame itemFrame) {
         if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ItemFrameManipulatedEvent event = new ItemFrameManipulatedEvent(itemFrame, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out
+        if (event.isCancelled()) return; //do nothing if cancelled
+
         switch (eMode) {
             case ITEMFRAME:
                 toggleItemFrameVisible(itemFrame);
@@ -186,8 +194,6 @@ public class PlayerEditor {
                 itemFrame.setVisible(true);
                 break;
             case NONE:
-                sendMessage("nomodeif", null);
-                break;
             default:
                 sendMessage("nomodeif", null);
                 break;
@@ -195,6 +201,7 @@ public class PlayerEditor {
     }
 
     private void resetPosition(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.reset")) return;
         armorStand.setHeadPose(new EulerAngle(0, 0, 0));
         armorStand.setBodyPose(new EulerAngle(0, 0, 0));
         armorStand.setLeftArmPose(new EulerAngle(0, 0, 0));
@@ -211,6 +218,11 @@ public class PlayerEditor {
 
     public void reverseEditArmorStand(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.basic")) return;
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out //TODO: Folia Refactor
+        if (event.isCancelled()) return; //do nothing if cancelled
 
         armorStand = attemptTarget(armorStand);
         switch (eMode) {
@@ -244,7 +256,13 @@ public class PlayerEditor {
     }
 
     private void move(ArmorStand armorStand) {
-        if(!getPlayer().hasPermission("asedit.placement")) return;
+        if(!getPlayer().hasPermission("asedit.movement")) return;
+
+        //Generate a new ArmorStandManipulationEvent and call it out.
+        ArmorStandManipulatedEvent event = new ArmorStandManipulatedEvent(armorStand, getPlayer());
+        Bukkit.getPluginManager().callEvent(event); // Bukkit handles the call out //TODO: Folia Refactor
+        if (event.isCancelled()) return; //do nothing if cancelled
+
         Location loc = armorStand.getLocation();
         switch (axis) {
             case X:
@@ -261,7 +279,7 @@ public class PlayerEditor {
     }
 
     private void reverseMove(ArmorStand armorStand) {
-        if(!getPlayer().hasPermission("asedit.placement")) return;
+        if(!getPlayer().hasPermission("asedit.movement")) return;
         Location loc = armorStand.getLocation();
         switch (axis) {
             case X:
@@ -278,6 +296,7 @@ public class PlayerEditor {
     }
 
     private void rotate(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.rotation")) return;
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 + (float) degreeAngleChange) % 360 - 180);
@@ -285,6 +304,7 @@ public class PlayerEditor {
     }
 
     private void reverseRotate(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.rotation")) return;
         Location loc = armorStand.getLocation();
         float yaw = loc.getYaw();
         loc.setYaw((yaw + 180 - (float) degreeAngleChange) % 360 - 180);
@@ -292,12 +312,14 @@ public class PlayerEditor {
     }
 
     private void copy(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.copy")) return;
         copySlots.copyDataToSlot(armorStand);
         sendMessage("copied", "" + (copySlots.currentSlot + 1));
         setMode(EditMode.PASTE);
     }
 
     private void paste(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.paste")) return;
         ArmorStandData data = copySlots.getDataToPaste();
         if (data == null) return;
         armorStand.setHeadPose(data.headPos);
@@ -311,6 +333,8 @@ public class PlayerEditor {
         armorStand.setBasePlate(data.basePlate);
         armorStand.setArms(data.showArms);
         armorStand.setVisible(data.visible);
+
+        //Only Paste the Items on the stand if in Creative Mode - Do not run elsewhere for good fecking reason!
         if (this.getPlayer().getGameMode() == GameMode.CREATIVE) {
             armorStand.getEquipment().setHelmet(data.head);
             armorStand.getEquipment().setChestplate(data.body);
@@ -356,31 +380,44 @@ public class PlayerEditor {
 
     }
 
-    private void toggleGravity(ArmorStand armorStand) { //Fix for Wolfst0rm/ArmorStandEditor-Issues#6: Translation of On/Off Keys are broken
+    private void toggleInvulnerability(ArmorStand armorStand) { //See NewFeature-Request #256 for more info
+        if(!getPlayer().hasPermission("asedit.toggleInvulnerability")) return;
+        armorStand.setInvulnerable(!armorStand.isInvulnerable());
+        sendMessage("toggleinvulnerability", String.valueOf(armorStand.isInvulnerable()));
+    }
+
+
+
+    private void toggleGravity(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.togglegravity")) return;
+
+        //Fix for Wolfst0rm/ArmorStandEditor-Issues#6: Translation of On/Off Keys are broken
         armorStand.setGravity(!armorStand.hasGravity());
         sendMessage("setgravity", String.valueOf(armorStand.hasGravity()));
-
     }
 
     void togglePlate(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.togglebaseplate")) return;
         armorStand.setBasePlate(!armorStand.hasBasePlate());
     }
 
     void toggleArms(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.togglearms")) return;
         armorStand.setArms(!armorStand.hasArms());
     }
 
     void toggleVisible(ArmorStand armorStand) {
-        if (!getPlayer().hasPermission("asedit.armorstand.invisible") || !plugin.armorStandVisibility) return; //Option to use perms or Config
+        if (!getPlayer().hasPermission("asedit.togglearmorstandvisiblity") || !plugin.armorStandVisibility) return; //Option to use perms or Config
         armorStand.setVisible(!armorStand.isVisible());
     }
 
     void toggleItemFrameVisible(ItemFrame itemFrame) {
-        if (!getPlayer().hasPermission("asedit.itemframe.invisible") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
+        if (!getPlayer().hasPermission("asedit.toggleitemframevisibility") || !plugin.invisibleItemFrames) return; //Option to use perms or Config
         itemFrame.setVisible(!itemFrame.isVisible());
     }
 
     void toggleSize(ArmorStand armorStand) {
+        if(!getPlayer().hasPermission("asedit.togglesize")) return;
         armorStand.setSmall(!armorStand.isSmall());
     }
 
@@ -432,7 +469,7 @@ public class PlayerEditor {
         if (armorStands == null || armorStands.isEmpty()) {
             target = null;
             targetList = null;
-            sendMessage("notarget", null);
+            sendMessage("notarget", "armorstand");
         } else {
             if (targetList == null) {
                 targetList = armorStands;
@@ -453,6 +490,12 @@ public class PlayerEditor {
                     sendMessage("target", null);
                 }
             }
+
+            //API: ArmorStandTargetedEvent
+            ArmorStandTargetedEvent e = new ArmorStandTargetedEvent(targetList.get(targetIndex), getPlayer());
+            Bukkit.getPluginManager().callEvent(e); //TODO: Folia Refactor
+            if (e.isCancelled()) return;
+
             target = targetList.get(targetIndex);
             highlight(target); //NOTE: If Targeted and Locked, it displays the TEAM Color Glow: RED
             //      Otherwise, its unlocked and will display WHITE as its not in a team by default
@@ -465,7 +508,7 @@ public class PlayerEditor {
         if (itemFrames == null || itemFrames.isEmpty()) {
             frameTarget = null;
             frameTargetList = null;
-            sendMessage("noframetarget", null);
+            sendMessage("notarget", "itemframe");
         } else {
 
             if (frameTargetList == null) {
@@ -486,6 +529,12 @@ public class PlayerEditor {
                     frameTargetIndex = 0;
                     sendMessage("frametarget", null);
                 }
+
+                //API: ItemFrameTargetedEvent
+                ItemFrameTargetedEvent e = new ItemFrameTargetedEvent(frameTargetList.get(frameTargetIndex), getPlayer());
+                Bukkit.getPluginManager().callEvent(e); //TODO: Folia Refactor
+                if (e.isCancelled()) return;
+
                 frameTarget = frameTargetList.get(frameTargetIndex);
             }
         }
@@ -558,6 +607,13 @@ public class PlayerEditor {
         @Override
         public void run() {
             if (isMenuCancelled()) return;
+
+
+            //API: PlayerOpenMenuEvent
+            PlayerOpenMenuEvent event = new PlayerOpenMenuEvent(getPlayer());
+            Bukkit.getPluginManager().callEvent(event); //TODO: Folia Refactor
+            if (event.isCancelled()) return;
+
             chestMenu.openMenu();
         }
     }

@@ -23,6 +23,7 @@ setmode:
   invisible: 透明化切り替え
   size: サイズ切り替え
   disableslots: 装備スロット無効化の切り替え
+  vulnerability: Toggle Vulnerability
   gravity: 自由落下の切り替え
   baseplate: 土台表示の切り替え
   placement: 本体の配置
@@ -56,15 +57,25 @@ pasted:
 target:
   msg: アーマースタンドの編集対象を保持しました。
 notarget:
-  msg: アーマースタンドの編集対象を保持していません。
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
 frametarget:
   msg: Itemframe target locked
-noframetarget:
-  msg: Itemframe target unlocked.
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 doubletarget:
   msg: Please look at either an ArmorStand or an ItemFrame, not both!
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+playerhead:
+  msg: Player Head retrieved.
+noplayerhead:
+  msg: Please turn on the ability to retrieve player heads in the config file.
+playerheaderror:
+  msg: Unable to Retrieve Player Head.
 help:
   msg: "1. 編集ツール(<x>)を手に持ちます。
 
@@ -212,6 +223,10 @@ helpgui:
   msg: ヘルプ
   description:
     msg: ここをクリックするとヘルプが確認できます！
+vulnerability:
+  msg: Toggle Vulnerability
+  description:
+    msg: Toggles an item's vulnerability state
 
 #icons (equipment menu)
 disabled:

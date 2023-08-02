@@ -67,6 +67,14 @@ nomodecom:
   msg: You must specify a Mode!
 nodoubletarget:
   msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+notarget:
+  msg: <x> target unlocked.
+  armorstand: ArmorStand
+  itemframe: ItemFrame
+toggleinvulnerability:
+  msg: ArmorStand vulnerability state has been toggled to <x>.
+  true: invulnerable
+  false: vulnerable
 
 #menutitle
 mainmenutitle:
