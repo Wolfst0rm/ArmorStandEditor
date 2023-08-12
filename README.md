@@ -107,7 +107,7 @@ RypoFalem for the original version of this plugin. Thank you for all your hard w
 
 Anyone who has contributed to this project with tests, issues, code reviews etc. Thank you!
 
-[![Shamblecraft TEMP](https://pbs.twimg.com/profile_images/1677976650322001928/Aah3YnlH.jpg)](https://namemc.com/server/mc.shamblecraft.net)
+[![Shamblecraft](https://media.discordapp.net/attachments/1017882838739189760/1129352283054940160/logo_trans.png)](https://namemc.com/server/mc.shamblecraft.net)
 
 Shamblecraft for using the plugin originally and giving me the idea to maintain it.
 </center>
