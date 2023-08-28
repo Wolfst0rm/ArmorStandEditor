@@ -133,7 +133,7 @@
         <dependency>
             <groupId>com.intellectualsites.plotsquared</groupId>
             <artifactId>plotsquared-bukkit</artifactId>
-            <version>7.0.0-SNAPSHOT</version>
+            <version>7.0.0</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
