@@ -2,62 +2,250 @@ menu:
   title: "Armor Stand Editor Menu"
   size: 54
   items:
-    1:
-      ItemStack[] items =
-      {
-      xAxis, yAxis, zAxis, null, coarseAdj, fineAdj, null, rotate, place,
-      null, headPos, playerHead, null, null, null, null, null, null,
-      rightArmPos, bodyPos, leftArmPos, reset, null, null, showArms, visibility, size,
-      rightLegPos, equipment, leftLegPos, null, null, toggleVulnerabilty, disableSlots, gravity, plate,
-      null, copy, paste, null, null, null, null, itemFrameVisible, null,
-      slot1, slot2, slot3, slot4, null, null, null, null, help
-      };
+    xaxis:
       material: RED_WOOL
+      name: "X Axis"
       slot: 0
-    2:
+      lore:
+        - "Rotate body parts along the X Axis"
+    yaxis:
       material: GREEN_WOOL
       slot: 1
-    3:
+      name: "Y Axis"
+      lore:
+        - "Rotate body parts along the Y Axis"
+    zaxis:
       material: BLUE_WOOL
       slot: 2
-    4:
+      name: "Z Axis"
+      lore:
+        - "Rotate body parts along the Z Axis"
+    coarseadj:
+      name: "Coarse Adjustment"
+      lore:
+        - "Make large adjustments"
       material: DIRT
       slot: 4
-    5:
+    fineadj:
       material: SANDSTONE
+      name: "Fine Adjustment"
+      lore:
+        - "Make tiny adjustments"
       slot: 5
-    6:
+    rotate:
       material: COMPASS
+      name: "Rotate"
+      lore:
+        - "Rotate the ArmorStand"
       slot: 7
-    7:
+    placement:
       material: MINECART
+      name: "Placement"
+      lore:
+        - "Move the ArmorStand"
       slot: 8
-    8:
+    head:
       material: LEATHER_HELMET
       slot: 10
-    9:
+      name: "Head Position"
+      lore:
+        - "Rotate the head"
+    playerHead:
+      name: "Player Head"
+      lore:
+        - "Please use /ase playerhead <name>"
       material: PLAYER_HEAD
       slot: 11
-    10:
+    body:
+      name: "Body Position"
+      lore:
+        - "Rotate the body"
       material: LEATHER_CHESTPLATE
       slot: 18
-    11:
+    rightleg:
+      name: "Right Leg Position"
+      lore:
+        - "Rotate the right leg"
       material: LEATHER_LEGGINGS
-    12:
+      slot: 27
+    equipment:
+      name: "Equipment"
+      lore:
+        - "Edit the ArmorStand's equipment"
+      material: CHEST
+      slot: 28
+    leftleg:
+      name: "Left Leg Position"
+      lore:
+        - "Rotate the left leg"
       material: LEATHER_LEGGINGS
-    13:
+      slot: 29
+    leftarm:
+      name: "Left Arm Position"
+      lore:
+        - "Rotate the left arm"
       material: STICK
       slot: 20
-    14:
+    reset:
+      name: "Reset Pose"
+      lore:
+        - "Reset bodypart position to default"
       material: LEVER
       slot: 21
-    15:
+    rightarm:
+      name: "Right Arm Position"
+      lore:
+        - "Rotate the right arm"
       material: STICK
       slot: 18
-    16:
+    showarms:
+      name: "Show Arms"
+      lore:
+        - "Turn arms on and off"
       material: STICK
       slot: 24
+    visibility:
+      name: "Visibility"
+      lore:
+        - "Make it visibile or invisible"
+      material: POTION
+      slot: 25
+      effect: INVISIBILITY
+      duration: 999999
+      amplifier: 1
+    size:
+      name: "Size"
+      lore:
+        - "Make it big or small"
+      material: PUFFERFISH
+      slot: 26
+    vulnerability:
+      material: BEDROCK
+      slot: 32
+      name: "Toggle Vulnerability"
+      lore:
+        - "Toggles an ArmorStand's vulnerability state"
+    disableSlots:
+      name: "Disable Slots"
+      lore:
+        - "Enable and disable equipment lock"
+      material: BARRIER
+      slot: 33
+    gravity:
+      name: "Gravity"
+      lore:
+        - "Turn gravity on or off"
+      material: SAND
+      slot: 34
+    plate:
+      name: "BasePlate"
+      lore:
+        - "Turn baseplate on or off"
+      material: STONE_SLAB
+      slot: 35
+    copy:
+      name: "Copy"
+      lore:
+        - "Copy the ArmorStand's settings"
+      material: WRITABLE_BOOK
+      slot: 37
+    paste:
+      name: "Paste"
+      lore:
+        - "Paste the ArmorStand's settings"
+      material: ENCHANTED_BOOK
+      slot: 38
+    itemFrameVisible:
+      name: "ItemFrame Visibility"
+      lore:
+        - "Toggles an itemframe's visibility"
+      material: ITEM_FRAME
+      slot: 43
+    slot1:
+      name: "Slot 1"
+      lore:
+        - "Edit the ArmorStand's equipment"
+      material: DANDELION
+      slot: 45
+    slot2:
+      name: "Slot 2"
+      lore:
+        - "Edit the ArmorStand's equipment"
+      material: AZURE_BLUET
+      slot: 46
+    slot3:
+      name: "Slot 3"
+      lore:
+        - "Edit the ArmorStand's equipment"
+      material: BLUE_ORCHID
+      slot: 47
+    slot4:
+      name: "Slot 4"
+      lore:
+        - "Edit the ArmorStand's equipment"
+      material: PEONY
+      slot: 48
+    help:
+      name: "Help!"
+      lore:
+        - "Click here to get help!"
+      material: NETHER_STAR
+      slot: 53
 
 equipment:
   title: "ArmorStand Equipment"
   size: 18
+  disabled-icon:
+    name: "Disabled"
+    material: BARRIER
+  disabled-slots:
+    - 6
+    - 7
+    - 8
+    - 15
+    - 16
+    - 17
+  slots:
+    helmet: 9
+    chestplate: 10
+    leggings: 11
+    boots: 12
+    rightHand: 13
+    leftHand: 14
+  items:
+    chestIcon:
+      name: "Chest"
+      lore:
+        - "Drag your chestplate into the slot below"
+      material: LEATHER_CHESTPLATE
+      slot: 1
+    headIcon:
+      name: "Head"
+      lore:
+        - "Drag your helemt into the slot below"
+      material: LEATHER_HELMET
+      slot: 0
+    legsIcon:
+      name: "Legs"
+      lore:
+        - "Drag your leggings into the slot below"
+      material: LEATHER_LEGGINGS
+      slot: 2
+    feetIcon:
+      name: "Feet"
+      lore:
+        - "Drag your boots into the slot below"
+      material: LEATHER_BOOTS
+      slot: 3
+    leftHandIcon:
+      name: "Left Hand"
+      lore:
+        - "Drag your left item into the slot below"
+      material: STICK
+      slot: 4
+    rightHandIcon:
+      name: "Right Hand"
+      lore:
+        - "Drag your right item into the slot below"
+      material: STICK
+      slot: 5

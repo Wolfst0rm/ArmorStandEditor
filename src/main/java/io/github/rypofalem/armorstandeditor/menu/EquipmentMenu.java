@@ -21,6 +21,7 @@ package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 import io.github.rypofalem.armorstandeditor.utils.Configuration;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -35,17 +36,17 @@ import java.util.ArrayList;
 
 public class EquipmentMenu implements ItemFactory {
     Inventory menuInv;
-    private PlayerEditor pe;
-    private ArmorStand armorstand;
+    private final PlayerEditor pe;
+    private final ArmorStand armorstand;
     ItemStack helmet, chest, pants, feetsies, rightHand, leftHand;
 
-    public EquipmentMenu(PlayerEditor pe, ArmorStand as){
+    public EquipmentMenu(PlayerEditor pe, ArmorStand as) {
         this.pe = pe;
         this.armorstand = as;
         menuInv = Bukkit.createInventory(pe.getManager().getEquipmentHolder(), Configuration.getGUI().getInt("equipment.size"), Configuration.color(Configuration.getGUI().getString("equipment.title")));
     }
 
-    private void fillInventory(){
+    private void fillInventory() {
         menuInv.clear();
         EntityEquipment equipment = armorstand.getEquipment();
         assert equipment != null;
@@ -57,51 +58,52 @@ public class EquipmentMenu implements ItemFactory {
         ItemStack leftHand = equipment.getItemInOffHand();
         equipment.clear();
 
-        ItemStack disabledIcon = new ItemStack(Material.BARRIER);
+        ItemStack disabledIcon = this.createItem(Configuration.getGUI().getConfigurationSection("equipment.disabled-icon"), (Inventory) null, null);
         ItemMeta meta = disabledIcon.getItemMeta();
-        meta.setDisplayName(pe.plugin.getLang().getMessage("disabled", "warn")); //equipslot.msg <option>
         meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon"); // mark as icon
         disabledIcon.setItemMeta(meta);
 
-        ItemStack helmetIcon = createIcon(Material.LEATHER_HELMET, "helm");
-        ItemStack chestIcon = createIcon(Material.LEATHER_CHESTPLATE, "chest");
-        ItemStack pantsIcon = createIcon(Material.LEATHER_LEGGINGS, "pants");
-        ItemStack feetsiesIcon = createIcon(Material.LEATHER_BOOTS, "boots");
-        ItemStack rightHandIcon = createIcon(Material.WOODEN_SWORD, "rhand");
-        ItemStack leftHandIcon = createIcon(Material.SHIELD, "lhand");
-        ItemStack[] items =
-                { helmetIcon, chestIcon, pantsIcon, feetsiesIcon, rightHandIcon, leftHandIcon, disabledIcon, disabledIcon, disabledIcon,
-                        helmet, chest, pants, feetsies, rightHand, leftHand, disabledIcon, disabledIcon, disabledIcon
-                };
-        menuInv.setContents(items);
+        for (String string : Configuration.getGUI().getStringList("equipment.disabled-slots")) {
+            int slot = NumberUtils.toInt(string, -1);
+            if (slot == -1) continue;
+
+            menuInv.setItem(slot, disabledIcon);
+        }
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.headIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.chestIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.legsIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.feetIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.rightHandIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.leftHandIcon"), menuInv, this::createIcon);
+        menuInv.setItem(Configuration.getGUI().getInt("equipment.slots.helmet"), helmet);
+        menuInv.setItem(Configuration.getGUI().getInt("equipment.slots.chestplate"), chest);
+        menuInv.setItem(Configuration.getGUI().getInt("equipment.slots.leggings"), pants);
+        menuInv.setItem(Configuration.getGUI().getInt("equipment.slots.boots"), feetsies);
+        menuInv.setItem(Configuration.getGUI().getInt("equipment.slots.rightHand"), rightHand);
+        menuInv.setItem(Configuration.getGUI().getInt("equipment.slots.leftHand"), leftHand);
     }
 
-    private ItemStack createIcon(Material mat, String slot){
-        ItemStack icon = new ItemStack(mat);
+    private ItemStack createIcon(ItemStack icon) {
         ItemMeta meta = icon.getItemMeta();
         meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon");
-        meta.setDisplayName(pe.plugin.getLang().getMessage("equipslot", "iconname", slot)); //equipslot.msg <option>
-        ArrayList<String> loreList = new ArrayList<>();
-        loreList.add(pe.plugin.getLang().getMessage("equipslot.description", "icondescription", slot)); //equioslot.description.msg <option>
-        meta.setLore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         icon.setItemMeta(meta);
         return icon;
     }
 
-    public void open(){
+    public void open() {
         fillInventory();
         pe.getPlayer().openInventory(menuInv);
     }
 
-    public void equipArmorstand(){
-        helmet = menuInv.getItem(9);
-        chest = menuInv.getItem(10);
-        pants = menuInv.getItem(11);
-        feetsies = menuInv.getItem(12);
-        rightHand = menuInv.getItem(13);
-        leftHand = menuInv.getItem(14);
+    public void equipArmorstand() {
+        helmet = menuInv.getItem(Configuration.getGUI().getInt("equipment.slots.helmet"));
+        chest = menuInv.getItem(Configuration.getGUI().getInt("equipment.slots.chestplate"));
+        pants = menuInv.getItem(Configuration.getGUI().getInt("equipment.slots.leggings"));
+        feetsies = menuInv.getItem(Configuration.getGUI().getInt("equipment.slots.boots"));
+        rightHand = menuInv.getItem(Configuration.getGUI().getInt("equipment.slots.rightHand"));
+        leftHand = menuInv.getItem(Configuration.getGUI().getInt("equipment.slots.leftHand"));
         armorstand.getEquipment().setHelmet(helmet);
         armorstand.getEquipment().setChestplate(chest);
         armorstand.getEquipment().setLeggings(pants);

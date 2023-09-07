@@ -7,10 +7,14 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -25,8 +29,13 @@ public interface ItemFactory {
         return new ItemFactory() {};
     }
 
-    default ItemStack createItem(ConfigurationSection section) {
-        return createItem(section, null, null);
+    default ItemStack createItem(ConfigurationSection section, Inventory inventory, Function<ItemStack, ItemStack> function) {
+        ItemStack itemStack = createItem(section, (Function<String, String>) null, null);
+        if (itemStack == null || section == null) return itemStack;
+
+        int slot = section.getInt("slot", -1);
+        if (slot != -1 && inventory != null) inventory.setItem(slot, function == null ? itemStack : function.apply(itemStack));
+        return itemStack;
     }
 
     default ItemStack createItem(ConfigurationSection section, Function<String, String> nameReplacements, Function<List<String>, List<String>> loreReplacements) {
@@ -100,6 +109,13 @@ public interface ItemFactory {
             int customModelData = section.getInt("custom-model-data", -1); // Get the custom model data.
             if (customModelData != -1) im.setCustomModelData(customModelData); // Set the custom model data.
         } catch (Throwable ignored) {}
+
+        if (im instanceof PotionMeta) {
+            try {
+                PotionEffect effect = new PotionEffect(PotionEffectType.getByName(section.getString("effect")), section.getInt("duration"), section.getInt("amplifier"));
+                ((PotionMeta) im).addCustomEffect(effect, true);
+            } catch (Throwable ignored) {}
+        }
         itemStack.setItemMeta(im); // Set the item meta.
         return itemStack; // Return the item stack.
     }
