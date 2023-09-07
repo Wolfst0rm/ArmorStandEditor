@@ -1,7 +1,7 @@
 menu:
   title: "Armor Stand Editor Menu"
   size: 54
-  items:
+  clickable-items:
     xaxis:
       material: RED_WOOL
       name: "X Axis"
@@ -195,24 +195,41 @@ menu:
 equipment:
   title: "ArmorStand Equipment"
   size: 18
-  disabled-icon:
-    name: "Disabled"
-    material: BARRIER
-  disabled-slots:
-    - 6
-    - 7
-    - 8
-    - 15
-    - 16
-    - 17
+  items:
+    1:
+      name: "Disabled"
+      material: BARRIER
+      slot: 6
+    2:
+      name: "Disabled"
+      material: BARRIER
+      slot: 7
+    3:
+      name: "Disabled"
+      material: BARRIER
+      slot: 8
+    4:
+      name: "Disabled"
+      material: BARRIER
+      slot: 15
+    5:
+      name: "Disabled"
+      material: BARRIER
+      slot: 16
+    6:
+      name: "Disabled"
+      material: BARRIER
+      slot: 17
+
   slots:
+    # Where the items will be placed
     helmet: 9
     chestplate: 10
     leggings: 11
     boots: 12
     rightHand: 13
     leftHand: 14
-  items:
+  clickable-items:
     chestIcon:
       name: "Chest"
       lore:

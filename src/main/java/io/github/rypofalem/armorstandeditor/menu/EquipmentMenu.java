@@ -24,6 +24,7 @@ import io.github.rypofalem.armorstandeditor.utils.Configuration;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
@@ -33,6 +34,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class EquipmentMenu implements ItemFactory {
     Inventory menuInv;
@@ -58,23 +60,19 @@ public class EquipmentMenu implements ItemFactory {
         ItemStack leftHand = equipment.getItemInOffHand();
         equipment.clear();
 
-        ItemStack disabledIcon = this.createItem(Configuration.getGUI().getConfigurationSection("equipment.disabled-icon"), (Inventory) null, null);
-        ItemMeta meta = disabledIcon.getItemMeta();
-        meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon"); // mark as icon
-        disabledIcon.setItemMeta(meta);
+        ConfigurationSection section = Configuration.getGUI().getConfigurationSection("equipment.items");
+        for (String keys : section == null ? Collections.<String>emptyList() : section.getKeys(false)) {
+            ConfigurationSection itemSection = section.getConfigurationSection(keys);
+            if (itemSection == null) continue;
 
-        for (String string : Configuration.getGUI().getStringList("equipment.disabled-slots")) {
-            int slot = NumberUtils.toInt(string, -1);
-            if (slot == -1) continue;
-
-            menuInv.setItem(slot, disabledIcon);
+            this.createItem(itemSection, menuInv, this::createIcon);
         }
-        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.headIcon"), menuInv, this::createIcon);
-        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.chestIcon"), menuInv, this::createIcon);
-        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.legsIcon"), menuInv, this::createIcon);
-        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.feetIcon"), menuInv, this::createIcon);
-        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.rightHandIcon"), menuInv, this::createIcon);
-        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.items.leftHandIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.clickable-items.headIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.clickable-items.chestIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.clickable-items.legsIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.clickable-items.feetIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.clickable-items.rightHandIcon"), menuInv, this::createIcon);
+        this.createItem(Configuration.getGUI().getConfigurationSection("equipment.clickable-items.leftHandIcon"), menuInv, this::createIcon);
         menuInv.setItem(Configuration.getGUI().getInt("equipment.slots.helmet"), helmet);
         menuInv.setItem(Configuration.getGUI().getInt("equipment.slots.chestplate"), chest);
         menuInv.setItem(Configuration.getGUI().getInt("equipment.slots.leggings"), pants);
