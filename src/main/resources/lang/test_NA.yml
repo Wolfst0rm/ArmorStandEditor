@@ -76,12 +76,6 @@ toggleinvulnerability:
   true: invulnerable
   false: vulnerable
 
-#menutitle
-mainmenutitle:
-  msg: Armor Stand Editor Menu
-equiptitle:
-  msg: ArmorStand Equipment
-
 #icons
 xaxis:
   msg: X Axis

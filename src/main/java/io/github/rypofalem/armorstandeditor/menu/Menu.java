@@ -21,6 +21,7 @@ package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
+import io.github.rypofalem.armorstandeditor.utils.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -34,15 +35,13 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
-public class Menu {
+public class Menu implements ItemFactory {
     private final Inventory menuInv;
     private final PlayerEditor pe;
-    private static String name = "Armor Stand Editor Menu";
 
     public Menu(PlayerEditor pe) {
         this.pe = pe;
-        name = pe.plugin.getLang().getMessage("mainmenutitle", "menutitle");
-        menuInv = Bukkit.createInventory(pe.getManager().getMenuHolder(), 54, name);
+        menuInv = Bukkit.createInventory(pe.getManager().getMenuHolder(), Configuration.getGUI().getInt("menu.size"), Configuration.color(Configuration.getGUI().getString("menu.title")));
         fillInventory();
     }
 
@@ -84,44 +83,31 @@ public class Menu {
         ItemStack playerHead = null;
         ItemStack toggleVulnerabilty = null;
 
-        xAxis = createIcon(new ItemStack(Material.RED_WOOL, 1),
-                "xaxis", "axis x");
+        xAxis = createIcon(new ItemStack(Material.RED_WOOL, 1), "xaxis", "axis x");
 
-        yAxis = createIcon(new ItemStack(Material.GREEN_WOOL, 1),
-                "yaxis", "axis y");
+        yAxis = createIcon(new ItemStack(Material.GREEN_WOOL, 1), "yaxis", "axis y");
 
-        zAxis = createIcon(new ItemStack(Material.BLUE_WOOL, 1),
-                "zaxis", "axis z");
+        zAxis = createIcon(new ItemStack(Material.BLUE_WOOL, 1), "zaxis", "axis z");
 
-        coarseAdj = createIcon(new ItemStack(Material.DIRT, 1),
-                "coarseadj", "adj coarse");
+        coarseAdj = createIcon(new ItemStack(Material.DIRT, 1), "coarseadj", "adj coarse");
 
-        fineAdj = createIcon(new ItemStack(Material.SANDSTONE),
-                "fineadj", "adj fine");
+        fineAdj = createIcon(new ItemStack(Material.SANDSTONE), "fineadj", "adj fine");
 
-        reset = createIcon(new ItemStack(Material.LEVER),
-                "reset", "mode reset");
+        reset = createIcon(new ItemStack(Material.LEVER), "reset", "mode reset");
 
-        headPos = createIcon(new ItemStack(Material.LEATHER_HELMET),
-                "head", "mode head");
+        headPos = createIcon(new ItemStack(Material.LEATHER_HELMET), "head", "mode head");
 
-        bodyPos = createIcon(new ItemStack(Material.LEATHER_CHESTPLATE),
-                "body", "mode body");
+        bodyPos = createIcon(new ItemStack(Material.LEATHER_CHESTPLATE), "body", "mode body");
 
-        leftLegPos = createIcon(new ItemStack(Material.LEATHER_LEGGINGS),
-                "leftleg", "mode leftleg");
+        leftLegPos = createIcon(new ItemStack(Material.LEATHER_LEGGINGS), "leftleg", "mode leftleg");
 
-        rightLegPos = createIcon(new ItemStack(Material.LEATHER_LEGGINGS),
-                "rightleg", "mode rightleg");
+        rightLegPos = createIcon(new ItemStack(Material.LEATHER_LEGGINGS), "rightleg", "mode rightleg");
 
-        leftArmPos = createIcon(new ItemStack(Material.STICK),
-                "leftarm", "mode leftarm");
+        leftArmPos = createIcon(new ItemStack(Material.STICK), "leftarm", "mode leftarm");
 
-        rightArmPos = createIcon(new ItemStack(Material.STICK),
-                "rightarm", "mode rightarm");
+        rightArmPos = createIcon(new ItemStack(Material.STICK), "rightarm", "mode rightarm");
 
-        showArms = createIcon(new ItemStack(Material.STICK),
-                "showarms", "mode showarms");
+        showArms = createIcon(new ItemStack(Material.STICK), "showarms", "mode showarms");
 
         //Praise Start - Sikatsu and cowgod, Nicely spotted this being broken
         if (pe.getPlayer().hasPermission("asedit.togglearmorstandvisibility") ||
@@ -259,9 +245,5 @@ public class Menu {
             fillInventory();
             pe.getPlayer().openInventory(menuInv);
         }
-    }
-
-    public static String getName() {
-        return name;
     }
 }

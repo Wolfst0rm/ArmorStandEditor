@@ -20,6 +20,7 @@
 package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
+import io.github.rypofalem.armorstandeditor.utils.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -32,18 +33,16 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 
-public class EquipmentMenu {
+public class EquipmentMenu implements ItemFactory {
     Inventory menuInv;
     private PlayerEditor pe;
     private ArmorStand armorstand;
-    static String name = "ArmorStand Equipment";
     ItemStack helmet, chest, pants, feetsies, rightHand, leftHand;
 
     public EquipmentMenu(PlayerEditor pe, ArmorStand as){
         this.pe = pe;
         this.armorstand = as;
-        name = pe.plugin.getLang().getMessage("equiptitle", "menutitle");
-        menuInv = Bukkit.createInventory(pe.getManager().getEquipmentHolder(), 18, name);
+        menuInv = Bukkit.createInventory(pe.getManager().getEquipmentHolder(), Configuration.getGUI().getInt("equipment.size"), Configuration.color(Configuration.getGUI().getString("equipment.title")));
     }
 
     private void fillInventory(){
@@ -109,9 +108,5 @@ public class EquipmentMenu {
         armorstand.getEquipment().setBoots(feetsies);
         armorstand.getEquipment().setItemInMainHand(rightHand);
         armorstand.getEquipment().setItemInOffHand(leftHand);
-    }
-
-    public static String getName(){
-        return name;
     }
 }

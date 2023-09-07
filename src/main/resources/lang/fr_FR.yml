@@ -118,12 +118,6 @@ nogive:
 noplayerhead:
   msg: Please turn on the ability to retrieve player heads in the config file.
 
-#menutitle
-mainmenutitle:
-  msg: Menu d'Armor Stand Editor
-equiptitle:
-  msg: Équipement de l'armor stand
-
 #icons
 xaxis:
   msg: Axe X

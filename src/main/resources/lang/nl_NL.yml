@@ -116,12 +116,6 @@ nogive:
 noplayerhead:
   msg: Schakel de mogelijkheid in om een player head op te halen in het configuratiebestand.
 
-#menutitle
-mainmenutitle:
-  msg: Armorstand Aanpassen
-equiptitle:
-  msg: Armorstand Uitrusting
-
 #icons
 xaxis:
   msg: X As

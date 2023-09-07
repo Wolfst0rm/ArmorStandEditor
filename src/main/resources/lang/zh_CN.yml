@@ -121,12 +121,6 @@ noreloadcom:
 nogive:
   msg: 你没有权限运行给予命令!
 
-#菜单标题
-mainmenutitle:
-  msg: 盔甲架编辑器
-equiptitle:
-  msg: 盔甲架装备
-
 #图标
 xaxis:
   msg: X 轴

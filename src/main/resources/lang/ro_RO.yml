@@ -89,13 +89,6 @@ nogive:
 playerheaderror:
   msg: Unable to Retrieve Player Head.
 
-#menutitle
-mainmenutitle:
-  msg: Armor Stand Editor Menu
-equiptitle:
-  msg: Echipament ArmorStand
-
-
 #icons
 xaxis:
   msg: Axa X

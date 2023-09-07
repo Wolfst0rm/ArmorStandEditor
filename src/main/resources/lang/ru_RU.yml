@@ -118,12 +118,6 @@ noplayerhead:
 playerheaderror:
   msg: Unable to Retrieve Player Head.
 
-#menutitle
-mainmenutitle:
-  msg: Редактирование стойки
-equiptitle:
-  msg: Снаряжение стойки
-
 #icons
 xaxis:
   msg: Ось X

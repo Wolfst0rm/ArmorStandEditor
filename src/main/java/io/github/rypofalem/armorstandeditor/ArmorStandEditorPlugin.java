@@ -23,6 +23,7 @@ import io.github.rypofalem.armorstandeditor.language.Language;
 import com.jeff_media.updatechecker.*;
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 
+import io.github.rypofalem.armorstandeditor.utils.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -48,11 +49,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     private NamespacedKey iconKey;
     private static ArmorStandEditorPlugin instance;
-    private Language lang;
+    private final Configuration configuration;
     
     //Server Version Detection: Paper or Spigot and Invalid NMS Version
     String nmsVersion;
-    String languageFolderLocation = "lang/";
     String warningMCVer = "Minecraft Version: ";
     public boolean hasSpigot = false;
     public boolean hasPaper = false;
@@ -103,11 +103,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
     public ArmorStandEditorPlugin(){
         instance = this;
+        this.configuration = new Configuration(this);
     }
 
     @Override
     public void onEnable() {
-
+        configuration.load();
         if (!Scheduler.isFolia())
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
@@ -160,29 +161,28 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
         //saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
         updateConfig("", "config.yml");
-        updateConfig(languageFolderLocation, "de_DE.yml");
-        updateConfig(languageFolderLocation, "es_ES.yml");
-        updateConfig(languageFolderLocation, "fr_FR.yml");
-        updateConfig(languageFolderLocation, "ja_JP.yml");
-        updateConfig(languageFolderLocation, "nl_NL.yml");
-        updateConfig(languageFolderLocation, "pl_PL.yml");
-        updateConfig(languageFolderLocation, "pt_BR.yml");
-        updateConfig(languageFolderLocation, "ro_RO.yml");
-        updateConfig(languageFolderLocation, "ru_RU.yml");
-        updateConfig(languageFolderLocation, "test_NA.yml");
-        updateConfig(languageFolderLocation, "uk_UA.yml");
-        updateConfig(languageFolderLocation, "zh_CN.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "de_DE.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "es_ES.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "fr_FR.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "ja_JP.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "nl_NL.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "pl_PL.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "pt_BR.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "ro_RO.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "ru_RU.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "test_NA.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "uk_UA.yml");
+        updateConfig(Configuration.getLanguageFolderLocation(), "zh_CN.yml");
 
         //English is the default language and needs to be unaltered to so that there is always a backup message string
         saveResource("lang/en_US.yml", true);
-        lang = new Language(getConfig().getString("lang"), this);
 
         //Rotation
-        coarseRot = getConfig().getDouble("coarse");
-        fineRot = getConfig().getDouble("fine");
+        coarseRot = Configuration.getConfig().getDouble("coarse");
+        fineRot = Configuration.getConfig().getDouble("fine");
 
         //Set Tool to be used in game
-        toolType = getConfig().getString("tool");
+        toolType = Configuration.getConfig().getString("tool");
         if (toolType != null) {
             editTool = Material.getMaterial(toolType); //Ignore Warning
         } else {
@@ -193,57 +193,57 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }
         
         //Do we require a custom tool name?
-        requireToolName = getConfig().getBoolean("requireToolName", false);
+        requireToolName = Configuration.getConfig().getBoolean("requireToolName", false);
         if(requireToolName){
-            editToolName = getConfig().getString("toolName", null);
+            editToolName = Configuration.getConfig().getString("toolName", null);
             if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
         }
 
         //Custom Model Data
-        allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
+        allowCustomModelData = Configuration.getConfig().getBoolean("allowCustomModelData", false);
 
         if(allowCustomModelData){
-            customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
+            customModelDataInt = Configuration.getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
         }
 
         //ArmorStandVisibility Node
-        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+        armorStandVisibility = Configuration.getConfig().getBoolean("armorStandVisibility", true);
 
         //Is there NBT Required for the tool
-        requireToolData = getConfig().getBoolean("requireToolData", false);
+        requireToolData = Configuration.getConfig().getBoolean("requireToolData", false);
 
         if(requireToolData) {
-            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+            editToolData = Configuration.getConfig().getInt("toolData", Integer.MIN_VALUE);
         }
 
-        requireToolLore = getConfig().getBoolean("requireToolLore", false);
+        requireToolLore = Configuration.getConfig().getBoolean("requireToolLore", false);
 
         if(requireToolLore) {
-            editToolLore = getConfig().getList("toolLore", null);
+            editToolLore = Configuration.getConfig().getList("toolLore", null);
         }
 
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
-        requireSneaking = getConfig().getBoolean("requireSneaking", false);
+        requireSneaking = Configuration.getConfig().getBoolean("requireSneaking", false);
 
         //Send Messages to Action Bar
-        sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+        sendToActionBar = Configuration.getConfig().getBoolean("sendMessagesToActionBar", true);
 
         //All ItemFrame Stuff
-        glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-        invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
+        glowItemFrames = Configuration.getConfig().getBoolean("glowingItemFrame", true);
+        invisibleItemFrames = Configuration.getConfig().getBoolean("invisibleItemFrames", true);
 
         //Add ability to enable ot Disable the running of the Updater
-        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
+        runTheUpdateChecker = Configuration.getConfig().getBoolean("runTheUpdateChecker", true);
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
-        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
-        updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+        opUpdateNotification = Configuration.getConfig().getBoolean("opUpdateNotification", true);
+        updateCheckerInterval = Configuration.getConfig().getDouble("updateCheckerInterval", 24);
 
         //Ability to get Player Heads via a command
-        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
+        allowedToRetrievePlayerHead = Configuration.getConfig().getBoolean("allowedToRetrievePlayerHead", true);
 
-        adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
+        adminOnlyNotifications = Configuration.getConfig().getBoolean("adminOnlyNotifications", true);
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if(!Scheduler.isFolia() && runTheUpdateChecker) {
@@ -379,22 +379,22 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
 
 
 
-    public String getArmorStandEditorVersion(){ return getConfig().getString("version"); }
+    public String getArmorStandEditorVersion(){ return Configuration.getConfig().getString("version"); }
 
     public boolean getArmorStandVisibility(){
-        return getConfig().getBoolean("armorStandVisibility");
+        return Configuration.getConfig().getBoolean("armorStandVisibility");
     }
 
     public boolean getItemFrameVisibility(){
-        return getConfig().getBoolean("invisibleItemFrames");
+        return Configuration.getConfig().getBoolean("invisibleItemFrames");
     }
 
     public Language getLang(){
-        return lang;
+        return this.configuration.getLang();
     }
 
     public boolean getAllowCustomModelData() {
-        return this.getConfig().getBoolean("allowCustomModelData");
+        return Configuration.getConfig().getBoolean("allowCustomModelData");
     }
 
     public Material getEditTool() {
@@ -402,15 +402,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
     }
 
     public boolean getRunTheUpdateChecker() {
-        return this.getConfig().getBoolean("runTheUpdateChecker");
+        return Configuration.getConfig().getBoolean("runTheUpdateChecker");
     }
 
-    public Integer getCustomModelDataInt() { return this.getConfig().getInt("customModelDataInt"); }
+    public Integer getCustomModelDataInt() { return Configuration.getConfig().getInt("customModelDataInt"); }
 
     //New in 1.20-43: Allow the ability to get a player head from a command - ENABLED VIA CONFIG ONLY!
-    public boolean getAllowedToRetrievePlayerHead() { return this.getConfig().getBoolean("allowedToRetrievePlayerHead"); }
+    public boolean getAllowedToRetrievePlayerHead() { return Configuration.getConfig().getBoolean("allowedToRetrievePlayerHead"); }
 
-    public boolean getAdminOnlyNotifications() { return this.getConfig().getBoolean("adminOnlyNotifications"); }
+    public boolean getAdminOnlyNotifications() { return Configuration.getConfig().getBoolean("adminOnlyNotifications"); }
 
     public boolean isEditTool(ItemStack itemStk){
         if (itemStk == null) { return false; }
@@ -476,79 +476,70 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
             unregisterScoreboards(scoreboard);
         }
 
-        //Perform Reload
-        reloadConfig();
-
+        this.configuration.load();
         //Re-Register Scoreboards
         if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
 
-        //Reload Config File
-        reloadConfig();
-
-        //Set Language
-        lang = new Language(getConfig().getString("lang"), this);
-
-
         //Rotation
-        coarseRot = getConfig().getDouble("coarse");
-        fineRot = getConfig().getDouble("fine");
+        coarseRot = Configuration.getConfig().getDouble("coarse");
+        fineRot = Configuration.getConfig().getDouble("fine");
 
         //Set Tool to be used in game
-        toolType = getConfig().getString("tool");
+        toolType = Configuration.getConfig().getString("tool");
         if (toolType != null) {
             editTool = Material.getMaterial(toolType); //Ignore Warning
         }
 
         //Do we require a custom tool name?
-        requireToolName = getConfig().getBoolean("requireToolName", false);
+        requireToolName = Configuration.getConfig().getBoolean("requireToolName", false);
         if(requireToolName){
-            editToolName = getConfig().getString("toolName", null);
+            editToolName = Configuration.getConfig().getString("toolName", null);
             if(editToolName != null) editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
         }
 
         //Custom Model Data
-        allowCustomModelData = getConfig().getBoolean("allowCustomModelData", false);
+        allowCustomModelData = Configuration.getConfig().getBoolean("allowCustomModelData", false);
 
         if(allowCustomModelData){
-            customModelDataInt = getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
+            customModelDataInt = Configuration.getConfig().getInt("customModelDataInt", Integer.MIN_VALUE);
         }
 
         //ArmorStandVisibility Node
-        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+        armorStandVisibility = Configuration.getConfig().getBoolean("armorStandVisibility", true);
 
         //Is there NBT Required for the tool
-        requireToolData = getConfig().getBoolean("requireToolData", false);
+        requireToolData = Configuration.getConfig().getBoolean("requireToolData", false);
 
         if(requireToolData) {
-            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+            editToolData = Configuration.getConfig().getInt("toolData", Integer.MIN_VALUE);
         }
 
-        requireToolLore = getConfig().getBoolean("requireToolLore", false);
+        requireToolLore = Configuration.getConfig().getBoolean("requireToolLore", false);
 
         if(requireToolLore) {
-            editToolLore = getConfig().getList("toolLore", null);
+            editToolLore = Configuration.getConfig().getList("toolLore", null);
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
-        requireSneaking = getConfig().getBoolean("requireSneaking", false);
+        requireSneaking = Configuration.getConfig().getBoolean("requireSneaking", false);
 
         //Send Messages to Action Bar
-        sendToActionBar = getConfig().getBoolean("sendMessagesToActionBar", true);
+        sendToActionBar = Configuration.getConfig().getBoolean("sendMessagesToActionBar", true);
 
         //All ItemFrame Stuff
-        glowItemFrames = getConfig().getBoolean("glowingItemFrame", true);
-        invisibleItemFrames = getConfig().getBoolean("invisibleItemFrames", true);
+        glowItemFrames = Configuration.getConfig().getBoolean("glowingItemFrame", true);
+        invisibleItemFrames = Configuration.getConfig().getBoolean("invisibleItemFrames", true);
 
         //Add ability to enable ot Disable the running of the Updater
-        runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
+        runTheUpdateChecker = Configuration.getConfig().getBoolean("runTheUpdateChecker", true);
 
         //Ability to get Player Heads via a command
-        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
-        adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
+        allowedToRetrievePlayerHead = Configuration.getConfig().getBoolean("allowedToRetrievePlayerHead", true);
+        adminOnlyNotifications = Configuration.getConfig().getBoolean("adminOnlyNotifications", true);
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
-        opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
-        updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+        opUpdateNotification = Configuration.getConfig().getBoolean("opUpdateNotification", true);
+        updateCheckerInterval = Configuration.getConfig().getDouble("updateCheckerInterval", 24);
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if(!Scheduler.isFolia() && runTheUpdateChecker) {
@@ -572,23 +563,23 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         Metrics metrics = new Metrics(this, PLUGIN_ID);
 
         //RequireToolLore Metric
-        metrics.addCustomChart(new SimplePie("tool_lore_enabled", () -> getConfig().getString("requireToolLore")));
+        metrics.addCustomChart(new SimplePie("tool_lore_enabled", () -> Configuration.getConfig().getString("requireToolLore")));
 
         //RequireToolData
-        metrics.addCustomChart(new SimplePie("tool_data_enabled", () -> getConfig().getString("requireToolData")));
+        metrics.addCustomChart(new SimplePie("tool_data_enabled", () -> Configuration.getConfig().getString("requireToolData")));
 
         //Send Messages to ActionBar
-        metrics.addCustomChart(new SimplePie("action_bar_messages", () -> getConfig().getString("sendMessagesToActionBar")));
+        metrics.addCustomChart(new SimplePie("action_bar_messages", () -> Configuration.getConfig().getString("sendMessagesToActionBar")));
 
         //Check for Sneaking
-        metrics.addCustomChart(new SimplePie("require_sneaking", () -> getConfig().getString("requireSneaking")));
+        metrics.addCustomChart(new SimplePie("require_sneaking", () -> Configuration.getConfig().getString("requireSneaking")));
 
         //Language is used
         metrics.addCustomChart(new DrilldownPie("language_used", () -> {
             Map<String, Map<String, Integer>> map = new HashMap<>();
             Map<String, Integer> entry = new HashMap<>();
 
-            String languageUsed = getConfig().getString("lang");
+            String languageUsed = Configuration.getConfig().getString("lang");
             assert languageUsed != null;
 
             if (languageUsed.startsWith("nl")) {
@@ -620,16 +611,16 @@ public class ArmorStandEditorPlugin extends JavaPlugin{
         }));
 
         //ArmorStandInvis Config
-        metrics.addCustomChart(new SimplePie("armor_stand_invisibility_usage", () -> getConfig().getString("armorStandVisibility")));
+        metrics.addCustomChart(new SimplePie("armor_stand_invisibility_usage", () -> Configuration.getConfig().getString("armorStandVisibility")));
 
         //ArmorStandInvis Config
-        metrics.addCustomChart(new SimplePie("itemframe_invisibility_used", () -> getConfig().getString("invisibleItemFrames")));
+        metrics.addCustomChart(new SimplePie("itemframe_invisibility_used", () -> Configuration.getConfig().getString("invisibleItemFrames")));
 
         //Add tracking to see who is using Custom Naming in BStats
-        metrics.addCustomChart(new SimplePie("custom_toolname_enabled", () -> getConfig().getString("requireToolName")));
+        metrics.addCustomChart(new SimplePie("custom_toolname_enabled", () -> Configuration.getConfig().getString("requireToolName")));
 
-        metrics.addCustomChart(new SimplePie("using_the_update_checker", () -> getConfig().getString("runTheUpdateChecker")));
-        metrics.addCustomChart(new SimplePie("op_updates", () -> getConfig().getString("opUpdateNotification")));
+        metrics.addCustomChart(new SimplePie("using_the_update_checker", () -> Configuration.getConfig().getString("runTheUpdateChecker")));
+        metrics.addCustomChart(new SimplePie("op_updates", () -> Configuration.getConfig().getString("opUpdateNotification")));
 
 
     }

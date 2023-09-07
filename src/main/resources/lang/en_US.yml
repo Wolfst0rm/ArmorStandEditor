@@ -131,12 +131,6 @@ nogive:
 noconsolecom:
   msg: Sorry but this command only works from in-game and not from Console!
 
-#menutitle
-mainmenutitle:
-  msg: Armor Stand Editor Menu
-equiptitle:
-  msg: ArmorStand Equipment
-
 #icons
 xaxis:
   msg: X Axis

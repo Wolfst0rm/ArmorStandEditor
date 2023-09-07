@@ -87,12 +87,6 @@ nomodecom:
 nogive:
   msg: You have no permission to use the give command!
 
-#menutitle
-mainmenutitle:
-  msg: Меню редагування стенду
-equiptitle:
-  msg: Інвертар стенду
-
 #icons
 xaxis:
   msg: Вісь X
