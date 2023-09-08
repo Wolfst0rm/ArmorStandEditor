@@ -31,6 +31,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -117,9 +118,11 @@ public class PlayerEditorManager implements Listener {
 
         if (event.getRightClicked() instanceof ArmorStand) {
             ArmorStand as = (ArmorStand) event.getRightClicked();
-
-            if (!canEdit(player, as)) return;
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
+                event.setCancelled(true);
+                if (!canEdit(player, as)) {
+                    return;
+                }
                 getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
                 event.setCancelled(true);
                 applyRightTool(player, as);
@@ -169,8 +172,11 @@ public class PlayerEditorManager implements Listener {
         } else if (event.getRightClicked() instanceof ItemFrame) {
             ItemFrame itemFrame = (ItemFrame) event.getRightClicked();
 
-            if (!canEdit(player, itemFrame)) return;
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
+                if (!canEdit(player, itemFrame)) {
+                    event.setCancelled(true);
+                    return;
+                }
                 getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
                 if (!itemFrame.getItem().getType().equals(Material.AIR)) {
                     event.setCancelled(true);
@@ -303,9 +309,13 @@ public class PlayerEditorManager implements Listener {
 
 
     boolean canEdit( Player player,  Entity entity) {
+
+        BlockBreakEvent blockBreakEvent = new BlockBreakEvent(entity.getLocation().getBlock(), player);
+        Bukkit.getPluginManager().callEvent(blockBreakEvent);
+        if (blockBreakEvent.isCancelled()) return false;
+
         //Get the Entity being checked for editing
         Block block = entity.getLocation().getBlock();
-
         // Check if all protections allow this edit, if one fails, don't allow edit
         return protections.stream().allMatch(protection -> protection.checkPermission(block, player));
     }
