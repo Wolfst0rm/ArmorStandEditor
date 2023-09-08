@@ -78,7 +78,7 @@ public class Menu implements ItemFactory {
             this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.size"), menuInv, x -> createIcon(x, "mode size"));
         }
         if (pe.getPlayer().hasPermission("asedit.disableslots")) {
-            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.disableSlots"), menuInv, x -> createIcon(x, "slot disableslots"));
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.disableSlots"), menuInv, x -> createIcon(x, "mode disableslots"));
         }
         if (pe.getPlayer().hasPermission("asedit.togglegravity")) {
             this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.gravity"), menuInv, x -> createIcon(x, "mode gravity"));
@@ -90,7 +90,7 @@ public class Menu implements ItemFactory {
             this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.placement"), menuInv, x -> createIcon(x, "mode placement"));
         }
         if (pe.getPlayer().hasPermission("asedit.rotation")) {
-            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.rotate"), menuInv, x -> createIcon(x, "rotate rotate"));
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.rotate"), menuInv, x -> createIcon(x, "mode rotate"));
         }
         if (pe.getPlayer().hasPermission("asedit.equipment")) {
             this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.equipment"), menuInv, x -> createIcon(x, "mode equipment"));
@@ -112,6 +112,8 @@ public class Menu implements ItemFactory {
     }
 
     private ItemStack createIcon(ItemStack icon, String command) {
+        if (icon == null) return null;
+
         ItemMeta meta = icon.getItemMeta();
         assert meta != null;
         meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, command == null ? "" : "ase " + command);

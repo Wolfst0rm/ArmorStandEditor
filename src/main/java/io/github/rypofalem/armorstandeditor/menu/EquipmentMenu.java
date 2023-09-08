@@ -82,6 +82,8 @@ public class EquipmentMenu implements ItemFactory {
     }
 
     private ItemStack createIcon(ItemStack icon) {
+        if (icon == null) return null;
+
         ItemMeta meta = icon.getItemMeta();
         meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon");
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
