@@ -85,7 +85,7 @@ public class PlayerEditorManager implements Listener {
         Scheduler.runTaskTimer(plugin, counter, 1, 1);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     void onArmorStandDamage( EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
@@ -109,7 +109,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     void onArmorStandInteract( PlayerInteractAtEntityEvent event) {
         if (ignoreNextInteract) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
@@ -221,7 +221,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onSwitchHands(PlayerSwapHandItemsEvent event) {
         if (!plugin.isEditTool(event.getOffHandItem())) return; //event assumes they are already switched
         event.setCancelled(true);
@@ -310,9 +310,13 @@ public class PlayerEditorManager implements Listener {
 
     boolean canEdit( Player player,  Entity entity) {
 
-        BlockBreakEvent blockBreakEvent = new BlockBreakEvent(entity.getLocation().getBlock(), player);
-        Bukkit.getPluginManager().callEvent(blockBreakEvent);
-        if (blockBreakEvent.isCancelled()) return false;
+        // get the block the entity is standing on
+//        Block block = entity.getLocation().getBlock();
+        // now get the block the player is standing on
+
+//        BlockBreakEvent blockBreakEvent = new BlockBreakEvent(entity.getLocation().getBlock(), player);
+//        Bukkit.getPluginManager().callEvent(blockBreakEvent);
+//        if (blockBreakEvent.isCancelled()) return false;
 
         //Get the Entity being checked for editing
         Block block = entity.getLocation().getBlock();
@@ -341,7 +345,7 @@ public class PlayerEditorManager implements Listener {
     }
 
     //Unused?
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     void onRightClickTool( PlayerInteractEvent e) {
         if (!(e.getAction() == Action.LEFT_CLICK_AIR
                 || e.getAction() == Action.RIGHT_CLICK_AIR
@@ -355,7 +359,7 @@ public class PlayerEditorManager implements Listener {
         getPlayerEditor(player.getUniqueId()).openMenu();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     void onScrollNCrouch( PlayerItemHeldEvent e) {
         Player player = e.getPlayer();
         if (!player.isSneaking()) return;
@@ -369,7 +373,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     void onPlayerMenuSelect( InventoryClickEvent e) {
         if (e.getInventory().getHolder() == null) return;
         if (!(e.getInventory().getHolder() instanceof ASEHolder)) return;
@@ -395,7 +399,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     void onPlayerMenuClose( InventoryCloseEvent e) {
         if (e.getInventory().getHolder() == null) return;
         if (!(e.getInventory().getHolder() instanceof ASEHolder)) return;
@@ -405,7 +409,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST)
     void onPlayerLogOut( PlayerQuitEvent e) {
         removePlayerEditor(e.getPlayer().getUniqueId());
     }
