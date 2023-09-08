@@ -85,7 +85,7 @@ public class PlayerEditorManager implements Listener {
         Scheduler.runTaskTimer(plugin, counter, 1, 1);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     void onArmorStandDamage( EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
@@ -109,7 +109,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     void onArmorStandInteract( PlayerInteractAtEntityEvent event) {
         if (ignoreNextInteract) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
@@ -221,7 +221,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onSwitchHands(PlayerSwapHandItemsEvent event) {
         if (!plugin.isEditTool(event.getOffHandItem())) return; //event assumes they are already switched
         event.setCancelled(true);
@@ -314,14 +314,9 @@ public class PlayerEditorManager implements Listener {
 //        Block block = entity.getLocation().getBlock();
         // now get the block the player is standing on
 
-//        BlockBreakEvent blockBreakEvent = new BlockBreakEvent(entity.getLocation().getBlock(), player);
-//        Bukkit.getPluginManager().callEvent(blockBreakEvent);
-//        if (blockBreakEvent.isCancelled()) return false;
-
-        //Get the Entity being checked for editing
-        Block block = entity.getLocation().getBlock();
-        // Check if all protections allow this edit, if one fails, don't allow edit
-        return protections.stream().allMatch(protection -> protection.checkPermission(block, player));
+        BlockBreakEvent blockBreakEvent = new BlockBreakEvent(entity.getLocation().getBlock(), player);
+        Bukkit.getPluginManager().callEvent(blockBreakEvent);
+        return !blockBreakEvent.isCancelled();
     }
 
     void applyLeftTool( Player player,  ArmorStand as) {
@@ -345,7 +340,7 @@ public class PlayerEditorManager implements Listener {
     }
 
     //Unused?
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     void onRightClickTool( PlayerInteractEvent e) {
         if (!(e.getAction() == Action.LEFT_CLICK_AIR
                 || e.getAction() == Action.RIGHT_CLICK_AIR
@@ -359,7 +354,7 @@ public class PlayerEditorManager implements Listener {
         getPlayerEditor(player.getUniqueId()).openMenu();
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     void onScrollNCrouch( PlayerItemHeldEvent e) {
         Player player = e.getPlayer();
         if (!player.isSneaking()) return;
@@ -373,7 +368,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     void onPlayerMenuSelect( InventoryClickEvent e) {
         if (e.getInventory().getHolder() == null) return;
         if (!(e.getInventory().getHolder() instanceof ASEHolder)) return;
@@ -399,7 +394,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     void onPlayerMenuClose( InventoryCloseEvent e) {
         if (e.getInventory().getHolder() == null) return;
         if (!(e.getInventory().getHolder() instanceof ASEHolder)) return;
@@ -409,7 +404,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     void onPlayerLogOut( PlayerQuitEvent e) {
         removePlayerEditor(e.getPlayer().getUniqueId());
     }
