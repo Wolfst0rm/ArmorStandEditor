@@ -35,21 +35,19 @@ import java.util.UUID;
 public class PlotSquaredProtection implements Protection {
 
     private final boolean psEnabled;
-    private PlotAPI plotAPI = null;
+    private PlotAPI plotAPI;
 
     public PlotSquaredProtection() {
         psEnabled = Bukkit.getPluginManager().isPluginEnabled("PlotSquared");
 
         if (!psEnabled) return;
-        if(plotAPI == null) return;
-        plotAPI = new PlotAPI();
-
     }
 
     public boolean checkPermission(Block block, Player player) {
         if (!psEnabled) return true;
         if (player.isOp()) return true;
         if (player.hasPermission("asedit.ignoreProtection.plotSquared")) return true;
+        if (plotAPI == null) plotAPI = new PlotAPI();
 
         //Get the Location of the Plot
         Location plotLocation = Location.at(player.getWorld().getName(), BlockVector3.at(block.getX(), block.getY(), block.getZ()));
@@ -68,6 +66,7 @@ public class PlotSquaredProtection implements Protection {
 
         //Get the Player
         PlotPlayer<?> plotPlayer = plotAPI.wrapPlayer(player.getUniqueId());
+
         if(plotPlayer == null) return true;
 
         //Get the UUID of the PlotPlayer
