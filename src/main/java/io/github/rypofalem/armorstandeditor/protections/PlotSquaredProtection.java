@@ -56,13 +56,15 @@ public class PlotSquaredProtection implements Protection {
         PlotArea area = plotLocation.getPlotArea();
 
         //If the Area is not a Plot, then we assume its a road, we return if a player can build on roads or not
-        if(area == null) return player.hasPermission("plots.admin.build.road");
+        if(area == null)
+            return player.hasPermission("plots.admin.build.road");
 
         //Get the Plot
         Plot plot = area.getPlot(plotLocation);
 
         //Rerun the Area check
-        if(plot == null) return player.hasPermission("plots.admin.build.road");
+        if(plot == null)
+            return player.hasPermission("plots.admin.build.road");
 
         //Get the Player
         PlotPlayer<?> plotPlayer = plotAPI.wrapPlayer(player.getUniqueId());
@@ -73,7 +75,7 @@ public class PlotSquaredProtection implements Protection {
         UUID uuid = plotPlayer.getUUID();
 
         //Return if they are added to the plot or if they are OP and have the Permission to build anywhere
-        return plot.isAdded(uuid) || plotPlayer.hasPermission("plots.admin.build.other");
+        return plot.isAdded(uuid) || plotPlayer.hasPermission("plots.admin.build.other") || plotPlayer.hasPermission("plots.admin.build.other");
 
     }
 }
