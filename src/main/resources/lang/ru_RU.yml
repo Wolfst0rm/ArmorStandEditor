@@ -1,4 +1,4 @@
-# Translated by KPidS
+# Translated by KPidS+Hopak120
 
 iconname: 2n
 icondescription: 5
@@ -20,7 +20,7 @@ setmode:
   invisible: переключения видимости
   size: переключения размера
   disableslots: переключения блокировки снаряжения
-  vulnerability: Toggle Vulnerability
+  vulnerability: переключения неуязвимости
   gravity: переключения гравитации
   baseplate: переключения плиты
   placement: изменения расположения
@@ -59,15 +59,15 @@ target:
 notarget:
   msg: Цель стойки разблокирована
 toggleinvulnerability:
-  msg: ArmorStand vulnerability state has been toggled to <x>.
-  true: invulnerable
-  false: vulnerable
+  msg: Стойка стала <x>.
+  true: неуязвимой
+  false: уязвимой
 frametarget:
   msg: Цель рамки заблокирована
 doubletarget:
   msg: Наведитесь на стойку или на рамку, а не на то и другое одновременно.
 nodoubletarget:
-  msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+  msg: Пожалуйста, смотрите на стойку или на рамку прежде чем менять руки!
 reloaded:
   msg: Конфиг перезагружен.
 help:
@@ -90,35 +90,15 @@ helptips:
 helpurl:
   msg: "Больше информации: https://github.com/RypoFalem/ArmorStandEditor/wiki"
 helpdiscord:
-  msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
+  msg: "или присоединитесь к нашему Discord: https://discord.gg/3BbJKWpTCj"
 give:
-  msg: Player given Item with CustomModelData
-stats:
-  msg: Here are the statistics for your ArmorStand.
+  msg: Игроку выдан предмет с CustomModelData.
 
 #warn
 cantedit:
   msg: Вы не можете редактировать стойки тут
 noperm:
   msg: У вас нет прав, чтобы использовать эту команду
-nopermoption:
-  msg: You don't have permission to use the <x> Option!
-  basic: Normal ArmorStand
-  showarms: Show Arms
-  armorstandvisibility: Armor Stand Visibility
-  baseplate: Set Baseplate Visibility
-  gravity: Toggle Gravity
-  vulnerability: Toggle Vulnerability!
-  itemframevisibility: Item Frame Visibility
-  size: Toggle ArmorStand Size
-  disableslots: Toggle Equipment Lock
-  paste: Paste ArmorStand Config
-  copy: Copy ArmorStand Config
-  reset: Reset ArmorStand Config
-  stats: View ArmorStand Statistics
-  armorstandglow: Toggle ArmorStand Glow
-norangestats:
-  msg: Please get next to an ArmorStand before running this command.
 noslotnumcom:
   msg: Укажите номер слота (1-9)
 noadjcom:
@@ -130,17 +110,14 @@ nomodecom:
 noreloadcom:
   msg: У вас нет прав, чтобы использовать эту команду
 nogive:
-  msg: You have no permission to use the give command!
+  msg: У вас нет прав на команду give
 playerhead:
-  msg: Player Head retrieved.
+  msg: Получена голова игрока.
 noplayerhead:
-  msg: Please turn on the ability to retrieve player heads in the config file.
+  msg: Пожалуйста включите возможность получения головы игрока в конфиге.
 playerheaderror:
-  msg: Unable to Retrieve Player Head.
-notincorrectworld:
-  msg: Sorry but you are not in the correct world to use ArmorStandEditor.
-unabledestroycreative:
-  msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
+  msg: Невозможно получить голову игрока
+
 #menutitle
 mainmenutitle:
   msg: Редактирование стойки
@@ -252,18 +229,10 @@ itemframevisible:
   msg: Видимость рамки
   description:
     msg: Включить или выключить видимость рамки
-playerheadmenu:
-  msg: Player Head
+vulnerability:
+  msg: Неуязвимость
   description:
-    msg: Please use /ase playerhead <name>
-blankslot:
-  msg: Nothing here
-  description:
-    msg: Just a placeholder item. Clicking me will not do anything.
-armorstandglow:
-  msg: Toggle ArmorStand Glow
-  description:
-    msg: Turn ArmorStand Glowing on or off.
+    msg: Включить или выключить неуязвимость
 
 #icons (equipment menu)
 disabled:
@@ -276,7 +245,7 @@ equipslot:
     chest: нагрудник
     pants: штаны
     boots: ботинки
-    rhand: предмет для правой руки 
+    rhand: предмет для правой руки
     lhand: предмет для левой руки
   helm: Шлем
   chest: Нагрудник
