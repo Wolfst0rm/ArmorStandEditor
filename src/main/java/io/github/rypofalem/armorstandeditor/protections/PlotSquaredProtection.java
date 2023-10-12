@@ -75,7 +75,7 @@ public class PlotSquaredProtection implements Protection {
         UUID uuid = plotPlayer.getUUID();
 
         //Return if they are added to the plot or if they are OP and have the Permission to build anywhere
-        return plot.isAdded(uuid) || plotPlayer.hasPermission("plots.admin.build.other") || plotPlayer.hasPermission("plots.admin.build.other");
+        return plot.isAdded(uuid) || plotPlayer.hasPermission("plots.admin.build.other");
 
     }
 }

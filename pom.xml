@@ -129,7 +129,6 @@
             <version>7.1.0</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>com.intellectualsites.plotsquared</groupId>
             <artifactId>plotsquared-bukkit</artifactId>
