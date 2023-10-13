@@ -563,7 +563,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
 
         allowedWorldList = getConfig().getList("allowed-worlds", null);
-        if(allowedWorldList != null && allowedWorldList.get(0).equals("*")){
+        if(allowedWorldList.get(0).equals("*")){
             allowedWorldList = getServer().getWorlds();
         }
 
