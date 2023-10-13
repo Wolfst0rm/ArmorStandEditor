@@ -377,119 +377,120 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandStats(Player player) {
-        if(!getPermissionStats(player)) return;
-        for(Entity e : player.getNearbyEntities(1,1,1)){
-            if(e instanceof ArmorStand as){
+        if(getPermissionStats(player)) {
+            for (Entity e : player.getNearbyEntities(1, 1, 1)) {
+                if (e instanceof ArmorStand as) {
 
-                //Calculation TIME - Might move this out later, but is OK here for now
-                double headX = as.getHeadPose().getX();
-                headX = Math.toDegrees(headX);
-                headX = Math.rint(headX);
+                    //Calculation TIME - Might move this out later, but is OK here for now
+                    double headX = as.getHeadPose().getX();
+                    headX = Math.toDegrees(headX);
+                    headX = Math.rint(headX);
 
-                double headY = as.getHeadPose().getY();
-                headY = Math.toDegrees(headY);
-                headY = Math.rint(headY);
+                    double headY = as.getHeadPose().getY();
+                    headY = Math.toDegrees(headY);
+                    headY = Math.rint(headY);
 
-                double headZ = as.getHeadPose().getZ();
-                headZ = Math.toDegrees(headZ);
-                headZ = Math.rint(headZ);
+                    double headZ = as.getHeadPose().getZ();
+                    headZ = Math.toDegrees(headZ);
+                    headZ = Math.rint(headZ);
 
-                //Body
-                double bodyX = as.getBodyPose().getX();
-                bodyX = Math.toDegrees(bodyX);
-                bodyX = Math.rint(bodyX);
+                    //Body
+                    double bodyX = as.getBodyPose().getX();
+                    bodyX = Math.toDegrees(bodyX);
+                    bodyX = Math.rint(bodyX);
 
-                double bodyY = as.getBodyPose().getY();
-                bodyY = Math.toDegrees(bodyY);
-                bodyY = Math.rint(bodyY);
+                    double bodyY = as.getBodyPose().getY();
+                    bodyY = Math.toDegrees(bodyY);
+                    bodyY = Math.rint(bodyY);
 
-                double bodyZ = as.getBodyPose().getZ();
-                bodyZ = Math.toDegrees(bodyZ);
-                bodyZ = Math.rint(bodyZ);
-
-
-                //Arms
-                double rightArmX = as.getRightArmPose().getX();
-                rightArmX = Math.toDegrees(rightArmX);
-                rightArmX = Math.rint(rightArmX);
-
-                double rightArmY = as.getRightArmPose().getY();
-                rightArmY = Math.toDegrees(rightArmY);
-                rightArmY = Math.rint(rightArmY);
-
-                double rightArmZ = as.getRightArmPose().getZ();
-                rightArmZ = Math.toDegrees(rightArmZ);
-                rightArmZ = Math.rint(rightArmZ);
+                    double bodyZ = as.getBodyPose().getZ();
+                    bodyZ = Math.toDegrees(bodyZ);
+                    bodyZ = Math.rint(bodyZ);
 
 
-                double leftArmX = as.getLeftArmPose().getX();
-                leftArmX = Math.toDegrees(leftArmX);
-                leftArmX = Math.rint(leftArmX);
+                    //Arms
+                    double rightArmX = as.getRightArmPose().getX();
+                    rightArmX = Math.toDegrees(rightArmX);
+                    rightArmX = Math.rint(rightArmX);
 
-                double leftArmY = as.getLeftArmPose().getY();
-                leftArmY = Math.toDegrees(leftArmY);
-                leftArmY = Math.rint(leftArmY);
+                    double rightArmY = as.getRightArmPose().getY();
+                    rightArmY = Math.toDegrees(rightArmY);
+                    rightArmY = Math.rint(rightArmY);
 
-                double leftArmZ = as.getLeftArmPose().getZ();
-                leftArmZ = Math.toDegrees(leftArmZ);
-                leftArmZ = Math.rint(leftArmZ);
+                    double rightArmZ = as.getRightArmPose().getZ();
+                    rightArmZ = Math.toDegrees(rightArmZ);
+                    rightArmZ = Math.rint(rightArmZ);
 
-                //Legs
-                double rightLegX = as.getRightLegPose().getX();
-                rightLegX = Math.toDegrees(rightLegX);
-                rightLegX = Math.rint(rightLegX);
 
-                double rightLegY = as.getRightLegPose().getY();
-                rightLegY = Math.toDegrees(rightLegY);
-                rightLegY = Math.rint(rightLegY);
+                    double leftArmX = as.getLeftArmPose().getX();
+                    leftArmX = Math.toDegrees(leftArmX);
+                    leftArmX = Math.rint(leftArmX);
 
-                double rightLegZ = as.getRightLegPose().getZ();
-                rightLegZ = Math.toDegrees(rightLegZ);
-                rightArmX = Math.rint(rightLegZ);
+                    double leftArmY = as.getLeftArmPose().getY();
+                    leftArmY = Math.toDegrees(leftArmY);
+                    leftArmY = Math.rint(leftArmY);
 
-                double leftLegX = as.getLeftLegPose().getX();
-                leftLegX = Math.toDegrees(leftLegX);
-                leftLegX = Math.rint(leftLegX);
+                    double leftArmZ = as.getLeftArmPose().getZ();
+                    leftArmZ = Math.toDegrees(leftArmZ);
+                    leftArmZ = Math.rint(leftArmZ);
 
-                double leftLegY = as.getLeftLegPose().getY();
-                leftLegY = Math.toDegrees(leftLegY);
-                leftLegY = Math.rint(leftLegY);
+                    //Legs
+                    double rightLegX = as.getRightLegPose().getX();
+                    rightLegX = Math.toDegrees(rightLegX);
+                    rightLegX = Math.rint(rightLegX);
 
-                double leftLegZ = as.getLeftLegPose().getZ();
-                leftLegZ = Math.toDegrees(leftLegZ);
-                leftLegZ = Math.rint(leftLegZ);
+                    double rightLegY = as.getRightLegPose().getY();
+                    rightLegY = Math.toDegrees(rightLegY);
+                    rightLegY = Math.rint(rightLegY);
 
-                //Coordinates
-                float locationX = (float) as.getLocation().getX();
-                float locationY = (float) as.getLocation().getY();
-                float locationZ = (float) as.getLocation().getZ();
+                    double rightLegZ = as.getRightLegPose().getZ();
+                    rightLegZ = Math.toDegrees(rightLegZ);
+                    rightArmX = Math.rint(rightLegZ);
 
-                //Toggles
-                boolean isVisible = as.isVisible();
-                boolean armsVisible = as.hasArms();
-                boolean basePlateVisible = as.hasBasePlate();
-                boolean isVulnerable = as.isInvulnerable();
-                boolean hasGravity = as.hasGravity();
-                boolean isSmall = as.isSmall();
-                boolean isGlowing = as.isGlowing();
-                boolean isLocked = plugin.scoreboard.getTeam(plugin.lockedTeam).hasEntry(as.getUniqueId().toString());
+                    double leftLegX = as.getLeftLegPose().getX();
+                    leftLegX = Math.toDegrees(leftLegX);
+                    leftLegX = Math.rint(leftLegX);
 
-                player.sendMessage(ChatColor.YELLOW + "----------- Armor Stand Statistics -----------");
-                player.sendMessage(ChatColor.YELLOW + plugin.getLang().getMessage("stats"));
-                player.sendMessage(ChatColor.YELLOW + "Head: " + ChatColor.AQUA + headX + " / " + headY + " / " + headZ);
-                player.sendMessage(ChatColor.YELLOW + "Body: " + ChatColor.AQUA + bodyX + " / " + bodyY + " / " + bodyZ);
-                player.sendMessage(ChatColor.YELLOW + "Right Arm: " + ChatColor.AQUA + rightArmX + " / " + rightArmY + " / " + rightArmZ);
-                player.sendMessage(ChatColor.YELLOW + "Left Arm: " + ChatColor.AQUA + leftArmX + " / " + leftArmY + " / " + leftArmZ);
-                player.sendMessage(ChatColor.YELLOW + "Right Leg: " + ChatColor.AQUA + rightLegX + " / " + rightLegY + " / " + rightLegZ);
-                player.sendMessage(ChatColor.YELLOW + "Left Leg: " + ChatColor.AQUA + leftLegX + " / " + leftLegY + " / " + leftLegZ);
-                player.sendMessage(ChatColor.YELLOW + "Coordinates: " + ChatColor.AQUA + " x: " + locationX + " / y: " + locationY + " / z: " + locationZ);
-                player.sendMessage(ChatColor.YELLOW + "Is Visible: " + ChatColor.AQUA + isVisible + ". " + ChatColor.YELLOW + "Arms Visible: " + ChatColor.AQUA + armsVisible + ". " + ChatColor.YELLOW + "Base Plate Visible: "+ ChatColor.AQUA + basePlateVisible);
-                player.sendMessage(ChatColor.YELLOW + "Is Vulnerable: " + ChatColor.AQUA + isVulnerable + ". " + ChatColor.YELLOW + "Affected by Gravity: " + ChatColor.AQUA + hasGravity);
-                player.sendMessage(ChatColor.YELLOW + "Is Small: " + ChatColor.AQUA + isSmall + ". " + ChatColor.YELLOW + "Is Glowing: " + ChatColor.AQUA + isGlowing + ". "  + ChatColor.YELLOW + "Is Locked: " + ChatColor.AQUA + isLocked);
-                player.sendMessage(ChatColor.YELLOW + "----------------------------------------------");
-            } else{
-                player.sendMessage(plugin.getLang().getMessage("norangeforstats", "warn"));
+                    double leftLegY = as.getLeftLegPose().getY();
+                    leftLegY = Math.toDegrees(leftLegY);
+                    leftLegY = Math.rint(leftLegY);
+
+                    double leftLegZ = as.getLeftLegPose().getZ();
+                    leftLegZ = Math.toDegrees(leftLegZ);
+                    leftLegZ = Math.rint(leftLegZ);
+
+                    //Coordinates
+                    float locationX = (float) as.getLocation().getX();
+                    float locationY = (float) as.getLocation().getY();
+                    float locationZ = (float) as.getLocation().getZ();
+
+                    //Toggles
+                    boolean isVisible = as.isVisible();
+                    boolean armsVisible = as.hasArms();
+                    boolean basePlateVisible = as.hasBasePlate();
+                    boolean isVulnerable = as.isInvulnerable();
+                    boolean hasGravity = as.hasGravity();
+                    boolean isSmall = as.isSmall();
+                    boolean isGlowing = as.isGlowing();
+                    boolean isLocked = plugin.scoreboard.getTeam(plugin.lockedTeam).hasEntry(as.getUniqueId().toString());
+
+                    player.sendMessage(ChatColor.YELLOW + "----------- Armor Stand Statistics -----------");
+                    player.sendMessage(ChatColor.YELLOW + plugin.getLang().getMessage("stats"));
+                    player.sendMessage(ChatColor.YELLOW + "Head: " + ChatColor.AQUA + headX + " / " + headY + " / " + headZ);
+                    player.sendMessage(ChatColor.YELLOW + "Body: " + ChatColor.AQUA + bodyX + " / " + bodyY + " / " + bodyZ);
+                    player.sendMessage(ChatColor.YELLOW + "Right Arm: " + ChatColor.AQUA + rightArmX + " / " + rightArmY + " / " + rightArmZ);
+                    player.sendMessage(ChatColor.YELLOW + "Left Arm: " + ChatColor.AQUA + leftArmX + " / " + leftArmY + " / " + leftArmZ);
+                    player.sendMessage(ChatColor.YELLOW + "Right Leg: " + ChatColor.AQUA + rightLegX + " / " + rightLegY + " / " + rightLegZ);
+                    player.sendMessage(ChatColor.YELLOW + "Left Leg: " + ChatColor.AQUA + leftLegX + " / " + leftLegY + " / " + leftLegZ);
+                    player.sendMessage(ChatColor.YELLOW + "Coordinates: " + ChatColor.AQUA + " x: " + locationX + " / y: " + locationY + " / z: " + locationZ);
+                    player.sendMessage(ChatColor.YELLOW + "Is Visible: " + ChatColor.AQUA + isVisible + ". " + ChatColor.YELLOW + "Arms Visible: " + ChatColor.AQUA + armsVisible + ". " + ChatColor.YELLOW + "Base Plate Visible: " + ChatColor.AQUA + basePlateVisible);
+                    player.sendMessage(ChatColor.YELLOW + "Is Vulnerable: " + ChatColor.AQUA + isVulnerable + ". " + ChatColor.YELLOW + "Affected by Gravity: " + ChatColor.AQUA + hasGravity);
+                    player.sendMessage(ChatColor.YELLOW + "Is Small: " + ChatColor.AQUA + isSmall + ". " + ChatColor.YELLOW + "Is Glowing: " + ChatColor.AQUA + isGlowing + ". " + ChatColor.YELLOW + "Is Locked: " + ChatColor.AQUA + isLocked);
+                    player.sendMessage(ChatColor.YELLOW + "----------------------------------------------");
+                }
             }
+        }else{
+            player.sendMessage(plugin.getLang().getMessage("norangeforstats", "warn"));
         }
     }
 
