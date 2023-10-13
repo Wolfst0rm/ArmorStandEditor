@@ -227,6 +227,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
 
         allowedWorldList = getConfig().getList("allowed-worlds", null);
+        if(allowedWorldList != null && allowedWorldList.get(0).equals("*")){
+            allowedWorldList = getServer().getWorlds();
+        }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
         requireSneaking = getConfig().getBoolean("requireSneaking", false);
@@ -560,6 +563,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
 
         allowedWorldList = getConfig().getList("allowed-worlds", null);
+        if(allowedWorldList != null && allowedWorldList.get(0).equals("*")){
+            allowedWorldList = getServer().getWorlds();
+        }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
         requireSneaking = getConfig().getBoolean("requireSneaking", false);

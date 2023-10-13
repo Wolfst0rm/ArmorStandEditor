@@ -25,10 +25,9 @@ opUpdateNotification: false
 #----------- WORLD SETTINGS
 # Add in a list of Worlds where ArmorStandEditing is allowed to happen
 # Please add your own worlds to this list. All Default Worlds are supported.
+# To allow ALL Worlds by default - Make sure that your first listed world is "*"
 allowed-worlds:
-  - world
-  - world_nether
-  - world_the_end
+  - "*"
 
 #----------- TOOL SETTINGS
 
