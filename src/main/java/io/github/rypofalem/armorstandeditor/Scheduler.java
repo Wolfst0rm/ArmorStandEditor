@@ -56,8 +56,13 @@ public class Scheduler {
     }
 
     public static Boolean isFolia() {
-        if (IS_FOLIA == null) IS_FOLIA = methodExist(Bukkit.class, "getGlobalRegionScheduler");
-        return IS_FOLIA;
+        try {
+            Class.forName("io.papermc.paper.threadedregions.ThreadedRegionizer");
+        }
+        catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public static Object getGlobalRegionScheduler() {
