@@ -26,10 +26,7 @@ import com.jeff_media.updatechecker.UserAgentBuilder;
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 import io.github.rypofalem.armorstandeditor.language.Language;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -80,6 +77,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     String editToolName = null;
     boolean requireToolLore = false;
     List<?> editToolLore = null;
+    List<?> tempWorldList = null;
     List<?> allowedWorldList = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
@@ -238,7 +236,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         allowedWorldList = getConfig().getList("allowed-worlds", null);
         if(allowedWorldList != null && allowedWorldList.get(0).equals("*")){
-            allowedWorldList = getServer().getWorlds();
+            allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17

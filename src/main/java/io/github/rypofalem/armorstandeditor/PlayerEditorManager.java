@@ -369,7 +369,7 @@ public class PlayerEditorManager implements Listener {
         if (plugin.requireSneaking && !player.isSneaking()) return;
         if (!player.hasPermission("asedit.basic")) return;
 
-        if (!plugin.allowedWorldList.contains(player.getWorld())) { //Implementation for Per World ASE
+        if (!plugin.allowedWorldList.contains(player.getWorld().getName())) { //Implementation for Per World ASE
             getPlayerEditor(player.getUniqueId()).sendMessage("notincorrectworld", "warn");
             e.setCancelled(true);
             return;
