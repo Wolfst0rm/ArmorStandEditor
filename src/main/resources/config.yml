@@ -99,3 +99,7 @@ allowedToRetrievePlayerHead: false
 #Each time the command is used, the admins will be notified that this has been ran but only
 #if this setting is made true
 adminOnlyNotifications: false
+
+#Debug Mode - For Development and Support Purposes ONLY!
+# Do Not Enable. Will Generate ALOT OF NOISE in your Log Files
+debugFlag: false

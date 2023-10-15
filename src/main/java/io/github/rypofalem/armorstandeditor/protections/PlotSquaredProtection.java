@@ -49,15 +49,14 @@ public class PlotSquaredProtection implements Protection {
         if (player.hasPermission("asedit.ignoreProtection.plotSquared")) return true;
         if (plotAPI == null) plotAPI = new PlotAPI();
 
-        //Get the Location of the Plot
-        Location plotLocation = Location.at(player.getWorld().getName(), BlockVector3.at(block.getX(), block.getY(), block.getZ()));
+       //Get the Location of the Plot
+        Location plotLocation = Location.at(block.getWorld().getName(), BlockVector3.at(block.getX(), block.getY(), block.getZ()));
 
         //Get the Area of the PLot
         PlotArea area = plotLocation.getPlotArea();
 
         //If the Area is not a Plot, then we assume its a road, we return if a player can build on roads or not
-        if(area == null)
-            return player.hasPermission("plots.admin.build.road");
+        if(area == null) return true;
 
         //Get the Plot
         Plot plot = area.getPlot(plotLocation);

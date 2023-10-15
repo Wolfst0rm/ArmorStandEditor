@@ -59,7 +59,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     public boolean hasFolia = false;
     String nmsVersionNotLatest = null;
     PluginDescriptionFile pdfFile = this.getDescription();
-    static final String SEPARATOR_FIELD = "================================";
+    public static final String SEPARATOR_FIELD = "================================";
 
     public PlayerEditorManager editorManager;
 
@@ -101,6 +101,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     public Scoreboard scoreboard;
     public Team team;
     String lockedTeam = "ASLocked";
+
+    //Debugging Options.... Not Exposed
+    boolean debugFlag;
 
     private static ArmorStandEditorPlugin plugin;
 
@@ -264,6 +267,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
+        debugFlag = getConfig().getBoolean("debugFlag", false);
+        if(debugFlag){
+            getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
+            getServer().getLogger().warning(" ArmorStandEditor - Debug Mode ");
+            getServer().getLogger().warning("      Debug Mode: ENABLED!     ");
+            getServer().getLogger().warning(" USE THIS FOR DEVELOPMENT PURPOSES ONLY! ");
+            getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
+        }
+
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if (!hasFolia && runTheUpdateChecker) {
 
@@ -396,6 +408,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
     }
 
+    public boolean getHasFolia() {
+        return Scheduler.isFolia();
+    }
 
     public String getArmorStandEditorVersion() {
         return getConfig().getString("version");
@@ -510,9 +525,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
         return true;
     }
-
-
-    public void performReload() {
+        public void performReload() {
 
         //Unregister Scoreboard before before performing the reload
         if (!hasFolia) {
@@ -692,4 +705,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         return iconKey;
     }
 
+    /**
+     * For debugging ASE - Do not use this outside of Development or stuff
+     */
+    public boolean isDebug() {
+        return debugFlag;
+    }
+
+    public void debugMsgHandler(String msg){
+        if(isDebug()) getServer().getLogger().log(Level.WARNING, "[ASE-DEBUG]: {0}", msg);
+    }
 }

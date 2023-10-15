@@ -102,7 +102,7 @@ public class Scheduler {
     }
 
     public static void teleport(Entity entity, Location location) {
-        if (IS_FOLIA) callMethod(Entity.class, entity, "teleportAsync", new Class[]{Location.class}, location);
+        if (isFolia()) callMethod(Entity.class, entity, "teleportAsync", new Class[]{Location.class}, location);
         else entity.teleport(location);
     }
 }

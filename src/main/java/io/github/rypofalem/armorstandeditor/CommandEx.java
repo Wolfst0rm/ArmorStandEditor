@@ -74,6 +74,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof ConsoleCommandSender) { //Fix to Support #267
+            if(plugin.isDebug()) plugin.debugMsgHandler("Sender is CONSOLE!");
             if (args.length == 0) {
                 sender.sendMessage(VERSION);
                 sender.sendMessage(HELP);
@@ -93,11 +94,13 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
 
         if (sender instanceof Player player && !getPermissionBasic(player)) {
+            if(plugin.isDebug()) plugin.debugMsgHandler("Sender is Player but asedit.basic is" + getPermissionBasic(player));
             sender.sendMessage(plugin.getLang().getMessage("nopermoption", "warn", "basic"));
             return true;
         } else {
-
             Player player = (Player) sender;
+
+            if(plugin.isDebug()) plugin.debugMsgHandler("Sender is Player and asedit.basic is" + getPermissionBasic(player));
             if (args.length == 0) {
                 player.sendMessage(LISTMODE);
                 player.sendMessage(LISTAXIS);
@@ -161,6 +164,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandGivePlayerHead(Player player, String[] args) {
+
         if (plugin.getAllowedToRetrievePlayerHead() && checkPermission(player, "head", true)) {
 
             if (args.length == 2) {
@@ -309,6 +313,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     if (args[1].equals("invisible") && !(checkPermission(player, "togglearmorstandvisibility", true) || plugin.getArmorStandVisibility())) return;
                     if (args[1].equals("itemframe") && !(checkPermission(player, "toggleitemframevisibility", true) || plugin.getItemFrameVisibility())) return;
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
+                    if(plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " chose the mode: " + mode);
                     return;
                 }
             }
@@ -339,13 +344,14 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         if (!(checkPermission(player, "update", true))) return;
 
         //Only Run if the Update Command Works
+        if (plugin.isDebug()) plugin.debugMsgHandler("Current ArmorStandEditor Version is: " + plugin.getArmorStandEditorVersion());
         if (plugin.getArmorStandEditorVersion().contains(".x")) {
             player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker will not work on Development Versions.");
             player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
         } else {
-            if (!Scheduler.isFolia() && plugin.getRunTheUpdateChecker()) {
+            if (!plugin.getHasFolia() && plugin.getRunTheUpdateChecker()) {
                 new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID + "").checkNow(player); //Runs Update Check
-            } else if (Scheduler.isFolia()) {
+            } else if (plugin.getHasFolia()) {
                 player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker does not currently work on Folia.");
                 player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
             } else {
@@ -355,6 +361,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandVersion(Player player) {
+        if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " permission check for asedit.update: " + getPermissionUpdate(player));
+
         if (!(getPermissionUpdate(player))) return;
         String verString = plugin.getArmorStandEditorVersion();
         player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
@@ -366,6 +374,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandReload(Player player) {
+        if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " permission check for asedit.reload: " + getPermissionReload(player));
+
         if (!(getPermissionReload(player))) return;
         plugin.performReload();
         player.sendMessage(plugin.getLang().getMessage("reloaded", ""));
@@ -377,6 +387,8 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandStats(Player player) {
+        if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " permission check for asedit.stats: " + getPermissionStats(player));
+
         if(getPermissionStats(player)) {
             for (Entity e : player.getNearbyEntities(1, 1, 1)) {
                 if (e instanceof ArmorStand as) {
@@ -482,7 +494,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.YELLOW + "Left Arm: " + ChatColor.AQUA + leftArmX + " / " + leftArmY + " / " + leftArmZ);
                     player.sendMessage(ChatColor.YELLOW + "Right Leg: " + ChatColor.AQUA + rightLegX + " / " + rightLegY + " / " + rightLegZ);
                     player.sendMessage(ChatColor.YELLOW + "Left Leg: " + ChatColor.AQUA + leftLegX + " / " + leftLegY + " / " + leftLegZ);
-                    player.sendMessage(ChatColor.YELLOW + "Coordinates: " + ChatColor.AQUA + " x: " + locationX + " / y: " + locationY + " / z: " + locationZ);
+                    player.sendMessage(ChatColor.YELLOW + "Coordinates: " + ChatColor.AQUA + " X: " + locationX + " / Y: " + locationY + " / Z: " + locationZ);
                     player.sendMessage(ChatColor.YELLOW + "Is Visible: " + ChatColor.AQUA + isVisible + ". " + ChatColor.YELLOW + "Arms Visible: " + ChatColor.AQUA + armsVisible + ". " + ChatColor.YELLOW + "Base Plate Visible: " + ChatColor.AQUA + basePlateVisible);
                     player.sendMessage(ChatColor.YELLOW + "Is Vulnerable: " + ChatColor.AQUA + isVulnerable + ". " + ChatColor.YELLOW + "Affected by Gravity: " + ChatColor.AQUA + hasGravity);
                     player.sendMessage(ChatColor.YELLOW + "Is Small: " + ChatColor.AQUA + isSmall + ". " + ChatColor.YELLOW + "Is Glowing: " + ChatColor.AQUA + isGlowing + ". " + ChatColor.YELLOW + "Is Locked: " + ChatColor.AQUA + isLocked);

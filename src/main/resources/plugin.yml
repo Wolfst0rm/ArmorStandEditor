@@ -159,6 +159,7 @@ permissions:
       asedit.copy: true
       asedit.paste: true
       asedit.reset: true
+      asedit.stats: true
       asedit.toggleInvulnerability: true
       asedit.togglebaseplate: true
       asedit.togglearms: true
