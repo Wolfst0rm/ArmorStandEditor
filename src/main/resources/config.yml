@@ -23,6 +23,9 @@ check-interval: 24
 opUpdateNotification: false
 
 #----------- WORLD SETTINGS
+# Enable Per World Support for ArmorStandEditor
+enablePerWorldSupport: false
+
 # Add in a list of Worlds where ArmorStandEditing is allowed to happen
 # Please add your own worlds to this list. All Default Worlds are supported.
 # To allow ALL Worlds by default - Make sure that your first listed world is "*"

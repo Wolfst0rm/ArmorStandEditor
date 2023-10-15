@@ -77,7 +77,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     String editToolName = null;
     boolean requireToolLore = false;
     List<?> editToolLore = null;
-    List<?> tempWorldList = null;
+    boolean enablePerWorld = false;
     List<?> allowedWorldList = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
@@ -234,9 +234,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             editToolLore = getConfig().getList("toolLore", null);
         }
 
-        allowedWorldList = getConfig().getList("allowed-worlds", null);
-        if(allowedWorldList != null && allowedWorldList.get(0).equals("*")){
-            allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
+        enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
+        if(enablePerWorld) {
+            allowedWorldList = getConfig().getList("allowed-worlds", null);
+            if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
+                allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
+            }
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
@@ -570,9 +573,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             editToolLore = getConfig().getList("toolLore", null);
         }
 
-        allowedWorldList = getConfig().getList("allowed-worlds", null);
-        if(allowedWorldList.get(0).equals("*")){
-            allowedWorldList = getServer().getWorlds();
+
+        enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
+        if(enablePerWorld) {
+            allowedWorldList = getConfig().getList("allowed-worlds", null);
+            if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
+                allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
+            }
         }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17

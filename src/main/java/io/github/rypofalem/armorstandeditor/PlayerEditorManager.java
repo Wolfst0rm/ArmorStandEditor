@@ -361,20 +361,21 @@ public class PlayerEditorManager implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     void onRightClickTool(PlayerInteractEvent e) {
         if (!(e.getAction() == Action.LEFT_CLICK_AIR
-            || e.getAction() == Action.RIGHT_CLICK_AIR
-            || e.getAction() == Action.LEFT_CLICK_BLOCK
-            || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
+                || e.getAction() == Action.RIGHT_CLICK_AIR
+                || e.getAction() == Action.LEFT_CLICK_BLOCK
+                || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         Player player = e.getPlayer();
         if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
         if (plugin.requireSneaking && !player.isSneaking()) return;
         if (!player.hasPermission("asedit.basic")) return;
 
-        if (!plugin.allowedWorldList.contains(player.getWorld().getName())) { //Implementation for Per World ASE
-            getPlayerEditor(player.getUniqueId()).sendMessage("notincorrectworld", "warn");
-            e.setCancelled(true);
-            return;
+        if (plugin.enablePerWorld){
+            if (!plugin.allowedWorldList.contains(player.getWorld().getName())) { //Implementation for Per World ASE
+                getPlayerEditor(player.getUniqueId()).sendMessage("notincorrectworld", "warn");
+                e.setCancelled(true);
+                return;
+            }
         }
-
         e.setCancelled(true);
         getPlayerEditor(player.getUniqueId()).openMenu();
     }
