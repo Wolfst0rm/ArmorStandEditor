@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.20.2-44</version>
+    <version>1.20.2-44.1</version>
     <name>armorstandeditor</name>
     <url>http://maven.apache.org</url>
 
@@ -152,7 +152,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.99.6.1</version>
+            <version>0.99.6.2</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
@@ -180,7 +180,7 @@
         <dependency>
             <groupId>com.github.angeschossen</groupId>
             <artifactId>LandsAPI</artifactId>
-            <version>6.35.0</version>
+            <version>6.37.0</version>
             <scope>provided</scope>
         </dependency>
         <!-- Bentobox -->
@@ -212,7 +212,7 @@
             <plugin>
                 <groupId>org.openrewrite.maven</groupId>
                 <artifactId>rewrite-maven-plugin</artifactId>
-                <version>5.4.1</version>
+                <version>5.8.1</version>
                 <configuration>
                     <activeRecipes>
                         <recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>
@@ -227,7 +227,7 @@
                     <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-migrate-java</artifactId>
-                        <version>2.0.9</version>
+                        <version>2.1.1</version>
                     </dependency>
                 </dependencies>
             </plugin>

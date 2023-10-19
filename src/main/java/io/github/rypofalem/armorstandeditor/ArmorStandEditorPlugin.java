@@ -26,10 +26,7 @@ import com.jeff_media.updatechecker.UserAgentBuilder;
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 import io.github.rypofalem.armorstandeditor.language.Language;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -59,9 +56,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     String warningMCVer = "Minecraft Version: ";
     public boolean hasSpigot = false;
     public boolean hasPaper = false;
+    public boolean hasFolia = false;
     String nmsVersionNotLatest = null;
     PluginDescriptionFile pdfFile = this.getDescription();
-    static final String SEPARATOR_FIELD = "================================";
+    public static final String SEPARATOR_FIELD = "================================";
 
     public PlayerEditorManager editorManager;
 
@@ -79,6 +77,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     String editToolName = null;
     boolean requireToolLore = false;
     List<?> editToolLore = null;
+    boolean enablePerWorld = false;
     List<?> allowedWorldList = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
@@ -102,6 +101,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     public Scoreboard scoreboard;
     public Team team;
     String lockedTeam = "ASLocked";
+
+    //Debugging Options.... Not Exposed
+    boolean debugFlag;
 
     private static ArmorStandEditorPlugin plugin;
 
@@ -143,6 +145,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         //Spigot Check
         hasSpigot = getHasSpigot();
         hasPaper = getHasPaper();
+        hasFolia = Scheduler.isFolia();
 
         //If Paper and Spigot are both FALSE - Disable the plugin
         if (!hasPaper && !hasSpigot) {
@@ -159,7 +162,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
 
         getServer().getPluginManager().enablePlugin(this);
-        if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
+
+        if (!hasFolia) {
+            scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
+            registerScoreboards(scoreboard);
+        } else {
+            getServer().getLogger().warning("Scoreboards currently do not work on Folia. Scoreboard Coloring will not work");
+        }
+
+
         getLogger().info(SEPARATOR_FIELD);
 
         //saveResource doesn't accept File.separator on Windows, need to hardcode unix separator "/" instead
@@ -226,7 +237,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             editToolLore = getConfig().getList("toolLore", null);
         }
 
-        allowedWorldList = getConfig().getList("allowed-worlds", null);
+        enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
+        if(enablePerWorld) {
+            allowedWorldList = getConfig().getList("allowed-worlds", null);
+            if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
+                allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
+            }
+        }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
         requireSneaking = getConfig().getBoolean("requireSneaking", false);
@@ -250,8 +267,17 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
+        debugFlag = getConfig().getBoolean("debugFlag", false);
+        if(debugFlag){
+            getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
+            getServer().getLogger().warning(" ArmorStandEditor - Debug Mode ");
+            getServer().getLogger().warning("      Debug Mode: ENABLED!     ");
+            getServer().getLogger().warning(" USE THIS FOR DEVELOPMENT PURPOSES ONLY! ");
+            getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
+        }
+
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
-        if (!Scheduler.isFolia() && runTheUpdateChecker) {
+        if (!hasFolia && runTheUpdateChecker) {
 
             if (opUpdateNotification) {
                 runUpdateCheckerWithOPNotifyOnJoinEnabled();
@@ -316,14 +342,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
     private void registerScoreboards(Scoreboard scoreboard) {
-        getLogger().info("Registering Scoreboards required for Glowing Effects");
+        getServer().getLogger().info("Registering Scoreboards required for Glowing Effects");
 
         //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
         if (scoreboard.getTeam(lockedTeam) == null) {
             scoreboard.registerNewTeam(lockedTeam);
-            Objects.requireNonNull(scoreboard.getTeam(lockedTeam)).setColor(ChatColor.RED);
+            scoreboard.getTeam(lockedTeam).setColor(ChatColor.RED);
         } else {
-            getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
+            getServer().getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
         }
     }
 
@@ -350,7 +376,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             if (player.getOpenInventory().getTopInventory().getHolder() == editorManager.getMenuHolder()) player.closeInventory();
         }
 
-        if (!Scheduler.isFolia()) {
+        if (!hasFolia) {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
             unregisterScoreboards(scoreboard);
         }
@@ -374,7 +400,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     public boolean getHasPaper() {
         try {
             Class.forName("com.destroystokyo.paper.PaperConfig");
-            nmsVersionNotLatest = "SpigotMC ASAP.";
+            nmsVersionNotLatest = "PaperMC ASAP.";
             return true;
         } catch (ClassNotFoundException e) {
             nmsVersionNotLatest = "";
@@ -382,6 +408,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
     }
 
+    public boolean getHasFolia() {
+        return Scheduler.isFolia();
+    }
 
     public String getArmorStandEditorVersion() {
         return getConfig().getString("version");
@@ -496,12 +525,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
         return true;
     }
-
-
-    public void performReload() {
+        public void performReload() {
 
         //Unregister Scoreboard before before performing the reload
-        if (!Scheduler.isFolia()) {
+        if (!hasFolia) {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
             unregisterScoreboards(scoreboard);
         }
@@ -510,7 +537,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         reloadConfig();
 
         //Re-Register Scoreboards
-        if (!Scheduler.isFolia()) registerScoreboards(scoreboard);
+        if (!hasFolia) registerScoreboards(scoreboard);
 
         //Reload Config File
         reloadConfig();
@@ -559,7 +586,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             editToolLore = getConfig().getList("toolLore", null);
         }
 
-        allowedWorldList = getConfig().getList("allowed-worlds", null);
+
+        enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
+        if(enablePerWorld) {
+            allowedWorldList = getConfig().getList("allowed-worlds", null);
+            if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
+                allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
+            }
+        }
 
         //Require Sneaking - Wolfst0rm/ArmorStandEditor#17
         requireSneaking = getConfig().getBoolean("requireSneaking", false);
@@ -583,7 +617,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
-        if (!Scheduler.isFolia() && runTheUpdateChecker) {
+        if (!hasFolia && runTheUpdateChecker) {
 
             if (opUpdateNotification) {
                 runUpdateCheckerWithOPNotifyOnJoinEnabled();
@@ -671,4 +705,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         return iconKey;
     }
 
+    /**
+     * For debugging ASE - Do not use this outside of Development or stuff
+     */
+    public boolean isDebug() {
+        return debugFlag;
+    }
+
+    public void debugMsgHandler(String msg){
+        if(isDebug()) getServer().getLogger().log(Level.WARNING, "[ASE-DEBUG]: {0}", msg);
+    }
 }

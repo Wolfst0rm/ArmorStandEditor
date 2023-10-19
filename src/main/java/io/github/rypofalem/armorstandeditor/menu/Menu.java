@@ -239,10 +239,10 @@ public class Menu {
 
         ItemStack[] items = {
                 blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
-                copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, blankSlot,
+                copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
                 slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
                 slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
-                blankSlot, glowing, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot,
+                blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot,
                 blankSlot, showArms, visibility, size, gravity, plate, toggleVulnerabilty, disableSlots, blankSlot
         };
 
