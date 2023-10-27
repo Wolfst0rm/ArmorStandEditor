@@ -24,11 +24,11 @@ public enum AdjustmentMode {
 
     private String name;
 
-    AdjustmentMode(String name){
+    AdjustmentMode(String name) {
         this.name = name;
     }
 
-    public String toString(){
+    public String toString() {
         return name;
     }
 }

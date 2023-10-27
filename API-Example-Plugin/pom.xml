@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.apiexample</groupId>
     <artifactId>armorstandeditor-apitest</artifactId>
     <packaging>jar</packaging>
-    <version>1.20.0-43</version>
+    <version>1.20.1-43.2</version>
     <name>armorstandeditor-apitest</name>
     <url>http://maven.apache.org</url>
 
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>com.github.wolfieheart</groupId>
             <artifactId>armorstandeditor</artifactId>
-            <version>1.20.1-43.1</version>
+            <version>1.20.2-44</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

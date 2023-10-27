@@ -28,7 +28,7 @@ public class ArmorStandData {
     public boolean visible, size, basePlate, gravity, showArms;
     public ItemStack head, body, legs, feetsies, rightHand, leftHand;
 
-    ArmorStandData(ArmorStand as){
+    ArmorStandData(ArmorStand as) {
         this.headPos = as.getHeadPose();
         this.leftArmPos = as.getLeftArmPose();
         this.rightArmPos = as.getRightArmPose();

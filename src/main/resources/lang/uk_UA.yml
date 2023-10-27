@@ -70,12 +70,35 @@ noplayerhead:
   msg: Please turn on the ability to retrieve player heads in the config file.
 playerheaderror:
   msg: Unable to Retrieve Player Head.
-
+notincorrectworld:
+  msg: Sorry but you are not in the correct world to use ArmorStandEditor.
+unabledestroycreative:
+  msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
+stats:
+  msg: Here are the statistics for your ArmorStand.
 #warn  
 cantedit:
   msg: Ти не можеш змінювати стенди тут!
 noperm:
   msg: У тебе нема прав!
+nopermoption:
+  msg: You don't have permission to use the <x> Option!
+  basic: Normal ArmorStand
+  showarms: Show Arms
+  armorstandvisibility: Armor Stand Visibility
+  baseplate: Set Baseplate Visibility
+  gravity: Toggle Gravity
+  vulnerability: Toggle Vulnerability!
+  itemframevisibility: Item Frame Visibility
+  size: Toggle ArmorStand Size
+  disableslots: Toggle Equipment Lock
+  paste: Paste ArmorStand Config
+  copy: Copy ArmorStand Config
+  reset: Reset ArmorStand Config
+  stats: View ArmorStand Statistics
+  armorstandglow: Toggle ArmorStand Glow
+norangestats:
+  msg: Please get next to an ArmorStand before running this command.
 noslotnumcom:
   msg: Уточніть слот!
 noadjcom:
@@ -190,6 +213,22 @@ vulnerability:
   msg: Toggle Vulnerability
   description:
     msg: Toggles an item's vulnerability state
+itemframevisible:
+  msg: Itemframe Visibility
+  description:
+    msg: Toggles an itemframes visibility
+playerheadmenu:
+  msg: Player Head
+  description:
+    msg: Please use /ase playerhead <name>
+blankslot:
+  msg: Nothing here
+  description:
+    msg: Just a placeholder item. Clicking me will not do anything.
+armorstandglow:
+  msg: Toggle ArmorStand Glow
+  description:
+    msg: Turn ArmorStand Glowing on or off.
 
 #icons (equipment)
 disabled:

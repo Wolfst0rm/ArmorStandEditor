@@ -1,4 +1,4 @@
-# Translated by KPidS
+# Translated by KPidS+Hopak120
 
 iconname: 2n
 icondescription: 5
@@ -20,7 +20,7 @@ setmode:
   invisible: переключения видимости
   size: переключения размера
   disableslots: переключения блокировки снаряжения
-  vulnerability: Toggle Vulnerability
+  vulnerability: переключения неуязвимости
   gravity: переключения гравитации
   baseplate: переключения плиты
   placement: изменения расположения
@@ -59,15 +59,15 @@ target:
 notarget:
   msg: Цель стойки разблокирована
 toggleinvulnerability:
-  msg: ArmorStand vulnerability state has been toggled to <x>.
-  true: invulnerable
-  false: vulnerable
+  msg: Стойка стала <x>.
+  true: неуязвимой
+  false: уязвимой
 frametarget:
   msg: Цель рамки заблокирована
 doubletarget:
   msg: Наведитесь на стойку или на рамку, а не на то и другое одновременно.
 nodoubletarget:
-  msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+  msg: Пожалуйста, смотрите на стойку или на рамку прежде чем менять руки!
 reloaded:
   msg: Конфиг перезагружен.
 help:
@@ -90,9 +90,9 @@ helptips:
 helpurl:
   msg: "Больше информации: https://github.com/RypoFalem/ArmorStandEditor/wiki"
 helpdiscord:
-  msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
+  msg: "или присоединитесь к нашему Discord: https://discord.gg/3BbJKWpTCj"
 give:
-  msg: Player given Item with CustomModelData
+  msg: Игроку выдан предмет с CustomModelData.
 
 #warn
 cantedit:
@@ -110,13 +110,13 @@ nomodecom:
 noreloadcom:
   msg: У вас нет прав, чтобы использовать эту команду
 nogive:
-  msg: You have no permission to use the give command!
+  msg: У вас нет прав на команду give
 playerhead:
-  msg: Player Head retrieved.
+  msg: Получена голова игрока.
 noplayerhead:
-  msg: Please turn on the ability to retrieve player heads in the config file.
+  msg: Пожалуйста включите возможность получения головы игрока в конфиге.
 playerheaderror:
-  msg: Unable to Retrieve Player Head.
+  msg: Невозможно получить голову игрока
 
 #menutitle
 mainmenutitle:
@@ -230,9 +230,9 @@ itemframevisible:
   description:
     msg: Включить или выключить видимость рамки
 vulnerability:
-  msg: Toggle Vulnerability
+  msg: Неуязвимость
   description:
-    msg: Toggles an item's vulnerability state
+    msg: Включить или выключить неуязвимость
 
 #icons (equipment menu)
 disabled:
@@ -245,7 +245,7 @@ equipslot:
     chest: нагрудник
     pants: штаны
     boots: ботинки
-    rhand: предмет для правой руки 
+    rhand: предмет для правой руки
     lhand: предмет для левой руки
   helm: Шлем
   chest: Нагрудник

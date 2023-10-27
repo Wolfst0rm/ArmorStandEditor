@@ -55,8 +55,20 @@ pasted:
 #warn
 cantedit:
   msg: Sorry, you cannot edit armor stands here!
-noperm: 
-  msg: You don't have permission to use this!
+noperm:
+  msg: You don't have permission to use the <x> Option!
+  basic: Normal ArmorStand
+  showarms: Show Arms
+  armorstandvisibility: Armor Stand Visibility
+  baseplate: Set Baseplate Visibility
+  gravity: Toggle Gravity
+  vulnerability: Toggle Vulnerability!
+  itemframevisibility: Item Frame Visibility
+  size: Toggle ArmorStand Size
+  disableslots: Toggle Equipment Lock
+  paste: Paste ArmorStand Config
+  copy: Copy ArmorStand Config
+  reset: Reset ArmorStand Config
 noslotnumcom: 
   msg: You must specify a slot number!
 noadjcom:
@@ -75,7 +87,10 @@ toggleinvulnerability:
   msg: ArmorStand vulnerability state has been toggled to <x>.
   true: invulnerable
   false: vulnerable
-
+notincorrectworld:
+  msg: Sorry but you are not in the correct world to use ArmorStandEditor.
+unabledestroycreative:
+  msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
 #menutitle
 mainmenutitle:
   msg: Armor Stand Editor Menu
@@ -179,7 +194,10 @@ copyslot:
   msg: Copy Slot <x>
   description:
     msg: Select a slot to store settings
-
+blankslot:
+  msg: Nothing here
+  description:
+    msg: Just a placeholder item. Clicking me will not do anything.
 #icons (equipment)
 disabled: 
   msg: Disabled

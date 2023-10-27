@@ -3,7 +3,7 @@
 #-----------------------------#
 
 #DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
-version: "1.20.1-43"
+version: "1.20.2-44.1"
 
 #----------- LANGUAGE
 #Name of the language file you wish to use
@@ -13,14 +13,26 @@ version: "1.20.1-43"
 lang: en_US.yml
 
 #----------- UPDATE NOTIFICATIONS
-#Enable or Disable the Update Checker
+# Enable or Disable the Update Checker
 runTheUpdateChecker: true
 
 # When runTheUpdateChecker is true, we will also check every X hours
 check-interval: 24
 
-#Set this to allow your operators to get messages in game w.r.t Plugin updates
+# Set this to allow your operators to get messages in game w.r.t Plugin updates
 opUpdateNotification: false
+
+#----------- WORLD SETTINGS
+# Enable Per World Support for ArmorStandEditor - Not Enabling this
+# means it will work for all worlds by default
+enablePerWorldSupport: false
+
+# Add in a list of Worlds where ArmorStandEditing is allowed to happen
+# Please add your own worlds to this list. All Default Worlds are supported.
+allowed-worlds:
+  - world
+  - world_nether
+  - world_the_end
 
 #----------- TOOL SETTINGS
 
@@ -89,3 +101,7 @@ allowedToRetrievePlayerHead: false
 #Each time the command is used, the admins will be notified that this has been ran but only
 #if this setting is made true
 adminOnlyNotifications: false
+
+#Debug Mode - For Development and Support Purposes ONLY!
+# Do Not Enable. Will Generate ALOT OF NOISE in your Log Files
+debugFlag: false

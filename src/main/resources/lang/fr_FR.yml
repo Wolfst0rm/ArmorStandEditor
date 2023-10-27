@@ -71,6 +71,14 @@ doubletarget:
   msg: Regardez un armor stand ou un item frame, pas les deux!
 nodoubletarget:
   msg: Regardez un armor stand ou un item frame avant de changer de main!
+notincorrectworld:
+  msg: Sorry but you are not in the correct world to use ArmorStandEditor.
+unabledestroycreative:
+  msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
+stats:
+  msg: Here are the statistics for your ArmorStand.
+playerheadhelp:
+  msg: "Please use /ase playerhead <name> to get a players head. Ex of the command - /ase playerhead Wolfieheart_"
 help:
   msg: "1. Tenez l'outil d'édition (<x>) dans votre main principale.
   
@@ -103,8 +111,26 @@ playerheaderror:
 #warn
 cantedit:
   msg: Désolé, vous ne pouvez pas modifier des armor stands ici !
-noperm: 
+noperm:
   msg: Vous n'avez pas la permission d'utiliser ceci !
+nopermoption:
+  msg: You don't have permission to use the <x> Option!
+  basic: Normal ArmorStand
+  showarms: Show Arms
+  armorstandvisibility: Armor Stand Visibility
+  baseplate: Set Baseplate Visibility
+  gravity: Toggle Gravity
+  vulnerability: Toggle Vulnerability!
+  itemframevisibility: Item Frame Visibility
+  size: Toggle ArmorStand Size
+  disableslots: Toggle Equipment Lock
+  paste: Paste ArmorStand Config
+  copy: Copy ArmorStand Config
+  reset: Reset ArmorStand Config
+  stats: View ArmorStand Statistics
+  armorstandglow: Toggle ArmorStand Glow
+norangestats:
+  msg: Please get next to an ArmorStand before running this command.
 noslotnumcom: 
   msg: Vous devez spécifier un numéro d'emplacement de copie !
 noadjcom:
@@ -233,6 +259,18 @@ itemframevisible:
   msg: Visibilité (Item Frame)
   description:
     msg: Rend visible ou invisible un Item Frame
+playerheadmenu:
+  msg: Player Head
+  description:
+    msg: Please use /ase playerhead <name>
+blankslot:
+  msg: Nothing here
+  description:
+    msg: Just a placeholder item. Clicking me will not do anything.
+armorstandglow:
+  msg: Toggle ArmorStand Glow
+  description:
+    msg: Turn ArmorStand Glowing on or off.
 
 #icons (equipment menu)
 disabled: 

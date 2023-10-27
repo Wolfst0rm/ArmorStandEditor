@@ -24,11 +24,11 @@ public enum Axis {
 
     String name;
 
-    Axis(String name){
+    Axis(String name) {
         this.name = name;
     }
 
-    public String toString(){
+    public String toString() {
         return name;
     }
 }

@@ -98,13 +98,16 @@ For Maven Users, if you want to interact directly, you need to add the following
 
 ## Credits / Special Thanks
 <center>
-[![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png)
+
+![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
+
 [JetBrains](https://www.jetbrains.com/), creators of IntelliJ Idea, who are supporting ArmorStandEditor with one of their [Open Source Licenses](https://www.jetbrains.com/opensource/). IntelliJ Idea is the IDE recommended for working with ArmorStandEditor.
 
 RypoFalem for the original version of this plugin. Thank you for all your hard work (Archived on this repository on the branch [Original-Version](https://github.com/Wolfst0rm/ArmorStandEditor/tree/Original-Version) )
 
 Anyone who has contributed to this project with tests, issues, code reviews etc. Thank you!
 
-![Shamblecraft](https://pbs.twimg.com/profile_images/1466015518029193221/lemURPH9_400x400.jpg)
+[![Shamblecraft](https://media.discordapp.net/attachments/1017882838739189760/1129352283054940160/logo_trans.png)](https://namemc.com/server/mc.shamblecraft.net)
+
 Shamblecraft for using the plugin originally and giving me the idea to maintain it.
 </center>

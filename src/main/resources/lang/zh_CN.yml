@@ -2,7 +2,7 @@
 #A section symbol will be inserted between each character in this section
 #http://minecraft.gamepedia.com/Formatting_codes
 #translated by sumdream
-#由 sumdream 和 10935336 翻译
+#由 sumdream , 10935336 和 Thaumiel9 翻译
 iconname: 2n
 icondescription: 5
 info: 6
@@ -11,7 +11,7 @@ menutitle: 8
 
 #信息
 setmode:
-  msg: 设置对象更改为 <x> , 点击盔甲架开始调整。
+  msg: 设置对象更改为 <x> , 点击盔甲架开始调整
   head: 头部
   body: 躯体
   leftleg: 左腿
@@ -23,7 +23,7 @@ setmode:
   invisible: 显隐切换
   size: 大小切换
   disableslots: 物品栏切换
-  vulnerability: Toggle Vulnerability.
+  vulnerability: 可破坏状态切换
   gravity: 重力切换
   baseplate: 底座切换
   placement: 位置
@@ -32,18 +32,18 @@ setmode:
   paste: 粘贴
   reset: 重设角度
 setaxis:
-  msg: 设置坐标为 <x>。
+  msg: 设置坐标为 <x>
   x: X
   y: Y
   z: Z
 setslot:
-  msg: 设定存档槽位 <x>。
+  msg: 设定存档槽位 <x>
 setadj:
-  msg: 设置调整模式 <x>。
+  msg: 设置调整模式 <x>
   coarse: 粗调
   fine: 微调
 setgravity:
-  msg: 重力 <x>。
+  msg: 重力 <x>
   on: 开启
   off: 关闭
 nomode:
@@ -51,75 +51,99 @@ nomode:
 nomodeif:
   msg: 请先点击空气选择设定模式!
 copied:
-  msg: 盔甲架状态已保存于 <x>。
+  msg: 盔甲架状态已保存于 <x>
 pasted:
-  msg: 已从 <x> 粘贴盔甲架状态。
+  msg: 已从 <x> 粘贴盔甲架状态
 target:
-  msg: 目标盔甲架已锁定。
+  msg: 目标盔甲架已锁定
 notarget:
-  msg: <x> target unlocked.
-  armorstand: ArmorStand
-  itemframe: ItemFrame
+  msg: 目标 <x> 已解锁
+  armorstand: 盔甲架
+  itemframe: 物品展示框
 frametarget:
-  msg: 目标物品展示框已锁定。
+  msg: 目标物品展示框已锁定
 doubletarget:
-  msg: 请看向盔甲架或物品展示框，不要两个同时看！
+  msg: 请看向盔甲架或物品展示框, 不要同时看向多个!
 reloaded:
-  msg: 配置文件已重新加载。
+  msg: 配置文件已重新加载
 nodoubletarget:
-  msg: Please look at an ArmorStand or an ItemFrame before switching hands!
+  msg: 请在切换副手前看向盔甲架或物品展示框!
 toggleinvulnerability:
-  msg: ArmorStand vulnerability state has been toggled to <x>.
-  true: invulnerable
-  false: vulnerable
+  msg: 盔甲架可破坏状态已更改为 <x>
+  true: 不可破坏
+  false: 可破坏
 help:
-  msg: "1. 手持编辑工具(<x>)
+  msg: "1. 手持编辑工具(<x>).
 
-      2. 对着盔甲架“左键或右键”来打开菜单。
+      2. 对着盔甲架“左键或右键”来打开菜单.
 
-      3. 选择标记的菜单选项。
+      3. 选择标记的菜单选项.
 
-      4. 使用编辑工具对着盔甲架“左键”以应用那些选项。
+      4. 使用编辑工具对着盔甲架“左键”以应用那些选项.
 
       5. 右键单击可反方向编辑!"
 helptips:
   msg: "小提示:
 
-  1. 当有别的盔甲架挡着你要编辑的盔甲架时，你可以拿着编辑工具按下“切换副手物品”键 (默认为 F) 来标记你想要编辑的盔甲架。
+  1. 当有别的盔甲架挡着你要编辑的盔甲架时, 你可以拿着编辑工具按下“切换副手物品”键(默认为 F)来标记你想要编辑的盔甲架.
 
-  2. 你可以将“命名牌(NameTags)”用于盔甲架 。更重要的是，你可以使用“&样式代码”标签赋予命名牌更多色彩。
+  2. 你可以将“命名牌(NameTags)”用于盔甲架. 更重要的是, 你可以使用“&样式代码”标签赋予命名牌更多色彩.
 
-  3. 你可以在手持编辑工具时使用“潜行(Shift) + 鼠标滚轮”来快速更改要修改的轴而不需要打开菜单。"
+  3. 你可以在手持编辑工具时使用“潜行(Shift) + 鼠标滚轮”来快速更改要修改的轴而不需要打开菜单."
 helpurl:
   msg: "更多信息: https://github.com/RypoFalem/ArmorStandEditor/wiki"
 helpdiscord:
   msg: "或加入我们的讨论区: https://discord.gg/3BbJKWpTCj"
 give:
-  msg: Player given Item with CustomModelData
+  msg: 玩家已获取自定义模型数据的物品
 playerhead:
-  msg: Player Head retrieved.
+  msg: 玩家头颅已获取
 noplayerhead:
-  msg: Please turn on the ability to retrieve player heads in the config file.
+  msg: 请先在配置文件中开启获取玩家头颅功能
 playerheaderror:
-  msg: Unable to Retrieve Player Head.
+  msg: 无法获取玩家头颅
+notincorrectworld:
+  msg: Sorry but you are not in the correct world to use ArmorStandEditor.
+unabledestroycreative:
+  msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
+stats:
+  msg: Here are the statistics for your ArmorStand.
 
 #警告
 cantedit:
-  msg: 对不起,你无法在这编辑盔甲架!
+  msg: 对不起, 你无法在这里编辑盔甲架!
 noperm:
-  msg: 你没有权限这样做！
+  msg: 你没有权限这样做!
+nopermoption:
+  msg: You don't have permission to use the <x> Option!
+  basic: Normal ArmorStand
+  showarms: Show Arms
+  armorstandvisibility: Armor Stand Visibility
+  baseplate: Set Baseplate Visibility
+  gravity: Toggle Gravity
+  vulnerability: Toggle Vulnerability!
+  itemframevisibility: Item Frame Visibility
+  size: Toggle ArmorStand Size
+  disableslots: Toggle Equipment Lock
+  paste: Paste ArmorStand Config
+  copy: Copy ArmorStand Config
+  reset: Reset ArmorStand Config
+  stats: View ArmorStand Statistics
+  armorstandglow: Toggle ArmorStand Glow
+norangestats:
+  msg: Please get next to an ArmorStand before running this command.
 noslotnumcom:
   msg: 你必须选择一个物品栏!
 noadjcom:
-  msg: 你必须选择一个调整模式（粗调/微调）!
+  msg: 你必须选择一个调整模式(粗调/微调)!
 noaxiscom:
   msg: 你必须选择一个坐标轴!
 nomodecom:
   msg: 你必须选择一个部位!
 noreloadcom:
-  msg: 你没有权限运行重载命令！
+  msg: 你没有权限运行重载命令!
 nogive:
-  msg: You have no permission to use the give command!
+  msg: 你没有权限运行给予命令!
 
 #菜单标题
 mainmenutitle:
@@ -232,7 +256,19 @@ itemframevisible:
   msg: 物品展示框显隐切换
   description:
     msg: 显示/隐形物品展示框
-    
+blankslot:
+  msg: Nothing here
+  description:
+    msg: Just a placeholder item. Clicking me will not do anything.
+playerheadmenu:
+  msg: Player Head
+  description:
+    msg: Please use /ase playerhead <name>
+armorstandglow:
+  msg: Toggle ArmorStand Glow
+  description:
+    msg: Turn ArmorStand Glowing on or off.
+
 #图标 (装备)
 disabled:
   msg: 关闭

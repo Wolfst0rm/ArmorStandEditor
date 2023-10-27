@@ -21,19 +21,20 @@ package io.github.rypofalem.armorstandeditor.protections;
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import com.bgsoftware.superiorskyblock.api.island.Island;
 import com.bgsoftware.superiorskyblock.api.wrappers.SuperiorPlayer;
+
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-public class SkyblockProtection implements Protection  {
+public class SkyblockProtection implements Protection {
     private final boolean skyblockEnabled;
 
-    public SkyblockProtection(){
+    public SkyblockProtection() {
         //NOTE FROM AUTHOR: I know there are many plugins that have Skyblock. I am using SuperiorSkyBlock2 as an Example!
         //IF YOU WANT YOUR SKYBLOCK ADDED, PLEASE SUBMIT A FEATURE REQUEST!
 
         skyblockEnabled = Bukkit.getPluginManager().isPluginEnabled("SuperiorSkyblock2");
-        if(!skyblockEnabled) return;
+        if (!skyblockEnabled) return;
     }
 
     public boolean checkPermission(Block block, Player player) {

@@ -20,6 +20,7 @@
 package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -39,14 +40,14 @@ public class EquipmentMenu {
     static String name = "ArmorStand Equipment";
     ItemStack helmet, chest, pants, feetsies, rightHand, leftHand;
 
-    public EquipmentMenu(PlayerEditor pe, ArmorStand as){
+    public EquipmentMenu(PlayerEditor pe, ArmorStand as) {
         this.pe = pe;
         this.armorstand = as;
         name = pe.plugin.getLang().getMessage("equiptitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getEquipmentHolder(), 18, name);
     }
 
-    private void fillInventory(){
+    private void fillInventory() {
         menuInv.clear();
         EntityEquipment equipment = armorstand.getEquipment();
         assert equipment != null;
@@ -71,13 +72,13 @@ public class EquipmentMenu {
         ItemStack rightHandIcon = createIcon(Material.WOODEN_SWORD, "rhand");
         ItemStack leftHandIcon = createIcon(Material.SHIELD, "lhand");
         ItemStack[] items =
-                { helmetIcon, chestIcon, pantsIcon, feetsiesIcon, rightHandIcon, leftHandIcon, disabledIcon, disabledIcon, disabledIcon,
-                        helmet, chest, pants, feetsies, rightHand, leftHand, disabledIcon, disabledIcon, disabledIcon
-                };
+            {helmetIcon, chestIcon, pantsIcon, feetsiesIcon, rightHandIcon, leftHandIcon, disabledIcon, disabledIcon, disabledIcon,
+                helmet, chest, pants, feetsies, rightHand, leftHand, disabledIcon, disabledIcon, disabledIcon
+            };
         menuInv.setContents(items);
     }
 
-    private ItemStack createIcon(Material mat, String slot){
+    private ItemStack createIcon(Material mat, String slot) {
         ItemStack icon = new ItemStack(mat);
         ItemMeta meta = icon.getItemMeta();
         meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon");
@@ -91,12 +92,12 @@ public class EquipmentMenu {
         return icon;
     }
 
-    public void open(){
+    public void open() {
         fillInventory();
         pe.getPlayer().openInventory(menuInv);
     }
 
-    public void equipArmorstand(){
+    public void equipArmorstand() {
         helmet = menuInv.getItem(9);
         chest = menuInv.getItem(10);
         pants = menuInv.getItem(11);
@@ -111,7 +112,7 @@ public class EquipmentMenu {
         armorstand.getEquipment().setItemInOffHand(leftHand);
     }
 
-    public static String getName(){
+    public static String getName() {
         return name;
     }
 }

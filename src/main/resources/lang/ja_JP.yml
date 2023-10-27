@@ -76,6 +76,14 @@ noplayerhead:
   msg: Please turn on the ability to retrieve player heads in the config file.
 playerheaderror:
   msg: Unable to Retrieve Player Head.
+unabledestroycreative:
+  msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
+notincorrectworld:
+  msg: Sorry but you are not in the correct world to use ArmorStandEditor.
+stats:
+  msg: Here are the statistics for your ArmorStand.
+playerheadhelp:
+  msg: "Please use /ase playerhead <name> to get a players head. Ex of the command - /ase playerhead Wolfieheart_"
 help:
   msg: "1. 編集ツール(<x>)を手に持ちます。
 
@@ -104,6 +112,24 @@ cantedit:
   msg: 申し訳ありません、ここでアーマースタンドを編集することができません！
 noperm:
   msg: 使用する権限がありません！
+nopermoption:
+  msg: You don't have permission to use the <x> Option!
+  basic: Normal ArmorStand
+  showarms: Show Arms
+  armorstandvisibility: Armor Stand Visibility
+  baseplate: Set Baseplate Visibility
+  gravity: Toggle Gravity
+  vulnerability: Toggle Vulnerability!
+  itemframevisibility: Item Frame Visibility
+  size: Toggle ArmorStand Size
+  disableslots: Toggle Equipment Lock
+  paste: Paste ArmorStand Config
+  copy: Copy ArmorStand Config
+  reset: Reset ArmorStand Config
+  stats: View ArmorStand Statistics
+  armorstandglow: Toggle ArmorStand Glow
+norangestats:
+  msg: Please get next to an ArmorStand before running this command.
 noslotnumcom:
   msg: スロット番号を指定する必要があります！
 noadjcom:
@@ -223,10 +249,22 @@ helpgui:
   msg: ヘルプ
   description:
     msg: ここをクリックするとヘルプが確認できます！
-vulnerability:
-  msg: Toggle Vulnerability
+itemframevisible:
+  msg: Itemframe Visibility
   description:
-    msg: Toggles an item's vulnerability state
+    msg: Toggles an itemframes visibility
+playerheadmenu:
+  msg: Player Head
+  description:
+    msg: Please use /ase playerhead <name>
+blankslot:
+  msg: Nothing here
+  description:
+    msg: Just a placeholder item. Clicking me will not do anything.
+armorstandglow:
+  msg: Toggle ArmorStand Glow
+  description:
+    msg: Turn ArmorStand Glowing on or off.
 
 #icons (equipment menu)
 disabled:
