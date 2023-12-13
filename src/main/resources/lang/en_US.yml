@@ -160,6 +160,8 @@ mainmenutitle:
   msg: Armor Stand Editor Menu
 equiptitle:
   msg: ArmorStand Equipment
+presettitle:
+  msg: Pre-Set ArmorStand Poses
 
 #icons
 xaxis:
@@ -282,6 +284,10 @@ armorstandglow:
   msg: Toggle ArmorStand Glow
   description:
     msg: Turn ArmorStand Glowing on or off.
+presetmenu:
+  msg: Preset Poses
+  description:
+    msg: Use a Preset Pose for your ArmorStand [Will Open another Menu]
 
 #icons (equipment menu)
 disabled:
@@ -302,3 +308,9 @@ equipslot:
   boots: Feetsies
   rhand: Right Hand
   lhand: Left Hand
+
+#icons (Preset Menu)
+sitting:
+  msg: Sitting
+  description:
+    msg: Make your ArmorStand Sit

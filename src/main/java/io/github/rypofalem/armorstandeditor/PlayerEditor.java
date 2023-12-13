@@ -18,6 +18,7 @@
  */
 package io.github.rypofalem.armorstandeditor;
 
+import io.github.rypofalem.armorstandeditor.menu.PresetArmorPosesMenu;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -65,6 +66,7 @@ public class PlayerEditor {
     int targetIndex = 0;
     int frameTargetIndex = 0;
     EquipmentMenu equipMenu;
+    PresetArmorPosesMenu presetPoseMenu;
     long lastCancelled = 0;
 
     public PlayerEditor(UUID uuid, ArmorStandEditorPlugin plugin) {
@@ -109,7 +111,7 @@ public class PlayerEditor {
     }
 
     public void editArmorStand(ArmorStand armorStand) {
-        if (getPlayer().hasPermission("asedit.basic")) {
+       if (getPlayer().hasPermission("asedit.basic")) {
 
             armorStand = attemptTarget(armorStand);
             switch (eMode) {
@@ -173,6 +175,9 @@ public class PlayerEditor {
                 case GLOWING:
                     toggleGlowing(armorStand);
                     break;
+                case PRESET:
+                    choosePreset(armorStand);
+                    break;
                 case NONE:
                 default:
                     sendMessage("nomode", null);
@@ -210,6 +215,12 @@ public class PlayerEditor {
         //if (team != null && team.hasEntry(armorStand.getName())) return; //Do not allow editing if the ArmorStand is Disabled
         equipMenu = new EquipmentMenu(this, armorStand);
         equipMenu.open();
+    }
+
+    private void choosePreset(ArmorStand armorStand){
+        if (!getPlayer().hasPermission("asedit.basic")) return;
+        presetPoseMenu = new PresetArmorPosesMenu(this, armorStand);
+        presetPoseMenu.openMenu();
     }
 
     public void reverseEditArmorStand(ArmorStand armorStand) {
@@ -518,6 +529,7 @@ public class PlayerEditor {
         return angle;
     }
 
+
     public void setTarget(ArrayList<ArmorStand> armorStands) {
         if (armorStands == null || armorStands.isEmpty()) {
             target = null;
@@ -592,6 +604,7 @@ public class PlayerEditor {
             }
         }
     }
+
 
 
     ArmorStand attemptTarget(ArmorStand armorStand) {

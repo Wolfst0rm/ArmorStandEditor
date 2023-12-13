@@ -38,7 +38,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
@@ -53,6 +52,7 @@ public class PlayerEditorManager implements Listener {
     private HashMap<UUID, PlayerEditor> players;
     private ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
     private ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
+    private ASEHolder presetHolder = new ASEHolder(); //Inventory Holder that owns the PresetArmorStand Post Menu
     double coarseAdj;
     double fineAdj;
     double coarseMov;
@@ -416,7 +416,20 @@ public class PlayerEditorManager implements Listener {
                 e.setCancelled(true);
             }
         }
+
+        if (e.getInventory().getHolder() == presetHolder){
+            e.setCancelled(true);
+            ItemStack item = e.getCurrentItem();
+            if(item != null && item.hasItemMeta()){
+                Player player = (Player) e.getWhoClicked();
+                String itemName = item.getItemMeta().getDisplayName();
+                PlayerEditor pe = players.get(player.getUniqueId());
+                pe.presetPoseMenu.handlePresetPose(itemName, player);
+            }
+        }
     }
+
+
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     void onPlayerMenuClose(InventoryCloseEvent e) {
@@ -455,9 +468,15 @@ public class PlayerEditorManager implements Listener {
         return equipmentHolder;
     }
 
+    public ASEHolder getPresetHolder() {
+        return presetHolder;
+    }
+
     long getTime() {
         return counter.ticks;
     }
+
+
 
     class TickCounter implements Runnable {
         long ticks = 0; //I am optimistic
