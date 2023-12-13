@@ -78,6 +78,7 @@ public class Menu {
         ItemStack help;
         ItemStack itemFrameVisible;
         ItemStack blankSlot;
+        ItemStack presetItem = null;
 
         //Variables that need to be Initialized
         ItemStack place = null;
@@ -133,6 +134,8 @@ public class Menu {
 
         showArms = createIcon(new ItemStack(Material.STICK),
             "showarms", "mode showarms");
+
+        presetItem = createIcon(new ItemStack(Material.GRASS_BLOCK), "presetmenu", "mode preset");
 
         //Praise Start - Sikatsu and cowgod, Nicely spotted this being broken
         if (pe.getPlayer().hasPermission("asedit.togglearmorstandvisibility") ||
@@ -242,7 +245,7 @@ public class Menu {
                 copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
                 slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
                 slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
-                blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot,
+                presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot,
                 blankSlot, showArms, visibility, size, gravity, plate, toggleVulnerabilty, disableSlots, blankSlot
         };
 
