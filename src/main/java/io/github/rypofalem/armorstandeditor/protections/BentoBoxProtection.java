@@ -26,15 +26,20 @@ import world.bentobox.bentobox.lists.Flags;
 import world.bentobox.bentobox.managers.AddonsManager;
 import world.bentobox.bentobox.managers.IslandsManager;
 
+import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
+
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
+import java.util.logging.Level;
 
 public class BentoBoxProtection implements Protection {
 
     private final boolean bentoEnabled;
+    private boolean bSkyBlockEnabled;
+    private boolean aOneBlockEnabled;
 
 
     public BentoBoxProtection() {
@@ -44,8 +49,8 @@ public class BentoBoxProtection implements Protection {
     @Override
     public boolean checkPermission(Block block, Player player) {
         if (!bentoEnabled || player.isOp() ||
-            player.hasPermission("asedit.ignoreProtection.bentobox") ||
-            player.hasPermission("bentobox.admin")) return true;
+                player.hasPermission("asedit.ignoreProtection.bentobox") ||
+                player.hasPermission("bentobox.admin")) return true;
 
         //Get the Bento Instance
         BentoBox myBento = BentoBox.getInstance();
@@ -56,21 +61,35 @@ public class BentoBoxProtection implements Protection {
         AddonsManager addonsManager = myBento.getAddonsManager();
 
         //Check first if BSkyblock is enabled or if the Player is Owner of that Island
-        if (addonsManager.getAddonByName("BSkyblock").isEmpty()) return true;
+        bSkyBlockEnabled = addonsManager.getAddonByName("BSkyblock").isPresent();
+        aOneBlockEnabled = addonsManager.getAddonByName("AOneBlock").isPresent();
+        //Logging for Debug - NOTE will trigger each time an edit is done
 
-        //Get the Location of the ArmorStand
-        Optional<Island> islandOptional = islandsManager.getIslandAt(block.getLocation());
+        if(ArmorStandEditorPlugin.instance().isDebug()) {
+            if (bSkyBlockEnabled && !aOneBlockEnabled) {
+                Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor] BentoBox Protection for ASE is looking at: BSkyBlock.");
+            }
+            if (aOneBlockEnabled && !bSkyBlockEnabled) {
+                Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor] BentoBox Protection for ASE is looking at: AOneBlock.");
+            }
+            if(!bSkyBlockEnabled && !aOneBlockEnabled){
+                Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor] BentoBox Protection is currently not using anything. This will automatically allow edits.");
+            }
+        }
 
-        //If there are no Islands Present
-        if (islandOptional.isEmpty()) return true;
 
-        //Do not run this check if the player is the owner of the island
-        if (islandsManager.isOwner(player.getWorld(), player.getUniqueId())) return true;
+        if(!bSkyBlockEnabled && !aOneBlockEnabled){
+            return true;
+        } else{
+            Optional<Island> islandOptional = islandsManager.getIslandAt(block.getLocation());
 
-        //Get the Island from the Island Optional
-        Island theIsland = islandOptional.get();
+            if (islandOptional.isEmpty()) return true;
 
-        //Return if that User isAllowed to break blocks on that Land
-        return theIsland.isAllowed(User.getInstance(player), Flags.BREAK_BLOCKS);
+            if (islandsManager.isOwner(block.getWorld(), player.getUniqueId())) return true;
+
+            Island theIsland = islandOptional.get();
+
+            return theIsland.isAllowed(User.getInstance(player), Flags.BREAK_BLOCKS);
+        }
     }
 }
