@@ -1,6 +1,6 @@
 /*
  * ArmorStandEditor: Bukkit plugin to allow editing armor stand attributes
- * Copyright (C) 2016-2023  RypoFalem
+ * Copyright (C) 2016-2023RypoFalem
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -9,286 +9,124 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA02110-1301, USA.
  */
 
 package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
-
+import io.github.rypofalem.armorstandeditor.utils.Configuration;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
-public class Menu {
+public class Menu implements ItemFactory {
     private final Inventory menuInv;
     private final PlayerEditor pe;
-    private static String name = "Armor Stand Editor Menu";
 
     public Menu(PlayerEditor pe) {
         this.pe = pe;
-        name = pe.plugin.getLang().getMessage("mainmenutitle", "menutitle");
-        menuInv = Bukkit.createInventory(pe.getManager().getMenuHolder(), 54, name);
+        menuInv = Bukkit.createInventory(pe.getManager().getMenuHolder(), Configuration.getGUI().getInt("menu.size"), Configuration.color(Configuration.getGUI().getString("menu.title")));
         fillInventory();
     }
 
     private void fillInventory() {
-
         menuInv.clear();
+        ConfigurationSection section = Configuration.getGUI().getConfigurationSection("menu.items");
+        for (String keys : section == null ? Collections.<String>emptyList() : section.getKeys(false)) {
+            ConfigurationSection itemSection = section.getConfigurationSection(keys);
+            if (itemSection == null) continue;
 
-        ItemStack xAxis;
-        ItemStack yAxis;
-        ItemStack zAxis;
-        ItemStack coarseAdj;
-        ItemStack fineAdj;
-        ItemStack rotate = null;
-        ItemStack headPos;
-        ItemStack rightArmPos;
-        ItemStack bodyPos;
-        ItemStack leftArmPos;
-        ItemStack reset;
-        ItemStack showArms;
-        ItemStack visibility;
-        ItemStack size = null;
-        ItemStack rightLegPos;
-        ItemStack glowing;
-        ItemStack leftLegPos;
-        ItemStack plate = null;
-        ItemStack copy = null;
-        ItemStack paste = null;
-        ItemStack slot1 = null;
-        ItemStack slot2 = null;
-        ItemStack slot3 = null;
-        ItemStack slot4 = null;
-        ItemStack help;
-        ItemStack itemFrameVisible;
-        ItemStack blankSlot;
-        ItemStack presetItem = null;
-
-        //Variables that need to be Initialized
-        ItemStack place = null;
-        ItemStack equipment = null;
-        ItemStack disableSlots = null;
-        ItemStack gravity = null;
-        ItemStack playerHead = null;
-        ItemStack toggleVulnerabilty = null;
-
-        //Slots with No Value
-        blankSlot = createIcon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1),
-                "blankslot", "");
-
-        //Axis - X, Y, Z for Movement
-        xAxis = createIcon(new ItemStack(Material.RED_CONCRETE, 1),
-            "xaxis", "axis x");
-
-        yAxis = createIcon(new ItemStack(Material.GREEN_CONCRETE, 1),
-            "yaxis", "axis y");
-
-        zAxis = createIcon(new ItemStack(Material.BLUE_CONCRETE, 1),
-            "zaxis", "axis z");
-
-        //Movement Speed
-        coarseAdj = createIcon(new ItemStack(Material.COARSE_DIRT, 1),
-            "coarseadj", "adj coarse");
-
-        fineAdj = createIcon(new ItemStack(Material.SMOOTH_SANDSTONE),
-            "fineadj", "adj fine");
-
-        //Reset Changes
-        reset = createIcon(new ItemStack(Material.WATER_BUCKET),
-            "reset", "mode reset");
-
-        //Which Part to Move
-        headPos = createIcon(new ItemStack(Material.IRON_HELMET),
-            "head", "mode head");
-
-        bodyPos = createIcon(new ItemStack(Material.IRON_CHESTPLATE),
-            "body", "mode body");
-
-        leftLegPos = createIcon(new ItemStack(Material.IRON_LEGGINGS),
-            "leftleg", "mode leftleg");
-
-        rightLegPos = createIcon(new ItemStack(Material.IRON_LEGGINGS),
-            "rightleg", "mode rightleg");
-
-        leftArmPos = createIcon(new ItemStack(Material.STICK),
-            "leftarm", "mode leftarm");
-
-        rightArmPos = createIcon(new ItemStack(Material.STICK),
-            "rightarm", "mode rightarm");
-
-        showArms = createIcon(new ItemStack(Material.STICK),
-            "showarms", "mode showarms");
-
-        presetItem = createIcon(new ItemStack(Material.BOOKSHELF), "presetmenu", "mode preset");
-
-        //Praise Start - Sikatsu and cowgod, Nicely spotted this being broken
-        if (pe.getPlayer().hasPermission("asedit.togglearmorstandvisibility") ||
-            pe.plugin.getArmorStandVisibility()) {
-            visibility = new ItemStack(Material.POTION, 1);
-            PotionMeta potionMeta = (PotionMeta) visibility.getItemMeta();
-            PotionEffect effect = new PotionEffect(PotionEffectType.INVISIBILITY, 1, 0);
-            if (potionMeta != null) {
-                potionMeta.addCustomEffect(effect, true);
-            }
-            visibility.setItemMeta(potionMeta);
-            createIcon(visibility, "invisible", "mode invisible");
-        } else {
-            visibility = null;
+            this.createItem(itemSection, menuInv, x -> createIcon(x, null));
         }
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.xaxis"), menuInv, x -> createIcon(x, "axis x"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.yaxis"), menuInv, x -> createIcon(x, "axis y"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.zaxis"), menuInv, x -> createIcon(x, "axis z"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.coarseadj"), menuInv, x -> createIcon(x, "adj coarse"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.fineadj"), menuInv, x -> createIcon(x, "adj fine"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.reset"), menuInv, x -> createIcon(x, "mode reset"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.head"), menuInv, x -> createIcon(x, "mode head"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.body"), menuInv, x -> createIcon(x, "mode body"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.leftleg"), menuInv, x -> createIcon(x, "mode leftleg"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.rightleg"), menuInv, x -> createIcon(x, "mode rightleg"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.leftarm"), menuInv, x -> createIcon(x, "mode leftarm"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.rightarm"), menuInv, x -> createIcon(x, "mode rightarm"));
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.showarms"), menuInv, x -> createIcon(x, "mode showarms"));
 
-        if (pe.getPlayer().hasPermission("asedit.toggleitemframevisibility") ||
-            pe.plugin.getItemFrameVisibility()) {
-            itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
-            createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
-        } else {
-            itemFrameVisible = null;
+        if (pe.getPlayer().hasPermission("asedit.togglearmorstandvisibility") || pe.plugin.getArmorStandVisibility()) {
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.visibility"), menuInv, x -> createIcon(x, "mode invisible"));
         }
-
-        //Praise end
-
+        if (pe.getPlayer().hasPermission("asedit.toggleitemframevisibility") || pe.plugin.getItemFrameVisibility()) {
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.itemFrameVisible"), menuInv, x -> createIcon(x, "mode itemframe"));
+        }
         if (pe.getPlayer().hasPermission("asedit.toggleInvulnerability")) {
-            toggleVulnerabilty = createIcon(new ItemStack(Material.TOTEM_OF_UNDYING, 1),
-                "vulnerability", "mode vulnerability");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.vulnerability"), menuInv, x -> createIcon(x, "mode vulnerability"));
         }
-
         if (pe.getPlayer().hasPermission("asedit.togglesize")) {
-            size = createIcon(new ItemStack(Material.PUFFERFISH, 1),
-                "size", "mode size");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.size"), menuInv, x -> createIcon(x, "mode size"));
         }
         if (pe.getPlayer().hasPermission("asedit.disableslots")) {
-            disableSlots = createIcon(new ItemStack(Material.BARRIER), "disableslots", "mode disableslots");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.disableSlots"), menuInv, x -> createIcon(x, "mode disableslots"));
         }
-
         if (pe.getPlayer().hasPermission("asedit.togglegravity")) {
-            gravity = createIcon(new ItemStack(Material.SAND), "gravity", "mode gravity");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.gravity"), menuInv, x -> createIcon(x, "mode gravity"));
         }
-
         if (pe.getPlayer().hasPermission("asedit.togglebaseplate")) {
-            plate = createIcon(new ItemStack(Material.SMOOTH_STONE_SLAB, 1),
-                "baseplate", "mode baseplate");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.plate"), menuInv, x -> createIcon(x, "mode baseplate"));
         }
-
         if (pe.getPlayer().hasPermission("asedit.movement")) {
-            place = createIcon(new ItemStack(Material.RAIL, 1),
-                "placement", "mode placement");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.placement"), menuInv, x -> createIcon(x, "mode placement"));
         }
-
         if (pe.getPlayer().hasPermission("asedit.rotation")) {
-            rotate = createIcon(new ItemStack(Material.COMPASS, 1),
-                "rotate", "mode rotate");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.rotate"), menuInv, x -> createIcon(x, "mode rotate"));
         }
-
         if (pe.getPlayer().hasPermission("asedit.equipment")) {
-            equipment = createIcon(new ItemStack(Material.CHEST, 1),
-                "equipment", "mode equipment");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.equipment"), menuInv, x -> createIcon(x, "mode equipment"));
         }
-
         if (pe.getPlayer().hasPermission("asedit.copy")) {
-            copy = createIcon(new ItemStack(Material.FLOWER_BANNER_PATTERN),
-                "copy", "mode copy");
-
-            slot1 = createIcon(new ItemStack(Material.BOOK),
-                "copyslot", "slot 1", "1");
-
-            slot2 = createIcon(new ItemStack(Material.BOOK, 2),
-                "copyslot", "slot 2", "2");
-
-            slot3 = createIcon(new ItemStack(Material.BOOK, 3),
-                "copyslot", "slot 3", "3");
-
-            slot4 = createIcon(new ItemStack(Material.BOOK, 4),
-                "copyslot", "slot 4", "4");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.copy"), menuInv, x -> createIcon(x, "mode copy"));
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.slot1"), menuInv, x -> createIcon(x, "slot 1"));
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.slot2"), menuInv, x -> createIcon(x, "slot 2"));
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.slot3"), menuInv, x -> createIcon(x, "slot 3"));
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.slot4"), menuInv, x -> createIcon(x, "slot 4"));
         }
-
         if (pe.getPlayer().hasPermission("asedit.paste")) {
-            paste = createIcon(new ItemStack(Material.FEATHER),
-                "paste", "mode paste");
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.paste"), menuInv, x -> createIcon(x, "mode paste"));
         }
-
         if (pe.getPlayer().hasPermission("asedit.head") && pe.plugin.getAllowedToRetrievePlayerHead()) {
-            playerHead = createIcon(new ItemStack(Material.PLAYER_HEAD, 1),
-                "playerheadmenu",
-                "playerhead");
-        } else{
-            playerHead = blankSlot;
+            this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.playerHead"), menuInv, x -> createIcon(x, "playerhead"));
         }
-
-        if (pe.getPlayer().hasPermission("asedit.togglearmorstandglow")){
-            glowing = createIcon(new ItemStack(Material.GLOW_INK_SAC, 1),
-                    "armorstandglow",
-                    "mode armorstandglow");
-        } else{
-            glowing = blankSlot;
-        }
-
-        help = createIcon(new ItemStack(Material.NETHER_STAR), "helpgui", "help");
-
-        ItemStack[] items ={
-
-                blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
-                copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
-                slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
-                slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
-                presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, disableSlots,
-                blankSlot, showArms, visibility, size, blankSlot, plate, toggleVulnerabilty, gravity, blankSlot
-        };
-
-
-        menuInv.setContents(items);
+        this.createItem(Configuration.getGUI().getConfigurationSection("menu.clickable-items.help"), menuInv, x -> createIcon(x, "help"));
     }
 
-    private ItemStack createIcon(ItemStack icon, String path, String command) {
-        return createIcon(icon, path, command, null);
-    }
+    private ItemStack createIcon(ItemStack icon, String command) {
+        if (icon == null) return null;
 
-    private ItemStack createIcon(ItemStack icon, String path, String command, String option) {
         ItemMeta meta = icon.getItemMeta();
         assert meta != null;
-        meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, "ase " + command);
-        meta.setDisplayName(getIconName(path, option));
-        ArrayList<String> loreList = new ArrayList<>();
-        loreList.add(getIconDescription(path, option));
-        meta.setLore(loreList);
+        meta.getPersistentDataContainer().set(ArmorStandEditorPlugin.instance().getIconKey(), PersistentDataType.STRING, command == null ? "" : "ase " + command);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         icon.setItemMeta(meta);
         return icon;
     }
 
-
-    private String getIconName(String path, String option) {
-        return pe.plugin.getLang().getMessage(path, "iconname", option);
-    }
-
-
-    private String getIconDescription(String path, String option) {
-        return pe.plugin.getLang().getMessage(path + ".description", "icondescription", option);
-    }
-
     public void openMenu() {
-        if (pe.getPlayer().hasPermission("asedit.basic")) {
-            fillInventory();
-            pe.getPlayer().openInventory(menuInv);
-        }
-    }
+        if (!pe.getPlayer().hasPermission("asedit.basic")) return;
 
-    public static String getName() {
-        return name;
+        fillInventory();
+        pe.getPlayer().openInventory(menuInv);
     }
 }

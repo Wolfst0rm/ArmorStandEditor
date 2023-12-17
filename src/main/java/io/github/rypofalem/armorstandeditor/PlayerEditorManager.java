@@ -86,8 +86,8 @@ public class PlayerEditorManager implements Listener {
         Scheduler.runTaskTimer(plugin, counter, 1, 1);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    void onArmorStandDamage(EntityDamageByEntityEvent event) {
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    void onArmorStandDamage( EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
         if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
@@ -110,8 +110,9 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    void onArmorStandInteract(PlayerInteractAtEntityEvent event) {
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    void onArmorStandInteract( PlayerInteractAtEntityEvent event) {
         if (ignoreNextInteract) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
         Player player = event.getPlayer();
@@ -119,9 +120,11 @@ public class PlayerEditorManager implements Listener {
 
         if (event.getRightClicked() instanceof ArmorStand) {
             ArmorStand as = (ArmorStand) event.getRightClicked();
-
-            if (!canEdit(player, as)) return;
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
+                event.setCancelled(true);
+                if (!canEdit(player, as)) {
+                    return;
+                }
                 getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
                 event.setCancelled(true);
                 applyRightTool(player, as);
@@ -171,8 +174,11 @@ public class PlayerEditorManager implements Listener {
         } else if (event.getRightClicked() instanceof ItemFrame) {
             ItemFrame itemFrame = (ItemFrame) event.getRightClicked();
 
-            if (!canEdit(player, itemFrame)) return;
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
+                if (!canEdit(player, itemFrame)) {
+                    event.setCancelled(true);
+                    return;
+                }
                 getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
                 if (!itemFrame.getItem().getType().equals(Material.AIR)) {
                     event.setCancelled(true);
@@ -182,8 +188,8 @@ public class PlayerEditorManager implements Listener {
             }
 
             if (player.getInventory().getItemInMainHand().getType().equals(Material.GLOW_INK_SAC) //attempt glowing
-                && player.hasPermission("asedit.basic")
-                && plugin.glowItemFrames && player.isSneaking()) {
+                    && player.hasPermission("asedit.basic")
+                    && plugin.glowItemFrames && player.isSneaking()) {
 
                 ItemFrameGlowEvent e = new ItemFrameGlowEvent(itemFrame, player);
                 Bukkit.getPluginManager().callEvent(e);
@@ -217,6 +223,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
+
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     void onArmorStandBreak(EntityDamageByEntityEvent event) { // Fixes issue #309
         if (!(event.getDamager() instanceof Player)) return; // If the damager is not a player, ignore.
@@ -243,7 +250,7 @@ public class PlayerEditorManager implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onSwitchHands(PlayerSwapHandItemsEvent event) {
         if (!plugin.isEditTool(event.getOffHandItem())) return; //event assumes they are already switched
         event.setCancelled(true);
@@ -260,10 +267,12 @@ public class PlayerEditorManager implements Listener {
             getPlayerEditor(player.getUniqueId()).setTarget(as);
         } else if (itemF != null && !itemF.isEmpty()) {
             getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
-        } else {
-            getPlayerEditor(player.getUniqueId()).sendMessage("nodoubletarget","warn");
+        } else { //TODO: Fix the sending of the message Twice in this Statement
+            getPlayerEditor(player.getUniqueId()).setTarget(null);
+            getPlayerEditor(player.getUniqueId()).setFrameTarget(null);
         }
     }
+
 
     private ArrayList<ArmorStand> getTargets(Player player) {
         Location eyeLaser = player.getEyeLocation();
@@ -281,9 +290,9 @@ public class PlayerEditorManager implements Listener {
             List<Entity> nearby = (List<Entity>) player.getWorld().getNearbyEntities(eyeLaser, LASERRADIUS, LASERRADIUS, LASERRADIUS);
             if (!nearby.isEmpty()) {
                 boolean endLaser = false;
-                for (Entity e : nearby) {
-                    if (e instanceof ArmorStand stand) {
-                        armorStands.add(stand);
+                for ( Entity e : nearby) {
+                    if (e instanceof ArmorStand) {
+                        armorStands.add((ArmorStand) e);
                         endLaser = true;
                     }
                 }
@@ -312,9 +321,9 @@ public class PlayerEditorManager implements Listener {
             List<Entity> nearby = (List<Entity>) player.getWorld().getNearbyEntities(eyeLaser, LASERRADIUS, LASERRADIUS, LASERRADIUS);
             if (!nearby.isEmpty()) {
                 boolean endLaser = false;
-                for (Entity e : nearby) {
-                    if (e instanceof ItemFrame frame) {
-                        itemFrames.add(frame);
+                for ( Entity e : nearby) {
+                    if (e instanceof ItemFrame) {
+                        itemFrames.add((ItemFrame) e);
                         endLaser = true;
                     }
                 }
@@ -428,8 +437,6 @@ public class PlayerEditorManager implements Listener {
             }
         }
     }
-
-
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     void onPlayerMenuClose(InventoryCloseEvent e) {
