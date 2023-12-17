@@ -22,6 +22,10 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+
+/*
+ * Currently not used but groundwork is now being laid for later
+ */
 public interface ItemFactory {
     static ItemFactory getInstance() {
         return new ItemFactory() {};
