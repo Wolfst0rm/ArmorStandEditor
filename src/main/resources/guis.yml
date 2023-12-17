@@ -1,3 +1,6 @@
+#################################
+#         ASE Main Menu         #
+#################################
 menu:
   title: "Armor Stand Editor Menu"
   size: 54
@@ -191,7 +194,9 @@ menu:
         - "Click here to get help!"
       material: NETHER_STAR
       slot: 53
-
+#################################
+#      ASE Equipment Menu       #
+#################################
 equipment:
   title: "ArmorStand Equipment"
   size: 18
