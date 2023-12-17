@@ -194,6 +194,7 @@ menu:
         - "Click here to get help!"
       material: NETHER_STAR
       slot: 53
+
 #################################
 #      ASE Equipment Menu       #
 #################################
@@ -271,3 +272,7 @@ equipment:
         - "Drag your right item into the slot below"
       material: STICK
       slot: 5
+
+################################
+#    ASE Preset Poses Menu     #
+################################
