@@ -239,23 +239,16 @@ public class Menu {
 
         help = createIcon(new ItemStack(Material.NETHER_STAR), "helpgui", "help");
 
-
-        /*ItemStack[] items = {
-                blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
-                copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
-                slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
-                slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
-                presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot,
-                blankSlot, showArms, visibility, size, gravity, plate, toggleVulnerabilty, disableSlots, blankSlot
-        };*/
         ItemStack[] items ={
-                blankSlot, showArms, visibility, size, gravity, plate, toggleVulnerabilty, disableSlots, blankSlot,
+
                 blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
                 copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
                 slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
                 slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
-                presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot,
+                presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, disableSlots,
+                blankSlot, showArms, visibility, size, blankSlot, plate, toggleVulnerabilty, gravity, blankSlot
         };
+
 
         menuInv.setContents(items);
     }

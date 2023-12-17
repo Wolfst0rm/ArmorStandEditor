@@ -54,7 +54,7 @@ public class PresetArmorPosesMenu {
     final String FISHING = "§2§nFishing";
 
     //Menu Stuff
-    final String BACKTOMENU = "§2§Back to Menu";
+    final String BACKTOMENU = "§2§nBack to Menu";
     final String HOWTO = "§2§nHow To";
 
     public PresetArmorPosesMenu(PlayerEditor pe, ArmorStand as){
@@ -198,6 +198,7 @@ public class PresetArmorPosesMenu {
                 player.sendMessage(pe.plugin.getLang().getMessage("helpurl"));
                 player.sendMessage(pe.plugin.getLang().getMessage("helpdiscord"));
                 player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+                player.closeInventory();
                 break;
         }
     }
