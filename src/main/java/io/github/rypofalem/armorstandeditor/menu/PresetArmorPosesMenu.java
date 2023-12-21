@@ -19,13 +19,10 @@
 
 package io.github.rypofalem.armorstandeditor.menu;
 
-import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
-import io.github.rypofalem.armorstandeditor.utils.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -33,13 +30,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.EulerAngle;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-public class PresetArmorPosesMenu implements ItemFactory {
+public class PresetArmorPosesMenu {
 
     Inventory menuInv;
     private PlayerEditor pe;
@@ -65,47 +60,67 @@ public class PresetArmorPosesMenu implements ItemFactory {
     public PresetArmorPosesMenu(PlayerEditor pe, ArmorStand as){
         this.pe = pe;
         this.armorstand = as;
-        menuInv = Bukkit.createInventory(pe.getManager().getPresetHolder(), Configuration.getGUI().getInt("preset.size"), Configuration.color(Configuration.getGUI().getString("preset.title")));
+        name = pe.plugin.getLang().getMessage("presettitle","menutitle");
+        menuInv = Bukkit.createInventory(pe.getManager().getPresetHolder(), 36, name);
     }
 
     private void fillInventory(){
         menuInv.clear();
-        ConfigurationSection section = Configuration.getGUI().getConfigurationSection("preset.items");
-        for (String keys : section == null ? Collections.<String>emptyList() : section.getKeys(false)) {
-            ConfigurationSection itemSection = section.getConfigurationSection(keys);
-            if (itemSection == null) continue;
-
-            this.createItem(itemSection, menuInv, x -> createIcon(x, null));
-        }
 
         /**
          * Menu Set up in a similar way as to how we do it for
          * the actual ArmorStand menu
          */
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.sitting"), menuInv, x -> createIcon(x, "sitting"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.waving"), menuInv, x -> createIcon(x, "waving"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.greet1"), menuInv, x -> createIcon(x, "greeting 1"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.greet2"), menuInv, x -> createIcon(x, "greeting 2"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.cheer"), menuInv, x -> createIcon(x, "cheers"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.archer"), menuInv, x -> createIcon(x, "archer"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.dancing"), menuInv, x -> createIcon(x, "dancing"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.hanging"), menuInv, x -> createIcon(x, "hanging"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.present"), menuInv, x -> createIcon(x, "present"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.fishing"), menuInv, x -> createIcon(x, "fishing"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.backtomenu"), menuInv, x -> createIcon(x, "backtomenu"));
-        this.createItem(Configuration.getGUI().getConfigurationSection("preset.clickable-items.howtopreset"), menuInv, x -> createIcon(x, "howtopreset"));
+
+        //Blank Slots
+        ItemStack blank = createIcon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1), "blankslot");
+
+        //Presets -- Here to test things out, will get better names soon TM
+        ItemStack sitting = createIcon(new ItemStack(Material.ARMOR_STAND, 1), "sitting");
+        ItemStack waving  = createIcon(new ItemStack(Material.ARMOR_STAND, 2), "waving");
+        ItemStack greet1  = createIcon(new ItemStack(Material.ARMOR_STAND, 3), "greeting 1");
+        ItemStack greet2  = createIcon(new ItemStack(Material.ARMOR_STAND, 4), "greeting 2");
+        ItemStack cheer   = createIcon(new ItemStack(Material.ARMOR_STAND, 5), "cheers");
+        ItemStack archer  = createIcon(new ItemStack(Material.ARMOR_STAND, 6), "archer");
+        ItemStack dancing = createIcon(new ItemStack(Material.ARMOR_STAND, 7), "dancing");
+        ItemStack hanging = createIcon(new ItemStack(Material.ARMOR_STAND, 8), "hanging");
+        ItemStack present = createIcon(new ItemStack(Material.ARMOR_STAND, 9), "present");
+        ItemStack fishing = createIcon(new ItemStack(Material.ARMOR_STAND, 10), "fishing");
+
+        //Utilities
+        ItemStack backToMenu  = createIcon(new ItemStack(Material.RED_WOOL, 1), "backtomenu");
+        ItemStack howToPreset = createIcon(new ItemStack(Material.BOOK, 1), "howtopreset");
+
+        //Build for the Menu ---- DO NOT MODIFY THIS UNLESS YOU KNOW WHAT YOU ARE DOING!
+        ItemStack[] items = {
+                blank, blank, blank, blank, blank, blank, blank, blank, blank,
+                blank, backToMenu, sitting, waving, greet1, greet2, cheer, archer, blank,
+                blank, howToPreset, dancing, hanging, present, fishing, blank, blank, blank,
+                blank, blank, blank, blank, blank, blank, blank, blank, blank
+        };
+
+        menuInv.setContents(items);
     }
 
-    private ItemStack createIcon(ItemStack icon, String path ) {
-        if (icon == null) return null;
-
+    private ItemStack createIcon(ItemStack icon, String path) {
         ItemMeta meta = icon.getItemMeta();
         assert meta != null;
-        meta.getPersistentDataContainer().set(pe.plugin.getIconKey(), PersistentDataType.STRING, "ase icon");
+        meta.setDisplayName(getIconName(path));
+        ArrayList<String> loreList = new ArrayList<>();
+        loreList.add(getIconDescription(path));
+        meta.setLore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         icon.setItemMeta(meta);
         return icon;
+    }
+
+    private String getIconName(String path) {
+        return pe.plugin.getLang().getMessage(path, "iconname");
+    }
+
+    private String getIconDescription(String path) {
+        return pe.plugin.getLang().getMessage(path + ".description", "icondescription");
     }
 
     public void openMenu() {
