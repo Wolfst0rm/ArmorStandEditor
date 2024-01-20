@@ -116,6 +116,8 @@ helpurl:
   msg: "More info: https://github.com/RypoFalem/ArmorStandEditor/wiki"
 helpdiscord:
   msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
+editUsingItemAdder:
+  msg: "It appears this ArmorStand was placed using ItemAdder, please use that to perform any edits."
 
 #warn
 cantedit:

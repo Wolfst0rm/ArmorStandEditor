@@ -1,13 +1,13 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.20.4-45
+version: 1.20.4-46
 api-version: "1.17"
 folia-supported: true
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, DreiFxn, Pinnkk, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox]
+softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox, ItemAdder]
 
 commands:
   ase:
