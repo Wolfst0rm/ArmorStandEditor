@@ -21,6 +21,7 @@ package io.github.rypofalem.armorstandeditor;
 
 import com.google.common.collect.ImmutableList;
 
+import dev.lone.itemsadder.api.CustomFurniture;
 import io.github.rypofalem.armorstandeditor.api.ArmorStandRenameEvent;
 import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
@@ -98,10 +99,13 @@ public class PlayerEditorManager implements Listener {
         }
         if (event.getEntity() instanceof ArmorStand) {
             ArmorStand as = (ArmorStand) event.getEntity();
-            getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
-            event.setCancelled(true);
-            if (canEdit(player, as))
-                applyLeftTool(player, as);
+
+            if (CustomFurniture.byAlreadySpawned(as) == null) {
+                getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
+                event.setCancelled(true);
+                if (canEdit(player, as))
+                    applyLeftTool(player, as);
+            }
         } else if (event.getEntity() instanceof ItemFrame) {
             ItemFrame itemf = (ItemFrame) event.getEntity();
             getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
@@ -122,10 +126,15 @@ public class PlayerEditorManager implements Listener {
 
             if (!canEdit(player, as)) return;
             if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
-                getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
-                event.setCancelled(true);
-                applyRightTool(player, as);
-                return;
+                if(CustomFurniture.byAlreadySpawned(as) == null) {
+                    getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
+                    event.setCancelled(true);
+                    applyRightTool(player, as);
+                    return;
+                }else{
+                    player.sendMessage(plugin.getLang().getMessage("editUsingItemAdder"));
+                    return;
+                }
             }
 
 
@@ -236,9 +245,8 @@ public class PlayerEditorManager implements Listener {
         }
 
         if(event.getEntity() instanceof ArmorStand entityAS && entityAS.isDead()){
-            //TODO: Find a more permanent fix for "Once you destroy that armor stand, the armor stand will keep it's name and colour given by the name tag." THIS IS A TEMP SOLUTION FOR NOW.
-            event.getEntity().setCustomName(null);
-            event.getEntity().setCustomNameVisible(false);
+            entityAS.setCustomName(null);
+            entityAS.setCustomNameVisible(false);
             event.setCancelled(false);
         }
     }
