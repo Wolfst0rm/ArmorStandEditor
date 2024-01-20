@@ -67,7 +67,7 @@ public class PresetArmorPosesMenu {
     private void fillInventory(){
         menuInv.clear();
 
-        /**
+        /*
          * Menu Set up in a similar way as to how we do it for
          * the actual ArmorStand menu
          */
