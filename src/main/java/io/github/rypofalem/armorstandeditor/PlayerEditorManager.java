@@ -74,6 +74,7 @@ public class PlayerEditorManager implements Listener {
         new SkyblockProtection(),
         new TownyProtection(),
         new WorldGuardProtection(),
+        new ItemAdderProtection(),
         new BentoBoxProtection());
 
     PlayerEditorManager(ArmorStandEditorPlugin plugin) {
@@ -125,18 +126,6 @@ public class PlayerEditorManager implements Listener {
             ArmorStand as = (ArmorStand) event.getRightClicked();
 
             if (!canEdit(player, as)) return;
-            if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
-                if(CustomFurniture.byAlreadySpawned(as) == null) {
-                    getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
-                    event.setCancelled(true);
-                    applyRightTool(player, as);
-                    return;
-                }else{
-                    player.sendMessage(plugin.getLang().getMessage("editUsingItemAdder"));
-                    return;
-                }
-            }
-
 
             //Attempt rename
             if (player.getInventory().getItemInMainHand().getType() == Material.NAME_TAG && player.hasPermission("asedit.rename")) {
