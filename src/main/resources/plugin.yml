@@ -159,7 +159,7 @@ permissions:
       asedit.update: false
       asedit.give: false
       asedit.reload: false
-      asedit.head: false
+      asedit.head: true
       asedit.rotation: true
       asedit.copy: true
       asedit.paste: true
