@@ -149,7 +149,7 @@ public class Menu {
             visibility.setItemMeta(potionMeta);
             createIcon(visibility, "invisible", "mode invisible");
         } else {
-            visibility = null;
+            visibility = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.toggleitemframevisibility") ||
@@ -157,7 +157,7 @@ public class Menu {
             itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
             createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
         } else {
-            itemFrameVisible = null;
+            itemFrameVisible = blankSlot;
         }
 
         //Praise end
@@ -170,33 +170,49 @@ public class Menu {
         if (pe.getPlayer().hasPermission("asedit.togglesize")) {
             size = createIcon(new ItemStack(Material.PUFFERFISH, 1),
                 "size", "mode size");
+        } else{
+            size = blankSlot;
         }
+
         if (pe.getPlayer().hasPermission("asedit.disableslots")) {
             disableSlots = createIcon(new ItemStack(Material.BARRIER), "disableslots", "mode disableslots");
+        } else{
+            disableSlots = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.togglegravity")) {
             gravity = createIcon(new ItemStack(Material.SAND), "gravity", "mode gravity");
+        } else{
+            gravity = blankSlot;
         }
+
 
         if (pe.getPlayer().hasPermission("asedit.togglebaseplate")) {
             plate = createIcon(new ItemStack(Material.SMOOTH_STONE_SLAB, 1),
                 "baseplate", "mode baseplate");
+        }else{
+            plate = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.movement")) {
             place = createIcon(new ItemStack(Material.RAIL, 1),
                 "placement", "mode placement");
+        } else{
+            place = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.rotation")) {
             rotate = createIcon(new ItemStack(Material.COMPASS, 1),
                 "rotate", "mode rotate");
+        } else {
+            rotate = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.equipment")) {
             equipment = createIcon(new ItemStack(Material.CHEST, 1),
                 "equipment", "mode equipment");
+        } else{
+            equipment = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.copy")) {
@@ -214,11 +230,19 @@ public class Menu {
 
             slot4 = createIcon(new ItemStack(Material.BOOK, 4),
                 "copyslot", "slot 4", "4");
+        } else {
+            copy = blankSlot;
+            slot1 = blankSlot;
+            slot2 = blankSlot;
+            slot3 = blankSlot;
+            slot4 = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.paste")) {
             paste = createIcon(new ItemStack(Material.FEATHER),
                 "paste", "mode paste");
+        } else{
+            paste = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.head") && pe.plugin.getAllowedToRetrievePlayerHead()) {
