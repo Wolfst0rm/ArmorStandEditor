@@ -245,7 +245,7 @@ public class Menu {
             paste = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.head") && pe.plugin.getAllowedToRetrievePlayerHead()) {
+        if (pe.getPlayer().hasPermission("asedit.head")) {
             playerHead = createIcon(new ItemStack(Material.PLAYER_HEAD, 1),
                 "playerheadmenu",
                 "playerhead");

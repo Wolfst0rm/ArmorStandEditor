@@ -483,7 +483,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 if (getPermissionReload(player)) {
                     argList.add("reload");
                 }
-                if (getPermissionPlayerHead(player) && plugin.getAllowedToRetrievePlayerHead()) {
+                if (getPermissionPlayerHead(player)) {
                     argList.add("playerhead");
                 }
 
