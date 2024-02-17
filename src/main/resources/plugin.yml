@@ -48,7 +48,7 @@ permissions:
     description: Allows Reloading of the ASE Config.
     default: false
   asedit.head:
-    description: Allows players to trigger a command to retrieve a player head
+    description: Allows players to trigger a command to retrieve their player head
     default: false
   asedit.movement:
     description: Changes whether the armor stand can be moved using the item for editing

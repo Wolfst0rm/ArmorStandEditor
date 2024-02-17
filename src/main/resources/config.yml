@@ -94,14 +94,6 @@ sendMessagesToActionBar: true
 #If true, players can make itemFrames glow by right-clicking with a Glow Ink Sac
 glowingItemFrame: true
 
-#(Optional) Allow Players to get Player Heads from a Command. NOTE: If this is False, this will not work.
-#You will also need asedit.head to be set TRUE as well in your Permissions Manager / File
-allowedToRetrievePlayerHead: false
-
-#Each time the command is used, the admins will be notified that this has been ran but only
-#if this setting is made true
-adminOnlyNotifications: false
-
 #Debug Mode - For Development and Support Purposes ONLY!
 # --- Do Not Enable. Will Generate ALOT OF NOISE in your Log Files
 debugFlag: false
