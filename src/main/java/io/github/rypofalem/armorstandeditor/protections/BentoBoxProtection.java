@@ -89,7 +89,11 @@ public class BentoBoxProtection implements Protection {
 
             Island theIsland = islandOptional.get();
 
-            return theIsland.isAllowed(User.getInstance(player), Flags.BREAK_BLOCKS);
+            if(theIsland.getRank(player.getUniqueId()) == 400){
+                return true;
+            } else {
+                return theIsland.isAllowed(User.getInstance(player), Flags.BREAK_BLOCKS);
+            }
         }
     }
 }
