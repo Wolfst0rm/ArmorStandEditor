@@ -100,13 +100,10 @@ public class PlayerEditorManager implements Listener {
         }
         if (event.getEntity() instanceof ArmorStand) {
             ArmorStand as = (ArmorStand) event.getEntity();
-
-            if (CustomFurniture.byAlreadySpawned(as) == null) {
-                getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
-                event.setCancelled(true);
-                if (canEdit(player, as))
-                    applyLeftTool(player, as);
-            }
+            getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
+            event.setCancelled(true);
+            if (canEdit(player, as))
+                applyLeftTool(player, as);
         } else if (event.getEntity() instanceof ItemFrame) {
             ItemFrame itemf = (ItemFrame) event.getEntity();
             getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
@@ -126,6 +123,13 @@ public class PlayerEditorManager implements Listener {
             ArmorStand as = (ArmorStand) event.getRightClicked();
 
             if (!canEdit(player, as)) return;
+            if (plugin.isEditTool(player.getInventory().getItemInMainHand())) {
+                getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
+                event.setCancelled(true);
+                applyRightTool(player, as);
+                return;
+            }
+
 
             //Attempt rename
             if (player.getInventory().getItemInMainHand().getType() == Material.NAME_TAG && player.hasPermission("asedit.rename")) {
@@ -180,8 +184,8 @@ public class PlayerEditorManager implements Listener {
             }
 
             if (player.getInventory().getItemInMainHand().getType().equals(Material.GLOW_INK_SAC) //attempt glowing
-                && player.hasPermission("asedit.basic")
-                && plugin.glowItemFrames && player.isSneaking()) {
+                    && player.hasPermission("asedit.basic")
+                    && plugin.glowItemFrames && player.isSneaking()) {
 
                 ItemFrameGlowEvent e = new ItemFrameGlowEvent(itemFrame, player);
                 Bukkit.getPluginManager().callEvent(e);
