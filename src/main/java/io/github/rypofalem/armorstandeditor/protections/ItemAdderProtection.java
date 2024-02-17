@@ -1,6 +1,5 @@
 package io.github.rypofalem.armorstandeditor.protections;
 
-import com.sk89q.worldguard.util.Entities;
 import dev.lone.itemsadder.api.CustomFurniture;
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import org.bukkit.Bukkit;
