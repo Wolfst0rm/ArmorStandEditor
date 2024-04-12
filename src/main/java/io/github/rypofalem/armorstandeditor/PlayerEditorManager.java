@@ -150,7 +150,7 @@ public class PlayerEditorManager implements Listener {
                     as.setCustomName(null);
                     as.setCustomNameVisible(false);
                     event.setCancelled(true);
-                } else if (name.startsWith(String.valueOf(ChatColor.COLOR_CHAR)) && !player.hasPermission("asedit.rename.color")) {
+                } else if (name.startsWith("" + ChatColor.COLOR_CHAR + "") && !player.hasPermission("asedit.rename.color")) {
                     event.setCancelled(true);
                     player.sendMessage(plugin.getLang().getMessage("renamestopped"));
                 } else if (!name.equals("")) { // nametag is not blank
