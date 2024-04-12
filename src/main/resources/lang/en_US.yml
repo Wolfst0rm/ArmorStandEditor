@@ -154,6 +154,8 @@ nogive:
   msg: "You either do not have the permission to use the give command or do not allow it in Config.yml"
 noconsolecom:
   msg: Sorry but this command only works from in-game and not from Console!
+renamestopped:
+  msg: Please make sure you have the ability/permission to give your ArmorStand Colored Names.
 
 #menutitle
 mainmenutitle:

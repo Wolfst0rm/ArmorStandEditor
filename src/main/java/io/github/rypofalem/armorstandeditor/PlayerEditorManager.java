@@ -133,6 +133,7 @@ public class PlayerEditorManager implements Listener {
             if (player.getInventory().getItemInMainHand().getType() == Material.NAME_TAG && player.hasPermission("asedit.rename")) {
                 ItemStack nameTag = player.getInventory().getItemInMainHand();
                 String name;
+                String name2;
                 if (nameTag.getItemMeta() != null && nameTag.getItemMeta().hasDisplayName()) {
                     name = nameTag.getItemMeta().getDisplayName().replace('&', ChatColor.COLOR_CHAR);
                 } else {
@@ -148,6 +149,9 @@ public class PlayerEditorManager implements Listener {
                     as.setCustomName(null);
                     as.setCustomNameVisible(false);
                     event.setCancelled(true);
+                } else if (name.startsWith(String.valueOf(ChatColor.COLOR_CHAR)) && !player.hasPermission("asedit.rename.color")){
+                    event.setCancelled(true);
+                    player.sendMessage(plugin.getLang().getMessage("renamestopped"));
                 } else if (!name.equals("")) { // nametag is not blank
                     event.setCancelled(true);
 
