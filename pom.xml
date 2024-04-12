@@ -210,7 +210,6 @@
                 <version>5.16.0</version>
                 <configuration>
                     <activeRecipes>
-                        <recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>
                         <recipe>org.openrewrite.java.format.AutoFormat</recipe>
                         <recipe>org.openrewrite.java.recipes.FindRecipes</recipe>
                         <recipe>org.openrewrite.java.OrderImports</recipe>
@@ -218,13 +217,6 @@
                         <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
                     </activeRecipes>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.openrewrite.recipe</groupId>
-                        <artifactId>rewrite-migrate-java</artifactId>
-                        <version>2.4.2</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
