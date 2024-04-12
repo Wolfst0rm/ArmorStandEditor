@@ -1,6 +1,6 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.20.4-45
+version: 1.20.4-46
 api-version: "1.17"
 folia-supported: true
 website: https://www.spigotmc.org/resources/94503/
@@ -31,6 +31,9 @@ permissions:
     default: true
   asedit.rename:
     description: Rename armorstands - Now Supports Color
+    default: true
+  asedit.rename.color:
+    description: Give players the ability to use colored nametags or not
     default: true
   asedit.equipment:
     description: Access armorstand equipment GUI
