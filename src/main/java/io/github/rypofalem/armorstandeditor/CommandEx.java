@@ -342,12 +342,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     bodyZ = Math.toDegrees(bodyZ);
                     bodyZ = Math.rint(bodyZ);
 
-
                     //Arms
-                    double rightArmX = as.getRightArmPose().getX();
-                    rightArmX = Math.toDegrees(rightArmX);
-                    rightArmX = Math.rint(rightArmX);
-
                     double rightArmY = as.getRightArmPose().getY();
                     rightArmY = Math.toDegrees(rightArmY);
                     rightArmY = Math.rint(rightArmY);
@@ -356,6 +351,9 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     rightArmZ = Math.toDegrees(rightArmZ);
                     rightArmZ = Math.rint(rightArmZ);
 
+                    double rightArmX = as.getRightArmPose().getX();
+                    rightArmX = Math.toDegrees(rightArmX);
+                    rightArmX = Math.rint(rightArmX);
 
                     double leftArmX = as.getLeftArmPose().getX();
                     leftArmX = Math.toDegrees(leftArmX);
