@@ -273,7 +273,7 @@ itemframevisible:
 playerheadmenu:
   msg: Player Head
   description:
-    msg: Please use /ase playerhead <name>
+    msg: Click me to get a copy of your own head
 blankslot:
   msg: Nothing here
   description:
