@@ -149,7 +149,7 @@ public class Menu {
             visibility.setItemMeta(potionMeta);
             createIcon(visibility, "invisible", "mode invisible");
         } else {
-            visibility = null;
+            visibility = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.toggleitemframevisibility") ||
@@ -157,7 +157,7 @@ public class Menu {
             itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
             createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
         } else {
-            itemFrameVisible = null;
+            itemFrameVisible = blankSlot;
         }
 
         //Praise end
