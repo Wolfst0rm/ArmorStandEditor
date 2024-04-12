@@ -94,7 +94,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     boolean armorStandVisibility = true;
 
     //Misc Options
-    boolean allowedToRetrievePlayerHead = false;
+    boolean allowedToRetrieveOwnPlayerHead = false;
     boolean adminOnlyNotifications = false;
 
     //Glow Entity Colors
@@ -263,7 +263,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
 
         //Ability to get Player Heads via a command
-        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
+        allowedToRetrieveOwnPlayerHead = getConfig().getBoolean("allowedToRetrieveOwnPlayerHead", true);
 
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
@@ -445,8 +445,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     }
 
     //New in 1.20-43: Allow the ability to get a player head from a command - ENABLED VIA CONFIG ONLY!
-    public boolean getAllowedToRetrievePlayerHead() {
-        return this.getConfig().getBoolean("allowedToRetrievePlayerHead");
+    public boolean getallowedToRetrieveOwnPlayerHead() {
+        return this.getConfig().getBoolean("allowedToRetrieveOwnPlayerHead");
     }
 
     public boolean getAdminOnlyNotifications() {
@@ -609,7 +609,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
 
         //Ability to get Player Heads via a command
-        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
+        allowedToRetrieveOwnPlayerHead = getConfig().getBoolean("allowedToRetrieveOwnPlayerHead", true);
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86

@@ -124,7 +124,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 case "version" -> commandVersion(player);
                 case "update" -> commandUpdate(player);
                 case "give" -> commandGive(player);
-                case "playerhead" -> commandGivePlayerHead(player, args);
+                case "playerhead" -> commandGivePlayerHead(player);
                 case "reload" -> commandReload(player);
                 case "stats" -> commandStats(player);
                 default -> {
@@ -163,87 +163,18 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
     }
 
-    private void commandGivePlayerHead(Player player, String[] args) {
-
-        if (plugin.getAllowedToRetrievePlayerHead() && checkPermission(player, "head", true)) {
-
-            if (args.length == 2) {
-
-                //Get the Player head Texture
-                String skinTexture = getPlayerHeadTexture(args[1]);
-
-                if (skinTexture == null) {
-                    player.sendMessage(plugin.getLang().getMessage("playerheaderror", "warn"));
-                }
-
-                //Create the ItemStack for the PlayerHead
-                ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
-
-                // Get the meta therefore
-                SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
-                assert playerHeadMeta != null;
-
-                //Generate a Random UUID
-                GameProfile gameProfile = new GameProfile(UUID.randomUUID(), null);
-                gameProfile.getProperties().put("textures", new Property("textures", skinTexture));
-                Field profileField = null;
-
-                try {
-                    profileField = playerHeadMeta.getClass().getDeclaredField("profile");
-                    profileField.setAccessible(true);
-                    profileField.set(playerHeadMeta, gameProfile);
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    player.sendMessage(plugin.getLang().getMessage("playerheaderror", "warn"));
-                } finally {
-                    if (profileField != null) {
-                        profileField.setAccessible(false);
-                    }
-                }
-
-                //Set the Display Name to be that of the Player Given
-                playerHeadMeta.setDisplayName(args[1]);
-
-                //Set the Item Meta
-                playerHead.setItemMeta(playerHeadMeta);
-
-                //Add the head to the Players Inventory + display PlayerHead Success Message
-                player.getInventory().addItem(playerHead);
-                player.sendMessage(plugin.getLang().getMessage("playerhead", "info"));
-
-                //Let Admins know this command has been ran
-                for (Player onlineList : Bukkit.getOnlinePlayers()) {
-                    if (onlineList.hasPermission("asedit.permpack.admin") && plugin.getAdminOnlyNotifications()) {
-                        onlineList.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] " + player.getName() + "has just used the /ase playerhead command to get the head for " + args[1]);
-                    }
-                }
-            }
-        } else {
-            player.sendMessage(plugin.getLang().getMessage("noplayerhead", "warn"));
+    private void commandGivePlayerHead(Player player){
+        if(player.hasPermission("asedit.head")) {
+            ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
+            SkullMeta meta = (SkullMeta) item.getItemMeta();
+            meta.setOwner(player.getName());
+            item.setItemMeta(meta);
+            player.getInventory().addItem(item);
+            player.sendMessage(plugin.getLang().getMessage("playerhead", "info"));
+        }else{
+            player.sendMessage(plugin.getLang().getMessage("playerheaderror", "warn"));
         }
     }
-
-    private String getPlayerHeadTexture(String playerName) {
-        try {
-            // Get the UUID of the Player in Question
-            URL uuidURL = new URL("https://api.mojang.com/users/profiles/minecraft/" + playerName);
-            try (InputStreamReader uuidURLReader = new InputStreamReader(uuidURL.openStream())) {
-                JsonObject uuidObject = gson.fromJson(uuidURLReader, JsonObject.class);
-                String uuid = uuidObject.get("id").getAsString();
-
-
-                // Get the Skin from that UUID
-                URL skinURL = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
-                try (InputStreamReader skinURLReader = new InputStreamReader(skinURL.openStream())) {
-                    JsonObject skinObject = gson.fromJson(skinURLReader, JsonObject.class);
-                    JsonObject skinTextureProperty = skinObject.get("properties").getAsJsonArray().get(0).getAsJsonObject();
-                    return skinTextureProperty.get("value").getAsString();
-                }
-            }
-        } catch (IOException | IllegalStateException e) {
-            return null;
-        }
-    }
-
 
     private void commandSlot(Player player, String[] args) {
 
@@ -566,7 +497,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 if (getPermissionReload(player)) {
                     argList.add("reload");
                 }
-                if (getPermissionPlayerHead(player) && plugin.getAllowedToRetrievePlayerHead()) {
+                if (getPermissionPlayerHead(player) || plugin.getallowedToRetrieveOwnPlayerHead()) {
                     argList.add("playerhead");
                 }
 
