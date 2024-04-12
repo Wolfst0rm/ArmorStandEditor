@@ -47,7 +47,7 @@ public class LandsProtection implements Protection {
 
     @Override
     public boolean checkPermission(Block block, Player player) {
-        if (!landsEnabled || player.hasPermission("asedit.ignoreProtection.lands")) return true;
+        if (!landsEnabled || player.hasPermission("asedit.ignoreProtection.lands") || player.isOp()) return true;
 
         //Get the players UUID
         UUID playerUUID = player.getUniqueId();
