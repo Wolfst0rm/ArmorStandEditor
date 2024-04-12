@@ -90,7 +90,7 @@ public class Menu {
 
         //Slots with No Value
         blankSlot = createIcon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1),
-                "blankslot", "");
+            "blankslot", "");
 
         //Axis - X, Y, Z for Movement
         xAxis = createIcon(new ItemStack(Material.RED_CONCRETE, 1),
@@ -225,28 +225,28 @@ public class Menu {
             playerHead = createIcon(new ItemStack(Material.PLAYER_HEAD, 1),
                 "playerheadmenu",
                 "playerhead");
-        } else{
+        } else {
             playerHead = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.togglearmorstandglow")){
+        if (pe.getPlayer().hasPermission("asedit.togglearmorstandglow")) {
             glowing = createIcon(new ItemStack(Material.GLOW_INK_SAC, 1),
-                    "armorstandglow",
-                    "mode armorstandglow");
-        } else{
+                "armorstandglow",
+                "mode armorstandglow");
+        } else {
             glowing = blankSlot;
         }
 
         help = createIcon(new ItemStack(Material.NETHER_STAR), "helpgui", "help");
 
-        ItemStack[] items ={
+        ItemStack[] items = {
 
-                blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
-                copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
-                slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
-                slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
-                presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, disableSlots,
-                blankSlot, showArms, visibility, size, blankSlot, plate, toggleVulnerabilty, gravity, blankSlot
+            blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
+            copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
+            slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
+            slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
+            presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, disableSlots,
+            blankSlot, showArms, visibility, size, blankSlot, plate, toggleVulnerabilty, gravity, blankSlot
         };
 
 

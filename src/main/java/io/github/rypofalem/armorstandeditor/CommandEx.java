@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
 
-
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
@@ -41,7 +40,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class CommandEx implements CommandExecutor, TabCompleter {
     ArmorStandEditorPlugin plugin;
@@ -66,7 +68,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof ConsoleCommandSender) { //Fix to Support #267
-            if(plugin.isDebug()) plugin.debugMsgHandler("Sender is CONSOLE!");
+            if (plugin.isDebug()) plugin.debugMsgHandler("Sender is CONSOLE!");
             if (args.length == 0) {
                 sender.sendMessage(VERSION);
                 sender.sendMessage(HELP);
@@ -86,13 +88,13 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
 
         if (sender instanceof Player player && !getPermissionBasic(player)) {
-            if(plugin.isDebug()) plugin.debugMsgHandler("Sender is Player but asedit.basic is" + getPermissionBasic(player));
+            if (plugin.isDebug()) plugin.debugMsgHandler("Sender is Player but asedit.basic is" + getPermissionBasic(player));
             sender.sendMessage(plugin.getLang().getMessage("nopermoption", "warn", "basic"));
             return true;
         } else {
             Player player = (Player) sender;
 
-            if(plugin.isDebug()) plugin.debugMsgHandler("Sender is Player and asedit.basic is" + getPermissionBasic(player));
+            if (plugin.isDebug()) plugin.debugMsgHandler("Sender is Player and asedit.basic is" + getPermissionBasic(player));
             if (args.length == 0) {
                 player.sendMessage(LISTMODE);
                 player.sendMessage(LISTAXIS);
@@ -155,15 +157,15 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
     }
 
-    private void commandGivePlayerHead(Player player){
-        if(player.hasPermission("asedit.head")) {
+    private void commandGivePlayerHead(Player player) {
+        if (player.hasPermission("asedit.head")) {
             ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
             SkullMeta meta = (SkullMeta) item.getItemMeta();
             meta.setOwner(player.getName());
             item.setItemMeta(meta);
             player.getInventory().addItem(item);
             player.sendMessage(plugin.getLang().getMessage("playerhead", "info"));
-        }else{
+        } else {
             player.sendMessage(plugin.getLang().getMessage("playerheaderror", "warn"));
         }
     }
@@ -236,7 +238,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     if (args[1].equals("invisible") && !(checkPermission(player, "togglearmorstandvisibility", true) || plugin.getArmorStandVisibility())) return;
                     if (args[1].equals("itemframe") && !(checkPermission(player, "toggleitemframevisibility", true) || plugin.getItemFrameVisibility())) return;
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
-                    if(plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " chose the mode: " + mode);
+                    if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " chose the mode: " + mode);
                     return;
                 }
             }
@@ -312,7 +314,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private void commandStats(Player player) {
         if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " permission check for asedit.stats: " + getPermissionStats(player));
 
-        if(getPermissionStats(player)) {
+        if (getPermissionStats(player)) {
             for (Entity e : player.getNearbyEntities(1, 1, 1)) {
                 if (e instanceof ArmorStand as) {
 
@@ -422,7 +424,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.YELLOW + "----------------------------------------------");
                 }
             }
-        }else{
+        } else {
             player.sendMessage(plugin.getLang().getMessage("norangeforstats", "warn"));
         }
     }
@@ -445,18 +447,23 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private boolean getPermissionBasic(Player player) {
         return checkPermission(player, "basic", false);
     }
+
     private boolean getPermissionGive(Player player) {
         return checkPermission(player, "give", false);
     }
+
     private boolean getPermissionUpdate(Player player) {
         return checkPermission(player, "update", false);
     }
+
     private boolean getPermissionReload(Player player) {
         return checkPermission(player, "reload", false);
     }
+
     private boolean getPermissionPlayerHead(Player player) {
         return checkPermission(player, "head", false);
     }
+
     private boolean getPermissionStats(Player player) {
         return checkPermission(player, "stats", false);
     }
@@ -491,7 +498,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     argList.add("playerhead");
                 }
 
-                if (getPermissionStats(player)){
+                if (getPermissionStats(player)) {
                     argList.add("stats");
                 }
             }

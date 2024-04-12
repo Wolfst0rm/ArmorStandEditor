@@ -18,14 +18,13 @@
  */
 package io.github.rypofalem.armorstandeditor.protections;
 
-import com.plotsquared.bukkit.BukkitPlatform;
 import com.plotsquared.core.PlotAPI;
 import com.plotsquared.core.location.Location;
 import com.plotsquared.core.player.PlotPlayer;
 import com.plotsquared.core.plot.Plot;
 import com.plotsquared.core.plot.PlotArea;
-
 import com.sk89q.worldedit.math.BlockVector3;
+
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -49,26 +48,26 @@ public class PlotSquaredProtection implements Protection {
         if (player.hasPermission("asedit.ignoreProtection.plotSquared")) return true;
         if (plotAPI == null) plotAPI = new PlotAPI();
 
-       //Get the Location of the Plot
+        //Get the Location of the Plot
         Location plotLocation = Location.at(block.getWorld().getName(), BlockVector3.at(block.getX(), block.getY(), block.getZ()));
 
         //Get the Area of the PLot
         PlotArea area = plotLocation.getPlotArea();
 
         //If the Area is not a Plot, then we assume its a road, we return if a player can build on roads or not
-        if(area == null) return true;
+        if (area == null) return true;
 
         //Get the Plot
         Plot plot = area.getPlot(plotLocation);
 
         //Rerun the Area check
-        if(plot == null)
+        if (plot == null)
             return player.hasPermission("plots.admin.build.road");
 
         //Get the Player
         PlotPlayer<?> plotPlayer = plotAPI.wrapPlayer(player.getUniqueId());
 
-        if(plotPlayer == null) return true;
+        if (plotPlayer == null) return true;
 
         //Get the UUID of the PlotPlayer
         UUID uuid = plotPlayer.getUUID();

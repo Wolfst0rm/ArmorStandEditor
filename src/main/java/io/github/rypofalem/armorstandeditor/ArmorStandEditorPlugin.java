@@ -238,7 +238,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
 
         enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
-        if(enablePerWorld) {
+        if (enablePerWorld) {
             allowedWorldList = getConfig().getList("allowed-worlds", null);
             if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
                 allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
@@ -268,7 +268,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
         debugFlag = getConfig().getBoolean("debugFlag", false);
-        if(debugFlag){
+        if (debugFlag) {
             getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
             getServer().getLogger().warning(" ArmorStandEditor - Debug Mode ");
             getServer().getLogger().warning("      Debug Mode: ENABLED!     ");
@@ -366,7 +366,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     private void updateConfig(String folder, String config) {
         if (!new File(getDataFolder() + File.separator + folder + config).exists()) {
-            saveResource(folder  + config, false);
+            saveResource(folder + config, false);
         }
     }
 
@@ -525,7 +525,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
         return true;
     }
-        public void performReload() {
+
+    public void performReload() {
 
         //Unregister Scoreboard before before performing the reload
         if (!hasFolia) {
@@ -588,7 +589,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
 
         enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
-        if(enablePerWorld) {
+        if (enablePerWorld) {
             allowedWorldList = getConfig().getList("allowed-worlds", null);
             if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
                 allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
@@ -712,7 +713,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         return debugFlag;
     }
 
-    public void debugMsgHandler(String msg){
-        if(isDebug()) getServer().getLogger().log(Level.WARNING, "[ASE-DEBUG]: {0}", msg);
+    public void debugMsgHandler(String msg) {
+        if (isDebug()) getServer().getLogger().log(Level.WARNING, "[ASE-DEBUG]: {0}", msg);
     }
 }
