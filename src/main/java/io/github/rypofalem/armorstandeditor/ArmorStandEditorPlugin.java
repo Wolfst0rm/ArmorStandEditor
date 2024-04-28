@@ -129,7 +129,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
 
         //Get NMS Version
-        if(hasPaper) {
+        if(hasPaper || hasFolia) {
             nmsVersion = getServer().getMinecraftVersion();
 
             // Check if the Minecraft version is supported
