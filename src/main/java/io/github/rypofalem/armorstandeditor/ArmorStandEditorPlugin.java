@@ -136,7 +136,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             if(nmsVersion.contains("1.20")) {
                 getLogger().log(Level.INFO, warningMCVer + "{0}", nmsVersion);
                 getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
-            } else-if(nmsVersion.contains("1.17") || nmsVersion.contains("1.18") || nmsVersion.contains("1.19") ){
+            } else if(nmsVersion.contains("1.17") || nmsVersion.contains("1.18") || nmsVersion.contains("1.19") ){
                 getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
                 getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
                 getLogger().warning("Loading continuing, but please consider updating to the latest version.");
