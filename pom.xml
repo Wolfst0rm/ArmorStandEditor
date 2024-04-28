@@ -9,7 +9,7 @@
     <url>https://maven.apache.org</url>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
         <sonar.organization>wolfieheart</sonar.organization>
@@ -30,179 +30,23 @@
     </developers>
 
     <repositories>
-        <!-- Spigot MC -->
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
+        <!-- Paper and Adventure -->
         <repository>
             <id>paper-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
-        <!-- Worldguard -->
         <repository>
-            <id>sk89q-repo</id>
-            <url>https://maven.enginehub.org/repo/</url>
-        </repository>
-        <!-- PlotSquared + CoreProtect -->
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>sonatype snapshots</id>
-            <url>https://s01.oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <!-- Towny + GriefDefender-->
-        <repository>
-            <id>glaremasters repo</id>
-            <url>https://repo.glaremasters.me/repository/towny/</url>
-        </repository>
-        <repository>
-            <id>glaremasters</id>
-            <url>https://repo.glaremasters.me/repository/bloodshot/</url>
-        </repository>
-        <!--- Update Checker -->
-        <repository>
-            <id>jeff-media-public</id>
-            <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
-        </repository>
-        <!--- Grief Prevention: DEPRECATION - Discuss Keeping or Removing -->
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-        <!-- SuperiorSkyblock API -->
-        <repository>
-            <id>bg-repo</id>
-            <url>https://repo.bg-software.com/repository/api/</url>
-        </repository>
-        <!-- Bentobox API -->
-        <repository>
-            <id>codemc-repo</id>
-            <url>https://repo.codemc.org/repository/maven-public/</url>
-        </repository>
-        <!-- Mojang/AuthLib -->
-        <repository>
-            <id>minecraft-repo</id>
-            <url>https://libraries.minecraft.net/</url>
+            <id>sonatype-oss-snapshots1</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
     </repositories>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.intellectualsites.bom</groupId>
-                <artifactId>bom-1.18.x</artifactId>
-                <version>1.31</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <!--Spigot + Folia API-->
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.folia</groupId>
-            <artifactId>folia-api</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--- WorldGuard -->
-        <dependency>
-            <groupId>com.sk89q.worldguard</groupId>
-            <artifactId>worldguard-bukkit</artifactId>
-            <version>7.1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--- PlotSquared -->
-        <dependency>
-            <groupId>com.intellectualsites.plotsquared</groupId>
-            <artifactId>plotsquared-core</artifactId>
-            <version>7.3.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.intellectualsites.plotsquared</groupId>
-            <artifactId>plotsquared-bukkit</artifactId>
-            <version>7.3.0</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>plotsquared-core</artifactId>
-                    <groupId>*</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!--- GriefPrevention: Depreciated -->
-        <dependency>
-            <groupId>com.github.TechFortress</groupId>
-            <artifactId>GriefPrevention</artifactId>
-            <version>16.18.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--- Towny -->
-        <dependency>
-            <groupId>com.palmergames.bukkit.towny</groupId>
-            <artifactId>towny</artifactId>
-            <version>0.100.0.14</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--- UpdateChecker -->
-        <dependency>
-            <groupId>com.jeff_media</groupId>
-            <artifactId>SpigotUpdateChecker</artifactId>
-            <version>3.0.3</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- SuperiorSkyblock API -->
-        <dependency>
-            <groupId>com.bgsoftware</groupId>
-            <artifactId>SuperiorSkyblockAPI</artifactId>
-            <version>2023.3</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--- GriefDefender -->
-        <dependency>
-            <groupId>com.griefdefender</groupId>
-            <artifactId>api</artifactId>
-            <version>2.1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Lands -->
-        <dependency>
-            <groupId>com.github.angeschossen</groupId>
-            <artifactId>LandsAPI</artifactId>
-            <version>6.42.8</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Bentobox -->
-        <dependency>
-            <groupId>world.bentobox</groupId>
-            <artifactId>bentobox</artifactId>
-            <version>1.23.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Mojang/AuthLib -->
-        <dependency>
-            <groupId>com.mojang</groupId>
-            <artifactId>authlib</artifactId>
-            <version>4.0.43</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Lombok Support -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.20.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -215,7 +59,7 @@
                 <version>5.16.0</version>
                 <configuration>
                     <activeRecipes>
-                        <recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>
+                        <recipe>org.openrewrite.java.migrate.UpgradeToJava21</recipe>
                         <recipe>org.openrewrite.java.format.AutoFormat</recipe>
                         <recipe>org.openrewrite.java.recipes.FindRecipes</recipe>
                         <recipe>org.openrewrite.java.OrderImports</recipe>
@@ -261,27 +105,6 @@
                 <configuration>
                     <release>${java.version}</release>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <relocations>
-                                <relocation>
-                                    <pattern>com.jeff_media.updatechecker</pattern>
-                                    <shadedPattern>io.github.rypofalem.armorstandeditor.updatechecker</shadedPattern>
-                                </relocation>
-                            </relocations>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

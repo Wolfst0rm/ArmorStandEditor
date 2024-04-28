@@ -1,13 +1,15 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.20.4-45
-api-version: "1.17"
-folia-supported: true
+version: 1.20.5-46-REWRITE-INFDEV
+api-version: "1.20"
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, DreiFxn, Pinnkk, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox]
+softdepend: []
+load: STARTUP
+prefix: ArmorStandEditor
+
 
 commands:
   ase:
@@ -15,181 +17,9 @@ commands:
     usage: /<command> ? - list subcommands
     aliases: [ase, asedit, armorstandeditor]
     permission: asedit.basic
-    permission-message: "You are lacking the permission node 'asedit.basic'"
 
 permissions:
   asedit.*:
     description: All ArmorStandEditor Commands
     default: op
-    children:
-      asedit.permpack.admin: true
-      asedit.ignoreProtection.*: true
-      asedit.head: true
 
-  asedit.basic:
-    description: Allow use armorstand edit functions. If set to false it will override all other functions.
-    default: true
-  asedit.rename:
-    description: Rename armorstands - Now Supports Color
-    default: true
-  asedit.equipment:
-    description: Access armorstand equipment GUI
-    default: true
-  asedit.disableSlots:
-    description: Allows locking and unlocking the contents of an ArmorStand. When locked, armor and equipment can not be added or removed without unlocking it first.
-    default: true
-  asedit.give:
-    description: Gives player the EditTool with Proper CustomModelData
-    default: false
-  asedit.update:
-    description: Allows the checking for updates.
-    default: false
-  asedit.reload:
-    description: Allows Reloading of the ASE Config.
-    default: false
-  asedit.head:
-    description: Allows players to trigger a command to retrieve a player head
-    default: false
-  asedit.movement:
-    description: Changes whether the armor stand can be moved using the item for editing
-    default: true
-  asedit.rotation:
-    description: Allows player to rotate the ArmorStand
-    default: true
-  asedit.copy:
-    description: Allows the players to create copies of their ArmorStand Configurations.
-    default: false
-  asedit.paste:
-    description: Allows the players to apply of a copy of their ArmorStand Configuration.
-    default: false
-  asedit.reset:
-    description: Allows the reset of the ArmorStand back to Default values
-    default: true
-  asedit.togglearmorstandvisibility:
-    description: Toggles ArmorStand visibility.
-    default: true
-  asedit.toggleitemframevisibility:
-    description: Allows setting of ItemFrame Visibility
-    default: true
-  asedit.toggleInvulnerability:
-    description: Allows players to toggle the vulnerability state of an ArmorStand.
-    default: true
-  asedit.togglebaseplate:
-    description: Allows the toggling of the Baseplate of an ArmorStand.
-    default: true
-  asedit.togglearms:
-    description: Allows the toggling of the Arms of an ArmorStand.
-    default: true
-  asedit.togglesize:
-    description: Allows the toggling of the size of an ArmorStand.
-    default: true
-  asedit.togglegravity:
-    description: Changes whether the armor stand has gravity
-    default: true
-  asedit.togglearmorstandglow:
-    description: Allows toggling of the Glowing State of an ArmorStand.
-    default: true
-  asedit.stats:
-    description: Ability to view ArmorStand Stats.
-    default: true
-
-  asedit.ignoreProtection.towny:
-    description: Allows user to ignore Towny's Protection Limitations.
-    default: false
-  asedit.ignoreProtection.griefProtection:
-    description: Allows user to ignore GriefProtection's Protection Limitations.
-    default: false
-  asedit.ignoreProtection.plotSquared:
-    description: Allows user to ignore PlotSquared's Protection Limitations.
-    default: false
-  asedit.ignoreProtection.worldGuard:
-    description: Allows user to ignore WorldGuard's Protection Limitations.
-    default: false
-  asedit.ignoreProtection.skyblock:
-    description: Allows user to ignore Skyblock's Protection Limitations.
-    default: false
-  asedit.ignoreProtection.griefDefender:
-    description: Allows user to ignore GriefDefender's Protection Limitations.
-    default: false
-  asedit.ignoreProtection.lands:
-    description: Allows user to ignore Lands Protection Limitations.
-    default: false
-  asedit.ignoreProtection.bentobox:
-    description: Allows user to ignore Bentobox Protection Limitations.
-    default: false
-
-  asedit.ignoreProtection.*:
-    description: Ignore all Protection Limitations
-    default: op
-    children:
-      asedit.ignoreProtection.towny: true
-      asedit.ignoreProtection.griefProtection: true
-      asedit.ignoreProtection.plotSquared: true
-      asedit.ignoreProtection.worldGuard:  true
-      asedit.ignoreProtection.skyblock: true
-      asedit.ignoreProtection.griefDefender: true
-      asedit.ignoreProtection.lands: true
-      asedit.ignoreProtection.bentobox: true
-
-  asedit.permpack.dontIgnoreProtections:
-    children:
-      asedit.ignoreProtection.towny: false
-      asedit.ignoreProtection.griefProtection: false
-      asedit.ignoreProtection.plotSquared: false
-      asedit.ignoreProtection.worldGuard:  false
-      asedit.ignoreProtection.skyblock: false
-      asedit.ignoreProtection.griefDefender: false
-      asedit.ignoreProtection.lands: false
-      asedit.ignoreProtection.bentobox: false
-
-  asedit.permpack.basic:
-    default: true
-    children:
-      asedit.basic: true
-      asedit.equipment: true
-      asedit.gravity: true
-      asedit.movement: true
-      asedit.disableSlots: true
-      asedit.rename: true
-      asedit.update: false
-      asedit.give: false
-      asedit.reload: false
-      asedit.head: false
-      asedit.rotation: true
-      asedit.copy: true
-      asedit.paste: true
-      asedit.reset: true
-      asedit.stats: true
-      asedit.toggleInvulnerability: true
-      asedit.togglebaseplate: true
-      asedit.togglearms: true
-      asedit.togglesize: true
-      asedit.togglearmorstandvisibility: true
-      asedit.toggleitemframevisibility: true
-      asedit.togglearmorstandglow: true
-      asedit.permpack.dontIgnoreProtections: true
-
-  asedit.permpack.admin:
-    default: op
-    children:
-      asedit.ignorePermissions.*: true
-      asedit.basic: true
-      asedit.equipment: true
-      asedit.movement: true
-      asedit.disableSlots: true
-      asedit.rename: true
-      asedit.update: true
-      asedit.reload: true
-      asedit.head: true
-      asedit.give: true
-      asedit.rotation: true
-      asedit.copy: true
-      asedit.paste: true
-      asedit.reset: true
-      asedit.togglebaseplate: true
-      asedit.togglearms: true
-      asedit.togglesize: true
-      asedit.toggleInvulnerability: true
-      asedit.togglegravity: true
-      asedit.togglearmorstandvisibility: true
-      asedit.toggleitemframevisibility: true
