@@ -117,35 +117,59 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         if (!Scheduler.isFolia())
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
-        //Get NMS Version
-        nmsVersion = getNmsVersion();
-
         //Load Messages in Console
         getLogger().info("======= ArmorStandEditor =======");
         getLogger().info("Plugin Version: " + pdfFile.getVersion());
 
-        // Check if the Minecraft version is supported
-        if (nmsVersion.compareTo("v1_17") < 0) {
-            getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
-            getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
-            getServer().getPluginManager().disablePlugin(this);
-            getLogger().info(SEPARATOR_FIELD);
-            return;
-        }
-
-        //Also Warn People to Update if using nmsVersion lower than latest
-        if (nmsVersion.compareTo("v1_20") < 0) {
-            getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
-            getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
-            getLogger().warning("Loading continuing, but please consider updating to the latest version.");
-        } else {
-            getLogger().log(Level.INFO, warningMCVer + "{0}", nmsVersion);
-            getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
-        }
         //Spigot Check
         hasSpigot = getHasSpigot();
         hasPaper = getHasPaper();
         hasFolia = Scheduler.isFolia();
+
+
+
+        //Get NMS Version
+        if(hasPaper) {
+            nmsVersion = getServer().getMinecraftVersion();
+
+            // Check if the Minecraft version is supported
+            if(nmsVersion.contains("1.20")) {
+                getLogger().log(Level.INFO, warningMCVer + "{0}", nmsVersion);
+                getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
+            } else-if(nmsVersion.contains("1.17") || nmsVersion.contains("1.18") || nmsVersion.contains("1.19") ){
+                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
+                getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
+                getLogger().warning("Loading continuing, but please consider updating to the latest version.");
+            } else{
+                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
+                getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
+                getServer().getPluginManager().disablePlugin(this);
+                getLogger().info(SEPARATOR_FIELD);
+            }
+        } else{
+            nmsVersion = getNmsVersion();
+            // Check if the Minecraft version is supported
+            if (nmsVersion.compareTo("v1_17") < 0) {
+                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
+                getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
+                getServer().getPluginManager().disablePlugin(this);
+                getLogger().info(SEPARATOR_FIELD);
+                return;
+            }
+
+            //Also Warn People to Update if using nmsVersion lower than latest
+            if (nmsVersion.compareTo("v1_20") < 0) {
+                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
+                getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
+                getLogger().warning("Loading continuing, but please consider updating to the latest version.");
+            } else {
+                getLogger().log(Level.INFO, warningMCVer + "{0}", nmsVersion);
+                getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
+            }
+
+        }
+
+
 
         //If Paper and Spigot are both FALSE - Disable the plugin
         if (!hasPaper && !hasSpigot) {
