@@ -115,6 +115,7 @@
             <groupId>net.kyori</groupId>
             <artifactId>adventure-api</artifactId>
             <version>4.16.0</version>
+            <scope>provided</scope>
         </dependency>
         <!--- WorldGuard -->
         <dependency>
