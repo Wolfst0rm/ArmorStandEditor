@@ -111,7 +111,7 @@ public class PresetArmorPosesMenu {
         loreList.add(getIconDescription(path));
         meta.setLore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         icon.setItemMeta(meta);
         return icon;
     }

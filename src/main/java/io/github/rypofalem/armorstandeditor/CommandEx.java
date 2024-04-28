@@ -30,6 +30,7 @@ import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.command.*;
 import org.bukkit.entity.ArmorStand;
@@ -159,9 +160,10 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     private void commandGivePlayerHead(Player player) {
         if (player.hasPermission("asedit.head")) {
+            OfflinePlayer offlinePlayer = player.getPlayer();
             ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
             SkullMeta meta = (SkullMeta) item.getItemMeta();
-            meta.setOwner(player.getName());
+            meta.setOwningPlayer(offlinePlayer);
             item.setItemMeta(meta);
             player.getInventory().addItem(item);
             player.sendMessage(plugin.getLang().getMessage("playerhead", "info"));
