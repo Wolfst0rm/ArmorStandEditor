@@ -1,6 +1,6 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.20.5-46
+version: 1.20.6-46
 api-version: "1.17"
 folia-supported: true
 website: https://www.spigotmc.org/resources/94503/
@@ -159,6 +159,7 @@ permissions:
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
+      asedit.rename.color: true
       asedit.update: false
       asedit.give: false
       asedit.reload: false
@@ -186,6 +187,7 @@ permissions:
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
+      asedit.rename.color: true
       asedit.update: true
       asedit.reload: true
       asedit.head: true
