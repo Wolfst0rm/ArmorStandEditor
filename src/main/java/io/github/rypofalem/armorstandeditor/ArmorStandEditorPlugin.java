@@ -58,7 +58,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     public boolean hasPaper = false;
     public boolean hasFolia = false;
     String nmsVersionNotLatest = null;
-    PluginDescriptionFile pdfFile = this.getDescription();
+
+    String aseVersion;
     public static final String SEPARATOR_FIELD = "================================";
 
     public PlayerEditorManager editorManager;
@@ -117,16 +118,17 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         if (!Scheduler.isFolia())
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
+        // Get ASEs Version Number from the config....
+        aseVersion = this.getConfig().getString("version");
+
         //Load Messages in Console
         getLogger().info("======= ArmorStandEditor =======");
-        getLogger().info("Plugin Version: " + pdfFile.getVersion());
+        getLogger().info("Plugin Version: v" + aseVersion);
 
         //Spigot Check
         hasSpigot = getHasSpigot();
         hasPaper = getHasPaper();
         hasFolia = Scheduler.isFolia();
-
-
 
         //Get NMS Version
         if(hasPaper || hasFolia) {
