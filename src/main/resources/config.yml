@@ -1,0 +1,44 @@
+#-----------------------------#
+#   ArmorStandEditor-Reborn   #
+#-----------------------------#
+
+#DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
+version: "RewriteDev-Version-0"
+
+#---- Scoreboard Coloring
+# Choose the color for your Locked Team Scoreboard.
+# You can find a full list at: https://jd.advntr.dev/api/4.14.0/net/kyori/adventure/text/format/NamedTextColor.html
+scoreboardColor: RED
+
+#---- Tool Data
+# Name of the edit tool's item Material.
+# You can find a full list at: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+toolMaterial: FLINT
+
+# (Optional) data that the plugin looks for to identify the name of the Edit Tool. Useful for Public Servers that do not want
+# normal use of Flint to be impacted.
+requireToolName: false
+toolName: "Example Name here"
+
+#---- Armor Stand Specifics
+
+# Rotations required to make a full circle using COARSE Adjustments
+coarseRotation: 12
+
+# Rotations required to make a full circle using FINER Adjustments
+fineRotation: 120
+
+# Can Make ArmorStands Visible/Invisible?
+# (Optional) You can either use this or the below permission to allow visibility changes
+# asedit.togglearmorstandvisibility
+armorStandVisibility: false
+
+# Can Make ItemFrames Visible/Invisible?
+# (Optional) You can either use this or the below permission to allow visibility changes
+# asedit.toggleitemframevisibility
+itemFrameVisiblity: false
+
+#---- Other Features
+# (Optional) Glowing Item Frames Support for Item Frames in 1.17 - WILL NOT WORK IN 1.16 OR LOWER AND 1.17.1 OR HIGHER
+# If true, players can make itemFrames glow by right-clicking with a Glow Ink Sac
+itemFrameGlowing: true

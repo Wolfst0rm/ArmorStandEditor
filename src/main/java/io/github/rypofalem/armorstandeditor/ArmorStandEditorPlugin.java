@@ -19,125 +19,211 @@
 
 package io.github.rypofalem.armorstandeditor;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
-import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.List;
+import java.util.logging.Level;
+
 public class ArmorStandEditorPlugin extends JavaPlugin {
 
-    PluginDescriptionFile pdfFile = getDescription();
 
     //Server Versioning - Spigot Detection and Derivatives
     boolean hasPaper;
+    boolean hasPurpur;
     boolean hasFolia;
     boolean hasSpigot;
+
+    //Plugin Loading Messages
+    String asePluginVersion = "";
     String minecraftVersion = "";
+    String minecraftVersionWarning = "";
+    static final String SEPERATOR_LOG = "================================";
 
-    //Scoreboards
-    Scoreboard scoreboard;
-    final String ASE_LOCKED_TEAM = "ASE_LOCKED";
-    Team team;
+    //Scoreboard related settings
+    public Scoreboard scoreboard;
+    public Team team;
+    String lockedTeamName = "ASE_LOCKED_TEAM";
+    NamedTextColor colorOfLockedTeam;
 
-    //Config related Items
-    NamedTextColor color;
+    // ASE-R Configuration Options
+
+    // -- Tool Data
+    String toolMaterial;
+    Material editToolMaterial;
+    boolean requireToolName;
+    String editToolName;
+    boolean requireToolData;
+    int editToolData;
+    boolean requireToolLore;
+    List<?> editToolLore;
+
+    // -- Armor Stand Specifics
+    double coarseRot;
+    double fineRot;
+    boolean armorStandVisibility;
+    boolean itemFrameVisibility;
+
+    // -- Other Features
+    boolean itemFrameGlowing;
 
 
     @Override
     public void onEnable() {
 
-        //Load Messages in Console
+        //First Log the Plugin Version
+        asePluginVersion = getConfig().getString("version");
+
         getLogger().info("======= ArmorStandEditor =======");
-        getLogger().info("Plugin Version: " + pdfFile.getVersion()); //Can be replaced with getConfig().getString("version"));
+        getLogger().log(Level.INFO, "Plugin Version: {0}", asePluginVersion);
 
-        //Get Minecraft Server Software Version
-        hasPaper = isPaper(); //io.papermc.paper.configuration.Configuration
-        hasFolia = isFolia(); //io.papermc.paper.threadedregions.RegionizedServer
-        hasSpigot = isSpigot(); //com.spigot.CustomTimingsHandler (per API Docs)
-        logServerSoftware();
+        //Get Minecraft Server Software Version + Log to Console
+        hasPaper = isPaper();   //io.papermc.paper.configuration.Configuration
+        hasFolia = isFolia();   //io.papermc.paper.threadedregions.RegionizedServer -- Could be removed in the future. Not Depreciated...
+        hasPurpur = isPurpur(); //org.purpurmc.purpur.event.PlayerAFKEvent
+        hasSpigot = isSpigot(); //com.spigot.CustomTimingsHandler (per API Docs) -- Depreciated for now....
 
-        //Log Minecraft Version and Any Warnings to go with it
-        getLogger().info("Minecraft Version: " + minecraftVersion);
-        logSpecificWarningsMinecraftVersion();
-        getServer().getPluginManager().enablePlugin(this);
+        // First Potential Disabling Point. Must be Spigot/Paper/Purpur or Folia to load ASE.
+        logServerSoftwareVersionToConsole(hasPaper, hasFolia, hasPurpur, hasSpigot);
 
-        this.loadConfig();
-        loadASEScoreboards(color);
+        // Minecraft Versioning. Final Potential Disable Point. Must be on 1.17/V1_17 or Higher to Load ASE.
+        minecraftVersion = gatherMinecraftServerVersionInfo();
+        getLogger().log(Level.INFO, "Minecraft Version: {0}", minecraftVersion);
 
-    }
-
-    private void loadConfig() {
-
-    }
-
-    private void loadASEScoreboards(NamedTextColor color) {
-        if(!hasFolia){
-            scoreboard = getServer().getScoreboardManager().getMainScoreboard();
-            getLogger().info("Registering ASE Locked Scoreboard - Required for Glowing Color Support");
-
-            if(scoreboard.getTeam(ASE_LOCKED_TEAM) == null){
-                scoreboard.registerNewTeam(ASE_LOCKED_TEAM);
-                scoreboard.getTeam(ASE_LOCKED_TEAM).color(color);
+        if (hasPurpur || hasPaper || hasFolia){
+            if(minecraftVersion.compareTo("1.20") < 0){
+                getLogger().log(Level.WARNING, "ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
+                getLogger().log(Level.WARNING, "Load Continuing, but some features may not work.");
+            } else if (minecraftVersion.compareTo("1.17") < 0 ) {
+                getLogger().log(Level.SEVERE, "ArmorStandEditor is not compatible with this version of Minecraft.");
+                getLogger().log(Level.SEVERE, "Please Update to a version past 1.17. Loading Failed.");
+                getLogger().log(Level.INFO, SEPERATOR_LOG);
+                getServer().getPluginManager().disablePlugin(this);
             } else{
-                getLogger().info("Scoreboard Already Exists. Continuing Load.");
+                getLogger().log(Level.INFO, "ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
             }
         } else{
-            getLogger().warning("Scoreboards do not work with Folia currently.");
+            if(minecraftVersion.compareTo("v1_20") < 0){
+                getLogger().log(Level.WARNING, "ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
+                getLogger().log(Level.WARNING, "Load Continuing, but some features may not work.");
+            } else if (minecraftVersion.compareTo("v1_17") < 0 ) {
+                getLogger().log(Level.SEVERE, "ArmorStandEditor is not compatible with this version of Minecraft.");
+                getLogger().log(Level.SEVERE, "Please Update to a version past 1.17. Loading Failed.");
+                getLogger().log(Level.INFO, SEPERATOR_LOG);
+                getServer().getPluginManager().disablePlugin(this);
+            } else{
+                getLogger().log(Level.INFO, "ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
+            }
+        }
+        getLogger().log(Level.INFO, SEPERATOR_LOG);
+
+        //Scoreboards - For all other versions MINUS Folia
+        colorOfLockedTeam = (NamedTextColor) getConfig().get("scoreboardColor");
+        if(!hasFolia){
+            scoreboard = this.getServer().getScoreboardManager().getMainScoreboard();
+            registerDisabledSlotsScoreboard(scoreboard);
+        } else{
+            getLogger().log(Level.WARNING, "Scoreboards currently do not work with Folia. Disabled Slots Feature will not work. Please deny asedit.disableSlots");
+        }
+
+        //TODO: Language Support - Priority 2
+
+        //Rotation Config Options
+        coarseRot = getConfig().getDouble("coarseRotation");
+        fineRot = getConfig().getDouble("fineRotation");
+        
+        //Tool Data -- Another failure point
+        toolMaterial = getConfig().getString("toolMaterial");
+        if(toolMaterial != null){
+            editToolMaterial = Material.getMaterial(toolMaterial);
+        } else{
+            getLogger().log(Level.SEVERE, "nable to get Tool for Use with Plugin. Unable to continue");
+            getLogger().log(Level.INFO, SEPERATOR_LOG);
+            getServer().getPluginManager().disablePlugin(this);
+        }
+
+        //Do we require custom tool names? -- Not Required by Default/If Not found
+        requireToolName = getConfig().getBoolean("requireToolName", false);
+        if(requireToolName){
+            editToolName = getConfig().getString("toolName");
+            if(editToolName != null){
+                if(hasPurpur || hasPaper || hasFolia){ // Paper etc.
+                    editToolName = String.valueOf(Component.text(editToolName.replace("&", "§")));
+                } else{ // Spigot
+                    editToolName = ChatColor.translateAlternateColorCodes('&', editToolName);
+                }
+
+            }
+        }
+
+        //Does the tool require Lore or Damage Data?
+        requireToolData = getConfig().getBoolean("requireToolData", false);
+        if(requireToolData){
+            editToolData = getConfig().getInt("toolData", Integer.MIN_VALUE);
+        }
+
+        //TODO: Custom Data Pack Model Support - Priority 4
+
+        //Can Make ArmorStands and ItemFrames visible/invisible?
+        armorStandVisibility = getConfig().getBoolean("armorStandVisibility", true);
+        itemFrameVisibility = getConfig().getBoolean("itemFrameVisibility", true);
+
+        //Allowed to make itemFrames Glow?
+        itemFrameGlowing = getConfig().getBoolean("itemFrameGlowing", true);
+
+
+
+
+        getServer().getPluginManager().enablePlugin(this);
+
+
+    }
+
+    private void registerDisabledSlotsScoreboard(Scoreboard scoreboard) {
+
+        getLogger().log(Level.INFO, "Registering Disabled Slots Scoreboard with Glowing Effects");
+
+        if(scoreboard.getTeam(lockedTeamName) == null){
+            scoreboard.registerNewTeam(lockedTeamName);
+            scoreboard.getTeam(lockedTeamName).color(colorOfLockedTeam);
+        } else{
+            getLogger().log(Level.INFO, "Scoreboard for {0} already exists. Continuing.", lockedTeamName);
         }
     }
 
-    private void unloadASEScoreboards(){
-        getLogger().info("Removing Scoreboards required for Glowing Effects");
-
-        team = scoreboard.getTeam(ASE_LOCKED_TEAM);
-        if (team != null) { //Basic Sanity Check to ensure that the team is there
-            team.unregister();
-        } else {
-            getLogger().severe("Team Already Appears to be removed. Please do not do this manually!");
-        }
-    }
-
-    private void logServerSoftware() {
-        if(hasPaper || hasFolia){
-            minecraftVersion = getServer().getMinecraftVersion(); // Returns 1.MAJOR.MINOR
-            getLogger().info("Paper/Folia: True");
-        } else if (hasSpigot){
-            minecraftVersion = getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3]; // Returns v1_20_R04
-            getLogger().info("Spigot: True");
-        } else {
-            getLogger().warning("ArmorStandEditor requires either Paper, Spigot or one of its forks to run. This is not an error, please do not report this! ");
+    private void logServerSoftwareVersionToConsole(boolean hasPaper, boolean hasFolia, boolean hasPurpur, boolean hasSpigot) {
+        if(hasPurpur || hasPaper || hasFolia){
+            getLogger().log(Level.INFO, "Paper/Folia/Purpur: TRUE");
+        } else if (hasSpigot) {
+            getLogger().log(Level.INFO, "SpigotMC: TRUE");
+        } else{
+            getLogger().log(Level.SEVERE, "You appear to not be running Paper, Folia, Purpur or Spigot. Please use those to continue.");
+            getLogger().log(Level.SEVERE, "ArmorStandEditor will now be disabled!");
+            getLogger().log(Level.INFO, SEPERATOR_LOG);
             getServer().getPluginManager().disablePlugin(this);
         }
     }
 
-    private void logSpecificWarningsMinecraftVersion() {
-        if(hasPaper || hasFolia){
-            if(minecraftVersion.contains("1.17") || minecraftVersion.contains("1.18") || minecraftVersion.contains("1.19")){
-                getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
-                getLogger().warning("Loading continuing, but please consider updating to the latest version.");
-            } else if (minecraftVersion.contains("1.20")) {
-                //Do Nothing
-            } else {
-                getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
-                getServer().getPluginManager().disablePlugin(this);
-            }
+    private String gatherMinecraftServerVersionInfo() {
+        if (hasPurpur || hasFolia || hasPaper){
+            minecraftVersion = getServer().getMinecraftVersion();
         } else {
-            if(minecraftVersion.contains("v1_20")){
-                //Do Nothing
-            } else if (minecraftVersion.contains("v1_19") || minecraftVersion.contains("v1_18") || minecraftVersion.contains("v1_17") ){
-                getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
-                getLogger().warning("Loading continuing, but please consider updating to the latest version.");
-            } else{
-                getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
-                getServer().getPluginManager().disablePlugin(this);
-            }
+            minecraftVersion = getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         }
+        return "";
     }
-
-    @Deprecated
-    // "Spigot will eventually be no longer supported by ASE
+    
+    /**
+     * @deprecated
+     *
+     * Spigot support is here for now, but might be removed in a future version
+     */
     private static boolean isSpigot() {
         try{
             Class.forName("com.spigotmc.CustomTimingsHandler");
@@ -156,8 +242,18 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
             return false;
         }
     }
-    private static boolean isFolia() {
+
+    private static boolean isPurpur() {
         try {
+            Class.forName("org.purpurmc.purpur.event.PlayerAFKEvent");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    private static boolean isFolia(){
+        try{
             Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
             return true;
         } catch (ClassNotFoundException e) {
@@ -166,10 +262,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     }
 
 
+
     @Override
     public void onDisable() {
-
-        unloadASEScoreboards();
     }
 
 }
