@@ -428,8 +428,6 @@ public class PlayerEditor {
         } else {
             sendMessage("nopermoption", "warn", "gravity");
         }
-
-
     }
 
     void togglePlate(ArmorStand armorStand) {

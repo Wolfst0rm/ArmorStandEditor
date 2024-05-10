@@ -57,7 +57,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     final String UPDATE = ChatColor.YELLOW + "/ase update";
     final String RELOAD = ChatColor.YELLOW + "/ase reload";
     final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
-    final String GIVEPLAYERHEAD = ChatColor.YELLOW + "/ase playerhead <name>";
+    final String GIVEPLAYERHEAD = ChatColor.YELLOW + "/ase playerhead";
     final String GETARMORSTATS = ChatColor.YELLOW + "/ase stats";
     Gson gson = new Gson();
 

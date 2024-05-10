@@ -155,7 +155,7 @@ permissions:
     children:
       asedit.basic: true
       asedit.equipment: true
-      asedit.gravity: true
+      asedit.togglegravity: true
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
