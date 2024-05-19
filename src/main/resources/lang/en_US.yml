@@ -82,18 +82,14 @@ reloaded:
   msg: Configuration File has been reloaded.
 playerhead:
   msg: Player Head retrieved.
-noplayerhead:
-  msg: Please turn on the ability to retrieve player heads in the config file and/or check your permissions to confirm that you have asedit.head set to true.
 playerheaderror:
-  msg: Unable to Retrieve Player Head.
+  msg: Unable to give you a playerhead.
 unabledestroycreative:
   msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
 notincorrectworld:
   msg: Sorry but you are not in the correct world to use ArmorStandEditor.
 stats:
   msg: Here are the statistics for your ArmorStand.
-playerheadhelp:
-  msg: "Please use /ase playerhead <name> to get a players head. Ex of the command - /ase playerhead Wolfieheart_"
 help:
   msg: "1. Hold the editing tool(<x>) in your main hand
 
@@ -154,6 +150,8 @@ nogive:
   msg: "You either do not have the permission to use the give command or do not allow it in Config.yml"
 noconsolecom:
   msg: Sorry but this command only works from in-game and not from Console!
+renamestopped:
+  msg: Please make sure you have the ability/permission to give your ArmorStand Colored Names.
 
 #menutitle
 mainmenutitle:
@@ -275,7 +273,7 @@ itemframevisible:
 playerheadmenu:
   msg: Player Head
   description:
-    msg: Please use /ase playerhead <name>
+    msg: Click me to get a copy of your own head
 blankslot:
   msg: Nothing here
   description:

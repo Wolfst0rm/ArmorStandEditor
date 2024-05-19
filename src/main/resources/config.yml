@@ -3,7 +3,7 @@
 #-----------------------------#
 
 #DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
-version: "1.20.4-45"
+version: "1.20.6-46"
 
 #----------- LANGUAGE
 #Name of the language file you wish to use
@@ -94,9 +94,9 @@ sendMessagesToActionBar: true
 #If true, players can make itemFrames glow by right-clicking with a Glow Ink Sac
 glowingItemFrame: true
 
-#(Optional) Allow Players to get Player Heads from a Command. NOTE: If this is False, this will not work.
-#You will also need asedit.head to be set TRUE as well in your Permissions Manager / File
-allowedToRetrievePlayerHead: false
+#(Optional) Allow Players to get Player Heads from a Command. You can set this up either here or giving players
+#asedit.head.
+allowedToRetrieveOwnPlayerHead: false
 
 #Each time the command is used, the admins will be notified that this has been ran but only
 #if this setting is made true

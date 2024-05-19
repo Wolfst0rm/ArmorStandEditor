@@ -90,7 +90,7 @@ public class Menu {
 
         //Slots with No Value
         blankSlot = createIcon(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1),
-                "blankslot", "");
+            "blankslot", "");
 
         //Axis - X, Y, Z for Movement
         xAxis = createIcon(new ItemStack(Material.RED_CONCRETE, 1),
@@ -149,7 +149,7 @@ public class Menu {
             visibility.setItemMeta(potionMeta);
             createIcon(visibility, "invisible", "mode invisible");
         } else {
-            visibility = null;
+            visibility = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.toggleitemframevisibility") ||
@@ -157,7 +157,7 @@ public class Menu {
             itemFrameVisible = new ItemStack(Material.ITEM_FRAME, 1);
             createIcon(itemFrameVisible, "itemframevisible", "mode itemframe");
         } else {
-            itemFrameVisible = null;
+            itemFrameVisible = blankSlot;
         }
 
         //Praise end
@@ -165,38 +165,55 @@ public class Menu {
         if (pe.getPlayer().hasPermission("asedit.toggleInvulnerability")) {
             toggleVulnerabilty = createIcon(new ItemStack(Material.TOTEM_OF_UNDYING, 1),
                 "vulnerability", "mode vulnerability");
+        } else {
+            toggleVulnerabilty = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.togglesize")) {
             size = createIcon(new ItemStack(Material.PUFFERFISH, 1),
                 "size", "mode size");
+        } else{
+            size = blankSlot;
         }
+
         if (pe.getPlayer().hasPermission("asedit.disableslots")) {
             disableSlots = createIcon(new ItemStack(Material.BARRIER), "disableslots", "mode disableslots");
+        } else{
+            disableSlots = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.togglegravity")) {
             gravity = createIcon(new ItemStack(Material.SAND), "gravity", "mode gravity");
+        } else {
+            gravity = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.togglebaseplate")) {
             plate = createIcon(new ItemStack(Material.SMOOTH_STONE_SLAB, 1),
                 "baseplate", "mode baseplate");
+        } else {
+            plate = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.movement")) {
             place = createIcon(new ItemStack(Material.RAIL, 1),
                 "placement", "mode placement");
+        } else{
+            place = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.rotation")) {
             rotate = createIcon(new ItemStack(Material.COMPASS, 1),
                 "rotate", "mode rotate");
+        } else {
+            rotate = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.equipment")) {
             equipment = createIcon(new ItemStack(Material.CHEST, 1),
                 "equipment", "mode equipment");
+        } else{
+            equipment = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.copy")) {
@@ -221,32 +238,32 @@ public class Menu {
                 "paste", "mode paste");
         }
 
-        if (pe.getPlayer().hasPermission("asedit.head") && pe.plugin.getAllowedToRetrievePlayerHead()) {
+        if (pe.getPlayer().hasPermission("asedit.head") || pe.plugin.getallowedToRetrieveOwnPlayerHead()) {
             playerHead = createIcon(new ItemStack(Material.PLAYER_HEAD, 1),
                 "playerheadmenu",
                 "playerhead");
-        } else{
+        } else {
             playerHead = blankSlot;
         }
 
-        if (pe.getPlayer().hasPermission("asedit.togglearmorstandglow")){
+        if (pe.getPlayer().hasPermission("asedit.togglearmorstandglow")) {
             glowing = createIcon(new ItemStack(Material.GLOW_INK_SAC, 1),
-                    "armorstandglow",
-                    "mode armorstandglow");
-        } else{
+                "armorstandglow",
+                "mode armorstandglow");
+        } else {
             glowing = blankSlot;
         }
 
         help = createIcon(new ItemStack(Material.NETHER_STAR), "helpgui", "help");
 
-        ItemStack[] items ={
+        ItemStack[] items = {
 
-                blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
-                copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
-                slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
-                slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
-                presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, disableSlots,
-                blankSlot, showArms, visibility, size, blankSlot, plate, toggleVulnerabilty, gravity, blankSlot
+            blankSlot, blankSlot, blankSlot, xAxis, yAxis, zAxis, blankSlot, blankSlot, help,
+            copy, paste, blankSlot, playerHead, headPos, reset, blankSlot, itemFrameVisible, glowing,
+            slot1, slot2, blankSlot, rightArmPos, bodyPos, leftArmPos, blankSlot, rotate, place,
+            slot3, slot4, blankSlot, rightLegPos, equipment, leftLegPos, blankSlot, coarseAdj, fineAdj,
+            presetItem, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, blankSlot, disableSlots,
+            blankSlot, showArms, visibility, size, blankSlot, plate, toggleVulnerabilty, gravity, blankSlot
         };
 
 
@@ -266,7 +283,7 @@ public class Menu {
         loreList.add(getIconDescription(path, option));
         meta.setLore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         icon.setItemMeta(meta);
         return icon;
     }

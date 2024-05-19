@@ -20,21 +20,17 @@
 package io.github.rypofalem.armorstandeditor;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
-
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.command.*;
 import org.bukkit.entity.ArmorStand;
@@ -45,11 +41,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class CommandEx implements CommandExecutor, TabCompleter {
     ArmorStandEditorPlugin plugin;
@@ -62,7 +57,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     final String UPDATE = ChatColor.YELLOW + "/ase update";
     final String RELOAD = ChatColor.YELLOW + "/ase reload";
     final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
-    final String GIVEPLAYERHEAD = ChatColor.YELLOW + "/ase playerhead <name>";
+    final String GIVEPLAYERHEAD = ChatColor.YELLOW + "/ase playerhead";
     final String GETARMORSTATS = ChatColor.YELLOW + "/ase stats";
     Gson gson = new Gson();
 
@@ -74,7 +69,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof ConsoleCommandSender) { //Fix to Support #267
-            if(plugin.isDebug()) plugin.debugMsgHandler("Sender is CONSOLE!");
+            if (plugin.isDebug()) plugin.debugMsgHandler("Sender is CONSOLE!");
             if (args.length == 0) {
                 sender.sendMessage(VERSION);
                 sender.sendMessage(HELP);
@@ -94,13 +89,13 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
 
         if (sender instanceof Player player && !getPermissionBasic(player)) {
-            if(plugin.isDebug()) plugin.debugMsgHandler("Sender is Player but asedit.basic is" + getPermissionBasic(player));
+            if (plugin.isDebug()) plugin.debugMsgHandler("Sender is Player but asedit.basic is" + getPermissionBasic(player));
             sender.sendMessage(plugin.getLang().getMessage("nopermoption", "warn", "basic"));
             return true;
         } else {
             Player player = (Player) sender;
 
-            if(plugin.isDebug()) plugin.debugMsgHandler("Sender is Player and asedit.basic is" + getPermissionBasic(player));
+            if (plugin.isDebug()) plugin.debugMsgHandler("Sender is Player and asedit.basic is" + getPermissionBasic(player));
             if (args.length == 0) {
                 player.sendMessage(LISTMODE);
                 player.sendMessage(LISTAXIS);
@@ -124,7 +119,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 case "version" -> commandVersion(player);
                 case "update" -> commandUpdate(player);
                 case "give" -> commandGive(player);
-                case "playerhead" -> commandGivePlayerHead(player, args);
+                case "playerhead" -> commandGivePlayerHead(player);
                 case "reload" -> commandReload(player);
                 case "stats" -> commandStats(player);
                 default -> {
@@ -149,7 +144,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     // https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/35 &
     // https://github.com/Wolfieheart/ArmorStandEditor-Issues/issues/30 - See Remarks OTHER
     private void commandGive(Player player) {
-        if (plugin.getAllowCustomModelData() && checkPermission(player, "give", true)) {
+        if (plugin.getAllowCustomModelData() || checkPermission(player, "give", true)) {
             ItemStack stack = new ItemStack(plugin.getEditTool()); //Only Support EditTool at the MOMENT
             ItemMeta meta = stack.getItemMeta();
             Objects.requireNonNull(meta).setCustomModelData(plugin.getCustomModelDataInt());
@@ -163,87 +158,19 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
     }
 
-    private void commandGivePlayerHead(Player player, String[] args) {
-
-        if (plugin.getAllowedToRetrievePlayerHead() && checkPermission(player, "head", true)) {
-
-            if (args.length == 2) {
-
-                //Get the Player head Texture
-                String skinTexture = getPlayerHeadTexture(args[1]);
-
-                if (skinTexture == null) {
-                    player.sendMessage(plugin.getLang().getMessage("playerheaderror", "warn"));
-                }
-
-                //Create the ItemStack for the PlayerHead
-                ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
-
-                // Get the meta therefore
-                SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
-                assert playerHeadMeta != null;
-
-                //Generate a Random UUID
-                GameProfile gameProfile = new GameProfile(UUID.randomUUID(), null);
-                gameProfile.getProperties().put("textures", new Property("textures", skinTexture));
-                Field profileField = null;
-
-                try {
-                    profileField = playerHeadMeta.getClass().getDeclaredField("profile");
-                    profileField.setAccessible(true);
-                    profileField.set(playerHeadMeta, gameProfile);
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    player.sendMessage(plugin.getLang().getMessage("playerheaderror", "warn"));
-                } finally {
-                    if (profileField != null) {
-                        profileField.setAccessible(false);
-                    }
-                }
-
-                //Set the Display Name to be that of the Player Given
-                playerHeadMeta.setDisplayName(args[1]);
-
-                //Set the Item Meta
-                playerHead.setItemMeta(playerHeadMeta);
-
-                //Add the head to the Players Inventory + display PlayerHead Success Message
-                player.getInventory().addItem(playerHead);
-                player.sendMessage(plugin.getLang().getMessage("playerhead", "info"));
-
-                //Let Admins know this command has been ran
-                for (Player onlineList : Bukkit.getOnlinePlayers()) {
-                    if (onlineList.hasPermission("asedit.permpack.admin") && plugin.getAdminOnlyNotifications()) {
-                        onlineList.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] " + player.getName() + "has just used the /ase playerhead command to get the head for " + args[1]);
-                    }
-                }
-            }
+    private void commandGivePlayerHead(Player player) {
+        if (player.hasPermission("asedit.head")) {
+            OfflinePlayer offlinePlayer = player.getPlayer();
+            ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
+            SkullMeta meta = (SkullMeta) item.getItemMeta();
+            meta.setOwningPlayer(offlinePlayer);
+            item.setItemMeta(meta);
+            player.getInventory().addItem(item);
+            player.sendMessage(plugin.getLang().getMessage("playerhead", "info"));
         } else {
-            player.sendMessage(plugin.getLang().getMessage("noplayerhead", "warn"));
+            player.sendMessage(plugin.getLang().getMessage("playerheaderror", "warn"));
         }
     }
-
-    private String getPlayerHeadTexture(String playerName) {
-        try {
-            // Get the UUID of the Player in Question
-            URL uuidURL = new URL("https://api.mojang.com/users/profiles/minecraft/" + playerName);
-            try (InputStreamReader uuidURLReader = new InputStreamReader(uuidURL.openStream())) {
-                JsonObject uuidObject = gson.fromJson(uuidURLReader, JsonObject.class);
-                String uuid = uuidObject.get("id").getAsString();
-
-
-                // Get the Skin from that UUID
-                URL skinURL = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
-                try (InputStreamReader skinURLReader = new InputStreamReader(skinURL.openStream())) {
-                    JsonObject skinObject = gson.fromJson(skinURLReader, JsonObject.class);
-                    JsonObject skinTextureProperty = skinObject.get("properties").getAsJsonArray().get(0).getAsJsonObject();
-                    return skinTextureProperty.get("value").getAsString();
-                }
-            }
-        } catch (IOException | IllegalStateException e) {
-            return null;
-        }
-    }
-
 
     private void commandSlot(Player player, String[] args) {
 
@@ -313,7 +240,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     if (args[1].equals("invisible") && !(checkPermission(player, "togglearmorstandvisibility", true) || plugin.getArmorStandVisibility())) return;
                     if (args[1].equals("itemframe") && !(checkPermission(player, "toggleitemframevisibility", true) || plugin.getItemFrameVisibility())) return;
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
-                    if(plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " chose the mode: " + mode);
+                    if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " chose the mode: " + mode);
                     return;
                 }
             }
@@ -389,7 +316,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private void commandStats(Player player) {
         if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " permission check for asedit.stats: " + getPermissionStats(player));
 
-        if(getPermissionStats(player)) {
+        if (getPermissionStats(player)) {
             for (Entity e : player.getNearbyEntities(1, 1, 1)) {
                 if (e instanceof ArmorStand as) {
 
@@ -419,12 +346,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     bodyZ = Math.toDegrees(bodyZ);
                     bodyZ = Math.rint(bodyZ);
 
-
                     //Arms
-                    double rightArmX = as.getRightArmPose().getX();
-                    rightArmX = Math.toDegrees(rightArmX);
-                    rightArmX = Math.rint(rightArmX);
-
                     double rightArmY = as.getRightArmPose().getY();
                     rightArmY = Math.toDegrees(rightArmY);
                     rightArmY = Math.rint(rightArmY);
@@ -433,6 +355,9 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     rightArmZ = Math.toDegrees(rightArmZ);
                     rightArmZ = Math.rint(rightArmZ);
 
+                    double rightArmX = as.getRightArmPose().getX();
+                    rightArmX = Math.toDegrees(rightArmX);
+                    rightArmX = Math.rint(rightArmX);
 
                     double leftArmX = as.getLeftArmPose().getX();
                     leftArmX = Math.toDegrees(leftArmX);
@@ -501,7 +426,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.YELLOW + "----------------------------------------------");
                 }
             }
-        }else{
+        } else {
             player.sendMessage(plugin.getLang().getMessage("norangeforstats", "warn"));
         }
     }
@@ -524,18 +449,23 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     private boolean getPermissionBasic(Player player) {
         return checkPermission(player, "basic", false);
     }
+
     private boolean getPermissionGive(Player player) {
         return checkPermission(player, "give", false);
     }
+
     private boolean getPermissionUpdate(Player player) {
         return checkPermission(player, "update", false);
     }
+
     private boolean getPermissionReload(Player player) {
         return checkPermission(player, "reload", false);
     }
+
     private boolean getPermissionPlayerHead(Player player) {
         return checkPermission(player, "head", false);
     }
+
     private boolean getPermissionStats(Player player) {
         return checkPermission(player, "stats", false);
     }
@@ -566,11 +496,11 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 if (getPermissionReload(player)) {
                     argList.add("reload");
                 }
-                if (getPermissionPlayerHead(player) && plugin.getAllowedToRetrievePlayerHead()) {
+                if (getPermissionPlayerHead(player) || plugin.getallowedToRetrieveOwnPlayerHead()) {
                     argList.add("playerhead");
                 }
 
-                if (getPermissionStats(player)){
+                if (getPermissionStats(player)) {
                     argList.add("stats");
                 }
             }
