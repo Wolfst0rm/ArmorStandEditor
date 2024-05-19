@@ -49,8 +49,8 @@ public class BentoBoxProtection implements Protection {
     @Override
     public boolean checkPermission(Block block, Player player) {
         if (!bentoEnabled || player.isOp() ||
-                player.hasPermission("asedit.ignoreProtection.bentobox") ||
-                player.hasPermission("bentobox.admin")) return true;
+            player.hasPermission("asedit.ignoreProtection.bentobox") ||
+            player.hasPermission("bentobox.admin")) return true;
 
         //Get the Bento Instance
         BentoBox myBento = BentoBox.getInstance();
@@ -65,22 +65,22 @@ public class BentoBoxProtection implements Protection {
         aOneBlockEnabled = addonsManager.getAddonByName("AOneBlock").isPresent();
         //Logging for Debug - NOTE will trigger each time an edit is done
 
-        if(ArmorStandEditorPlugin.instance().isDebug()) {
+        if (ArmorStandEditorPlugin.instance().isDebug()) {
             if (bSkyBlockEnabled && !aOneBlockEnabled) {
                 Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor] BentoBox Protection for ASE is looking at: BSkyBlock.");
             }
             if (aOneBlockEnabled && !bSkyBlockEnabled) {
                 Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor] BentoBox Protection for ASE is looking at: AOneBlock.");
             }
-            if(!bSkyBlockEnabled && !aOneBlockEnabled){
+            if (!bSkyBlockEnabled && !aOneBlockEnabled) {
                 Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor] BentoBox Protection is currently not using anything. This will automatically allow edits.");
             }
         }
 
 
-        if(!bSkyBlockEnabled && !aOneBlockEnabled){
+        if (!bSkyBlockEnabled && !aOneBlockEnabled) {
             return true;
-        } else{
+        } else {
             Optional<Island> islandOptional = islandsManager.getIslandAt(block.getLocation());
 
             if (islandOptional.isEmpty()) return true;
@@ -89,7 +89,11 @@ public class BentoBoxProtection implements Protection {
 
             Island theIsland = islandOptional.get();
 
-            return theIsland.isAllowed(User.getInstance(player), Flags.BREAK_BLOCKS);
+            if (theIsland.getRank(player.getUniqueId()) == 400) {
+                return true;
+            } else {
+                return theIsland.isAllowed(User.getInstance(player), Flags.BREAK_BLOCKS);
+            }
         }
     }
 }

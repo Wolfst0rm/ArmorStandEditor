@@ -20,6 +20,7 @@
 package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -57,14 +58,14 @@ public class PresetArmorPosesMenu {
     final String BACKTOMENU = "§2§nBack to Menu";
     final String HOWTO = "§2§nHow To";
 
-    public PresetArmorPosesMenu(PlayerEditor pe, ArmorStand as){
+    public PresetArmorPosesMenu(PlayerEditor pe, ArmorStand as) {
         this.pe = pe;
         this.armorstand = as;
-        name = pe.plugin.getLang().getMessage("presettitle","menutitle");
+        name = pe.plugin.getLang().getMessage("presettitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getPresetHolder(), 36, name);
     }
 
-    private void fillInventory(){
+    private void fillInventory() {
         menuInv.clear();
 
         /**
@@ -77,26 +78,26 @@ public class PresetArmorPosesMenu {
 
         //Presets -- Here to test things out, will get better names soon TM
         ItemStack sitting = createIcon(new ItemStack(Material.ARMOR_STAND, 1), "sitting");
-        ItemStack waving  = createIcon(new ItemStack(Material.ARMOR_STAND, 2), "waving");
-        ItemStack greet1  = createIcon(new ItemStack(Material.ARMOR_STAND, 3), "greeting 1");
-        ItemStack greet2  = createIcon(new ItemStack(Material.ARMOR_STAND, 4), "greeting 2");
-        ItemStack cheer   = createIcon(new ItemStack(Material.ARMOR_STAND, 5), "cheers");
-        ItemStack archer  = createIcon(new ItemStack(Material.ARMOR_STAND, 6), "archer");
+        ItemStack waving = createIcon(new ItemStack(Material.ARMOR_STAND, 2), "waving");
+        ItemStack greet1 = createIcon(new ItemStack(Material.ARMOR_STAND, 3), "greeting 1");
+        ItemStack greet2 = createIcon(new ItemStack(Material.ARMOR_STAND, 4), "greeting 2");
+        ItemStack cheer = createIcon(new ItemStack(Material.ARMOR_STAND, 5), "cheers");
+        ItemStack archer = createIcon(new ItemStack(Material.ARMOR_STAND, 6), "archer");
         ItemStack dancing = createIcon(new ItemStack(Material.ARMOR_STAND, 7), "dancing");
         ItemStack hanging = createIcon(new ItemStack(Material.ARMOR_STAND, 8), "hanging");
         ItemStack present = createIcon(new ItemStack(Material.ARMOR_STAND, 9), "present");
         ItemStack fishing = createIcon(new ItemStack(Material.ARMOR_STAND, 10), "fishing");
 
         //Utilities
-        ItemStack backToMenu  = createIcon(new ItemStack(Material.RED_WOOL, 1), "backtomenu");
+        ItemStack backToMenu = createIcon(new ItemStack(Material.RED_WOOL, 1), "backtomenu");
         ItemStack howToPreset = createIcon(new ItemStack(Material.BOOK, 1), "howtopreset");
 
         //Build for the Menu ---- DO NOT MODIFY THIS UNLESS YOU KNOW WHAT YOU ARE DOING!
         ItemStack[] items = {
-                blank, blank, blank, blank, blank, blank, blank, blank, blank,
-                blank, backToMenu, sitting, waving, greet1, greet2, cheer, archer, blank,
-                blank, howToPreset, dancing, hanging, present, fishing, blank, blank, blank,
-                blank, blank, blank, blank, blank, blank, blank, blank, blank
+            blank, blank, blank, blank, blank, blank, blank, blank, blank,
+            blank, backToMenu, sitting, waving, greet1, greet2, cheer, archer, blank,
+            blank, howToPreset, dancing, hanging, present, fishing, blank, blank, blank,
+            blank, blank, blank, blank, blank, blank, blank, blank, blank
         };
 
         menuInv.setContents(items);
@@ -110,7 +111,7 @@ public class PresetArmorPosesMenu {
         loreList.add(getIconDescription(path));
         meta.setLore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         icon.setItemMeta(meta);
         return icon;
     }
@@ -135,8 +136,8 @@ public class PresetArmorPosesMenu {
     }
 
     public void handlePresetPose(String itemName, Player player) {
-        if(itemName == null) return;
-        if(player == null) return;
+        if (itemName == null) return;
+        if (player == null) return;
         switch (itemName) {
             case SITTING:
                 setPresetPose(player, 345, 0, 10, 350, 0, 350, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);
@@ -204,26 +205,26 @@ public class PresetArmorPosesMenu {
     }
 
     public void setPresetPose(Player player, double rightArmRoll, double rightArmYaw, double rightArmPitch,
-                              double leftArmRoll, double leftArmYaw, double leftArmPitch,
-                              double rightLegRoll, double rightLegYaw, double rightLegPitch,
-                              double leftLegRoll, double LeftLegYaw, double llp_yaw,
-                              double headRoll, double headYaw, double headPitch,
-                              double bodyRoll, double bodyYaw, double bodyPitch){
+        double leftArmRoll, double leftArmYaw, double leftArmPitch,
+        double rightLegRoll, double rightLegYaw, double rightLegPitch,
+        double leftLegRoll, double LeftLegYaw, double llp_yaw,
+        double headRoll, double headYaw, double headPitch,
+        double bodyRoll, double bodyYaw, double bodyPitch) {
 
         for (Entity theArmorStand : player.getNearbyEntities(1, 1, 1)) {
             if (theArmorStand instanceof ArmorStand armorStand) {
-                if(!player.hasPermission("asedit.basic")) return;
+                if (!player.hasPermission("asedit.basic")) return;
 
                 //Do the right positions based on what is given
                 rightArmRoll = Math.toRadians(rightArmRoll);
                 rightArmYaw = Math.toRadians(rightArmYaw);
-                rightArmPitch =  Math.toRadians(rightArmPitch);
+                rightArmPitch = Math.toRadians(rightArmPitch);
                 EulerAngle rightArmEulerAngle = new EulerAngle(rightArmRoll, rightArmYaw, rightArmPitch);
                 armorStand.setRightArmPose(rightArmEulerAngle);
 
                 // Calculate and set left arm settings
                 leftArmRoll = Math.toRadians(leftArmRoll);
-                leftArmYaw =  Math.toRadians(leftArmYaw);
+                leftArmYaw = Math.toRadians(leftArmYaw);
                 leftArmPitch = Math.toRadians(leftArmPitch);
                 EulerAngle leftArmEulerAngle = new EulerAngle(leftArmRoll, leftArmYaw, leftArmPitch);
                 armorStand.setLeftArmPose(leftArmEulerAngle);
@@ -237,7 +238,7 @@ public class PresetArmorPosesMenu {
 
                 // Calculate and set left leg settings
                 leftLegRoll = Math.toRadians(leftLegRoll);
-                LeftLegYaw =  Math.toRadians(LeftLegYaw);
+                LeftLegYaw = Math.toRadians(LeftLegYaw);
                 llp_yaw = Math.toRadians(llp_yaw);
                 EulerAngle leftLegEulerAngle = new EulerAngle(leftLegRoll, LeftLegYaw, llp_yaw);
                 armorStand.setLeftLegPose(leftLegEulerAngle);

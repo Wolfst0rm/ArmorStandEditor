@@ -73,6 +73,7 @@ public class PlayerEditorManager implements Listener {
         new SkyblockProtection(),
         new TownyProtection(),
         new WorldGuardProtection(),
+        new itemAdderProtection(),
         new BentoBoxProtection());
 
     PlayerEditorManager(ArmorStandEditorPlugin plugin) {
@@ -133,6 +134,7 @@ public class PlayerEditorManager implements Listener {
             if (player.getInventory().getItemInMainHand().getType() == Material.NAME_TAG && player.hasPermission("asedit.rename")) {
                 ItemStack nameTag = player.getInventory().getItemInMainHand();
                 String name;
+                String name2;
                 if (nameTag.getItemMeta() != null && nameTag.getItemMeta().hasDisplayName()) {
                     name = nameTag.getItemMeta().getDisplayName().replace('&', ChatColor.COLOR_CHAR);
                 } else {
@@ -148,6 +150,9 @@ public class PlayerEditorManager implements Listener {
                     as.setCustomName(null);
                     as.setCustomNameVisible(false);
                     event.setCancelled(true);
+                } else if (name.startsWith("" + ChatColor.COLOR_CHAR + "") && !player.hasPermission("asedit.rename.color")) {
+                    event.setCancelled(true);
+                    player.sendMessage(plugin.getLang().getMessage("renamestopped"));
                 } else if (!name.equals("")) { // nametag is not blank
                     event.setCancelled(true);
 
@@ -235,7 +240,7 @@ public class PlayerEditorManager implements Listener {
             }
         }
 
-        if(event.getEntity() instanceof ArmorStand entityAS && entityAS.isDead()){
+        if (event.getEntity() instanceof ArmorStand entityAS && entityAS.isDead()) {
             //TODO: Find a more permanent fix for "Once you destroy that armor stand, the armor stand will keep it's name and colour given by the name tag." THIS IS A TEMP SOLUTION FOR NOW.
             event.getEntity().setCustomName(null);
             event.getEntity().setCustomNameVisible(false);
@@ -261,7 +266,7 @@ public class PlayerEditorManager implements Listener {
         } else if (itemF != null && !itemF.isEmpty()) {
             getPlayerEditor(player.getUniqueId()).setFrameTarget(itemF);
         } else {
-            getPlayerEditor(player.getUniqueId()).sendMessage("nodoubletarget","warn");
+            getPlayerEditor(player.getUniqueId()).sendMessage("nodoubletarget", "warn");
         }
     }
 
@@ -361,9 +366,9 @@ public class PlayerEditorManager implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     void onRightClickTool(PlayerInteractEvent e) {
         if (!(e.getAction() == Action.LEFT_CLICK_AIR
-                || e.getAction() == Action.RIGHT_CLICK_AIR
-                || e.getAction() == Action.LEFT_CLICK_BLOCK
-                || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
+            || e.getAction() == Action.RIGHT_CLICK_AIR
+            || e.getAction() == Action.LEFT_CLICK_BLOCK
+            || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         Player player = e.getPlayer();
         if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
         if (plugin.requireSneaking && !player.isSneaking()) return;
@@ -371,8 +376,8 @@ public class PlayerEditorManager implements Listener {
         if (plugin.enablePerWorld && (!plugin.allowedWorldList.contains(player.getWorld().getName()))) {
             //Implementation for Per World ASE
                 getPlayerEditor(player.getUniqueId()).sendMessage("notincorrectworld", "warn");
-                e.setCancelled(true);
-                return;
+            e.setCancelled(true);
+            return;
         }
         e.setCancelled(true);
         getPlayerEditor(player.getUniqueId()).openMenu();
@@ -417,10 +422,10 @@ public class PlayerEditorManager implements Listener {
             }
         }
 
-        if (e.getInventory().getHolder() == presetHolder){
+        if (e.getInventory().getHolder() == presetHolder) {
             e.setCancelled(true);
             ItemStack item = e.getCurrentItem();
-            if(item != null && item.hasItemMeta()){
+            if (item != null && item.hasItemMeta()) {
                 Player player = (Player) e.getWhoClicked();
                 String itemName = item.getItemMeta().getDisplayName();
                 PlayerEditor pe = players.get(player.getUniqueId());
@@ -428,7 +433,6 @@ public class PlayerEditorManager implements Listener {
             }
         }
     }
-
 
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -475,7 +479,6 @@ public class PlayerEditorManager implements Listener {
     long getTime() {
         return counter.ticks;
     }
-
 
 
     class TickCounter implements Runnable {

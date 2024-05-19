@@ -58,7 +58,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     public boolean hasPaper = false;
     public boolean hasFolia = false;
     String nmsVersionNotLatest = null;
-    PluginDescriptionFile pdfFile = this.getDescription();
+
+    String aseVersion;
     public static final String SEPARATOR_FIELD = "================================";
 
     public PlayerEditorManager editorManager;
@@ -94,7 +95,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     boolean armorStandVisibility = true;
 
     //Misc Options
-    boolean allowedToRetrievePlayerHead = false;
+    boolean allowedToRetrieveOwnPlayerHead = false;
     boolean adminOnlyNotifications = false;
 
     //Glow Entity Colors
@@ -117,35 +118,60 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         if (!Scheduler.isFolia())
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
 
-        //Get NMS Version
-        nmsVersion = getNmsVersion();
+        // Get ASEs Version Number from the config....
+        aseVersion = this.getConfig().getString("version");
 
         //Load Messages in Console
         getLogger().info("======= ArmorStandEditor =======");
-        getLogger().info("Plugin Version: " + pdfFile.getVersion());
+        getLogger().info("Plugin Version: v" + aseVersion);
 
-        // Check if the Minecraft version is supported
-        if (nmsVersion.compareTo("v1_17") < 0) {
-            getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
-            getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
-            getServer().getPluginManager().disablePlugin(this);
-            getLogger().info(SEPARATOR_FIELD);
-            return;
-        }
-
-        //Also Warn People to Update if using nmsVersion lower than latest
-        if (nmsVersion.compareTo("v1_20") < 0) {
-            getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
-            getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
-            getLogger().warning("Loading continuing, but please consider updating to the latest version.");
-        } else {
-            getLogger().log(Level.INFO, warningMCVer + "{0}", nmsVersion);
-            getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
-        }
         //Spigot Check
         hasSpigot = getHasSpigot();
         hasPaper = getHasPaper();
         hasFolia = Scheduler.isFolia();
+
+        //Get NMS Version
+        if(hasPaper || hasFolia) {
+            nmsVersion = getServer().getMinecraftVersion();
+
+            // Check if the Minecraft version is supported
+            if(nmsVersion.contains("1.20")) {
+                getLogger().log(Level.INFO, warningMCVer + "{0}", nmsVersion);
+                getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
+            } else if(nmsVersion.contains("1.17") || nmsVersion.contains("1.18") || nmsVersion.contains("1.19") ){
+                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
+                getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
+                getLogger().warning("Loading continuing, but please consider updating to the latest version.");
+            } else{
+                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
+                getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
+                getServer().getPluginManager().disablePlugin(this);
+                getLogger().info(SEPARATOR_FIELD);
+            }
+        } else{
+            nmsVersion = getNmsVersion();
+            // Check if the Minecraft version is supported
+            if (nmsVersion.compareTo("v1_17") < 0) {
+                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
+                getLogger().warning("ArmorStandEditor is not compatible with this version of Minecraft. Please update to at least version 1.17. Loading failed.");
+                getServer().getPluginManager().disablePlugin(this);
+                getLogger().info(SEPARATOR_FIELD);
+                return;
+            }
+
+            //Also Warn People to Update if using nmsVersion lower than latest
+            if (nmsVersion.compareTo("v1_20") < 0) {
+                getLogger().log(Level.WARNING, warningMCVer + "{0}", nmsVersion);
+                getLogger().warning("ArmorStandEditor is compatible with this version of Minecraft, but it is not the latest supported version.");
+                getLogger().warning("Loading continuing, but please consider updating to the latest version.");
+            } else {
+                getLogger().log(Level.INFO, warningMCVer + "{0}", nmsVersion);
+                getLogger().info("ArmorStandEditor is compatible with this version of Minecraft. Loading continuing.");
+            }
+
+        }
+
+
 
         //If Paper and Spigot are both FALSE - Disable the plugin
         if (!hasPaper && !hasSpigot) {
@@ -238,7 +264,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
 
         enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
-        if(enablePerWorld) {
+        if (enablePerWorld) {
             allowedWorldList = getConfig().getList("allowed-worlds", null);
             if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
                 allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
@@ -263,12 +289,12 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
 
         //Ability to get Player Heads via a command
-        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
+        allowedToRetrieveOwnPlayerHead = getConfig().getBoolean("allowedToRetrieveOwnPlayerHead", true);
 
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
         debugFlag = getConfig().getBoolean("debugFlag", false);
-        if(debugFlag){
+        if (debugFlag) {
             getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
             getServer().getLogger().warning(" ArmorStandEditor - Debug Mode ");
             getServer().getLogger().warning("      Debug Mode: ENABLED!     ");
@@ -366,7 +392,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     private void updateConfig(String folder, String config) {
         if (!new File(getDataFolder() + File.separator + folder + config).exists()) {
-            saveResource(folder  + config, false);
+            saveResource(folder + config, false);
         }
     }
 
@@ -445,8 +471,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     }
 
     //New in 1.20-43: Allow the ability to get a player head from a command - ENABLED VIA CONFIG ONLY!
-    public boolean getAllowedToRetrievePlayerHead() {
-        return this.getConfig().getBoolean("allowedToRetrievePlayerHead");
+    public boolean getallowedToRetrieveOwnPlayerHead() {
+        return this.getConfig().getBoolean("allowedToRetrieveOwnPlayerHead");
     }
 
     public boolean getAdminOnlyNotifications() {
@@ -525,7 +551,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         }
         return true;
     }
-        public void performReload() {
+
+    public void performReload() {
 
         //Unregister Scoreboard before before performing the reload
         if (!hasFolia) {
@@ -588,7 +615,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
 
         enablePerWorld = getConfig().getBoolean("enablePerWorldSupport", false);
-        if(enablePerWorld) {
+        if (enablePerWorld) {
             allowedWorldList = getConfig().getList("allowed-worlds", null);
             if (allowedWorldList != null && allowedWorldList.get(0).equals("*")) {
                 allowedWorldList = getServer().getWorlds().stream().map(World::getName).toList();
@@ -609,7 +636,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         runTheUpdateChecker = getConfig().getBoolean("runTheUpdateChecker", true);
 
         //Ability to get Player Heads via a command
-        allowedToRetrievePlayerHead = getConfig().getBoolean("allowedToRetrievePlayerHead", true);
+        allowedToRetrieveOwnPlayerHead = getConfig().getBoolean("allowedToRetrieveOwnPlayerHead", true);
         adminOnlyNotifications = getConfig().getBoolean("adminOnlyNotifications", true);
 
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
@@ -712,7 +739,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         return debugFlag;
     }
 
-    public void debugMsgHandler(String msg){
-        if(isDebug()) getServer().getLogger().log(Level.WARNING, "[ASE-DEBUG]: {0}", msg);
+    public void debugMsgHandler(String msg) {
+        if (isDebug()) getServer().getLogger().log(Level.WARNING, "[ASE-DEBUG]: {0}", msg);
     }
 }

@@ -1,13 +1,13 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.20.4-45
+version: 1.20.6-46
 api-version: "1.17"
 folia-supported: true
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, DreiFxn, Pinnkk, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox]
+softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox, ItemAdder]
 
 commands:
   ase:
@@ -31,6 +31,9 @@ permissions:
     default: true
   asedit.rename:
     description: Rename armorstands - Now Supports Color
+    default: true
+  asedit.rename.color:
+    description: Give players the ability to use colored nametags or not
     default: true
   asedit.equipment:
     description: Access armorstand equipment GUI
@@ -117,6 +120,9 @@ permissions:
   asedit.ignoreProtection.bentobox:
     description: Allows user to ignore Bentobox Protection Limitations.
     default: false
+  asedit.ignoreProtection.itemAdder:
+    description: Allows user to ignore ItemAdder/LoneDev Protection Limitations.
+    default: false
 
   asedit.ignoreProtection.*:
     description: Ignore all Protection Limitations
@@ -130,6 +136,7 @@ permissions:
       asedit.ignoreProtection.griefDefender: true
       asedit.ignoreProtection.lands: true
       asedit.ignoreProtection.bentobox: true
+      asedit.ignoreProtection.itemAdder: true
 
   asedit.permpack.dontIgnoreProtections:
     children:
@@ -141,16 +148,18 @@ permissions:
       asedit.ignoreProtection.griefDefender: false
       asedit.ignoreProtection.lands: false
       asedit.ignoreProtection.bentobox: false
+      asedit.ignoreProtection.itemAdder: false
 
   asedit.permpack.basic:
     default: true
     children:
       asedit.basic: true
       asedit.equipment: true
-      asedit.gravity: true
+      asedit.togglegravity: true
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
+      asedit.rename.color: true
       asedit.update: false
       asedit.give: false
       asedit.reload: false
@@ -178,6 +187,7 @@ permissions:
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
+      asedit.rename.color: true
       asedit.update: true
       asedit.reload: true
       asedit.head: true
