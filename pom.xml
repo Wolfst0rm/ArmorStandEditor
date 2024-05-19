@@ -114,7 +114,7 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-api</artifactId>
-            <version>4.16.0</version>
+            <version>4.17.0</version>
             <scope>provided</scope>
         </dependency>
         <!--- WorldGuard -->
@@ -168,7 +168,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.100.2.3</version>
+            <version>0.100.2.9</version>
             <scope>provided</scope>
         </dependency>
         <!--- UpdateChecker -->
@@ -202,7 +202,7 @@
         <dependency>
             <groupId>com.github.angeschossen</groupId>
             <artifactId>LandsAPI</artifactId>
-            <version>6.42.8</version>
+            <version>7.1.12</version>
             <scope>provided</scope>
         </dependency>
         <!-- Bentobox -->
@@ -234,7 +234,7 @@
             <plugin>
                 <groupId>org.openrewrite.maven</groupId>
                 <artifactId>rewrite-maven-plugin</artifactId>
-                <version>5.29.0</version>
+                <version>5.31.0</version>
                 <configuration>
                     <activeRecipes>
                         <recipe>org.openrewrite.java.format.AutoFormat</recipe>
