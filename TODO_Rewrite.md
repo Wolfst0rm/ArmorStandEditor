@@ -6,6 +6,7 @@
 
 ## Priority 2 - Normal
 - Languages
+- Reimplement what was already there previously
 - Retrieving own Player Head Support
 
 ## Priority 3 - Low
