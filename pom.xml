@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.20.5-46</version>
+    <version>1.20.6-46.1</version>
     <name>armorstandeditor</name>
     <url>https://maven.apache.org</url>
 
@@ -227,8 +227,10 @@
             <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
     <!--Java 8-->
+
     <build>
         <plugins>
             <plugin>
@@ -273,7 +275,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <release>${java.version}</release>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
