@@ -172,13 +172,13 @@ public class Menu {
         if (pe.getPlayer().hasPermission("asedit.togglesize")) {
             size = createIcon(new ItemStack(Material.PUFFERFISH, 1),
                 "size", "mode size");
-        } else{
+        } else {
             size = blankSlot;
         }
 
         if (pe.getPlayer().hasPermission("asedit.disableslots")) {
             disableSlots = createIcon(new ItemStack(Material.BARRIER), "disableslots", "mode disableslots");
-        } else{
+        } else {
             disableSlots = blankSlot;
         }
 
@@ -198,7 +198,7 @@ public class Menu {
         if (pe.getPlayer().hasPermission("asedit.movement")) {
             place = createIcon(new ItemStack(Material.RAIL, 1),
                 "placement", "mode placement");
-        } else{
+        } else {
             place = blankSlot;
         }
 
@@ -212,7 +212,7 @@ public class Menu {
         if (pe.getPlayer().hasPermission("asedit.equipment")) {
             equipment = createIcon(new ItemStack(Material.CHEST, 1),
                 "equipment", "mode equipment");
-        } else{
+        } else {
             equipment = blankSlot;
         }
 
@@ -283,7 +283,6 @@ public class Menu {
         loreList.add(getIconDescription(path, option));
         meta.setLore(loreList);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
         icon.setItemMeta(meta);
         return icon;
     }
