@@ -117,14 +117,14 @@ noperm:
 nopermoption:
   msg: 您无权使用 <x> 该选项！
   basic: 普通盔甲架
-  showarms: 展示武器
+  showarms: 显示手臂
   armorstandvisibility: 盔甲架可见性
   baseplate: 设置底板可见性
   gravity: 切换重力
-  vulnerability: 切换脆弱性！
-  itemframevisibility: 项目框架可见性
+  vulnerability: 切换不可破坏！
+  itemframevisibility: 物品展示框可见性
   size: 切换盔甲架大小
-  disableslots: 切换装备锁
+  disableslots: 切换装备锁定
   paste: 粘贴盔甲架配置
   copy: 复制盔甲架配置
   reset: 重置盔甲架配置
