@@ -436,6 +436,11 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         return Scheduler.isFolia();
     }
 
+    //Will be useful for later.....
+    public String getMinecraftVersion(){
+        return this.nmsVersion;
+    }
+
     public String getArmorStandEditorVersion() {
         return getConfig().getString("version");
     }
