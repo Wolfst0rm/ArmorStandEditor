@@ -20,18 +20,19 @@
 package io.github.rypofalem.armorstandeditor;
 
 import com.google.common.collect.ImmutableList;
-
 import io.github.rypofalem.armorstandeditor.api.ArmorStandRenameEvent;
 import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
-
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
-import org.bukkit.event.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -333,13 +334,29 @@ public class PlayerEditorManager implements Listener {
         return itemFrames;
     }
 
-
-    boolean canEdit(Player player, Entity entity) {
-        //Get the Entity being checked for editing
-        Block block = entity.getLocation().getBlock();
-
-        // Check if all protections allow this edit, if one fails, don't allow edit
-        return protections.stream().allMatch(protection -> protection.checkPermission(block, player));
+    static boolean canEdit(Player player, Entity entity) {
+        return canEdit(player, entity.getLocation());
+    }
+    
+    static boolean canEdit(Player player, Location location) {
+        // Get the Entity being checked for editing
+        Block block = location.getBlock();
+        
+        // TODO Remove old protection system, including "protections/" folder and documentation update:
+        
+/*        // Check if all protections allow this edit, if one fails, don't allow edit
+        return protections.stream().allMatch(protection -> protection.checkPermission(block, player));*/
+        
+        // Creating test place-event for the target location (works also for Fine Adjustment):
+        BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(), location.getBlock(), 
+                player.getActiveItem(), player, false, player.getActiveItemHand());
+        
+        // Checking build permission by test-event:
+        Bukkit.getServer().getPluginManager().callEvent(placeEvent);
+        boolean canBuild = !placeEvent.isCancelled();
+        placeEvent.setCancelled(true);
+        
+        return canBuild;
     }
 
     void applyLeftTool(Player player, ArmorStand as) {
