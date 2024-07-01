@@ -339,10 +339,10 @@ public class PlayerEditorManager implements Listener {
     }
     
     static boolean canEdit(Player player, Location location) {
-        // Get the Entity being checked for editing
         Block block = location.getBlock();
         
-        // TODO Remove old protection system, including "protections/" folder and documentation update:
+        // TODO Deconstruct unused restriction-system checks in "protections/" folder. 
+        //  Only 'asedit.ignoreProtection.<plugin>' check is necessary now.
         
 /*        // Check if all protections allow this edit, if one fails, don't allow edit
         return protections.stream().allMatch(protection -> protection.checkPermission(block, player));*/
