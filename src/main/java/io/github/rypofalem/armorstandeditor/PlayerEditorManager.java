@@ -347,16 +347,16 @@ public class PlayerEditorManager implements Listener {
 /*        // Check if all protections allow this edit, if one fails, don't allow edit
         return protections.stream().allMatch(protection -> protection.checkPermission(block, player));*/
         
-        // Creating test place-event for the target location (works also for Fine Adjustment):
+        // Creating test place-event for the target location. (Works also for Fine Adjustment.)
+        // Used 'BlockPlaceEvent', because e.g. 'EntityPlaceEvent' is not handled the same for every restriction system.
         BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(), location.getBlock(), 
                 player.getActiveItem(), player, false, player.getActiveItemHand());
         
-        // Checking build permission by test-event:
+        // Checking build permission by test-event. (The block is generally not placed via 'callEvent()' method.)
         Bukkit.getServer().getPluginManager().callEvent(placeEvent);
-        boolean canBuild = !placeEvent.isCancelled();
-        placeEvent.setCancelled(true);
+        // An event-cancel afterward would have no effect.
         
-        return canBuild;
+        return !placeEvent.isCancelled();
     }
 
     void applyLeftTool(Player player, ArmorStand as) {
