@@ -147,7 +147,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
                 getServer().getPluginManager().disablePlugin(this);
                 getLogger().info(SEPARATOR_FIELD);
             }
-        } else {
+        } else { // Spigot Detected
             nmsVersion = getNmsVersion();
             // Check if the Minecraft version is supported
             if (nmsVersion.compareTo("v1_17") < 0) {

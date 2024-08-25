@@ -19,6 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor.menu;
 
+import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
 import org.bukkit.Bukkit;
@@ -38,32 +39,33 @@ import java.util.ArrayList;
 public class PresetArmorPosesMenu {
 
     Inventory menuInv;
-    private PlayerEditor pe;
+    private final PlayerEditor pe;
+    public ArmorStandEditorPlugin plugin = ArmorStandEditorPlugin.instance();
     private ArmorStand armorstand;
     static String name;
-
-    //PRESET NAMES
-    final String SITTING = "§2§nSitting";
-    final String WAVING = "§2§nWaving";
-    final String GREETING_1 = "§2§nGreeting 1";
-    final String GREETING_2 = "§2§nGreeting 2";
-    final String CHEERS = "§2§nCheers";
-    final String ARCHER = "§2§nArcher";
-    final String DANCING = "§2§nDancing";
-    final String HANG = "§2§nHanging";
-    final String PRESENT = "§2§nPresent";
-    final String FISHING = "§2§nFishing";
-
-    //Menu Stuff
-    final String BACKTOMENU = "§2§nBack to Menu";
-    final String HOWTO = "§2§nHow To";
 
     public PresetArmorPosesMenu(PlayerEditor pe, ArmorStand as) {
         this.pe = pe;
         this.armorstand = as;
-        name = pe.plugin.getLang().getMessage("presettitle", "menutitle");
+        name = plugin.getLang().getMessage("presettitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getPresetHolder(), 36, name);
     }
+
+    //PRESET NAMES
+    final String SITTING  = plugin.getLang().getMessage("sitting").replace("§6","§2§n");
+    final String WAVING     = plugin.getLang().getMessage("waving").replace("§6","§2§n");
+    final String GREETING_1 = plugin.getLang().getMessage("greeting 1").replace("§6","§2§n");
+    final String GREETING_2 = plugin.getLang().getMessage("greeting 2").replace("§6","§2§n");
+    final String CHEERS     = plugin.getLang().getMessage("cheers").replace("§6","§2§n");
+    final String ARCHER     = plugin.getLang().getMessage("archer").replace("§6","§2§n");
+    final String DANCING    = plugin.getLang().getMessage("dancing").replace("§6","§2§n");
+    final String HANGING    = plugin.getLang().getMessage("hanging").replace("§6","§2§n");
+    final String PRESENTING = plugin.getLang().getMessage("presenting").replace("§6","§2§n");
+    final String FISHING    = plugin.getLang().getMessage("fishing").replace("§6","§2§n");
+
+    //Menu Stuff
+    final String BACKTOMENU = plugin.getLang().getMessage("backtomenu").replace("§6","§2§n");
+    final String HOWTO      = plugin.getLang().getMessage("howtopreset").replace("§6","§2§n");
 
     private void fillInventory() {
         menuInv.clear();
@@ -116,11 +118,11 @@ public class PresetArmorPosesMenu {
     }
 
     private String getIconName(String path) {
-        return pe.plugin.getLang().getMessage(path, "iconname");
+        return plugin.getLang().getMessage(path, "iconname");
     }
 
     private String getIconDescription(String path) {
-        return pe.plugin.getLang().getMessage(path + ".description", "icondescription");
+        return plugin.getLang().getMessage(path + ".description", "icondescription");
     }
 
     public void openMenu() {
@@ -134,72 +136,61 @@ public class PresetArmorPosesMenu {
         return name;
     }
 
-    public void handlePresetPose(String itemName, Player player) {
+    public void handlePresetPose(String itemName, Player player){
         if (itemName == null) return;
         if (player == null) return;
-        switch (itemName) {
-            case SITTING:
-                setPresetPose(player, 345, 0, 10, 350, 0, 350, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case WAVING:
-                setPresetPose(player, 220, 20, 0, 350, 0, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case GREETING_1:
-                setPresetPose(player, 260, 20, 0, 260, 340, 0, 340, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case GREETING_2:
-                setPresetPose(player, 260, 10, 0, 260, 350, 0, 320, 0, 0, 10, 0, 0, 340, 0, 350, 0, 0, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case CHEERS:
-                setPresetPose(player, 250, 60, 0, 20, 10, 0, 10, 0, 0, 350, 0, 0, 340, 0, 0, 0, 0, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case ARCHER:
-                setPresetPose(player, 270, 350, 0, 280, 50, 0, 340, 0, 10, 20, 0, 350, 0, 0, 0, 0, 0, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case DANCING:
-                setPresetPose(player, 14, 0, 110, 20, 0, 250, 250, 330, 0, 15, 330, 0, 350, 350, 0, 0, 0, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case HANG:
-                setPresetPose(player, 1, 33, 67, -145, -33, -4, -42, 21, 1, -100, 0, -1, -29, -38, -18, 0, -4, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case PRESENT:
-                setPresetPose(player, 280, 330, 0, 10, 0, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case FISHING:
-                setPresetPose(player, 300, 320, 0, 300, 40, 0, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
-            case BACKTOMENU:
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                pe.openMenu();
-                break;
-            case HOWTO:
-                player.sendMessage(pe.plugin.getLang().getMessage("howtopresetmsg"));
-                player.sendMessage(pe.plugin.getLang().getMessage("helpurl"));
-                player.sendMessage(pe.plugin.getLang().getMessage("helpdiscord"));
-                player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
-                player.closeInventory();
-                break;
+
+        //Do the Preset
+        if (itemName.equals(SITTING)){
+            setPresetPose(player, 345, 0, 10, 350, 0, 350, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(WAVING)){
+            setPresetPose(player, 220, 20, 0, 350, 0, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(GREETING_1)) {
+            setPresetPose(player, 260, 20, 0, 260, 340, 0, 340, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(GREETING_2)) {
+            setPresetPose(player, 260, 10, 0, 260, 350, 0, 320, 0, 0, 10, 0, 0, 340, 0, 350, 0, 0, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(ARCHER)) {
+            setPresetPose(player, 270, 350, 0, 280, 50, 0, 340, 0, 10, 20, 0, 350, 0, 0, 0, 0, 0, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(DANCING)){
+            setPresetPose(player, 14, 0, 110, 20, 0, 250, 250, 330, 0, 15, 330, 0, 350, 350, 0, 0, 0, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(CHEERS)) {
+            setPresetPose(player, 250, 60, 0, 20, 10, 0, 10, 0, 0, 350, 0, 0, 340, 0, 0, 0, 0, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(HANGING)) {
+            setPresetPose(player, 1, 33, 67, -145, -33, -4, -42, 21, 1, -100, 0, -1, -29, -38, -18, 0, -4, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(PRESENTING)) {
+            setPresetPose(player, 280, 330, 0, 10, 0, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(FISHING)) {
+            setPresetPose(player, 300, 320, 0, 300, 40, 0, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+        } else if (itemName.equals(BACKTOMENU)) {
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
+            pe.openMenu();
+        } else if (itemName.equals(HOWTO)) {
+            player.sendMessage(pe.plugin.getLang().getMessage("howtopresetmsg"));
+            player.sendMessage(pe.plugin.getLang().getMessage("helpurl"));
+            player.sendMessage(pe.plugin.getLang().getMessage("helpdiscord"));
+            player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
+            player.closeInventory();
         }
     }
 
