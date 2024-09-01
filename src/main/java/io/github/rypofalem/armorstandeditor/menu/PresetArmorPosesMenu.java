@@ -52,7 +52,7 @@ public class PresetArmorPosesMenu {
     }
 
     //PRESET NAMES
-    final String SITTING  = plugin.getLang().getMessage("sitting").replace("§6","§2§n");
+    final String SITTING    = plugin.getLang().getMessage("sitting").replace("§6","§2§n");
     final String WAVING     = plugin.getLang().getMessage("waving").replace("§6","§2§n");
     final String GREETING_1 = plugin.getLang().getMessage("greeting 1").replace("§6","§2§n");
     final String GREETING_2 = plugin.getLang().getMessage("greeting 2").replace("§6","§2§n");
