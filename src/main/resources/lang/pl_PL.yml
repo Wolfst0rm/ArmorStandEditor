@@ -2,6 +2,9 @@
 # Polish translation by Patbox
 #
 
+#NOTE from Author:
+# Do NOT Add CustomColors to icons (PresetMenu) as it will break how presets work and do the translation
+
 iconname: 2n
 icondescription: 5
 info: 6

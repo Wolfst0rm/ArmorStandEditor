@@ -1,6 +1,9 @@
 # Translations by Amaury Carrade (https://github.com/AmauryCarrade) and Niasio (https://github.com/Niasio)
 # Updated on 12 avril 2023 by kugge (https://github.com/kugge)
 
+#NOTE from Author:
+# Do NOT Add CustomColors to icons (PresetMenu) as it will break how presets work and do the translation
+
 #A section symbol will be inserted between each character in this section
 #http://minecraft.gamepedia.com/Formatting_codes
 iconname: 2n

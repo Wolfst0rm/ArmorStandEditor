@@ -1,13 +1,16 @@
-#Translation by Jumpy91
+#Translation by Jumpy91 & DreiFxn
+
+#NOTE from Author:
+# Do NOT Add CustomColors to icons (PresetMenu) as it will break how presets work and do the translation
 
 #formatting
 #A section symbol will be inserted between each character in this section
 #http://minecraft.gamepedia.com/Formatting_codes
 iconname: 2n
-icondescription: 5
+icondescription: e
 info: 6
 warn: c
-menutitle: 8
+menutitle: 6
 
 #info
 setmode:
@@ -23,7 +26,6 @@ setmode:
   invisible: Sichtbarkeit umschalten
   size: Größe umschalten
   disableslots: Deaktivierte Slots umschalten
-  vulnerability: Toggle Vulnerability
   gravity: Erdanziehungskraft umschalten
   baseplate: Bodenplatte umschalten
   placement: Platzierung
@@ -46,10 +48,6 @@ setgravity:
   msg: Erdanziehungskraft <x>.
   true: an
   false: aus
-toggleinvulnerability:
-  msg: ArmorStand vulnerability state has been toggled to <x>.
-  true: invulnerable
-  false: vulnerable
 nomode:
   msg: Klicke mit dem Bearbeitungswerkzeug weg vom Rüstungsständer um den Bearbeitungsmodus auszuwählen!
 nomodeif:
@@ -61,27 +59,13 @@ pasted:
 target:
   msg: Ziel Rüstungsständer wurde gesperrt.
 notarget:
-  msg: <x> wurde entsperrt.
-  armorstand: Ziel Rüstungsständer
-  itemframe: ItemFrame
+  msg: Ziel Rüstungsständer wurde entsperrt.
 frametarget:
   msg: Itemframe Ziel gesperrt.
+noframetarget:
+  msg: Itemframe Ziel entsperrt.
 doubletarget:
   msg: Bitte schaue entweder auf einen Rüstungsständer oder einem ItemFrame, nicht beides!
-nodoubletarget:
-  msg: Please look at an ArmorStand or an ItemFrame before switching hands!
-playerhead:
-  msg: Player Head retrieved.
-noplayerhead:
-  msg: Please turn on the ability to retrieve player heads in the config file.
-playerheaderror:
-  msg: Unable to Retrieve Player Head.
-notincorrectworld:
-  msg: Sorry but you are not in the correct world to use ArmorStandEditor.
-unabledestroycreative:
-  msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
-stats:
-  msg: Here are the statistics for your ArmorStand.
 help:
   msg: "1. Halte das Bearbeitungswerkzeug(<x>) in deiner Haupthand.
 
@@ -102,8 +86,6 @@ helptips:
   3. Du kannst sneaken und das Scrollrad drehen während du das Bearbeitungswerkzeug hältst um die Achsen zu wechseln ohne das Menü zu öffnen."
 helpurl:
   msg: "Weitere Infos: https://github.com/RypoFalem/ArmorStandEditor/wiki"
-helpdiscord:
-  msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
 give:
   msg: Player given Item with CustomModelData
 
@@ -112,26 +94,8 @@ cantedit:
   msg: Entschuldigung, du kannst hier keine Rüstungsständer bearbeiten!
 noperm:
   msg: Du hast keine Erlaubnis diesen Befehl zu nutzen!
-nopermoption:
-  msg: You don't have permission to use the <x> Option!
-  basic: Normal ArmorStand
-  showarms: Show Arms
-  armorstandvisibility: Armor Stand Visibility
-  baseplate: Set Baseplate Visibility
-  gravity: Toggle Gravity
-  vulnerability: Toggle Vulnerability!
-  itemframevisibility: Item Frame Visibility
-  size: Toggle ArmorStand Size
-  disableslots: Toggle Equipment Lock
-  paste: Paste ArmorStand Config
-  copy: Copy ArmorStand Config
-  reset: Reset ArmorStand Config
-  stats: View ArmorStand Statistics
-  armorstandglow: Toggle ArmorStand Glow
 noslotnumcom:
   msg: Du musst eine Slotnummer angeben!
-norangestats:
-  msg: Please get next to an ArmorStand before running this command.
 noadjcom:
   msg: Du musst Grob oder Fein auswählen!
 noaxiscom:
@@ -212,10 +176,6 @@ disableslots:
   msg: Deaktiviere Slots
   description:
     msg: Aktiviere und Deaktiviere die Ausrüstungssperre
-vulnerability:
-  msg: Toggle Vulnerability
-  description:
-    msg: Toggles an item's vulnerability state
 gravity:
   msg: Erdanziehungskraft
   description:
@@ -252,22 +212,6 @@ helpgui:
   msg: Hilfe!
   description:
     msg: Klicke hier um Hilfe zu erhalten!
-itemframevisible:
-  msg: Itemframe Visibility
-  description:
-    msg: Toggles an itemframes visibility
-playerheadmenu:
-  msg: Player Head
-  description:
-    msg: Please use /ase playerhead <name>
-blankslot:
-  msg: Nothing here
-  description:
-    msg: Just a placeholder item. Clicking me will not do anything.
-armorstandglow:
-  msg: Toggle ArmorStand Glow
-  description:
-    msg: Turn ArmorStand Glowing on or off.
 
 #icons (equipment menu)
 disabled:
@@ -289,68 +233,44 @@ equipslot:
   rhand: Rechte Hand
   lhand: Linke Hand
 
-#all things related to Presets
-presetmenu:
-  msg: Preset Poses
-  description:
-    msg: Use a Preset Pose for your ArmorStand [Will Open another Menu]
-
 #icons (Preset Menu)
 sitting:
-  msg: Sitting
+  msg: Sitzen
   description:
-    msg: Time to sit back and relax.
+    msg: Zeit, sich zurückzulehnen und zu entspannen.
 waving:
-  msg: Waving
+  msg: Winken
   description:
-    msg: Hey, Over here!
+    msg: Hey, hier drüben!
 greeting 1:
-  msg: Greeting 1
+  msg: Begrüßung 1
   description:
-    msg: Greetings, I am your Armor Stand.
+    msg: Seid gegrüßt, ich bin euer Rüstungsständer.
 greeting 2:
-  msg: Greeting 2
+  msg: Begrüßung 2
   description:
-    msg: Oh Hey there, I am your Armor Stand.
+    msg: Hallo, ich bin dein Rüstungsständer.
 archer:
-  msg: Archer
+  msg: Bogenschütze
   description:
-    msg: Watch out, your Armor Stand is about to shoot you :O
+    msg: Pass auf, dein Rüstungsständer ist dabei, dich zu erschießen. :O
 dancing:
-  msg: Dancing
+  msg: Tanzen
   description:
-    msg: Hey there, would you like a dance?
+    msg: Hallo, möchtest du tanzen?
 cheers:
-  msg: Cheers
+  msg: Prost
   description:
-    msg: Lets Cheers to this!
+    msg: Lasst uns darauf anstoßen!
 hanging:
-  msg: Hanging
+  msg: Hängend
   description:
-    msg: Time to hang onto this mountain like our life depended on it.
+    msg: Es ist an der Zeit, an diesem Berg festzuhalten, als ob unser Leben davon abhinge.
 present:
-  msg: Present
+  msg: Geschenk
   description:
-    msg: Your ArmorStand has a present for you <3
+    msg: Dein Rüstungsständer hat ein Geschenk für dich. <3
 fishing:
-  msg: Fishing
+  msg: Angeln
   description:
-    msg: Time yo go on a fishing trip
-
-#Help for Presets
-backtomenu:
-  msg: Back to Menu
-  description:
-    msg: Click me to go back to the main menu
-howtopreset:
-  msg: How To
-  description:
-    msg: A short message on how to use presets.
-howtopresetmsg:
-  msg: "1. Hold the editing tool in your main hand
-  
-  2. Open the Menu with Preset Mode Active.
-  
-  3. Choose one of the Armor Stand Presets that you want to select. 
-  
-  4. After choosing, your menu will close and your chosen preset will be applied. "
+    msg: Zeit für einen Angelausflug.

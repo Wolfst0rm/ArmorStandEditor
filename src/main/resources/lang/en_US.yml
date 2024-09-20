@@ -11,6 +11,9 @@ info: 6
 warn: c
 menutitle: 8
 
+#NOTE from Author:
+# Do NOT Add CustomColors to icons (PresetMenu) as it will break how presets work and do the translation
+
 #info
 setmode:
   msg: Setting mode to <x>.
