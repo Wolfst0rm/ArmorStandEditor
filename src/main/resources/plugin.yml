@@ -1,13 +1,13 @@
 name: ArmorStandEditor
 main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: ${project.version}
-api-version: "1.13"
+version: 1.21.1-47.2
+api-version: "1.17"
 folia-supported: true
 website: https://www.spigotmc.org/resources/94503/
 author: Wolfstorm
 authors: [Wolfstorm, Pinnkk, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox]
+softdepend: [Towny, WorldGuard, GriefPrevention, PlotSquared, Lands, bentobox, ItemAdder]
 
 commands:
   ase:
@@ -93,6 +93,7 @@ permissions:
       asedit.ignoreProtection.griefDefender: true
       asedit.ignoreProtection.lands: true
       asedit.ignoreProtection.bentobox: true
+      asedit.ignoreProtection.itemAdder: true
 
   asedit.permpack.dontIgnoreProtections:
     children:
@@ -104,16 +105,18 @@ permissions:
       asedit.ignoreProtection.griefDefender: false
       asedit.ignoreProtection.lands: false
       asedit.ignoreProtection.bentobox: false
+      asedit.ignoreProtection.itemAdder: false
 
   asedit.permpack.basic:
     default: op
     children:
       asedit.basic: true
       asedit.equipment: true
-      asedit.gravity: true
+      asedit.togglegravity: true
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
+      asedit.rename.color: true
       asedit.update: false
       asedit.give: false
       asedit.reload: false
@@ -139,6 +142,7 @@ permissions:
       asedit.movement: true
       asedit.disableSlots: true
       asedit.rename: true
+      asedit.rename.color: true
       asedit.update: true
       asedit.reload: true
       asedit.head: true

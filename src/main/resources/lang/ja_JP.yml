@@ -1,5 +1,8 @@
 #Translation by kotarobo
 
+#NOTE from Author:
+# Do NOT Add CustomColors to icons (PresetMenu) as it will break how presets work and do the translation
+
 #formatting
 #A section symbol will be inserted between each character in this section
 #http://minecraft.gamepedia.com/Formatting_codes
@@ -285,3 +288,69 @@ equipslot:
   boots: ブーツ
   rhand: 右手
   lhand: 左手
+
+#all things related to Presets
+presetmenu:
+  msg: Preset Poses
+  description:
+    msg: Use a Preset Pose for your ArmorStand [Will Open another Menu]
+
+#icons (Preset Menu)
+sitting:
+  msg: Sitting
+  description:
+    msg: Time to sit back and relax.
+waving:
+  msg: Waving
+  description:
+    msg: Hey, Over here!
+greeting 1:
+  msg: Greeting 1
+  description:
+    msg: Greetings, I am your Armor Stand.
+greeting 2:
+  msg: Greeting 2
+  description:
+    msg: Oh Hey there, I am your Armor Stand.
+archer:
+  msg: Archer
+  description:
+    msg: Watch out, your Armor Stand is about to shoot you :O
+dancing:
+  msg: Dancing
+  description:
+    msg: Hey there, would you like a dance?
+cheers:
+  msg: Cheers
+  description:
+    msg: Lets Cheers to this!
+hanging:
+  msg: Hanging
+  description:
+    msg: Time to hang onto this mountain like our life depended on it.
+present:
+  msg: Present
+  description:
+    msg: Your ArmorStand has a present for you <3
+fishing:
+  msg: Fishing
+  description:
+    msg: Time yo go on a fishing trip
+
+#Help for Presets
+backtomenu:
+  msg: Back to Menu
+  description:
+    msg: Click me to go back to the main menu
+howtopreset:
+  msg: How To
+  description:
+    msg: A short message on how to use presets.
+howtopresetmsg:
+  msg: "1. Hold the editing tool in your main hand
+  
+  2. Open the Menu with Preset Mode Active.
+  
+  3. Choose one of the Armor Stand Presets that you want to select. 
+  
+  4. After choosing, your menu will close and your chosen preset will be applied. "

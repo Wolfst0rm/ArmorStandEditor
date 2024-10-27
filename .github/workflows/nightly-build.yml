@@ -1,0 +1,136 @@
+name: Nightly ASE Build of Main (CI/CD)
+
+on:
+  schedule:
+    - cron: "0 23 * * *"
+
+jobs:
+  nightly-build-java21:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java_version: ['21']
+
+    steps:
+      # Checkout the repository
+      - name: Checkout ArmorStandEditor
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Set up the Java Development Kit (JDK)
+      - name: Setup JDK ${{ matrix.java_version }}
+        uses: actions/setup-java@v4.2.2
+        with:
+          java-version: ${{ matrix.java_version }}
+          distribution: 'zulu'
+
+      # Cache SonarCloud for analysis
+      - name: Cache SonarCloud for Analysis
+        uses: actions/cache@v4.0.2
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      # Cache Maven packages to speed up build
+      - name: Cache the Maven Packages to speed up build
+        uses: actions/cache@v4.0.2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      # Build and analyze the project using Maven and SonarCloud
+      - name: Build and analyze via Maven
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=wolfieheart_ArmorStandEditor
+
+      # Clean and verify the build
+      - name: Clean Verify
+        run: mvn -B clean verify
+
+      # Get the current date and time
+      - name: Get Current Date and Time
+        id: date
+        run: echo "DATE=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
+      # Rename the artifact file with the current date and time
+      - name: Rename Artifact
+        run: |
+          ARTIFACT_PATH=$(find /home/runner/work/ArmorStandEditor/ArmorStandEditor/target/ -name 'armorstandeditor-*-*.jar')
+          mv $ARTIFACT_PATH "${ARTIFACT_PATH%.jar}-${{ env.DATE }}-Java21.jar"
+
+      # Upload the renamed artifact for debugging
+      - name: Upload Artifact for Debugging
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: /home/runner/work/ArmorStandEditor/ArmorStandEditor/target/armorstandeditor-*-*-Java21.jar
+          if-no-files-found: error
+          retention-days: 1
+          overwrite: true
+
+#  nightly-build-java17:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        java_version: ['17']
+
+#    steps:
+#      # Checkout the repository
+#     - name: Checkout ArmorStandEditor
+#       uses: actions/checkout@v4
+#       with:
+#          fetch-depth: 0
+#
+      # Set up the Java Development Kit (JDK)
+#      - name: Setup JDK ${{ matrix.java_version }}
+#        uses: actions/setup-java@v4.2.1
+#        with:
+#          java-version: ${{ matrix.java_version }}
+#          distribution: 'temurin'
+
+      # Cache SonarCloud for analysis
+#      - name: Cache SonarCloud for Analysis
+#        uses: actions/cache@v4.0.2
+#        with:
+#         path: ~/.sonar/cache
+#          key: ${{ runner.os }}-sonar
+#          restore-keys: ${{ runner.os }}-sonar
+
+# - name: Cache the Maven Packages to speed up build
+#   uses: actions/cache@v4.0.2
+#   with:
+#     path: ~/.m2
+#     key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+#     restore-keys: ${{ runner.os }}-m2
+
+# - name: Build and analyze via Maven
+#   env:
+#     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+#     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#   run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=wolfieheart_ArmorStandEditor
+
+# - name: Clean Verify
+#   run: mvn -B clean verify
+
+# - name: Get Current Date and Time
+#   id: date
+#   run: echo "DATE=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
+# - name: Rename Artifact
+#   run: |
+#     ARTIFACT_PATH=$(find /home/runner/work/ArmorStandEditor/ArmorStandEditor/target/ -name 'armorstandeditor-*-*.jar')
+#     mv $ARTIFACT_PATH "${ARTIFACT_PATH%.jar}-${{ env.DATE }}-Java17.jar"
+
+# - name: Upload Artifact for Debugging
+#   uses: actions/upload-artifact@v4
+#   with:
+#     name: artifact
+#     path: /home/runner/work/ArmorStandEditor/ArmorStandEditor/target/armorstandeditor-*-*-Java17.jar
+#     if-no-files-found: error
+#     retention-days: 1
+#     overwrite: true

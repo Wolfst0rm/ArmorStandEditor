@@ -1,8 +1,11 @@
+#NOTE from Author:
+# Do NOT Add CustomColors to icons (PresetMenu) as it will break how presets work and do the translation
+
 #formatting
 #A section symbol will be inserted between each character in this section
 #http://minecraft.gamepedia.com/Formatting_codes
 #translated by sumdream
-#由 sumdream , 10935336 和 Thaumiel9 翻译
+#由 sumdream , 10935336 , LikeWind 和 Thaumiel9 翻译
 iconname: 2n
 icondescription: 5
 info: 6
@@ -103,11 +106,11 @@ noplayerhead:
 playerheaderror:
   msg: 无法获取玩家头颅
 notincorrectworld:
-  msg: Sorry but you are not in the correct world to use ArmorStandEditor.
+  msg: 对不起，您没有在正确的世界中使用盔甲架编辑器。
 unabledestroycreative:
-  msg: Unable to Destroy this Invulnerable ArmorStand in Creative Mode.
+  msg: 无法在创造模式中摧毁这个不可破坏的盔甲架。
 stats:
-  msg: Here are the statistics for your ArmorStand.
+  msg: 以下是盔甲架的统计数据。
 
 #警告
 cantedit:
@@ -115,23 +118,23 @@ cantedit:
 noperm:
   msg: 你没有权限这样做!
 nopermoption:
-  msg: You don't have permission to use the <x> Option!
-  basic: Normal ArmorStand
-  showarms: Show Arms
-  armorstandvisibility: Armor Stand Visibility
-  baseplate: Set Baseplate Visibility
-  gravity: Toggle Gravity
-  vulnerability: Toggle Vulnerability!
-  itemframevisibility: Item Frame Visibility
-  size: Toggle ArmorStand Size
-  disableslots: Toggle Equipment Lock
-  paste: Paste ArmorStand Config
-  copy: Copy ArmorStand Config
-  reset: Reset ArmorStand Config
-  stats: View ArmorStand Statistics
-  armorstandglow: Toggle ArmorStand Glow
+  msg: 您无权使用 <x> 该选项！
+  basic: 普通盔甲架
+  showarms: 显示手臂
+  armorstandvisibility: 盔甲架可见性
+  baseplate: 设置底板可见性
+  gravity: 切换重力
+  vulnerability: 切换不可破坏！
+  itemframevisibility: 物品展示框可见性
+  size: 切换盔甲架大小
+  disableslots: 切换装备锁定
+  paste: 粘贴盔甲架配置
+  copy: 复制盔甲架配置
+  reset: 重置盔甲架配置
+  stats: 查看盔甲架统计数据
+  armorstandglow: 切换盔甲架发光
 norangestats:
-  msg: Please get next to an ArmorStand before running this command.
+  msg: 在运行此命令之前，请靠近盔甲架。
 noslotnumcom:
   msg: 你必须选择一个物品栏!
 noadjcom:
@@ -156,6 +159,10 @@ xaxis:
   msg: X 轴
   description:
     msg: 调整 X 轴位置
+vulnerability:
+  msg: 切换不可破坏
+  description:
+    msg: 切换一个盔甲架的不可破坏状态
 yaxis:
   msg: Y 轴
   description:
@@ -257,17 +264,17 @@ itemframevisible:
   description:
     msg: 显示/隐形物品展示框
 blankslot:
-  msg: Nothing here
+  msg: 这里什么都没有
   description:
-    msg: Just a placeholder item. Clicking me will not do anything.
+    msg: 只是一个占位符项。单击“我”不会执行任何操作。
 playerheadmenu:
-  msg: Player Head
+  msg: 玩家头
   description:
-    msg: Please use /ase playerhead <name>
+    msg: 请使用 /ase playerhead <name>
 armorstandglow:
-  msg: Toggle ArmorStand Glow
+  msg: 切换盔甲架发光
   description:
-    msg: Turn ArmorStand Glowing on or off.
+    msg: 转动盔甲架发光打开或关闭。
 
 #图标 (装备)
 disabled:
@@ -288,3 +295,69 @@ equipslot:
   boots: 靴子
   rhand: 右手
   lhand: 左手
+
+#all things related to Presets
+presetmenu:
+  msg: 预设姿势
+  description:
+    msg: 使用预设姿势盔甲架[将打开另一个菜单]
+
+#icons (Preset Menu)
+sitting:
+  msg: 坐
+  description:
+    msg: 是时候坐下来放松一下了。
+waving:
+  msg: 挥舞
+  description:
+    msg: 嘿，过来！
+greeting 1:
+  msg: 问候语 1
+  description:
+    msg: 你好，我是你们的盔甲架。
+greeting 2:
+  msg: 问候语 2
+  description:
+    msg: 哦，嘿，我是你的盔甲架。
+archer:
+  msg: 射手
+  description:
+    msg: 小心，你的装甲架即将向你开枪：O
+dancing:
+  msg: 婆娑
+  description:
+    msg: 嘿，你想跳舞吗？
+cheers:
+  msg: 干杯
+  description:
+    msg: 让我们为此干杯！
+hanging:
+  msg: 绞刑
+  description:
+    msg: 是时候像我们的生命一样挂在这座山上了。
+present:
+  msg: 礼物
+  description:
+    msg: 你的盔甲架有礼物给你 <3
+fishing:
+  msg: 钓鱼
+  description:
+    msg: 是时候去钓鱼了
+
+#Help for Presets
+backtomenu:
+  msg: 返回菜单
+  description:
+    msg: 单击“我”返回主菜单
+howtopreset:
+  msg: 如何
+  description:
+    msg: 有关如何使用预设的简短消息。
+howtopresetmsg:
+  msg: "1. 将编辑工具握在主手中
+  
+  2. 打开预设模式处于活动状态的菜单。
+  
+  3. 选择要选择的盔甲架预设之一。
+  
+  4. 选择后，您的菜单将关闭并应用您选择的预设。"

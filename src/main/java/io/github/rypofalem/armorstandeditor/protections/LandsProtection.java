@@ -47,7 +47,7 @@ public class LandsProtection implements Protection {
 
     @Override
     public boolean checkPermission(Block block, Player player) {
-        if (!landsEnabled || player.hasPermission("asedit.ignoreProtection.lands")) return true;
+        if (!landsEnabled || player.hasPermission("asedit.ignoreProtection.lands") || player.isOp()) return true;
 
         //Get the players UUID
         UUID playerUUID = player.getUniqueId();
@@ -72,8 +72,7 @@ public class LandsProtection implements Protection {
                     if (landAreaOfAS.getRole(playerUUID) == visitorRole) return false;
 
                     // If Player is Trusted OR Player is Owner of the Area/Claim, Allow Edits
-                    if (landAreaOfAS.isTrusted(playerUUID) || landAreaOfAS.getOwnerUID() == landPlayer.getUID()) return true;
-                    else if (landAreaOfAS.hasRoleFlag(playerUUID, BLOCK_BREAK) ||
+                    if (landAreaOfAS.isTrusted(playerUUID) || landAreaOfAS.getOwnerUID() == landPlayer.getUID()) return true; else if (landAreaOfAS.hasRoleFlag(playerUUID, BLOCK_BREAK) ||
                         landAreaOfAS.hasRoleFlag(playerUUID, BLOCK_PLACE) ||
                         landAreaOfAS.hasRoleFlag(playerUUID, INTERACT_CONTAINER) ||
                         landAreaOfAS.hasRoleFlag(playerUUID, INTERACT_GENERAL)) {

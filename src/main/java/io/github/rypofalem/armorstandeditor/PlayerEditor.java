@@ -24,6 +24,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 import io.github.rypofalem.armorstandeditor.api.*;
 import io.github.rypofalem.armorstandeditor.menu.EquipmentMenu;
 import io.github.rypofalem.armorstandeditor.menu.Menu;
+import io.github.rypofalem.armorstandeditor.menu.PresetArmorPosesMenu;
+
+//Do not optimize these..... This will no work properly
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.ArmorStandData;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
@@ -65,6 +68,7 @@ public class PlayerEditor {
     int targetIndex = 0;
     int frameTargetIndex = 0;
     EquipmentMenu equipMenu;
+    PresetArmorPosesMenu presetPoseMenu;
     long lastCancelled = 0;
 
     public PlayerEditor(UUID uuid, ArmorStandEditorPlugin plugin) {
@@ -173,13 +177,16 @@ public class PlayerEditor {
                 case GLOWING:
                     toggleGlowing(armorStand);
                     break;
+                case PRESET:
+                    choosePreset(armorStand);
+                    break;
                 case NONE:
                 default:
                     sendMessage("nomode", null);
                     break;
 
             }
-        }else return;
+        } else return;
     }
 
     public void editItemFrame(ItemFrame itemFrame) {
@@ -202,7 +209,7 @@ public class PlayerEditor {
                     sendMessage("nomodeif", null);
                     break;
             }
-        }else return;
+        } else return;
     }
 
     private void openEquipment(ArmorStand armorStand) {
@@ -210,6 +217,12 @@ public class PlayerEditor {
         //if (team != null && team.hasEntry(armorStand.getName())) return; //Do not allow editing if the ArmorStand is Disabled
         equipMenu = new EquipmentMenu(this, armorStand);
         equipMenu.open();
+    }
+
+    private void choosePreset(ArmorStand armorStand) {
+        if (!getPlayer().hasPermission("asedit.basic")) return;
+        presetPoseMenu = new PresetArmorPosesMenu(this, armorStand);
+        presetPoseMenu.openMenu();
     }
 
     public void reverseEditArmorStand(ArmorStand armorStand) {
@@ -312,7 +325,7 @@ public class PlayerEditor {
             copySlots.copyDataToSlot(armorStand);
             sendMessage("copied", "" + (copySlots.currentSlot + 1));
             setMode(EditMode.PASTE);
-        }else{
+        } else {
             sendMessage("nopermoption", "warn", "copy");
         }
 
@@ -345,7 +358,7 @@ public class PlayerEditor {
                 armorStand.getEquipment().setItemInOffHand(data.leftHand);
             }
             sendMessage("pasted", "" + (copySlots.currentSlot + 1));
-        }else{
+        } else {
             sendMessage("nopermoption", "warn", "paste");
         }
     }
@@ -358,13 +371,13 @@ public class PlayerEditor {
             armorStand.setRightArmPose(new EulerAngle(0, 0, 0));
             armorStand.setLeftLegPose(new EulerAngle(0, 0, 0));
             armorStand.setRightLegPose(new EulerAngle(0, 0, 0));
-        } else{
+        } else {
             sendMessage("nopermoption", "warn", "reset");
         }
     }
 
     private void toggleDisableSlots(ArmorStand armorStand) {
-        if (!getPlayer().hasPermission("asedit.disableSlots")){
+        if (!getPlayer().hasPermission("asedit.disableSlots")) {
             sendMessage("nopermoption", "warn", "disableslots");
         } else {
             if (armorStand.hasEquipmentLock(EquipmentSlot.HAND, ArmorStand.LockType.REMOVING_OR_CHANGING)) { //Adds a lock to every slot or removes it
@@ -405,55 +418,52 @@ public class PlayerEditor {
             armorStand.setInvulnerable(!armorStand.isInvulnerable());
             sendMessage("toggleinvulnerability", String.valueOf(armorStand.isInvulnerable()));
         } else {
-            sendMessage("nopermoption","warn", "vulnerability");
+            sendMessage("nopermoption", "warn", "vulnerability");
         }
     }
 
 
     private void toggleGravity(ArmorStand armorStand) {
-        if (getPlayer().hasPermission("asedit.togglegravity")){
+        if (getPlayer().hasPermission("asedit.togglegravity")) {
             armorStand.setGravity(!armorStand.hasGravity());
             sendMessage("setgravity", String.valueOf(armorStand.hasGravity()));//Fix for Wolfst0rm/ArmorStandEditor-Issues#6: Translation of On/Off Keys are broken
-        } else{
-            sendMessage("nopermoption","warn", "gravity");
+        } else {
+            sendMessage("nopermoption", "warn", "gravity");
         }
-
-
-
     }
 
     void togglePlate(ArmorStand armorStand) {
-        if(getPlayer().hasPermission("asedit.togglebaseplate")){
+        if (getPlayer().hasPermission("asedit.togglebaseplate")) {
             armorStand.setBasePlate(!armorStand.hasBasePlate());
-        } else{
+        } else {
             sendMessage("nopermoption", "warn", "baseplate");
         }
 
     }
 
-    void toggleGlowing(ArmorStand armorStand){
-        if(getPlayer().hasPermission("asedit.togglearmorstandglow")){
+    void toggleGlowing(ArmorStand armorStand) {
+        if (getPlayer().hasPermission("asedit.togglearmorstandglow")) {
             //Will only make it glow white - Not something we can do like with Locking. Do not request this!
             //Otherwise, this simple function becomes a mess to maintain. As you would need a Team generated with each
             //Color and I ain't going to impose that on servers.
             armorStand.setGlowing(!armorStand.isGlowing());
-        } else{
+        } else {
             sendMessage("nopermoption", "warn", "armorstandglow");
         }
     }
 
     void toggleArms(ArmorStand armorStand) {
-        if(getPlayer().hasPermission("asedit.togglearms")){
+        if (getPlayer().hasPermission("asedit.togglearms")) {
             armorStand.setArms(!armorStand.hasArms());
-        }else{
+        } else {
             sendMessage("nopermoption", "warn", "showarms");
         }
     }
 
     void toggleVisible(ArmorStand armorStand) {
-        if(getPlayer().hasPermission("asedit.togglearmorstandvisibility") || plugin.getArmorStandVisibility()){
+        if (getPlayer().hasPermission("asedit.togglearmorstandvisibility") || plugin.getArmorStandVisibility()) {
             armorStand.setVisible(!armorStand.isVisible());
-        } else{ //Throw No Permission Message
+        } else { //Throw No Permission Message
             sendMessage("nopermoption", "warn", "armorstandvisibility");
         }
     }
@@ -461,7 +471,7 @@ public class PlayerEditor {
     void toggleItemFrameVisible(ItemFrame itemFrame) {
         if (getPlayer().hasPermission("asedit.toggleitemframevisibility") || plugin.invisibleItemFrames) { //Option to use perms or Config
             itemFrame.setVisible(!itemFrame.isVisible());
-        }else {
+        } else {
             sendMessage("nopermoption", "warn", "itemframevisibility");
         }
     }
@@ -517,6 +527,7 @@ public class PlayerEditor {
         }
         return angle;
     }
+
 
     public void setTarget(ArrayList<ArmorStand> armorStands) {
         if (armorStands == null || armorStands.isEmpty()) {
@@ -611,7 +622,7 @@ public class PlayerEditor {
                 plugin.getServer().getPlayer(getUUID()).spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
             } else {
                 String rawText = plugin.getLang().getRawMessage(path, format, option);
-                String command = "title %s actionbar %s".formatted(plugin.getServer().getPlayer(getUUID()).getName(), rawText);
+                String command = "minecraft:title %s actionbar %s".formatted(plugin.getServer().getPlayer(getUUID()).getName(), rawText);
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
             }
         } else {
