@@ -3,7 +3,7 @@
 #-----------------------------#
 
 #DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
-version: "1.21.1-47.2"
+version: "1.21.4-48"
 
 #----------- LANGUAGE
 #Name of the language file you wish to use
@@ -72,6 +72,11 @@ coarse: 12
 
 #How many rotations to make a full circle in Fine adjustment mode
 fine: 120
+
+# (NEW) Set a server limit on the Size of an ArmorStand
+# NOte this has been changed to take into account the /attribute command version
+minScaleValue: 0.1
+maxScaleValue: 10
 
 #Allow the option to toggle invisibility for ItemFrames and ArmorStand
 #You can either use this or the below permissions to allow visibility changes

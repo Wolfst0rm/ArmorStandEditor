@@ -18,6 +18,7 @@
  */
 package io.github.rypofalem.armorstandeditor;
 
+import io.github.rypofalem.armorstandeditor.menu.SizeMenu;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
@@ -69,6 +70,7 @@ public class PlayerEditor {
     int frameTargetIndex = 0;
     EquipmentMenu equipMenu;
     PresetArmorPosesMenu presetPoseMenu;
+    SizeMenu sizeModificationMenu;
     long lastCancelled = 0;
 
     public PlayerEditor(UUID uuid, ArmorStandEditorPlugin plugin) {
@@ -139,7 +141,7 @@ public class PlayerEditor {
                     toggleArms(armorStand);
                     break;
                 case SIZE:
-                    toggleSize(armorStand);
+                    chooseSize(armorStand);
                     break;
                 case INVISIBLE:
                     toggleVisible(armorStand);
@@ -223,6 +225,25 @@ public class PlayerEditor {
         if (!getPlayer().hasPermission("asedit.basic")) return;
         presetPoseMenu = new PresetArmorPosesMenu(this, armorStand);
         presetPoseMenu.openMenu();
+    }
+
+    //Size Menu Refactor
+    /*    void toggleSize(ArmorStand armorStand) {
+        if (getPlayer().hasPermission("asedit.togglesize")) {
+            armorStand.setSmall(!armorStand.isSmall());
+        } else {
+            sendMessage("nopermoption", "warn", "size");
+        }
+    }
+    */
+    private void chooseSize(ArmorStand armorStand){
+        if(!getPlayer().hasPermission("asedit.togglesize")){
+            sendMessage("nopermoption", "warn", "size");
+            return;
+        } else {
+            sizeModificationMenu = new SizeMenu(this, armorStand);
+            sizeModificationMenu.openMenu();
+        }
     }
 
     public void reverseEditArmorStand(ArmorStand armorStand) {
@@ -476,13 +497,6 @@ public class PlayerEditor {
         }
     }
 
-    void toggleSize(ArmorStand armorStand) {
-        if (getPlayer().hasPermission("asedit.togglesize")) {
-            armorStand.setSmall(!armorStand.isSmall());
-        } else {
-            sendMessage("nopermoption", "warn", "size");
-        }
-    }
 
     void cycleAxis(int i) {
         int index = axis.ordinal();

@@ -81,6 +81,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     List<?> allowedWorldList = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
+    double maxScaleValue;
+    double minScaleValue;
 
     //GUI Settings
     boolean requireSneaking = false;
@@ -219,6 +221,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         //Rotation
         coarseRot = getConfig().getDouble("coarse");
         fineRot = getConfig().getDouble("fine");
+
+        // Scale Values for Size
+        maxScaleValue = getConfig().getDouble("maxScaleValue");
+        minScaleValue = getConfig().getDouble("minScaleValue");
 
         //Set Tool to be used in game
         toolType = getConfig().getString("tool");
@@ -580,6 +586,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         coarseRot = getConfig().getDouble("coarse");
         fineRot = getConfig().getDouble("fine");
 
+        // Scale Values for Size
+        maxScaleValue = getConfig().getDouble("maxScaleValue");
+        minScaleValue = getConfig().getDouble("minScaleValue");
+
         //Set Tool to be used in game
         toolType = getConfig().getString("tool");
         if (toolType != null) {
@@ -744,5 +754,13 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     public void debugMsgHandler(String msg) {
         if (isDebug()) getServer().getLogger().log(Level.WARNING, "[ASE-DEBUG]: {0}", msg);
+    }
+
+    public double getMinScaleValue() {
+        return minScaleValue;
+    }
+
+    public double getMaxScaleValue() {
+        return maxScaleValue;
     }
 }
