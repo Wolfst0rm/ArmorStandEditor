@@ -228,21 +228,18 @@ public class PlayerEditor {
     }
 
     //Size Menu Refactor
-    /*    void toggleSize(ArmorStand armorStand) {
-        if (getPlayer().hasPermission("asedit.togglesize")) {
-            armorStand.setSmall(!armorStand.isSmall());
-        } else {
-            sendMessage("nopermoption", "warn", "size");
-        }
-    }
-    */
     private void chooseSize(ArmorStand armorStand){
         if(!getPlayer().hasPermission("asedit.togglesize")){
             sendMessage("nopermoption", "warn", "size");
             return;
         } else {
-            sizeModificationMenu = new SizeMenu(this, armorStand);
-            sizeModificationMenu.openMenu();
+            if(plugin.getServer().getMinecraftVersion().compareTo("1.21") < 0){
+                sizeModificationMenu = new SizeMenu(this, armorStand);
+                sizeModificationMenu.openMenu();
+            } else {
+                armorStand.setSmall(!armorStand.isSmall());
+            }
+
         }
     }
 
