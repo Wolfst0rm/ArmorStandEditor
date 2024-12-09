@@ -70,9 +70,9 @@ public class PresetArmorPosesMenu {
     private void fillInventory() {
         menuInv.clear();
 
-        /**
-         * Menu Set up in a similar way as to how we do it for
-         * the actual ArmorStand menu
+        /*
+          Menu Set up in a similar way as to how we do it for
+          the actual ArmorStand menu
          */
 
         //Blank Slots
@@ -173,7 +173,7 @@ public class PresetArmorPosesMenu {
             setPresetPose(player, 1, 33, 67, -145, -33, -4, -42, 21, 1, -100, 0, -1, -29, -38, -18, 0, -4, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(PRESENTING)) {
+       } else if (itemName.equals(PRESENTING)) {
             setPresetPose(player, 280, 330, 0, 10, 0, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
