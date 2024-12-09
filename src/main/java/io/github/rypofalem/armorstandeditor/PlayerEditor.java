@@ -234,6 +234,7 @@ public class PlayerEditor {
             return;
         } else {
             if(plugin.getServer().getMinecraftVersion().compareTo("1.21") >= 0 || plugin.getNmsVersion().compareTo("v1_21") >= 0){
+                //NOTE: New Sizing Menu ONLY WORKS IN 1.21 and HIGHER
                 sizeModificationMenu = new SizeMenu(this, armorStand);
                 sizeModificationMenu.openMenu();
             } else {
