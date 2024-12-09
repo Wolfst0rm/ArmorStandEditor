@@ -233,7 +233,7 @@ public class PlayerEditor {
             sendMessage("nopermoption", "warn", "size");
             return;
         } else {
-            if(plugin.getServer().getMinecraftVersion().compareTo("1.21") < 0){
+            if(plugin.getServer().getMinecraftVersion().compareTo("1.21") >= 0 || plugin.getNmsVersion().compareTo("v1_21") >= 0){
                 sizeModificationMenu = new SizeMenu(this, armorStand);
                 sizeModificationMenu.openMenu();
             } else {
