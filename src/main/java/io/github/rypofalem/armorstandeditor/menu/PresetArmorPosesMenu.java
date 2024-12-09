@@ -60,7 +60,7 @@ public class PresetArmorPosesMenu {
     final String ARCHER     = plugin.getLang().getMessage("archer").replace("§6","§2§n");
     final String DANCING    = plugin.getLang().getMessage("dancing").replace("§6","§2§n");
     final String HANGING    = plugin.getLang().getMessage("hanging").replace("§6","§2§n");
-    final String PRESENTING = plugin.getLang().getMessage("presenting").replace("§6","§2§n");
+    final String PRESENTING = plugin.getLang().getMessage("present").replace("§6","§2§n");
     final String FISHING    = plugin.getLang().getMessage("fishing").replace("§6","§2§n");
 
     //Menu Stuff
