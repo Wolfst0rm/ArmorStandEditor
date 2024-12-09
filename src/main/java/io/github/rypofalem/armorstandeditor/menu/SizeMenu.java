@@ -194,29 +194,29 @@ public class SizeMenu extends ASEHolder {
                             pe.getPlayer().sendMessage(plugin.getLang().getMessage("scaleminwarn","warn"));
                             return;
                         } else {
-                            as.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(newScaleValue);
+                            as.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
                         }
                     // Add either 0.1 or 0.5 to the current
                     } else if(itemName.equals(SCALEPLUS12) || itemName.equals(SCALEPLUS110)){
-                        currentScaleValue = as.getAttribute(Attribute.GENERIC_SCALE).getBaseValue();
+                        currentScaleValue = as.getAttribute(Attribute.SCALE).getBaseValue();
                         newScaleValue = currentScaleValue + scaleValue; // Add for increments
                         if(newScaleValue > plugin.getMaxScaleValue()){
                             pe.getPlayer().sendMessage(plugin.getLang().getMessage("scalemaxwarn","warn"));
                             return;
                         }
-                        as.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(newScaleValue);
+                        as.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
                      //Subtract either 0.1 or 0.5 from the current
                     } else if(itemName.equals(SCALEMINUS12) || itemName.equals(SCALEMINUS110)){
-                        currentScaleValue = as.getAttribute(Attribute.GENERIC_SCALE).getBaseValue();
+                        currentScaleValue = as.getAttribute(Attribute.SCALE).getBaseValue();
                         newScaleValue = currentScaleValue - scaleValue; // Subtract for decrements
                         if(newScaleValue < plugin.getMinScaleValue()){
                             pe.getPlayer().sendMessage(plugin.getLang().getMessage("scaleminwarn","warn"));
                             return;
                         }
-                        as.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(newScaleValue);
+                        as.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
                     }else if(itemName.equals(RESET)){ // Set it back to 1
                         newScaleValue = 1;
-                        as.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(newScaleValue);
+                        as.getAttribute(Attribute.SCALE).setBaseValue(newScaleValue);
                     }
 
 
