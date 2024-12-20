@@ -379,19 +379,23 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         for(String teamToBeRegistered : asTeams){
             team = scoreboard.getTeam(teamToBeRegistered);
             scoreboard.registerNewTeam(teamToBeRegistered);
-            if(teamToBeRegistered == lockedTeam){
-                getServer().getLogger().info("Registering Scoreboards required for Glowing Effects when Disabling Slots...");
-                scoreboard.getTeam(teamToBeRegistered).setColor(ChatColor.RED);
-            } else {
+            if(team != null){
+                if(teamToBeRegistered == lockedTeam){
+                    getServer().getLogger().info("Registering Scoreboards required for Glowing Effects when Disabling Slots...");
+                    scoreboard.getTeam(teamToBeRegistered).setColor(ChatColor.RED);
+                }
+            }else {
                 getServer().getLogger().info("Scoreboard for Team '" + teamToBeRegistered + "' Already exists. Continuing to load");
             }
+
         }
     }
 
     private void unregisterScoreboards(Scoreboard scoreboard) {
         getLogger().info("Removing Scoreboards required for Glowing Effects");
         for(String teamToBeRegistered : asTeams){
-            if(teamToBeRegistered != null){
+            team = scoreboard.getTeam(teamToBeRegistered);
+            if(team != null){
                 team.unregister();
             } else {
                 getServer().getLogger().severe("Team '" + teamToBeRegistered + "' already appears to be removed. Avoid manual removal to prevent errors!");
