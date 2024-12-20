@@ -50,7 +50,6 @@ public class EquipmentMenu {
     private void fillInventory() {
         menuInv.clear();
         EntityEquipment equipment = armorstand.getEquipment();
-        assert equipment != null;
         ItemStack helmet = equipment.getHelmet();
         ItemStack chest = equipment.getChestplate();
         ItemStack pants = equipment.getLeggings();
@@ -93,8 +92,10 @@ public class EquipmentMenu {
 
     public void open() {
         pe.getPlayer().closeInventory();
-        fillInventory();
-        pe.getPlayer().openInventory(menuInv);
+        if (pe.getPlayer().hasPermission("asedit.equipment")) {
+            fillInventory();
+            pe.getPlayer().openInventory(menuInv);
+        }
     }
 
     public void equipArmorstand() {
