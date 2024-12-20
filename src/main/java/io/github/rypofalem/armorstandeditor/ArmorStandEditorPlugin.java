@@ -392,7 +392,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     }
 
     private void unregisterScoreboards(Scoreboard scoreboard) {
-        getLogger().info("Removing Scoreboards required for Glowing Effects");
+        getLogger().info("Removing Scoreboards required for Glowing Effects when Disabling Slots...");
         for(String teamToBeRegistered : asTeams){
             team = scoreboard.getTeam(teamToBeRegistered);
             if(team != null){
