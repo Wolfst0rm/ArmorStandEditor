@@ -218,7 +218,7 @@ public class PlayerEditor {
         if (!getPlayer().hasPermission("asedit.equipment")) return;
         //if (team != null && team.hasEntry(armorStand.getName())) return; //Do not allow editing if the ArmorStand is Disabled
         equipMenu = new EquipmentMenu(this, armorStand);
-        equipMenu.open();
+        equipMenu.openMenu();
     }
 
     private void choosePreset(ArmorStand armorStand) {

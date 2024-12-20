@@ -90,7 +90,7 @@ public class EquipmentMenu {
         return icon;
     }
 
-    public void open() {
+    public void openMenu() {
         pe.getPlayer().closeInventory();
         if (pe.getPlayer().hasPermission("asedit.equipment")) {
             fillInventory();
