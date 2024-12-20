@@ -92,8 +92,8 @@ public class EquipmentMenu {
     }
 
     public void open() {
-        fillInventory();
         pe.getPlayer().closeInventory();
+        fillInventory();
         pe.getPlayer().openInventory(menuInv);
     }
 
