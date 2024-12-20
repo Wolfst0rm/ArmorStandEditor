@@ -102,7 +102,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     //Glow Entity Colors
     public Scoreboard scoreboard;
     public Team team;
+    List<String> asTeams = new ArrayList<>();
     String lockedTeam = "ASLocked";
+    String inUseTeam = "AS-InUse";
 
     //Debugging Options.... Not Exposed
     boolean debugFlag;
@@ -186,8 +188,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
                 getLogger().log(Level.INFO, "PaperMC: {0}", hasPaper);
             }
         }
-
         getServer().getPluginManager().enablePlugin(this);
+
+        asTeams.add(lockedTeam);
+        asTeams.add(inUseTeam);
 
         if (!hasFolia) {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
@@ -372,26 +376,29 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
     private void registerScoreboards(Scoreboard scoreboard) {
-        getServer().getLogger().info("Registering Scoreboards required for Glowing Effects");
-
-        //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
-        if (scoreboard.getTeam(lockedTeam) == null) {
-            scoreboard.registerNewTeam(lockedTeam);
-            scoreboard.getTeam(lockedTeam).setColor(ChatColor.RED);
-        } else {
-            getServer().getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
+        for(String teamToBeRegistered : asTeams){
+            team = scoreboard.getTeam(teamToBeRegistered);
+            scoreboard.registerNewTeam(teamToBeRegistered);
+            if(teamToBeRegistered == lockedTeam){
+                getServer().getLogger().info("Registering Scoreboards required for Glowing Effects when Disabling Slots...");
+                scoreboard.getTeam(teamToBeRegistered).setColor(ChatColor.RED);
+            } else {
+                getServer().getLogger().info("Scoreboard for Team '" + teamToBeRegistered + "' Already exists. Continuing to load");
+            }
         }
     }
 
     private void unregisterScoreboards(Scoreboard scoreboard) {
         getLogger().info("Removing Scoreboards required for Glowing Effects");
-
-        team = scoreboard.getTeam(lockedTeam);
-        if (team != null) { //Basic Sanity Check to ensure that the team is there
-            team.unregister();
-        } else {
-            getLogger().severe("Team Already Appears to be removed. Please do not do this manually!");
+        for(String teamToBeRegistered : asTeams){
+            if(teamToBeRegistered != null){
+                team.unregister();
+            } else {
+                getServer().getLogger().severe("Team '" + teamToBeRegistered + "' already appears to be removed. Avoid manual removal to prevent errors!");
+            }
         }
+
+
     }
 
     private void updateConfig(String folder, String config) {
