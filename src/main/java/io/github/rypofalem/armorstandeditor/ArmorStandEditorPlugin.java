@@ -377,8 +377,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
     private void registerScoreboards(Scoreboard scoreboard) {
         for(String teamToBeRegistered : asTeams){
-            team = scoreboard.getTeam(teamToBeRegistered);
             scoreboard.registerNewTeam(teamToBeRegistered);
+            team = scoreboard.getTeam(teamToBeRegistered);
             if(team != null){
                 if(teamToBeRegistered == lockedTeam){
                     getServer().getLogger().info("Registering Scoreboards required for Glowing Effects when Disabling Slots...");
