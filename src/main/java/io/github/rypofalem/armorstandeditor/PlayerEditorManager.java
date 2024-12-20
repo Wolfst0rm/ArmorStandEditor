@@ -39,6 +39,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class PlayerEditorManager implements Listener {
     private ArrayList<ArmorStand> as = null;
     private ArrayList<ItemFrame> itemF = null;
     private Integer noSize = 0;
+    Team team;
 
     // Instantiate protections used to determine whether a player may edit an armor stand or item frame
     //NOTE: GriefPreventionProtection is Depreciated as of v1.19.3-40
@@ -454,6 +456,12 @@ public class PlayerEditorManager implements Listener {
         if (e.getInventory().getHolder() == equipmentHolder) {
             PlayerEditor pe = players.get(e.getPlayer().getUniqueId());
             pe.equipMenu.equipArmorstand();
+
+            // Remove the In Use Lock
+            team = plugin.scoreboard.getTeam(plugin.inUseTeam);
+            if(team != null){
+                team.removeEntry(pe.armorStandInUseId.toString());
+            }
         }
     }
 

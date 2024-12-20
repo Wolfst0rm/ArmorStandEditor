@@ -51,6 +51,7 @@ public class PlayerEditor {
     public ArmorStandEditorPlugin plugin;
     Team team;
     private UUID uuid;
+    public UUID armorStandInUseId;
     UUID armorStandID;
     EditMode eMode;
     AdjustmentMode adjMode;
@@ -216,9 +217,18 @@ public class PlayerEditor {
 
     private void openEquipment(ArmorStand armorStand) {
         if (!getPlayer().hasPermission("asedit.equipment")) return;
-        //if (team != null && team.hasEntry(armorStand.getName())) return; //Do not allow editing if the ArmorStand is Disabled
-        equipMenu = new EquipmentMenu(this, armorStand);
-        equipMenu.openMenu();
+
+        //Dont allow Editing the ArmorStand if the Stand is on the AS-InUse Team
+        // Means No 2 Players can edit the Equipment at the same time
+        team = plugin.scoreboard.getTeam(plugin.inUseTeam);
+        armorStandInUseId = armorStand.getUniqueId();
+        if(team != null && !team.hasEntry(armorStandInUseId.toString())){
+            team.addEntry(armorStandInUseId.toString());
+            equipMenu = new EquipmentMenu(this, armorStand);
+            equipMenu.openMenu();
+        } else {
+            plugin.getLang().getMessage("asinuse", "warn");
+        }
     }
 
     private void choosePreset(ArmorStand armorStand) {

@@ -117,6 +117,8 @@ helpdiscord:
   msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
 
 #warn
+asinuse:
+  msg: Unable to edit ArmorStand as it is currently being edited by another player!
 cantedit:
   msg: Sorry, you cannot edit armor stands here!
 noperm:
@@ -155,6 +157,7 @@ noconsolecom:
   msg: Sorry but this command only works from in-game and not from Console!
 renamestopped:
   msg: Please make sure you have the ability/permission to give your ArmorStand Colored Names.
+
 
 #menutitle
 mainmenutitle:
