@@ -20,8 +20,8 @@
 package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
-import io.github.rypofalem.armorstandeditor.PlayerEditor;
 import io.github.rypofalem.armorstandeditor.Debug;
+import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

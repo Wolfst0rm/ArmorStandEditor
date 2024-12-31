@@ -25,7 +25,6 @@ import com.jeff_media.updatechecker.UserAgentBuilder;
 
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 import io.github.rypofalem.armorstandeditor.language.Language;
-import io.github.rypofalem.armorstandeditor.Debug;
 
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -374,15 +373,15 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
     private void registerScoreboards(Scoreboard scoreboard) {
-        for(String teamToBeRegistered : asTeams){
+        for (String teamToBeRegistered : asTeams) {
             scoreboard.registerNewTeam(teamToBeRegistered);
             team = scoreboard.getTeam(teamToBeRegistered);
-            if(team != null){
-                if(teamToBeRegistered == lockedTeam){
+            if (team != null) {
+                if (teamToBeRegistered == lockedTeam) {
                     getServer().getLogger().info("Registering Scoreboards required for Glowing Effects when Disabling Slots...");
                     scoreboard.getTeam(teamToBeRegistered).setColor(ChatColor.RED);
                 }
-            }else {
+            } else {
                 getServer().getLogger().info("Scoreboard for Team '" + teamToBeRegistered + "' Already exists. Continuing to load");
             }
 
@@ -391,9 +390,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     private void unregisterScoreboards(Scoreboard scoreboard) {
         getLogger().info("Removing Scoreboards required for Glowing Effects when Disabling Slots...");
-        for(String teamToBeRegistered : asTeams){
+        for (String teamToBeRegistered : asTeams) {
             team = scoreboard.getTeam(teamToBeRegistered);
-            if(team != null){
+            if (team != null) {
                 team.unregister();
             } else {
                 getServer().getLogger().severe("Team '" + teamToBeRegistered + "' already appears to be removed. Avoid manual removal to prevent errors!");
@@ -452,7 +451,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     }
 
     //Will be useful for later.....
-    public String getMinecraftVersion(){
+    public String getMinecraftVersion() {
         return this.nmsVersion;
     }
 

@@ -66,7 +66,7 @@ public class BentoBoxProtection implements Protection {
 
         if (ArmorStandEditorPlugin.instance().isDebug()) {
             if (bSkyBlockEnabled && !aOneBlockEnabled) {
-                Bukkit.getServer().getLogger().log(Level.INFO,"[ArmorStandEditor-Debug] BentoBox Protection for ASE is looking at: BSkyBlock.");
+                Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] BentoBox Protection for ASE is looking at: BSkyBlock.");
             }
             if (aOneBlockEnabled && !bSkyBlockEnabled) {
                 Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] BentoBox Protection for ASE is looking at: AOneBlock.");

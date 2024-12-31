@@ -1,6 +1,7 @@
 package io.github.rypofalem.armorstandeditor;
 
 import org.bukkit.Bukkit;
+
 import java.util.logging.Level;
 
 public class Debug {

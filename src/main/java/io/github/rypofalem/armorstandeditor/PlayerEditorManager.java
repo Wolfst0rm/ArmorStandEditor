@@ -21,11 +21,11 @@ package io.github.rypofalem.armorstandeditor;
 
 import com.google.common.collect.ImmutableList;
 
+import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.api.ArmorStandRenameEvent;
 import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
 import io.github.rypofalem.armorstandeditor.protections.*;
-import io.github.rypofalem.armorstandeditor.Debug;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -450,14 +450,14 @@ public class PlayerEditorManager implements Listener {
             }
         }
 
-        if (e.getInventory().getHolder() == sizeMenuHolder){
+        if (e.getInventory().getHolder() == sizeMenuHolder) {
             e.setCancelled(true);
             ItemStack item = e.getCurrentItem();
-            if(item != null && item.hasItemMeta()){
+            if (item != null && item.hasItemMeta()) {
                 Player player = (Player) e.getWhoClicked();
                 String itemName = item.getItemMeta().getDisplayName();
                 PlayerEditor pe = players.get(player.getUniqueId());
-                pe.sizeModificationMenu.handleAttributeScaling(itemName,player);
+                pe.sizeModificationMenu.handleAttributeScaling(itemName, player);
             }
         }
     }
@@ -473,7 +473,7 @@ public class PlayerEditorManager implements Listener {
 
             // Remove the In Use Lock
             team = plugin.scoreboard.getTeam(plugin.inUseTeam);
-            if(team != null){
+            if (team != null) {
                 team.removeEntry(pe.armorStandInUseId.toString());
             }
         }
