@@ -173,7 +173,7 @@ public class SizeMenu extends ASEHolder {
     }
 
     private void setArmorStandScale(Player player, String itemName, double scaleValue) {
-        debug.log("[ASE-Debug] Setting the Scale of the ArmorStand");
+        debug.log("Setting the Scale of the ArmorStand");
         double currentScaleValue;
         double newScaleValue;
 
@@ -192,7 +192,7 @@ public class SizeMenu extends ASEHolder {
                     || itemName.equals(SCALE7) || itemName.equals(SCALE8) || itemName.equals(SCALE9)
                     || itemName.equals(SCALE10)) {
                     newScaleValue = currentScaleValue + scaleValue;
-                    debug.log("[ASE-Debug] Result of the scale Calculation: " + newScaleValue);
+                    debug.log("Result of the scale Calculation: " + newScaleValue);
                     if (newScaleValue > plugin.getMaxScaleValue()) {
                         pe.getPlayer().sendMessage(plugin.getLang().getMessage("scalemaxwarn", "warn"));
                         return;
@@ -206,7 +206,7 @@ public class SizeMenu extends ASEHolder {
                     } else if (itemName.equals(SCALEPLUS12) || itemName.equals(SCALEPLUS110)) {
                     currentScaleValue = as.getAttribute(Attribute.SCALE).getBaseValue();
                     newScaleValue = currentScaleValue + scaleValue; // Add for increments
-                    debug.log("[ASE-Debug] Result of the scale Calculation: " + newScaleValue);
+                    debug.log("Result of the scale Calculation: " + newScaleValue);
                     if (newScaleValue > plugin.getMaxScaleValue()) {
                         pe.getPlayer().sendMessage(plugin.getLang().getMessage("scalemaxwarn", "warn"));
                         return;
@@ -216,7 +216,7 @@ public class SizeMenu extends ASEHolder {
                 } else if (itemName.equals(SCALEMINUS12) || itemName.equals(SCALEMINUS110)) {
                     currentScaleValue = as.getAttribute(Attribute.SCALE).getBaseValue();
                     newScaleValue = currentScaleValue - scaleValue; // Subtract for decrements
-                    debug.log("[ASE-Debug] Result of the scale Calculation: " + newScaleValue);
+                    debug.log("Result of the scale Calculation: " + newScaleValue);
                     if (newScaleValue < plugin.getMinScaleValue()) {
                         pe.getPlayer().sendMessage(plugin.getLang().getMessage("scaleminwarn", "warn"));
                         return;
