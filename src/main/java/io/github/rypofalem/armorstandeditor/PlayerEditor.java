@@ -239,7 +239,7 @@ public class PlayerEditor {
             equipMenu = new EquipmentMenu(this, armorStand);
             equipMenu.openMenu();
         } else {
-            sendMessage("asinuse", "warn"));
+            sendMessage("asinuse", "warn");
         }
     }
 
