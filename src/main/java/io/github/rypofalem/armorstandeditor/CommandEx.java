@@ -76,6 +76,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                 sender.sendMessage(VERSION);
                 sender.sendMessage(HELP);
                 sender.sendMessage(RELOAD);
+                return true;
             } else {
                 switch (args[0].toLowerCase()) {
                     case "reload" -> commandReloadConsole(sender);
