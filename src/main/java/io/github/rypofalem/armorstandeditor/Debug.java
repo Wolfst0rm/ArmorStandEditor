@@ -16,6 +16,6 @@ public class Debug {
     public void log(String msg) {
         debugTurnedOn = plugin.isDebug();
         if (!debugTurnedOn) return;
-        Bukkit.getServer().getLogger().log(Level.INFO, msg);
+        Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] " + msg);
     }
 }

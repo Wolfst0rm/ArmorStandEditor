@@ -131,7 +131,7 @@ public class PresetArmorPosesMenu {
     public void openMenu() {
         if (pe.getPlayer().hasPermission("asedit.basic")) {
             fillInventory();
-            debug.log("[ArmorStandEditor-Debug] Player '" + pe.getPlayer().getDisplayName() + "' has opened the ArmorStand Preset Menu");
+            debug.log("Player '" + pe.getPlayer().getDisplayName() + "' has opened the ArmorStand Preset Menu");
             pe.getPlayer().openInventory(menuInv);
         }
     }
@@ -144,7 +144,7 @@ public class PresetArmorPosesMenu {
         if (itemName == null) return;
         if (player == null) return;
 
-        debug.log("[ArmorStandEditor-Debug] Player '" + player.getDisplayName() + "' has chosen the Preset AS Pose '" + itemName + "'");
+        debug.log("Player '" + player.getDisplayName() + "' has chosen the Preset AS Pose '" + itemName + "'");
         //Do the Preset
         if (itemName.equals(SITTING)) {
             setPresetPose(player, 345, 0, 10, 350, 0, 350, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);

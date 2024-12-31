@@ -100,19 +100,19 @@ public class PlayerEditorManager implements Listener {
         if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
         if (!((event.getEntity() instanceof ArmorStand) || event.getEntity() instanceof ItemFrame)) {
             event.setCancelled(true);
-            debug.log("[ArmorStandEditor-Debug] Open Menu Called for Player: " + player.getDisplayName());
+            debug.log("Open Menu Called for Player: " + player.getDisplayName());
             getPlayerEditor(player.getUniqueId()).openMenu();
             return;
         }
         if (event.getEntity() instanceof ArmorStand) {
-            debug.log("[ArmorStandEditor-Debug] Player '" + player.getDisplayName() + "' has left clicked the ArmorStand");
+            debug.log("Player '" + player.getDisplayName() + "' has left clicked the ArmorStand");
             ArmorStand as = (ArmorStand) event.getEntity();
             getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
             event.setCancelled(true);
             if (canEdit(player, as))
                 applyLeftTool(player, as);
         } else if (event.getEntity() instanceof ItemFrame) {
-            debug.log("[ArmorStandEditor-Debug]  Player '" + player.getDisplayName() + "' has rght clicked on an ItemFrame");
+            debug.log(" Player '" + player.getDisplayName() + "' has rght clicked on an ItemFrame");
             ItemFrame itemf = (ItemFrame) event.getEntity();
             getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
             event.setCancelled(true);
@@ -128,7 +128,7 @@ public class PlayerEditorManager implements Listener {
         if (!((event.getRightClicked() instanceof ArmorStand) || event.getRightClicked() instanceof ItemFrame)) return;
 
         if (event.getRightClicked() instanceof ArmorStand) {
-            debug.log("[ArmorStandEditor-Debug] Player '" + player.getDisplayName() + "' has right clicked on an ArmorStand");
+            debug.log("Player '" + player.getDisplayName() + "' has right clicked on an ArmorStand");
             ArmorStand as = (ArmorStand) event.getRightClicked();
 
             if (!canEdit(player, as)) return;
@@ -260,7 +260,7 @@ public class PlayerEditorManager implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onSwitchHands(PlayerSwapHandItemsEvent event) {
-        debug.log("[ArmorStandEditor-Debug] PlayerSwapHandItemsEvent trigger for Player: " + event.getPlayer().getDisplayName());
+        debug.log("PlayerSwapHandItemsEvent trigger for Player: " + event.getPlayer().getDisplayName());
         if (!plugin.isEditTool(event.getOffHandItem())) return; //event assumes they are already switched
         event.setCancelled(true);
         Player player = event.getPlayer();
@@ -354,25 +354,25 @@ public class PlayerEditorManager implements Listener {
     }
 
     void applyLeftTool(Player player, ArmorStand as) {
-        debug.log("[ArmorStandEditor-Debug] Applying Left Tool on ArmorStand for Player: " + player.getDisplayName());
+        debug.log("Applying Left Tool on ArmorStand for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).editArmorStand(as);
     }
 
     void applyLeftTool(Player player, ItemFrame itemf) {
-        debug.log("[ArmorStandEditor-Debug] Applying Left Tool on ItemFrame for Player: " + player.getDisplayName());
+        debug.log("Applying Left Tool on ItemFrame for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).editItemFrame(itemf);
     }
 
     void applyRightTool(Player player, ItemFrame itemf) {
-        debug.log("[ArmorStandEditor-Debug] Applying Right Tool on ItemFrame for Player: " + player.getDisplayName());
+        debug.log("Applying Right Tool on ItemFrame for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).editItemFrame(itemf);
     }
 
     void applyRightTool(Player player, ArmorStand as) {
-        debug.log("[ArmorStandEditor-Debug] Applying Right Tool on ArmorStand for Player: " + player.getDisplayName());
+        debug.log("Applying Right Tool on ArmorStand for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).reverseEditArmorStand(as);
     }
@@ -384,7 +384,7 @@ public class PlayerEditorManager implements Listener {
             || e.getAction() == Action.RIGHT_CLICK_AIR
             || e.getAction() == Action.LEFT_CLICK_BLOCK
             || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
-        debug.log("[ArmorStandEditor-Debug] Ran on Right Click Tool Event.");
+        debug.log("Ran on Right Click Tool Event.");
         Player player = e.getPlayer();
         if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
         if (plugin.requireSneaking && !player.isSneaking()) return;
@@ -396,7 +396,7 @@ public class PlayerEditorManager implements Listener {
             return;
         }
         e.setCancelled(true);
-        debug.log("[ArmorStandEditor-Debug] Open Menu Called for Player: " + player.getDisplayName());
+        debug.log("Open Menu Called for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).openMenu();
     }
 

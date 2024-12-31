@@ -237,7 +237,7 @@ public class SizeMenu extends ASEHolder {
     public void openMenu() {
         if (pe.getPlayer().hasPermission("asedit.togglesize")) {
             fillInventory();
-            debug.log("[ArmorStandEditor-Debug] Player '" + pe.getPlayer().getDisplayName() + "' has opened the Sizing Attribute Menu");
+            debug.log("Player '" + pe.getPlayer().getDisplayName() + "' has opened the Sizing Attribute Menu");
             pe.getPlayer().openInventory(menuInv);
         }
     }

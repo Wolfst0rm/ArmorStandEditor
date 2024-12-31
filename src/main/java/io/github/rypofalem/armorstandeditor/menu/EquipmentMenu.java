@@ -97,7 +97,7 @@ public class EquipmentMenu {
         pe.getPlayer().closeInventory();
         if (pe.getPlayer().hasPermission("asedit.equipment")) {
             fillInventory();
-            debug.log("[ArmorStandEditor-Debug] Player '" + pe.getPlayer().getDisplayName() + "' has opened the Equipment Menu.");
+            debug.log("Player '" + pe.getPlayer().getDisplayName() + "' has opened the Equipment Menu.");
             pe.getPlayer().openInventory(menuInv);
         }
     }
@@ -110,14 +110,14 @@ public class EquipmentMenu {
         rightHand = menuInv.getItem(13);
         leftHand = menuInv.getItem(14);
 
-        debug.log("[ArmorStandEditor-Debug] Equipping the ArmorStand with the following items: ");
-        debug.log("[ArmorStandEditor-Debug] Helmet: " + helmet);
-        debug.log("[ArmorStandEditor-Debug] Chest: " + chest);
-        debug.log("[ArmorStandEditor-Debug] Chest: " + chest);
-        debug.log("[ArmorStandEditor-Debug] Pants: " + pants);
-        debug.log("[ArmorStandEditor-Debug] Boots: " + feetsies);
-        debug.log("[ArmorStandEditor-Debug] R-Hand: " + rightHand);
-        debug.log("[ArmorStandEditor-Debug] L-Hand: " + leftHand);
+        debug.log("Equipping the ArmorStand with the following items: ");
+        debug.log("Helmet: " + helmet);
+        debug.log("Chest: " + chest);
+        debug.log("Chest: " + chest);
+        debug.log("Pants: " + pants);
+        debug.log("Boots: " + feetsies);
+        debug.log("R-Hand: " + rightHand);
+        debug.log("L-Hand: " + leftHand);
 
         armorstand.getEquipment().setHelmet(helmet);
         armorstand.getEquipment().setChestplate(chest);

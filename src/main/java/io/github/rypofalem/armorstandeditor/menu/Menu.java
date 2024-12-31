@@ -302,7 +302,7 @@ public class Menu {
     public void openMenu() {
         if (pe.getPlayer().hasPermission("asedit.basic")) {
             fillInventory();
-            debug.log("[ArmorStandEditor-Debug] Player '" + pe.getPlayer().getDisplayName() + "' has opened the Main ASE Menu");
+            debug.log("Player '" + pe.getPlayer().getDisplayName() + "' has opened the Main ASE Menu");
             pe.getPlayer().openInventory(menuInv);
         }
     }

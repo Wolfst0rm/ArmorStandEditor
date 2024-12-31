@@ -71,7 +71,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof ConsoleCommandSender) { //Fix to Support #267
-            debug.log("[ArmorStandEditor-Debug] Sender is CONSOLE!");
+            debug.log("Sender is CONSOLE!");
             if (args.length == 0) {
                 sender.sendMessage(VERSION);
                 sender.sendMessage(HELP);
@@ -92,13 +92,13 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
 
         if (sender instanceof Player player && !getPermissionBasic(player)) {
-            debug.log("[ArmorStandEditor-Debug] Sender is Player but asedit.basic is" + getPermissionBasic(player));
+            debug.log("Sender is Player but asedit.basic is" + getPermissionBasic(player));
             sender.sendMessage(plugin.getLang().getMessage("nopermoption", "warn", "basic"));
             return true;
         } else {
             Player player = (Player) sender;
 
-            debug.log("[ArmorStandEditor-Debug] Sender is Player and asedit.basic is " + getPermissionBasic(player));
+            debug.log("Sender is Player and asedit.basic is " + getPermissionBasic(player));
             if (args.length == 0) {
                 player.sendMessage(LISTMODE);
                 player.sendMessage(LISTAXIS);
@@ -163,7 +163,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     private void commandGivePlayerHead(Player player) {
         if (player.hasPermission("asedit.head")) {
-            debug.log("[ArmorStandEditor-Debug] Creating a player head for the OfflinePlayer '" + player.getDisplayName() + "'");
+            debug.log("Creating a player head for the OfflinePlayer '" + player.getDisplayName() + "'");
             OfflinePlayer offlinePlayer = player.getPlayer();
             ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
             SkullMeta meta = (SkullMeta) item.getItemMeta();
@@ -187,7 +187,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             try {
                 byte slot = (byte) (Byte.parseByte(args[1]) - 0b1);
                 if (slot >= 0 && slot < 9) {
-                    debug.log("[ArmorStandEditor-Debug] Player has chosen slot: " + slot);
+                    debug.log("Player has chosen slot: " + slot);
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setCopySlot(slot);
                 } else {
                     player.sendMessage(LISTSLOT);
@@ -225,7 +225,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         if (args.length > 1) {
             for (Axis axis : Axis.values()) {
                 if (axis.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
-                    debug.log("[ArmorStandEditor-Debug] Player '" + player.getDisplayName() + "' sets the axis to " + axis);
+                    debug.log("Player '" + player.getDisplayName() + "' sets the axis to " + axis);
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setAxis(axis);
                     return;
                 }
@@ -246,7 +246,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     if (args[1].equals("invisible") && !(checkPermission(player, "togglearmorstandvisibility", true) || plugin.getArmorStandVisibility())) return;
                     if (args[1].equals("itemframe") && !(checkPermission(player, "toggleitemframevisibility", true) || plugin.getItemFrameVisibility())) return;
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
-                    debug.log("[ArmorStandEditor-Debug] Player '" + player.getDisplayName() + "' chose the mode: " + mode);
+                    debug.log("Player '" + player.getDisplayName() + "' chose the mode: " + mode);
                     return;
                 }
             }
@@ -277,17 +277,17 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         if (!(checkPermission(player, "update", true))) return;
 
         //Only Run if the Update Command Works
-        debug.log("[ArmorStandEditor-Debug] Current ArmorStandEditor Version is: " + plugin.getArmorStandEditorVersion());
+        debug.log("Current ArmorStandEditor Version is: " + plugin.getArmorStandEditorVersion());
         if (plugin.getArmorStandEditorVersion().contains(".x")) {
-            debug.log("[ArmorStandEditor-Debug] Plugin version is DEVELOPMENT");
+            debug.log("Plugin version is DEVELOPMENT");
             player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker will not work on Development Versions.");
             player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
         } else {
             if (!plugin.getHasFolia() && plugin.getRunTheUpdateChecker()) {
-                debug.log("[ArmorStandEditor-Debug] Plugin is on Server: Paper/Spigot or a fork thereof.");
+                debug.log("Plugin is on Server: Paper/Spigot or a fork thereof.");
                 new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID).checkNow(player); //Runs Update Check
             } else if (plugin.getHasFolia()) {
-                debug.log("[ArmorStandEditor-Debug] Plugin is on Folia");
+                debug.log("Plugin is on Folia");
                 player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker does not currently work on Folia.");
                 player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
             } else {
@@ -297,7 +297,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandVersion(Player player) {
-        debug.log("[ArmorStandEditor-Debug] Player '" + player.getDisplayName() + "' permission check for asedit.update: " + getPermissionUpdate(player));
+        debug.log("Player '" + player.getDisplayName() + "' permission check for asedit.update: " + getPermissionUpdate(player));
         if (!(getPermissionUpdate(player))) return;
         String verString = plugin.getArmorStandEditorVersion();
         player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
@@ -309,22 +309,22 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandReload(Player player) {
-        debug.log("[ArmorStandEditor-Debug] Player '" + player.getDisplayName() + "' permission check for asedit.reload: " + getPermissionReload(player));
+        debug.log("Player '" + player.getDisplayName() + "' permission check for asedit.reload: " + getPermissionReload(player));
 
         if (!(getPermissionReload(player))) return;
-        debug.log("[ArmorStandEditor-Debug] Performing reload of config.yml");
+        debug.log("Performing reload of config.yml");
         plugin.performReload();
         player.sendMessage(plugin.getLang().getMessage("reloaded", ""));
     }
 
     private void commandReloadConsole(CommandSender sender) {
-        debug.log("[ArmorStandEditor-Debug] Console has decided to reload the plugin....");
+        debug.log("Console has decided to reload the plugin....");
         plugin.performReload();
         sender.sendMessage(plugin.getLang().getMessage("reloaded", "info"));
     }
 
     private void commandStats(Player player) {
-        debug.log("[ArmorStandEditor-Debug] Player '" + player.getDisplayName() + "' permission check for asedit.stats: " + getPermissionStats(player));
+        debug.log("Player '" + player.getDisplayName() + "' permission check for asedit.stats: " + getPermissionStats(player));
 
         if (getPermissionStats(player)) {
             for (Entity e : player.getNearbyEntities(1, 1, 1)) {
