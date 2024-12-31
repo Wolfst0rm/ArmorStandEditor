@@ -665,6 +665,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
         updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
 
+
+        // Add Debug Reload
+        debugFlag = getConfig().getBoolean("debugFlag", false);
+        if (debugFlag) {
+            getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] ArmorStandEditor Debug Mode is now ENABLED! Use this ONLY for testing Purposes. If you can see this and you have debug disabled, please report it as a bug!");
+        }
+
+
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if (!hasFolia && runTheUpdateChecker) {
 
