@@ -111,13 +111,13 @@ public class EquipmentMenu {
         leftHand = menuInv.getItem(14);
 
         debug.log("[ArmorStandEditor-Debug] Equipping the ArmorStand with the following items: ");
-        debug.log("[ArmorStandEditor-Debug] Helmet: " + helmet.getType());
-        debug.log("[ArmorStandEditor-Debug] Chest: " + chest.getType());
-        debug.log("[ArmorStandEditor-Debug] Chest: " + chest.getType());
-        debug.log("[ArmorStandEditor-Debug] Pants: " + pants.getType());
-        debug.log("[ArmorStandEditor-Debug] Boots: " + feetsies.getType());
-        debug.log("[ArmorStandEditor-Debug] R-Hand: " + rightHand.getType());
-        debug.log("[ArmorStandEditor-Debug] L-Hand: " + leftHand.getType());
+        debug.log("[ArmorStandEditor-Debug] Helmet: " + helmet);
+        debug.log("[ArmorStandEditor-Debug] Chest: " + chest);
+        debug.log("[ArmorStandEditor-Debug] Chest: " + chest);
+        debug.log("[ArmorStandEditor-Debug] Pants: " + pants);
+        debug.log("[ArmorStandEditor-Debug] Boots: " + feetsies);
+        debug.log("[ArmorStandEditor-Debug] R-Hand: " + rightHand);
+        debug.log("[ArmorStandEditor-Debug] L-Hand: " + leftHand);
 
         armorstand.getEquipment().setHelmet(helmet);
         armorstand.getEquipment().setChestplate(chest);
