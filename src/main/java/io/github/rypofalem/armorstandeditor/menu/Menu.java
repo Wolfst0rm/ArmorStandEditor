@@ -21,6 +21,7 @@ package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
+import io.github.rypofalem.armorstandeditor.Debug;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -39,9 +40,11 @@ public class Menu {
     private final Inventory menuInv;
     private final PlayerEditor pe;
     private static String name = "Armor Stand Editor Menu";
+    private Debug debug;
 
     public Menu(PlayerEditor pe) {
         this.pe = pe;
+        this.debug = new Debug(pe.plugin);
         name = pe.plugin.getLang().getMessage("mainmenutitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getMenuHolder(), 54, name);
         fillInventory();
@@ -266,7 +269,6 @@ public class Menu {
             blankSlot, showArms, visibility, size, blankSlot, plate, toggleVulnerabilty, gravity, blankSlot
         };
 
-
         menuInv.setContents(items);
     }
 
@@ -300,6 +302,7 @@ public class Menu {
     public void openMenu() {
         if (pe.getPlayer().hasPermission("asedit.basic")) {
             fillInventory();
+            debug.log("[ArmorStandEditor-Debug] Player '" + pe.getPlayer().getDisplayName() + "' has opened the Main ASE Menu");
             pe.getPlayer().openInventory(menuInv);
         }
     }

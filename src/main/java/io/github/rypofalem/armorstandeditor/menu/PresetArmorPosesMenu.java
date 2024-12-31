@@ -21,6 +21,7 @@ package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
+import io.github.rypofalem.armorstandeditor.Debug;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 public class PresetArmorPosesMenu {
 
     Inventory menuInv;
+    private Debug debug;
     private final PlayerEditor pe;
     public ArmorStandEditorPlugin plugin = ArmorStandEditorPlugin.instance();
     private ArmorStand armorstand;
@@ -47,6 +49,7 @@ public class PresetArmorPosesMenu {
     public PresetArmorPosesMenu(PlayerEditor pe, ArmorStand as) {
         this.pe = pe;
         this.armorstand = as;
+        this.debug = new Debug(pe.plugin);
         name = plugin.getLang().getMessage("presettitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getPresetHolder(), 36, name);
     }
@@ -128,6 +131,7 @@ public class PresetArmorPosesMenu {
     public void openMenu() {
         if (pe.getPlayer().hasPermission("asedit.basic")) {
             fillInventory();
+            debug.log("[ArmorStandEditor-Debug] Player '" + pe.getPlayer().getDisplayName() + "' has opened the ArmorStand Preset Menu");
             pe.getPlayer().openInventory(menuInv);
         }
     }
@@ -140,6 +144,7 @@ public class PresetArmorPosesMenu {
         if (itemName == null) return;
         if (player == null) return;
 
+        debug.log("[ArmorStandEditor-Debug] Player '"+player.getDisplayName()+"' has chosen the Preset AS Pose '" + itemName + "'");
         //Do the Preset
         if (itemName.equals(SITTING)){
             setPresetPose(player, 345, 0, 10, 350, 0, 350, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);

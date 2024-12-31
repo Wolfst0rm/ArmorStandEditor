@@ -41,7 +41,6 @@ public class BentoBoxProtection implements Protection {
     private boolean bSkyBlockEnabled;
     private boolean aOneBlockEnabled;
 
-
     public BentoBoxProtection() {
         bentoEnabled = Bukkit.getPluginManager().isPluginEnabled("BentoBox");
     }
@@ -67,13 +66,13 @@ public class BentoBoxProtection implements Protection {
 
         if (ArmorStandEditorPlugin.instance().isDebug()) {
             if (bSkyBlockEnabled && !aOneBlockEnabled) {
-                Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor] BentoBox Protection for ASE is looking at: BSkyBlock.");
+                Bukkit.getServer().getLogger().log(Level.INFO,"[ArmorStandEditor-Debug] BentoBox Protection for ASE is looking at: BSkyBlock.");
             }
             if (aOneBlockEnabled && !bSkyBlockEnabled) {
-                Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor] BentoBox Protection for ASE is looking at: AOneBlock.");
+                Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] BentoBox Protection for ASE is looking at: AOneBlock.");
             }
             if (!bSkyBlockEnabled && !aOneBlockEnabled) {
-                Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor] BentoBox Protection is currently not using anything. This will automatically allow edits.");
+                Bukkit.getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] BentoBox Protection is currently not using anything. This will automatically allow edits.");
             }
         }
 

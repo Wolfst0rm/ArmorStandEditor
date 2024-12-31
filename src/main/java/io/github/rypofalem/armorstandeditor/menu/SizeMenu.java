@@ -2,6 +2,8 @@ package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
+import io.github.rypofalem.armorstandeditor.Debug;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -22,6 +24,7 @@ public class SizeMenu extends ASEHolder {
 
     public ArmorStandEditorPlugin plugin = ArmorStandEditorPlugin.instance();
     Inventory menuInv;
+    private Debug debug;
     private PlayerEditor pe;
     private ArmorStand as;
     static String name = "Size Menu";
@@ -29,6 +32,7 @@ public class SizeMenu extends ASEHolder {
     public SizeMenu(PlayerEditor pe, ArmorStand as){
         this.pe = pe;
         this.as = as;
+        this.debug = new Debug(pe.plugin);
         name = pe.plugin.getLang().getMessage("sizeMenu", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getSizeMenuHolder(), 27 , name);
     }
@@ -169,7 +173,7 @@ public class SizeMenu extends ASEHolder {
     }
 
     private void setArmorStandScale(Player player, String itemName, double scaleValue) {
-
+            debug.log("[ASE-Debug] Setting the Scale of the ArmorStand");
             double currentScaleValue; double newScaleValue;
 
             for (Entity theArmorStand : player.getNearbyEntities(1,1,1)){
@@ -187,6 +191,7 @@ public class SizeMenu extends ASEHolder {
                             || itemName.equals(SCALE7)|| itemName.equals(SCALE8)|| itemName.equals(SCALE9)
                             || itemName.equals(SCALE10)){
                         newScaleValue = currentScaleValue + scaleValue;
+                        debug.log("[ASE-Debug] Result of the scale Calculation: " + newScaleValue);
                         if(newScaleValue > plugin.getMaxScaleValue()){
                             pe.getPlayer().sendMessage(plugin.getLang().getMessage("scalemaxwarn", "warn"));
                             return;
@@ -200,6 +205,7 @@ public class SizeMenu extends ASEHolder {
                     } else if(itemName.equals(SCALEPLUS12) || itemName.equals(SCALEPLUS110)){
                         currentScaleValue = as.getAttribute(Attribute.SCALE).getBaseValue();
                         newScaleValue = currentScaleValue + scaleValue; // Add for increments
+                        debug.log("[ASE-Debug] Result of the scale Calculation: " + newScaleValue);
                         if(newScaleValue > plugin.getMaxScaleValue()){
                             pe.getPlayer().sendMessage(plugin.getLang().getMessage("scalemaxwarn","warn"));
                             return;
@@ -209,6 +215,7 @@ public class SizeMenu extends ASEHolder {
                     } else if(itemName.equals(SCALEMINUS12) || itemName.equals(SCALEMINUS110)){
                         currentScaleValue = as.getAttribute(Attribute.SCALE).getBaseValue();
                         newScaleValue = currentScaleValue - scaleValue; // Subtract for decrements
+                        debug.log("[ASE-Debug] Result of the scale Calculation: " + newScaleValue);
                         if(newScaleValue < plugin.getMinScaleValue()){
                             pe.getPlayer().sendMessage(plugin.getLang().getMessage("scaleminwarn","warn"));
                             return;
@@ -229,6 +236,7 @@ public class SizeMenu extends ASEHolder {
     public void openMenu() {
         if(pe.getPlayer().hasPermission("asedit.togglesize")){
             fillInventory();
+            debug.log("[ArmorStandEditor-Debug] Player '" + pe.getPlayer().getDisplayName() + "' has opened the Sizing Attribute Menu");
             pe.getPlayer().openInventory(menuInv);
         }
     }

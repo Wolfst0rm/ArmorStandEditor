@@ -25,6 +25,7 @@ import com.jeff_media.updatechecker.UserAgentBuilder;
 
 import io.github.rypofalem.armorstandeditor.Metrics.*;
 import io.github.rypofalem.armorstandeditor.language.Language;
+import io.github.rypofalem.armorstandeditor.Debug;
 
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -44,6 +45,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     //!!! DO NOT REMOVE THESE UNDER ANY CIRCUMSTANCES - Required for BStats and UpdateChecker !!!
     public static final int SPIGOT_RESOURCE_ID = 94503;  //Used for Update Checker
     private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
+    private Debug debug = new Debug(this);
 
     private NamespacedKey iconKey;
     private static ArmorStandEditorPlugin instance;
@@ -303,11 +305,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         debugFlag = getConfig().getBoolean("debugFlag", false);
         if (debugFlag) {
-            getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
-            getServer().getLogger().warning(" ArmorStandEditor - Debug Mode ");
-            getServer().getLogger().warning("      Debug Mode: ENABLED!     ");
-            getServer().getLogger().warning(" USE THIS FOR DEVELOPMENT PURPOSES ONLY! ");
-            getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
+            getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] ArmorStandEditor Debug Mode is now ENABLED! Use this ONLY for testing Purposes. If you can see this and you have debug disabled, please report it as a bug!");
         }
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
@@ -756,22 +754,18 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         return iconKey;
     }
 
-    /**
-     * For debugging ASE - Do not use this outside of Development or stuff
-     */
-    public boolean isDebug() {
-        return debugFlag;
-    }
-
-    public void debugMsgHandler(String msg) {
-        if (isDebug()) getServer().getLogger().log(Level.WARNING, "[ASE-DEBUG]: {0}", msg);
-    }
-
     public double getMinScaleValue() {
         return minScaleValue;
     }
 
     public double getMaxScaleValue() {
         return maxScaleValue;
+    }
+
+    /**
+     * For debugging ASE - Do not use this outside of Development or stuff
+     */
+    public boolean isDebug() {
+        return debugFlag;
     }
 }
