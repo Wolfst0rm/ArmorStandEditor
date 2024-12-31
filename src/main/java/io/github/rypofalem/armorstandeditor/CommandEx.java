@@ -162,6 +162,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     private void commandGivePlayerHead(Player player) {
         if (player.hasPermission("asedit.head")) {
+            debug.log("[ArmorStandEditor-Debug] Creating a player head for the OfflinePlayer '" + player.getDisplayName() + "'");
             OfflinePlayer offlinePlayer = player.getPlayer();
             ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
             SkullMeta meta = (SkullMeta) item.getItemMeta();
