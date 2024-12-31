@@ -97,7 +97,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         } else {
             Player player = (Player) sender;
 
-            debug.log("[ArmorStandEditor-Debug] Sender is Player and asedit.basic is" + getPermissionBasic(player));
+            debug.log("[ArmorStandEditor-Debug] Sender is Player and asedit.basic is " + getPermissionBasic(player));
             if (args.length == 0) {
                 player.sendMessage(LISTMODE);
                 player.sendMessage(LISTAXIS);
