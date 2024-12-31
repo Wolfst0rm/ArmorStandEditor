@@ -473,7 +473,7 @@ public class PlayerEditor {
 
     private void toggleInvulnerability(ArmorStand armorStand) { //See NewFeature-Request #256 for more info
         if (getPlayer().hasPermission("asedit.toggleInvulnerability")) {
-            debug.log("Making an ArmorStand "+ armorStand.isInvulnerable() + " near player: " + getPlayer().getDisplayName());
+            debug.log("Making an ArmorStand vulnerable/invulnerable near player: " + getPlayer().getDisplayName());
             armorStand.setInvulnerable(!armorStand.isInvulnerable());
             sendMessage("toggleinvulnerability", String.valueOf(armorStand.isInvulnerable()));
         } else {
