@@ -4,7 +4,7 @@
     <groupId>io.github.rypofalem.armorstandeditor</groupId>
     <artifactId>armorstandeditor</artifactId>
     <packaging>jar</packaging>
-    <version>1.20.4-45</version>
+    <version>0.x-Rewrite</version>
     <name>armorstandeditor</name>
     <url>https://maven.apache.org</url>
 
@@ -53,28 +53,6 @@
     <!--Java 8-->
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.openrewrite.maven</groupId>
-                <artifactId>rewrite-maven-plugin</artifactId>
-                <version>5.16.0</version>
-                <configuration>
-                    <activeRecipes>
-                        <recipe>org.openrewrite.java.migrate.UpgradeToJava21</recipe>
-                        <recipe>org.openrewrite.java.format.AutoFormat</recipe>
-                        <recipe>org.openrewrite.java.recipes.FindRecipes</recipe>
-                        <recipe>org.openrewrite.java.OrderImports</recipe>
-                        <recipe>org.openrewrite.java.ShortenFullyQualifiedTypeReferences</recipe>
-                        <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
-                    </activeRecipes>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.openrewrite.recipe</groupId>
-                        <artifactId>rewrite-migrate-java</artifactId>
-                        <version>2.4.2</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
