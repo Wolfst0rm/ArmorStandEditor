@@ -1,46 +1,102 @@
-/*
- * ArmorStandEditor: Bukkit plugin to allow editing armor stand attributes
- * Copyright (C) 2016-2023  RypoFalem
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+package io.rypofalem.armorstandeditor;
 
-package io.github.rypofalem.armorstandeditor;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
-import java.util.List;
 import java.util.logging.Level;
 
-public class ArmorStandEditorPlugin extends JavaPlugin {
+public final class ArmorStandEditorPlugin extends JavaPlugin {
+
+    public static final String SEPARATOR_FIELD = "================================";
+
+    // Classes
+    private static ArmorStandEditorPlugin instance;
+    private io.github.rypofalem.armorstandeditor.Debug debug = new io.github.rypofalem.armorstandeditor.Debug(this);
+
+    // Server Software Check True/False
+    boolean isFolia;
+    boolean isPaper;
+    boolean isSpigotMc;
+
+    // Debug Flag - ALWAYS ON BY DEFAULT
+    boolean debugFlag = true;
+
+    //Config Items (in Order)
+    String aseVersion;
+
+    public ArmorStandEditorPlugin() {
+        instance = this;
+    }
 
 
     @Override
     public void onEnable() {
-    }
+        // Plugin startup logic
+        //Load Messages in Console
+        debug.log("Debug Mode = ON");
+        debug.log("Enabling ASE, Getting ASE Version and logging Server Checks");
 
+        aseVersion = getConfig().getString("version");
+        getLogger().info("======= ArmorStandEditor =======");
+        getLogger().info("Plugin Version: v" + aseVersion);
+
+        isFolia = isFolia();
+        debug.log("Using Folia: " + isFolia);
+        isPaper = isPaper();
+        debug.log("Using Paper or a Fork: " + isPaper);
+        isSpigotMc = isSpigotMc();
+        debug.log("Using SpigotMC: " + isSpigotMc);
+
+
+        if(isFolia || isPaper){
+            getLogger().log(Level.INFO, "Server Type: Paper/Folia/Purpur or a Fork");
+            getLogger().log(Level.INFO, SEPARATOR_FIELD);
+            getServer().getPluginManager().enablePlugin(this);
+
+        }
+
+        if(isSpigotMc){
+            getLogger().log(Level.INFO, "Server Type: SpigotMC");
+            getLogger().log(Level.SEVERE, "This Plugin No Longer works on Spigot. Disabling ArmorStandEditor");
+            getLogger().log(Level.INFO, SEPARATOR_FIELD);
+            getServer().getPluginManager().disablePlugin(this);
+        }
+
+    }
 
     @Override
     public void onDisable() {
+        // Plugin shutdown logic
     }
 
+    public static boolean isFolia(){
+        try{
+            Class.forName("io.papermc.paper.threadedregions.RegionziedServer");
+            return true;
+        } catch (ClassNotFoundException e){
+            return false;
+        }
+    }
+
+    private static boolean isPaper() {
+        try{
+            Class.forName("io.papermc.paper.text.PaperComponents");
+            return true;
+        } catch (ClassNotFoundException e){
+            return false;
+        }
+    }
+
+    private static boolean isSpigotMc() {
+        try{
+            Class.forName("org.spigotmc.CustomTimingsHandler");
+            return true;
+        } catch (ClassNotFoundException e){
+            return false;
+        }
+    }
+
+
+    public boolean isDebug() {
+        return debugFlag;
+    }
 }

@@ -1,24 +1,8 @@
 name: ArmorStandEditor
-main: io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin
-version: 1.20.5-46-REWRITE-INFDEV
-api-version: "1.20"
-website: https://www.spigotmc.org/resources/94503/
+version: '0.0.0.1'
+main: io.rypofalem.armorstandeditor.ArmorStandEditorPlugin
+api-version: '1.21'
+load: STARTUP
 author: Wolfstorm
 authors: [Wolfstorm, DreiFxn, Pinnkk, Kugge, Marfjeh, miknes123, rypofalem, sekwah41, Sikatsu1997, Cool_boy, sumdream, Amaury Carrade, nicuch, kotarobo, prettydude, Jumpy91, Niasio, Patbox, Puremin0rez, Prof-Bloodstone, PlanetTeamSpeak]
 description: Allows players to edit data of armorstands without any commands.
-softdepend: []
-prefix: ArmorStandEditor
-
-
-commands:
-  ase:
-    description: Changes the function of the armorstand edit tool.
-    usage: /<command> ? - list subcommands
-    aliases: [ase, asedit, armorstandeditor]
-    permission: asedit.basic
-
-permissions:
-  asedit.*:
-    description: All ArmorStandEditor Commands
-    default: op
-
