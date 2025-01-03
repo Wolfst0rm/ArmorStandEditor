@@ -2,17 +2,26 @@
 <hr />
 
 ## In Progress
-- Menus from 1.21.4-48 
+- Utils
+- Folia Support
 
 ## TODO:
+- Menus from 1.21.4-48
+  - Sizing Rework
+  - Preset poses
+  - Standard ASE Menu
+  - Equipment
 - Player Editor Reimplementation
-- Utils
+  - Start with Menu Critical things 
+
 - Modes
 - Commands
 - Permissions
 - API
+  - Add New APIs for Menu Opening.
+  - Readd everything there currently.
 - Protections
-- Folia Support
+
 
 ## Done
 - Configuration Options and Loading them in
