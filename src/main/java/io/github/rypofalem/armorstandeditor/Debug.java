@@ -6,8 +6,8 @@ import java.util.logging.Level;
 
 public class Debug {
 
-    private boolean debugTurnedOn;
-    private ArmorStandEditorPlugin plugin;
+    boolean debugTurnedOn;
+    private final ArmorStandEditorPlugin plugin;
     String debugOutputToConsole;
 
     public Debug(ArmorStandEditorPlugin plugin) {
@@ -18,7 +18,7 @@ public class Debug {
         debugTurnedOn = plugin.isDebug();
         if (!debugTurnedOn) return;
 
-        debugOutputToConsole = String.format("[ArmorStandEditor-Debug] " + msg);
+        debugOutputToConsole = String.format("[ArmorStandEditor-Debug] %s", msg);
         plugin.getServer().getLogger().log(Level.INFO, debugOutputToConsole);
     }
 }
