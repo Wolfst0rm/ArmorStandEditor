@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: ['17', '21']
+        java: ['21','23']
     steps:
       # 1. Check out the current working tree
       - name: Checkout ArmorStandEditor Repository
