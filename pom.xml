@@ -42,11 +42,18 @@
     </repositories>
 
     <dependencies>
-        <!--Spigot + Folia API-->
+        <!--Paper API-->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.21.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Lombok Support -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

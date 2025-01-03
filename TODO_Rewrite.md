@@ -2,8 +2,9 @@
 <hr />
 
 ## In Progress
-- Utils
-- Folia Support
+- API
+  - Add New APIs for Menu Opening.
+  - Readd everything there currently. (DONE)
 
 ## TODO:
 - Menus from 1.21.4-48
@@ -12,14 +13,11 @@
   - Standard ASE Menu
   - Equipment
 - Player Editor Reimplementation
-  - Start with Menu Critical things 
-
+  - Start with Menu Critical things
 - Modes
 - Commands
 - Permissions
-- API
-  - Add New APIs for Menu Opening.
-  - Readd everything there currently.
+
 - Protections
 
 
@@ -30,3 +28,5 @@
 - Metrics and Handling them
 - Debug Output
 - Langauges
+- Utils
+- Folia Support
