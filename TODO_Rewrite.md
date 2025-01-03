@@ -4,7 +4,7 @@
 ## In Progress
 - API
   - Add New APIs for Menu Opening.
-  - Readd everything there currently. (DONE)
+  - Readd everything there currently. (CURRENTLY BROKEN. WILL CHECK WITH THE PAPER MC FOLK TOMORROW!)
 
 ## TODO:
 - Menus from 1.21.4-48
