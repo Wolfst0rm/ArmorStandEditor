@@ -1,6 +1,6 @@
-package io.github.rypofalem.armorstandeditor;
+package io.github.rypofalem.armorstandeditor.devtools;
 
-import io.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
+import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
 
 import java.util.logging.Level;
 

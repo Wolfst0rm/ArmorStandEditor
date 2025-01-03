@@ -1,10 +1,13 @@
 package io.github.rypofalem.armorstandeditor;
 
+import io.github.rypofalem.armorstandeditor.devtools.Debug;
+
+import io.github.rypofalem.armorstandeditor.metricshandler.MetricsHandler;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -12,20 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+import org.bukkit.plugin.java.JavaPlugin;
+
 public final class ArmorStandEditorPlugin extends JavaPlugin {
 
     public static final String SEPARATOR_FIELD = "================================";
 
     // Classes
     private static ArmorStandEditorPlugin instance;
-    private io.github.rypofalem.armorstandeditor.Debug debug = new io.github.rypofalem.armorstandeditor.Debug(this);
+    private Debug debug = new Debug(this);
+    MetricsHandler metricsHandler;
 
     // Server Software Check True/False
     boolean isFolia;
     boolean isPaper;
-
-
-
 
     //Config Items (in Order)
     boolean debugFlag;  // Debug Flag - Not for Production
@@ -75,7 +78,6 @@ public final class ArmorStandEditorPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
         debugFlag = isDebug();
 
         if(debugFlag) {
@@ -112,6 +114,8 @@ public final class ArmorStandEditorPlugin extends JavaPlugin {
         // Setup the Teams and Scoreboards that ASE uses
         doScoreboardSetup();
 
+        //TODO: Readd Languages here!
+
         // Get all the Configuration Options
         coarseRotation       = getCoarseConfig();
         fineRotation         = getFineConfig();
@@ -138,15 +142,11 @@ public final class ArmorStandEditorPlugin extends JavaPlugin {
         perWorldSupport = getPerWorldSupportConfig();
         doPerWorldSupportSetup(perWorldSupport);
 
-
-
-
-
-
-
-
-
         getLogger().log(Level.INFO, SEPARATOR_FIELD);
+
+        // Do all the Metrics for BStats
+        metricsHandler = new MetricsHandler();
+
     }
 
     @Override
