@@ -1,15 +1,23 @@
-# List of everything to be readded to ArmorStandEditor
+# What Still has to be rewritten
+<hr />
 
-## Priority 1 - CRITICAL / SEVERE
+## In Progress
+- Menus from 1.21.4-48 
+
+## TODO:
+- Player Editor Reimplementation
+- Utils
+- Modes
 - Commands
-- Player Editing
+- Permissions
+- API
+- Protections
+- Folia Support
 
-## Priority 2 - Normal
-- Languages
-- Reimplement what was already there previously
-- Retrieving own Player Head Support
-
-## Priority 3 - Low
-
-## Priority 4 - Minor
-- Custom Data pack Model Support
+## Done
+- Configuration Options and Loading them in
+- Scoreboards
+- SpigotMC check / PaperMc and Fork Checks
+- Metrics and Handling them
+- Debug Output
+- Langauges
