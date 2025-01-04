@@ -17,20 +17,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package io.github.rypofalem.armorstandeditor.api;
+package io.github.rypofalem.armorstandeditor.api.interfaces;
 
 import lombok.Getter;
 
-import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.event.Event;
 
-public abstract class ItemFrameEvent extends Event {
+public abstract class ArmorStandEvent extends Event {
 
     @Getter
-    protected final ItemFrame itemFrame;
+    protected final ArmorStand armorStand;
 
-    public ItemFrameEvent(ItemFrame itemFrame) {
-        this.itemFrame = itemFrame;
+    public ArmorStandEvent(ArmorStand armorStand) {
+        this.armorStand = armorStand;
     }
 
 }
