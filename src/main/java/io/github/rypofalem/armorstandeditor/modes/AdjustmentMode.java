@@ -20,7 +20,8 @@
 package io.github.rypofalem.armorstandeditor.modes;
 
 public enum AdjustmentMode {
-    COARSE("Coarse"), FINE("Fine");
+    COARSE("Coarse"),
+    FINE("Fine");
 
     private String name;
 
