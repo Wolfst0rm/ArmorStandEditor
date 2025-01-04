@@ -47,11 +47,17 @@ jobs:
       - name: Verify build
         run: ./gradlew clean test
 
+
+
       # 6. Upload Artifacts (Debug Purposes)
+      - name: List files in build/libs
+        run: ls -l build/libs
+
       - name: Upload Artifact for Debugging
         uses: actions/upload-artifact@v4.0.0
         if: success() && matrix.java == '21'
         with:
           name: artifact
-          path: build/libs/armorstandeditor-*-*.jar
+          path: build/libs/armorstandeditor-*.jar
           if-no-files-found: error
+

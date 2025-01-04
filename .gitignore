@@ -4,7 +4,9 @@
 
 # Build directories
 /bin/
-/build/
+**/build
+dist/
+
 
 # Eclipse IDE
 .project
