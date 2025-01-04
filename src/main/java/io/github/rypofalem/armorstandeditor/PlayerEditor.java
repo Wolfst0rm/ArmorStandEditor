@@ -47,4 +47,12 @@ public class PlayerEditor {
         return plugin.editorManager;
     }
 
+    public Player getPlayer() {
+        return plugin.getServer().getPlayer(getUUID());
+    }
+
+    public UUID getUUID() {
+        return uuid;
+    }
+
 }

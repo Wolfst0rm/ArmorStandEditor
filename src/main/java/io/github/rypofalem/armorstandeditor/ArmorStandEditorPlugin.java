@@ -2,6 +2,7 @@ package io.github.rypofalem.armorstandeditor;
 
 import io.github.rypofalem.armorstandeditor.devtools.Debug;
 
+import io.github.rypofalem.armorstandeditor.language.Lang;
 import io.github.rypofalem.armorstandeditor.metricshandler.MetricsHandler;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -26,6 +27,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin {
     private Debug debug = new Debug(this);
     MetricsHandler metricsHandler;
     protected PlayerEditorManager editorManager;
+    private Lang language;
 
     // Server Software Check True/False
     boolean isFolia;
@@ -116,6 +118,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin {
         doScoreboardSetup();
 
         //TODO: Readd Languages here!
+        language = new Lang(getLanguageConfig(), this);
 
         // Get all the Configuration Options
         coarseRotation       = getCoarseConfig();
@@ -288,10 +291,13 @@ public final class ArmorStandEditorPlugin extends JavaPlugin {
     public String getToolTypeConfig() { return getConfig().getString("tool");}
     public String getToolNameConfig() { return getConfig().getString("editToolName");}
     public String getToolLoreConfig(){ return getConfig().getString("toolLore", null); }
+    public String getLanguageConfig(){ return getConfig().getString("lang"); }
 
     public Integer getEditToolDataConfig() { return getConfig().getInt("toolData", Integer.MIN_VALUE); }
-    public List<?> getAllowedWorldListConfig(){
-        return getConfig().getList("allowed-worlds", null);
+    public List<?> getAllowedWorldListConfig(){ return getConfig().getList("allowed-worlds", null); }
+
+    public Lang getLanguage(){
+        return language;
     }
 
 
