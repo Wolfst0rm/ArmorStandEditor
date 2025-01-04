@@ -5,6 +5,13 @@
 #DO NOT CHANGE THIS - CHANGES AUTOMATICALLY PER UPDATE
 version: "0.x-Rewrite"
 
+#----------- LANGUAGE
+#Name of the language file you wish to use
+
+#NOTE: If you are editing en_US.yml, it will not persist across restarts due to it being overwritten
+#Please read the comments at the top of that file before editing/changing/modifying.
+lang: en_US.yml
+
 #----------- WORLD SETTINGS
 # Enable Per World Support for ArmorStandEditor - Not Enabling this
 # means it will work for all worlds by default
