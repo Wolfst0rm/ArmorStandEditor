@@ -9,7 +9,8 @@ public class MetricsHandler {
     private static final int PLUGIN_ID = 12668;
     public ArmorStandEditorPlugin plugin;
 
-    public MetricsHandler(){
+    public MetricsHandler(ArmorStandEditorPlugin plugin){
+        this.plugin = plugin;
         Metrics metrics = new Metrics(plugin, PLUGIN_ID);
         metrics.addCustomChart(new Metrics.SimplePie("dev_flag_enabled", () -> valueOf(plugin.isDebug())));
         metrics.addCustomChart(new Metrics.SimplePie("require_sneaking", () -> valueOf(plugin.getRequireSneakingConfig())));

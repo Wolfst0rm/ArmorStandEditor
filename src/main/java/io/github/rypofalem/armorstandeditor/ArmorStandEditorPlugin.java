@@ -25,6 +25,7 @@ public final class ArmorStandEditorPlugin extends JavaPlugin {
     private static ArmorStandEditorPlugin instance;
     private Debug debug = new Debug(this);
     MetricsHandler metricsHandler;
+    protected PlayerEditorManager editorManager;
 
     // Server Software Check True/False
     boolean isFolia;
@@ -145,7 +146,8 @@ public final class ArmorStandEditorPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, SEPARATOR_FIELD);
 
         // Do all the Metrics for BStats
-        metricsHandler = new MetricsHandler();
+        metricsHandler = new MetricsHandler(this);
+        editorManager  = new PlayerEditorManager(this);
 
     }
 
