@@ -42,13 +42,10 @@ jobs:
 
       # 5. Create a Clean Package - and Verify it
       - name: Clean and build
-        run: ./gradlew clean build
+        run: ./gradlew clean build --info
 
-      - name: List files in build/libs
-        run: ls -l  /home/runner/work/ArmorStandEditor/build/libs
-
-      - name: Verify build
-        run: ./gradlew clean test
+      - name: List files in build dir
+        run: ls -lR /home/runner/work/ArmorStandEditor/ArmorStandEditor/build/
 
       # 6. Upload Artifacts (Debug Purposes)
       - name: Upload Artifact for Debugging
