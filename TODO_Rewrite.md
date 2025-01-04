@@ -4,8 +4,8 @@
 ## In Progress
 - API
   - Add New APIs for Menu Opening.
-  - Readd everything there currently. (CURRENTLY BROKEN. WILL CHECK WITH THE PAPER MC FOLK TOMORROW!)
-
+- Player Editor Reimplementation
+ 
 ## TODO:
 - Menus from 1.21.4-48
   - Sizing Rework
@@ -14,11 +14,10 @@
   - Equipment
 - Player Editor Reimplementation
   - Start with Menu Critical things
-- Modes
 - Commands
 - Permissions
-
 - Protections
+- Testing for Config Options in the Code
 
 
 ## Done
@@ -30,3 +29,7 @@
 - Langauges
 - Utils
 - Folia Support
+- Modes
+- API
+  - Readd everything there currently.
+- Gradle Migration
