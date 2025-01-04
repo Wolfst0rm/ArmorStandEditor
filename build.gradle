@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'io.github.rypofalem.armorstandeditor'
+version = '0.x-Rewrite'
+
+def javaVersion = 21
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+    maven {
+        url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+}
+
+tasks.jar {
+    manifest {
+        attributes(
+                'Implementation-Title': 'armorstandeditor',
+                'Implementation-Version': version
+        )
+    }
+}
+
+tasks.register('attachArtifact') {
+    doLast {
+        println "Attach optional artifact if needed."
+        // Gradle doesn't natively support attaching optional artifacts like Maven. Additional logic might be added here.
+    }
+}
+
+testing {
+    suites {
+        test(JvmTestSuite) {
+            useJUnitJupiter()
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}

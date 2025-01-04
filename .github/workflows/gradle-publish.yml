@@ -1,7 +1,4 @@
-# This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Java CI with Maven
+name: Java CI with Gradle
 on: [push, pull_request]
 
 jobs:
@@ -25,40 +22,33 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'zulu'
 
-      # 3. Setup local Maven package cache to speed up building
-      - name: Cache SonarCloud packages
+      # 3. Setup local Gradle cache to speed up building
+      - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-          
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      
-      # 4. Build via Maven
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      # 4. Build and analyze
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=wolfieheart_ArmorStandEditor
+        run: ./gradlew build sonarqube -Dsonar.projectKey=wolfieheart_ArmorStandEditor
 
-      #5: Create a Clean Package - and Verify it
-      - name: Clean package
-        run: mvn -B clean package
+      # 5. Create a Clean Package - and Verify it
+      - name: Clean and build
+        run: ./gradlew clean build
 
-      - name: Clean Verify
-        run: mvn -B clean verify
+      - name: Verify build
+        run: ./gradlew clean test
 
-      #6 Upload Artifacts (Debug Purposes)
+      # 6. Upload Artifacts (Debug Purposes)
       - name: Upload Artifact for Debugging
         uses: actions/upload-artifact@v4.0.0
         if: success() && matrix.java == '21'
         with:
           name: artifact
-          path: /home/runner/work/ArmorStandEditor/ArmorStandEditor/target/armorstandeditor-*-*.jar
+          path: build/libs/armorstandeditor-*-*.jar
           if-no-files-found: error

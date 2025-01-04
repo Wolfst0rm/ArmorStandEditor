@@ -1,11 +1,26 @@
+# IntelliJ IDEA
 .idea/
-target/
 *.iml
+
+# Build directories
 /bin/
-/.project
-/.classpath
-/.settings/
+/build/
+
+# Eclipse IDE
+.project
+.classpath
+.settings/
+
+# Java specific metadata
 /src/main/java/META-INF/*.MF
 /src/main/java/META-INF/
+
+# Project-specific files
 /TODO-LIST.MD
-/dependency-reduced-pom.xml
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Gradle Wrapper
+.gradle-wrapper/
