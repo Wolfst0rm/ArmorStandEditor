@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'org.sonarqube' version '10.6'
+    id 'org.sonarqube' version '6.0.1.5171'
 }
 
 group = 'io.github.rypofalem.armorstandeditor'
@@ -15,12 +15,12 @@ java {
     }
 }
 
-sonarqube {
+sonar {
     properties {
         property "sonar.projectKey", "wolfieheart_ArmorStandEditor"
         property "sonar.organization", "wolfieheart"
         property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.login", System.getenv("SONAR_TOKEN")
+        property "sonar.token", System.getenv("SONAR_TOKEN")
     }
 }
 
