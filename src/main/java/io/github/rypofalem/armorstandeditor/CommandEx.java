@@ -19,19 +19,19 @@
 
 package io.github.rypofalem.armorstandeditor;
 
-import com.google.gson.Gson;
-
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
 
 import io.github.rypofalem.armorstandeditor.modes.AdjustmentMode;
 import io.github.rypofalem.armorstandeditor.modes.Axis;
 import io.github.rypofalem.armorstandeditor.modes.EditMode;
+import io.github.rypofalem.armorstandeditor.Debug;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -59,21 +59,24 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     final String GIVECUSTOMMODEL = ChatColor.YELLOW + "/ase give";
     final String GIVEPLAYERHEAD = ChatColor.YELLOW + "/ase playerhead";
     final String GETARMORSTATS = ChatColor.YELLOW + "/ase stats";
-    Gson gson = new Gson();
+    private Debug debug;
 
     public CommandEx(ArmorStandEditorPlugin armorStandEditorPlugin) {
+
         this.plugin = armorStandEditorPlugin;
+        this.debug = new Debug(armorStandEditorPlugin);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof ConsoleCommandSender) { //Fix to Support #267
-            if (plugin.isDebug()) plugin.debugMsgHandler("Sender is CONSOLE!");
+            debug.log("Sender is CONSOLE!");
             if (args.length == 0) {
                 sender.sendMessage(VERSION);
                 sender.sendMessage(HELP);
                 sender.sendMessage(RELOAD);
+                return true;
             } else {
                 switch (args[0].toLowerCase()) {
                     case "reload" -> commandReloadConsole(sender);
@@ -89,13 +92,13 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         }
 
         if (sender instanceof Player player && !getPermissionBasic(player)) {
-            if (plugin.isDebug()) plugin.debugMsgHandler("Sender is Player but asedit.basic is" + getPermissionBasic(player));
+            debug.log("Sender is Player but asedit.basic is" + getPermissionBasic(player));
             sender.sendMessage(plugin.getLang().getMessage("nopermoption", "warn", "basic"));
             return true;
         } else {
             Player player = (Player) sender;
 
-            if (plugin.isDebug()) plugin.debugMsgHandler("Sender is Player and asedit.basic is" + getPermissionBasic(player));
+            debug.log("Sender is Player and asedit.basic is " + getPermissionBasic(player));
             if (args.length == 0) {
                 player.sendMessage(LISTMODE);
                 player.sendMessage(LISTAXIS);
@@ -160,6 +163,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
 
     private void commandGivePlayerHead(Player player) {
         if (player.hasPermission("asedit.head")) {
+            debug.log("Creating a player head for the OfflinePlayer '" + player.getDisplayName() + "'");
             OfflinePlayer offlinePlayer = player.getPlayer();
             ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
             SkullMeta meta = (SkullMeta) item.getItemMeta();
@@ -183,6 +187,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
             try {
                 byte slot = (byte) (Byte.parseByte(args[1]) - 0b1);
                 if (slot >= 0 && slot < 9) {
+                    debug.log("Player has chosen slot: " + slot);
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setCopySlot(slot);
                 } else {
                     player.sendMessage(LISTSLOT);
@@ -220,6 +225,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         if (args.length > 1) {
             for (Axis axis : Axis.values()) {
                 if (axis.toString().toLowerCase().contentEquals(args[1].toLowerCase())) {
+                    debug.log("Player '" + player.getDisplayName() + "' sets the axis to " + axis);
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setAxis(axis);
                     return;
                 }
@@ -240,7 +246,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     if (args[1].equals("invisible") && !(checkPermission(player, "togglearmorstandvisibility", true) || plugin.getArmorStandVisibility())) return;
                     if (args[1].equals("itemframe") && !(checkPermission(player, "toggleitemframevisibility", true) || plugin.getItemFrameVisibility())) return;
                     plugin.editorManager.getPlayerEditor(player.getUniqueId()).setMode(mode);
-                    if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " chose the mode: " + mode);
+                    debug.log("Player '" + player.getDisplayName() + "' chose the mode: " + mode);
                     return;
                 }
             }
@@ -271,14 +277,17 @@ public class CommandEx implements CommandExecutor, TabCompleter {
         if (!(checkPermission(player, "update", true))) return;
 
         //Only Run if the Update Command Works
-        if (plugin.isDebug()) plugin.debugMsgHandler("Current ArmorStandEditor Version is: " + plugin.getArmorStandEditorVersion());
+        debug.log("Current ArmorStandEditor Version is: " + plugin.getArmorStandEditorVersion());
         if (plugin.getArmorStandEditorVersion().contains(".x")) {
+            debug.log("Plugin version is DEVELOPMENT");
             player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker will not work on Development Versions.");
             player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
         } else {
             if (!plugin.getHasFolia() && plugin.getRunTheUpdateChecker()) {
-                new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID + "").checkNow(player); //Runs Update Check
+                debug.log("Plugin is on Server: Paper/Spigot or a fork thereof.");
+                new UpdateChecker(plugin, UpdateCheckSource.SPIGOT, "" + ArmorStandEditorPlugin.SPIGOT_RESOURCE_ID).checkNow(player); //Runs Update Check
             } else if (plugin.getHasFolia()) {
+                debug.log("Plugin is on Folia");
                 player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Update Checker does not currently work on Folia.");
                 player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Report all bugs to: https://github.com/Wolfieheart/ArmorStandEditor/issues");
             } else {
@@ -288,8 +297,7 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandVersion(Player player) {
-        if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " permission check for asedit.update: " + getPermissionUpdate(player));
-
+        debug.log("Player '" + player.getDisplayName() + "' permission check for asedit.update: " + getPermissionUpdate(player));
         if (!(getPermissionUpdate(player))) return;
         String verString = plugin.getArmorStandEditorVersion();
         player.sendMessage(ChatColor.YELLOW + "[ArmorStandEditor] Version: " + verString);
@@ -301,26 +309,30 @@ public class CommandEx implements CommandExecutor, TabCompleter {
     }
 
     private void commandReload(Player player) {
-        if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " permission check for asedit.reload: " + getPermissionReload(player));
+        debug.log("Player '" + player.getDisplayName() + "' permission check for asedit.reload: " + getPermissionReload(player));
 
         if (!(getPermissionReload(player))) return;
+        debug.log("Performing reload of config.yml");
         plugin.performReload();
         player.sendMessage(plugin.getLang().getMessage("reloaded", ""));
     }
 
     private void commandReloadConsole(CommandSender sender) {
+        debug.log("Console has decided to reload the plugin....");
         plugin.performReload();
         sender.sendMessage(plugin.getLang().getMessage("reloaded", "info"));
     }
 
     private void commandStats(Player player) {
-        if (plugin.isDebug()) plugin.debugMsgHandler(player.getDisplayName() + " permission check for asedit.stats: " + getPermissionStats(player));
+        debug.log("Player '" + player.getDisplayName() + "' permission check for asedit.stats: " + getPermissionStats(player));
 
         if (getPermissionStats(player)) {
             for (Entity e : player.getNearbyEntities(1, 1, 1)) {
                 if (e instanceof ArmorStand as) {
 
                     //Calculation TIME - Might move this out later, but is OK here for now
+                    double sizeAttribute;
+
                     double headX = as.getHeadPose().getX();
                     headX = Math.toDegrees(headX);
                     headX = Math.rint(headX);
@@ -396,6 +408,12 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     leftLegZ = Math.toDegrees(leftLegZ);
                     leftLegZ = Math.rint(leftLegZ);
 
+                    if (plugin.getServer().getMinecraftVersion().compareTo("1.21") >= 0 || plugin.getNmsVersion().compareTo("v1_21") >= 0) {
+                        sizeAttribute = Objects.requireNonNull(as.getAttribute(Attribute.SCALE)).getBaseValue();
+                    } else {
+                        sizeAttribute = 0;
+                    }
+
                     //Coordinates
                     float locationX = (float) as.getLocation().getX();
                     float locationY = (float) as.getLocation().getY();
@@ -422,8 +440,13 @@ public class CommandEx implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.YELLOW + "Coordinates: " + ChatColor.AQUA + " X: " + locationX + " / Y: " + locationY + " / Z: " + locationZ);
                     player.sendMessage(ChatColor.YELLOW + "Is Visible: " + ChatColor.AQUA + isVisible + ". " + ChatColor.YELLOW + "Arms Visible: " + ChatColor.AQUA + armsVisible + ". " + ChatColor.YELLOW + "Base Plate Visible: " + ChatColor.AQUA + basePlateVisible);
                     player.sendMessage(ChatColor.YELLOW + "Is Vulnerable: " + ChatColor.AQUA + isVulnerable + ". " + ChatColor.YELLOW + "Affected by Gravity: " + ChatColor.AQUA + hasGravity);
-                    player.sendMessage(ChatColor.YELLOW + "Is Small: " + ChatColor.AQUA + isSmall + ". " + ChatColor.YELLOW + "Is Glowing: " + ChatColor.AQUA + isGlowing + ". " + ChatColor.YELLOW + "Is Locked: " + ChatColor.AQUA + isLocked);
+                    if (plugin.getServer().getMinecraftVersion().compareTo("1.21") >= 0 || plugin.getNmsVersion().compareTo("v1_21") >= 0) {
+                        player.sendMessage(ChatColor.YELLOW + "Size: " + ChatColor.AQUA + sizeAttribute + "/" + plugin.getMaxScaleValue() + ". " + ChatColor.YELLOW + "Is Glowing: " + ChatColor.AQUA + isGlowing + ". " + ChatColor.YELLOW + "Is Locked: " + ChatColor.AQUA + isLocked);
+                    } else {
+                        player.sendMessage(ChatColor.YELLOW + "Is Small: " + ChatColor.AQUA + isSmall + ". " + ChatColor.YELLOW + "Is Glowing: " + ChatColor.AQUA + isGlowing + ". " + ChatColor.YELLOW + "Is Locked: " + ChatColor.AQUA + isLocked);
+                    }
                     player.sendMessage(ChatColor.YELLOW + "----------------------------------------------");
+
                 }
             }
         } else {

@@ -117,6 +117,8 @@ helpdiscord:
   msg: "or join our Discord: https://discord.gg/3BbJKWpTCj"
 
 #warn
+asinuse:
+  msg: Unable to edit ArmorStand as it is currently being edited by another player!
 cantedit:
   msg: Sorry, you cannot edit armor stands here!
 noperm:
@@ -155,6 +157,7 @@ noconsolecom:
   msg: Sorry but this command only works from in-game and not from Console!
 renamestopped:
   msg: Please make sure you have the ability/permission to give your ArmorStand Colored Names.
+
 
 #menutitle
 mainmenutitle:
@@ -371,3 +374,71 @@ howtopresetmsg:
   3. Choose one of the Armor Stand Presets that you want to select. 
   
   4. After choosing, your menu will close and your chosen preset will be applied. "
+
+
+#Size Scaling
+sizeMenu:
+  msg: ArmorStand Size (Scaling)
+  description:
+    msg: Set a scale for your ArmorStand [Will Open ANOTHER Menu]
+
+scale1:
+  msg: Scale = 1 (Default)
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to 1 (Default)
+scale2:
+  msg: Scale = 2
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to Scale 2
+scale3:
+  msg: Scale = 3
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to Scale 3
+scale4:
+  msg: Scale = 4
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to Scale 4
+scale5:
+  msg: Scale = 5
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to Scale 5
+scale6:
+  msg: Scale = 6
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to Scale 6
+scale7:
+  msg: Scale = 7
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to Scale 7
+scale8:
+  msg: Scale = 8
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to Scale 8
+scale9:
+  msg: Scale = 9
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to scale 9
+scale10:
+  msg: Scale = 10
+  description:
+    msg: Set the Scale Attribute of your ArmorStand to scale 10
+scaleadd12:
+  msg: Scale + 0.5 (Coarse)
+  description:
+    msg: Add 0.5 to the current Scale of your ArmorStand
+scaleremove12:
+  msg: Scale - 0.5 (Coarse)
+  description:
+    msg: Remove 0.5 to the current Scale of your ArmorStand
+scaleadd110:
+  msg: Scale + 0.1 (Fine)
+  description:
+    msg: Remove 0.5 to the current Scale of your ArmorStand
+scaleremove110:
+  msg: Scale - 0.1 (Fine)
+  description:
+    msg: Remove 0.1 to the current Scale of your ArmorStand
+scalemaxwarn:
+  msg: Please choose a different size, as this against the server maximum scale limits
+scaleminwarn:
+  msg: Please choose a different size, as this against the server minimum scale limits
