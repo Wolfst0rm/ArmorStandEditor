@@ -19,6 +19,7 @@
 
 package io.github.rypofalem.armorstandeditor.menu;
 
+import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
 import org.bukkit.Bukkit;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 
 public class EquipmentMenu {
     Inventory menuInv;
+    private Debug debug;
     private PlayerEditor pe;
     private ArmorStand armorstand;
     static String name = "ArmorStand Equipment";
@@ -43,6 +45,7 @@ public class EquipmentMenu {
     public EquipmentMenu(PlayerEditor pe, ArmorStand as) {
         this.pe = pe;
         this.armorstand = as;
+        this.debug = new Debug(pe.plugin);
         name = pe.plugin.getLang().getMessage("equiptitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getEquipmentHolder(), 18, name);
     }
@@ -50,7 +53,6 @@ public class EquipmentMenu {
     private void fillInventory() {
         menuInv.clear();
         EntityEquipment equipment = armorstand.getEquipment();
-        assert equipment != null;
         ItemStack helmet = equipment.getHelmet();
         ItemStack chest = equipment.getChestplate();
         ItemStack pants = equipment.getLeggings();
@@ -91,9 +93,13 @@ public class EquipmentMenu {
         return icon;
     }
 
-    public void open() {
-        fillInventory();
-        pe.getPlayer().openInventory(menuInv);
+    public void openMenu() {
+        pe.getPlayer().closeInventory();
+        if (pe.getPlayer().hasPermission("asedit.equipment")) {
+            fillInventory();
+            debug.log("Player '" + pe.getPlayer().getDisplayName() + "' has opened the Equipment Menu.");
+            pe.getPlayer().openInventory(menuInv);
+        }
     }
 
     public void equipArmorstand() {
@@ -103,6 +109,16 @@ public class EquipmentMenu {
         feetsies = menuInv.getItem(12);
         rightHand = menuInv.getItem(13);
         leftHand = menuInv.getItem(14);
+
+        debug.log("Equipping the ArmorStand with the following items: ");
+        debug.log("Helmet: " + helmet);
+        debug.log("Chest: " + chest);
+        debug.log("Chest: " + chest);
+        debug.log("Pants: " + pants);
+        debug.log("Boots: " + feetsies);
+        debug.log("R-Hand: " + rightHand);
+        debug.log("L-Hand: " + leftHand);
+
         armorstand.getEquipment().setHelmet(helmet);
         armorstand.getEquipment().setChestplate(chest);
         armorstand.getEquipment().setLeggings(pants);

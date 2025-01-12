@@ -20,6 +20,7 @@
 package io.github.rypofalem.armorstandeditor.menu;
 
 import io.github.rypofalem.armorstandeditor.ArmorStandEditorPlugin;
+import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.PlayerEditor;
 
 import org.bukkit.Bukkit;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 public class PresetArmorPosesMenu {
 
     Inventory menuInv;
+    private Debug debug;
     private final PlayerEditor pe;
     public ArmorStandEditorPlugin plugin = ArmorStandEditorPlugin.instance();
     private ArmorStand armorstand;
@@ -47,32 +49,33 @@ public class PresetArmorPosesMenu {
     public PresetArmorPosesMenu(PlayerEditor pe, ArmorStand as) {
         this.pe = pe;
         this.armorstand = as;
+        this.debug = new Debug(pe.plugin);
         name = plugin.getLang().getMessage("presettitle", "menutitle");
         menuInv = Bukkit.createInventory(pe.getManager().getPresetHolder(), 36, name);
     }
 
     //PRESET NAMES
-    final String SITTING    = plugin.getLang().getMessage("sitting").replace("§6","§2§n");
-    final String WAVING     = plugin.getLang().getMessage("waving").replace("§6","§2§n");
-    final String GREETING_1 = plugin.getLang().getMessage("greeting 1").replace("§6","§2§n");
-    final String GREETING_2 = plugin.getLang().getMessage("greeting 2").replace("§6","§2§n");
-    final String CHEERS     = plugin.getLang().getMessage("cheers").replace("§6","§2§n");
-    final String ARCHER     = plugin.getLang().getMessage("archer").replace("§6","§2§n");
-    final String DANCING    = plugin.getLang().getMessage("dancing").replace("§6","§2§n");
-    final String HANGING    = plugin.getLang().getMessage("hanging").replace("§6","§2§n");
-    final String PRESENTING = plugin.getLang().getMessage("presenting").replace("§6","§2§n");
-    final String FISHING    = plugin.getLang().getMessage("fishing").replace("§6","§2§n");
+    final String SITTING = plugin.getLang().getMessage("sitting").replace("§6", "§2§n");
+    final String WAVING = plugin.getLang().getMessage("waving").replace("§6", "§2§n");
+    final String GREETING_1 = plugin.getLang().getMessage("greeting 1").replace("§6", "§2§n");
+    final String GREETING_2 = plugin.getLang().getMessage("greeting 2").replace("§6", "§2§n");
+    final String CHEERS = plugin.getLang().getMessage("cheers").replace("§6", "§2§n");
+    final String ARCHER = plugin.getLang().getMessage("archer").replace("§6", "§2§n");
+    final String DANCING = plugin.getLang().getMessage("dancing").replace("§6", "§2§n");
+    final String HANGING = plugin.getLang().getMessage("hanging").replace("§6", "§2§n");
+    final String PRESENTING = plugin.getLang().getMessage("present").replace("§6", "§2§n");
+    final String FISHING = plugin.getLang().getMessage("fishing").replace("§6", "§2§n");
 
     //Menu Stuff
-    final String BACKTOMENU = plugin.getLang().getMessage("backtomenu").replace("§6","§2§n");
-    final String HOWTO      = plugin.getLang().getMessage("howtopreset").replace("§6","§2§n");
+    final String BACKTOMENU = plugin.getLang().getMessage("backtomenu").replace("§6", "§2§n");
+    final String HOWTO = plugin.getLang().getMessage("howtopreset").replace("§6", "§2§n");
 
     private void fillInventory() {
         menuInv.clear();
 
-        /**
-         * Menu Set up in a similar way as to how we do it for
-         * the actual ArmorStand menu
+        /*
+          Menu Set up in a similar way as to how we do it for
+          the actual ArmorStand menu
          */
 
         //Blank Slots
@@ -128,6 +131,7 @@ public class PresetArmorPosesMenu {
     public void openMenu() {
         if (pe.getPlayer().hasPermission("asedit.basic")) {
             fillInventory();
+            debug.log("Player '" + pe.getPlayer().getDisplayName() + "' has opened the ArmorStand Preset Menu");
             pe.getPlayer().openInventory(menuInv);
         }
     }
@@ -136,16 +140,17 @@ public class PresetArmorPosesMenu {
         return name;
     }
 
-    public void handlePresetPose(String itemName, Player player){
+    public void handlePresetPose(String itemName, Player player) {
         if (itemName == null) return;
         if (player == null) return;
 
+        debug.log("Player '" + player.getDisplayName() + "' has chosen the Preset AS Pose '" + itemName + "'");
         //Do the Preset
-        if (itemName.equals(SITTING)){
+        if (itemName.equals(SITTING)) {
             setPresetPose(player, 345, 0, 10, 350, 0, 350, 280, 20, 0, 280, 340, 0, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(WAVING)){
+        } else if (itemName.equals(WAVING)) {
             setPresetPose(player, 220, 20, 0, 350, 0, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
@@ -161,7 +166,7 @@ public class PresetArmorPosesMenu {
             setPresetPose(player, 270, 350, 0, 280, 50, 0, 340, 0, 10, 20, 0, 350, 0, 0, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();
-        } else if (itemName.equals(DANCING)){
+        } else if (itemName.equals(DANCING)) {
             setPresetPose(player, 14, 0, 110, 20, 0, 250, 250, 330, 0, 15, 330, 0, 350, 350, 0, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1, 1);
             player.closeInventory();

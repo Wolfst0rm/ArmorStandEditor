@@ -21,6 +21,7 @@ package io.github.rypofalem.armorstandeditor;
 
 import com.google.common.collect.ImmutableList;
 
+import io.github.rypofalem.armorstandeditor.Debug;
 import io.github.rypofalem.armorstandeditor.api.ArmorStandRenameEvent;
 import io.github.rypofalem.armorstandeditor.api.ItemFrameGlowEvent;
 import io.github.rypofalem.armorstandeditor.menu.ASEHolder;
@@ -39,6 +40,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scoreboard.Team;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -48,11 +50,13 @@ import java.util.UUID;
 
 //Manages PlayerEditors and Player Events related to editing armorstands
 public class PlayerEditorManager implements Listener {
+    private Debug debug;
     private ArmorStandEditorPlugin plugin;
     private HashMap<UUID, PlayerEditor> players;
     private ASEHolder menuHolder = new ASEHolder(); //Inventory holder that owns the main ase menu inventories for the plugin
     private ASEHolder equipmentHolder = new ASEHolder(); //Inventory holder that owns the equipment menu
     private ASEHolder presetHolder = new ASEHolder(); //Inventory Holder that owns the PresetArmorStand Post Menu
+    private ASEHolder sizeMenuHolder = new ASEHolder(); //Inventory Holder that owns the PresetArmorStand Post Menu
     double coarseAdj;
     double fineAdj;
     double coarseMov;
@@ -62,6 +66,7 @@ public class PlayerEditorManager implements Listener {
     private ArrayList<ArmorStand> as = null;
     private ArrayList<ItemFrame> itemF = null;
     private Integer noSize = 0;
+    Team team;
 
     // Instantiate protections used to determine whether a player may edit an armor stand or item frame
     //NOTE: GriefPreventionProtection is Depreciated as of v1.19.3-40
@@ -78,6 +83,7 @@ public class PlayerEditorManager implements Listener {
 
     PlayerEditorManager(ArmorStandEditorPlugin plugin) {
         this.plugin = plugin;
+        this.debug = new Debug(plugin);
         players = new HashMap<>();
         coarseAdj = Util.FULL_CIRCLE / plugin.coarseRot;
         fineAdj = Util.FULL_CIRCLE / plugin.fineRot;
@@ -94,16 +100,19 @@ public class PlayerEditorManager implements Listener {
         if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
         if (!((event.getEntity() instanceof ArmorStand) || event.getEntity() instanceof ItemFrame)) {
             event.setCancelled(true);
+            debug.log("Open Menu Called for Player: " + player.getDisplayName());
             getPlayerEditor(player.getUniqueId()).openMenu();
             return;
         }
         if (event.getEntity() instanceof ArmorStand) {
+            debug.log("Player '" + player.getDisplayName() + "' has left clicked the ArmorStand");
             ArmorStand as = (ArmorStand) event.getEntity();
             getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
             event.setCancelled(true);
             if (canEdit(player, as))
                 applyLeftTool(player, as);
         } else if (event.getEntity() instanceof ItemFrame) {
+            debug.log(" Player '" + player.getDisplayName() + "' has rght clicked on an ItemFrame");
             ItemFrame itemf = (ItemFrame) event.getEntity();
             getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
             event.setCancelled(true);
@@ -119,6 +128,7 @@ public class PlayerEditorManager implements Listener {
         if (!((event.getRightClicked() instanceof ArmorStand) || event.getRightClicked() instanceof ItemFrame)) return;
 
         if (event.getRightClicked() instanceof ArmorStand) {
+            debug.log("Player '" + player.getDisplayName() + "' has right clicked on an ArmorStand");
             ArmorStand as = (ArmorStand) event.getRightClicked();
 
             if (!canEdit(player, as)) return;
@@ -250,6 +260,7 @@ public class PlayerEditorManager implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onSwitchHands(PlayerSwapHandItemsEvent event) {
+        debug.log("PlayerSwapHandItemsEvent trigger for Player: " + event.getPlayer().getDisplayName());
         if (!plugin.isEditTool(event.getOffHandItem())) return; //event assumes they are already switched
         event.setCancelled(true);
         Player player = event.getPlayer();
@@ -343,21 +354,25 @@ public class PlayerEditorManager implements Listener {
     }
 
     void applyLeftTool(Player player, ArmorStand as) {
+        debug.log("Applying Left Tool on ArmorStand for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).editArmorStand(as);
     }
 
     void applyLeftTool(Player player, ItemFrame itemf) {
+        debug.log("Applying Left Tool on ItemFrame for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).editItemFrame(itemf);
     }
 
     void applyRightTool(Player player, ItemFrame itemf) {
+        debug.log("Applying Right Tool on ItemFrame for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).editItemFrame(itemf);
     }
 
     void applyRightTool(Player player, ArmorStand as) {
+        debug.log("Applying Right Tool on ArmorStand for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).cancelOpenMenu();
         getPlayerEditor(player.getUniqueId()).reverseEditArmorStand(as);
     }
@@ -369,6 +384,7 @@ public class PlayerEditorManager implements Listener {
             || e.getAction() == Action.RIGHT_CLICK_AIR
             || e.getAction() == Action.LEFT_CLICK_BLOCK
             || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
+        debug.log("Ran on Right Click Tool Event.");
         Player player = e.getPlayer();
         if (!plugin.isEditTool(player.getInventory().getItemInMainHand())) return;
         if (plugin.requireSneaking && !player.isSneaking()) return;
@@ -380,6 +396,7 @@ public class PlayerEditorManager implements Listener {
             return;
         }
         e.setCancelled(true);
+        debug.log("Open Menu Called for Player: " + player.getDisplayName());
         getPlayerEditor(player.getUniqueId()).openMenu();
     }
 
@@ -432,6 +449,17 @@ public class PlayerEditorManager implements Listener {
                 pe.presetPoseMenu.handlePresetPose(itemName, player);
             }
         }
+
+        if (e.getInventory().getHolder() == sizeMenuHolder) {
+            e.setCancelled(true);
+            ItemStack item = e.getCurrentItem();
+            if (item != null && item.hasItemMeta()) {
+                Player player = (Player) e.getWhoClicked();
+                String itemName = item.getItemMeta().getDisplayName();
+                PlayerEditor pe = players.get(player.getUniqueId());
+                pe.sizeModificationMenu.handleAttributeScaling(itemName, player);
+            }
+        }
     }
 
 
@@ -442,6 +470,12 @@ public class PlayerEditorManager implements Listener {
         if (e.getInventory().getHolder() == equipmentHolder) {
             PlayerEditor pe = players.get(e.getPlayer().getUniqueId());
             pe.equipMenu.equipArmorstand();
+
+            // Remove the In Use Lock
+            team = plugin.scoreboard.getTeam(plugin.inUseTeam);
+            if (team != null) {
+                team.removeEntry(pe.armorStandInUseId.toString());
+            }
         }
     }
 
@@ -470,6 +504,10 @@ public class PlayerEditorManager implements Listener {
 
     public ASEHolder getEquipmentHolder() {
         return equipmentHolder;
+    }
+
+    public ASEHolder getSizeMenuHolder() {
+        return sizeMenuHolder;
     }
 
     public ASEHolder getPresetHolder() {

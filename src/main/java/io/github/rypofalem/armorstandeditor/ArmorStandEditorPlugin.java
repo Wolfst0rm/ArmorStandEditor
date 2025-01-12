@@ -44,6 +44,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     //!!! DO NOT REMOVE THESE UNDER ANY CIRCUMSTANCES - Required for BStats and UpdateChecker !!!
     public static final int SPIGOT_RESOURCE_ID = 94503;  //Used for Update Checker
     private static final int PLUGIN_ID = 12668;		     //Used for BStats Metrics
+    private Debug debug = new Debug(this);
 
     private NamespacedKey iconKey;
     private static ArmorStandEditorPlugin instance;
@@ -81,6 +82,8 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     List<?> allowedWorldList = null;
     boolean allowCustomModelData = false;
     Integer customModelDataInt = Integer.MIN_VALUE;
+    double maxScaleValue;
+    double minScaleValue;
 
     //GUI Settings
     boolean requireSneaking = false;
@@ -100,7 +103,9 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     //Glow Entity Colors
     public Scoreboard scoreboard;
     public Team team;
+    List<String> asTeams = new ArrayList<>();
     String lockedTeam = "ASLocked";
+    String inUseTeam = "AS-InUse";
 
     //Debugging Options.... Not Exposed
     boolean debugFlag;
@@ -184,8 +189,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
                 getLogger().log(Level.INFO, "PaperMC: {0}", hasPaper);
             }
         }
-
         getServer().getPluginManager().enablePlugin(this);
+
+        asTeams.add(lockedTeam);
+        asTeams.add(inUseTeam);
 
         if (!hasFolia) {
             scoreboard = Objects.requireNonNull(this.getServer().getScoreboardManager()).getMainScoreboard();
@@ -219,6 +226,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         //Rotation
         coarseRot = getConfig().getDouble("coarse");
         fineRot = getConfig().getDouble("fine");
+
+        // Scale Values for Size
+        maxScaleValue = getConfig().getDouble("maxScaleValue");
+        minScaleValue = getConfig().getDouble("minScaleValue");
 
         //Set Tool to be used in game
         toolType = getConfig().getString("tool");
@@ -293,11 +304,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
         debugFlag = getConfig().getBoolean("debugFlag", false);
         if (debugFlag) {
-            getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
-            getServer().getLogger().warning(" ArmorStandEditor - Debug Mode ");
-            getServer().getLogger().warning("      Debug Mode: ENABLED!     ");
-            getServer().getLogger().warning(" USE THIS FOR DEVELOPMENT PURPOSES ONLY! ");
-            getServer().getLogger().warning(ArmorStandEditorPlugin.SEPARATOR_FIELD);
+            getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] ArmorStandEditor Debug Mode is now ENABLED! Use this ONLY for testing Purposes. If you can see this and you have debug disabled, please report it as a bug!");
         }
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
@@ -366,26 +373,33 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
 
     //Implement Glow Effects for Wolfstorm/ArmorStandEditor-Issues#5 - Add Disable Slots with Different Glow than Default
     private void registerScoreboards(Scoreboard scoreboard) {
-        getServer().getLogger().info("Registering Scoreboards required for Glowing Effects");
+        for (String teamToBeRegistered : asTeams) {
+            scoreboard.registerNewTeam(teamToBeRegistered);
+            team = scoreboard.getTeam(teamToBeRegistered);
+            if (team != null) {
+                if (teamToBeRegistered == lockedTeam) {
+                    getServer().getLogger().info("Registering Scoreboards required for Glowing Effects when Disabling Slots...");
+                    scoreboard.getTeam(teamToBeRegistered).setColor(ChatColor.RED);
+                }
+            } else {
+                getServer().getLogger().info("Scoreboard for Team '" + teamToBeRegistered + "' Already exists. Continuing to load");
+            }
 
-        //Fix for Scoreboard Issue reported by Starnos - Wolfst0rm/ArmorStandEditor-Issues/issues/18
-        if (scoreboard.getTeam(lockedTeam) == null) {
-            scoreboard.registerNewTeam(lockedTeam);
-            scoreboard.getTeam(lockedTeam).setColor(ChatColor.RED);
-        } else {
-            getServer().getLogger().info("Scoreboard for ASLocked Already exists. Continuing to load");
         }
     }
 
     private void unregisterScoreboards(Scoreboard scoreboard) {
-        getLogger().info("Removing Scoreboards required for Glowing Effects");
-
-        team = scoreboard.getTeam(lockedTeam);
-        if (team != null) { //Basic Sanity Check to ensure that the team is there
-            team.unregister();
-        } else {
-            getLogger().severe("Team Already Appears to be removed. Please do not do this manually!");
+        getLogger().info("Removing Scoreboards required for Glowing Effects when Disabling Slots...");
+        for (String teamToBeRegistered : asTeams) {
+            team = scoreboard.getTeam(teamToBeRegistered);
+            if (team != null) {
+                team.unregister();
+            } else {
+                getServer().getLogger().severe("Team '" + teamToBeRegistered + "' already appears to be removed. Avoid manual removal to prevent errors!");
+            }
         }
+
+
     }
 
     private void updateConfig(String folder, String config) {
@@ -437,7 +451,7 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
     }
 
     //Will be useful for later.....
-    public String getMinecraftVersion(){
+    public String getMinecraftVersion() {
         return this.nmsVersion;
     }
 
@@ -580,6 +594,10 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         coarseRot = getConfig().getDouble("coarse");
         fineRot = getConfig().getDouble("fine");
 
+        // Scale Values for Size
+        maxScaleValue = getConfig().getDouble("maxScaleValue");
+        minScaleValue = getConfig().getDouble("minScaleValue");
+
         //Set Tool to be used in game
         toolType = getConfig().getString("tool");
         if (toolType != null) {
@@ -645,6 +663,14 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         //Add Ability to check for UpdatePerms that Notify Ops - https://github.com/Wolfieheart/ArmorStandEditor/issues/86
         opUpdateNotification = getConfig().getBoolean("opUpdateNotification", true);
         updateCheckerInterval = getConfig().getDouble("updateCheckerInterval", 24);
+
+
+        // Add Debug Reload
+        debugFlag = getConfig().getBoolean("debugFlag", false);
+        if (debugFlag) {
+            getServer().getLogger().log(Level.INFO, "[ArmorStandEditor-Debug] ArmorStandEditor Debug Mode is now ENABLED! Use this ONLY for testing Purposes. If you can see this and you have debug disabled, please report it as a bug!");
+        }
+
 
         //Run UpdateChecker - Reports out to Console on Startup ONLY!
         if (!hasFolia && runTheUpdateChecker) {
@@ -735,14 +761,18 @@ public class ArmorStandEditorPlugin extends JavaPlugin {
         return iconKey;
     }
 
+    public double getMinScaleValue() {
+        return minScaleValue;
+    }
+
+    public double getMaxScaleValue() {
+        return maxScaleValue;
+    }
+
     /**
      * For debugging ASE - Do not use this outside of Development or stuff
      */
     public boolean isDebug() {
         return debugFlag;
-    }
-
-    public void debugMsgHandler(String msg) {
-        if (isDebug()) getServer().getLogger().log(Level.WARNING, "[ASE-DEBUG]: {0}", msg);
     }
 }
